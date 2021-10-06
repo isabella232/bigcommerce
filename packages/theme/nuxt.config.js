@@ -45,11 +45,11 @@ export default {
       // @core-development-only-end
       useRawSource: {
         dev: [
-          '@vue-storefront/<% INTEGRATION %>',
+          '@vue-storefront/bigcommerce',
           '@vue-storefront/core'
         ],
         prod: [
-          '@vue-storefront/<% INTEGRATION %>',
+          '@vue-storefront/bigcommerce',
           '@vue-storefront/core'
         ]
       }
@@ -58,8 +58,8 @@ export default {
     ['@vue-storefront/nuxt-theme', {
       generate: {
         replace: {
-          apiClient: '@vue-storefront/<% INTEGRATION %>-api',
-          composables: '@vue-storefront/<% INTEGRATION %>'
+          apiClient: '@vue-storefront/bigcommerce-api',
+          composables: '@vue-storefront/bigcommerce'
         }
       }
     }],
@@ -67,7 +67,7 @@ export default {
     /* project-only-start
     ['@vue-storefront/nuxt-theme'],
     project-only-end */
-    ['@vue-storefront/<% INTEGRATION %>/nuxt', {}]
+    ['@vue-storefront/bigcommerce/nuxt', {}]
   ],
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

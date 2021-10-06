@@ -1,7 +1,7 @@
 module.exports = {
   integrations: {
-    <% INTEGRATION %>: {
-      location: '@vue-storefront/<% INTEGRATION %>-api/server',
+    bigcommerce: {
+      location: '@vue-storefront/bigcommerce-api/server',
       configuration: {}
     }
   }
