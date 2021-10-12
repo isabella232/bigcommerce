@@ -1,6 +1,6 @@
 {
   "name": "@vue-storefront/bigcommerce",
-  "version": "2.4.1",
+  "version": "0.0.1",
   "private": true,
   "sideEffects": false,
   "main": "lib/index.cjs.js",
@@ -16,8 +16,8 @@
     "update:update": "ncu -u"
   },
   "dependencies": {
-    "@vue-storefront/bigcommerce-api": "~2.4.1",
-    "@vue-storefront/core": "~2.4.1"
+    "@vue-storefront/bigcommerce-api": "~0.0.1",
+    "@vue-storefront/core": "~2.4.3"
   },
   "devDependencies": {
     "rollup-plugin-typescript2": "^0.30.0",
