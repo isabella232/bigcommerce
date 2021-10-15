@@ -1,0 +1,21 @@
+{
+  "name": "@vue-storefront/bigcommerce-open-api-sdk",
+  "version": "0.0.1",
+  "description": "TypeScript definitions && Axios client for Big Commerce Webservices",
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.es.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "rimraf lib && rollup -c",
+    "generate-sdk": "npx @openapitools/openapi-generator-cli generate -i https://gdm-tvpage.demo.hybris.com/rest/v2/api-docs -g typescript-axios -o src --skip-validate-spec && yarn build"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "devDependencies": {
+    "execa": "^5.1.1"
+  }
+}
