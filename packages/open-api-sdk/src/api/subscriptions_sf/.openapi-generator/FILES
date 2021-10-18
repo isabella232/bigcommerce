@@ -1,0 +1,8 @@
+.openapi-generator-ignore
+apis/SubscriptionApi.ts
+apis/index.ts
+index.ts
+models/Subscription.ts
+models/SubscriptionRequest.ts
+models/index.ts
+runtime.ts

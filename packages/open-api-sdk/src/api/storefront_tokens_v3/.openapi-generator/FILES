@@ -1,0 +1,14 @@
+.openapi-generator-ignore
+apis/APITokenApi.ts
+apis/CustomerImpersonationTokenApi.ts
+apis/index.ts
+index.ts
+models/BaseError.ts
+models/ErrorResponse.ts
+models/ErrorResponseAllOf.ts
+models/TokenBase.ts
+models/TokenFull.ts
+models/TokenPostImpersonation.ts
+models/TokenPostSimple.ts
+models/index.ts
+runtime.ts

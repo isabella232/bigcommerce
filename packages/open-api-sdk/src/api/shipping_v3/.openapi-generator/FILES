@@ -1,0 +1,15 @@
+.openapi-generator-ignore
+apis/ProductsApi.ts
+apis/index.ts
+index.ts
+models/CustomsInformation.ts
+models/InlineResponse200.ts
+models/MetaCollection.ts
+models/MetaCollectionPagination.ts
+models/MetaCollectionPaginationLinks.ts
+models/ShippingMethodBase.ts
+models/ShippingMethodBaseSettings.ts
+models/ShippingMethodFull.ts
+models/ShippingMethodFullAllOf.ts
+models/index.ts
+runtime.ts

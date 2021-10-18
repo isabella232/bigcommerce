@@ -1,0 +1,9 @@
+.openapi-generator-ignore
+apis/TaxProviderConnectionApi.ts
+apis/index.ts
+index.ts
+models/InlineObject.ts
+models/ResponseConnection.ts
+models/ResponseConnectionData.ts
+models/index.ts
+runtime.ts

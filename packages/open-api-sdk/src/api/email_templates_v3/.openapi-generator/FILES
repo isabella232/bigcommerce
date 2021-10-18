@@ -1,0 +1,15 @@
+.openapi-generator-ignore
+apis/EmailTemplatesApi.ts
+apis/index.ts
+index.ts
+models/BaseError.ts
+models/EmailTemplate.ts
+models/EmailTemplateUpdate.ts
+models/ErrorResponse.ts
+models/ErrorResponseAllOf.ts
+models/InlineResponse200.ts
+models/InlineResponse2001.ts
+models/LocaleObject.ts
+models/Scratch.ts
+models/index.ts
+runtime.ts

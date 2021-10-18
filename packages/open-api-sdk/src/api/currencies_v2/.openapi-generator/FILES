@@ -1,0 +1,9 @@
+.openapi-generator-ignore
+apis/CurrenciesApi.ts
+apis/index.ts
+index.ts
+models/CurrencyBase.ts
+models/CurrencyFull.ts
+models/CurrencyFullAllOf.ts
+models/index.ts
+runtime.ts

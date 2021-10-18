@@ -1,0 +1,13 @@
+.openapi-generator-ignore
+apis/StoreInformationApi.ts
+apis/TimeZoneApi.ts
+apis/index.ts
+index.ts
+models/DateFormat.ts
+models/StoreInformation.ts
+models/StoreInformationFeatures.ts
+models/StoreInformationLogo.ts
+models/TimeStampFull.ts
+models/Timezone.ts
+models/index.ts
+runtime.ts

@@ -1,0 +1,8 @@
+.openapi-generator-ignore
+apis/CustomersApi.ts
+apis/index.ts
+index.ts
+models/CustomFields.ts
+models/CustomerCreateData.ts
+models/index.ts
+runtime.ts

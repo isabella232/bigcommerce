@@ -1,0 +1,7 @@
+.openapi-generator-ignore
+apis/ConsentApi.ts
+apis/index.ts
+index.ts
+models/ConsentPreferences.ts
+models/index.ts
+runtime.ts

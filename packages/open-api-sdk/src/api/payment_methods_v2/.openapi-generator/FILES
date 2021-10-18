@@ -1,0 +1,7 @@
+.openapi-generator-ignore
+apis/PaymentMethodsApi.ts
+apis/index.ts
+index.ts
+models/PaymentBase.ts
+models/index.ts
+runtime.ts

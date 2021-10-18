@@ -1,0 +1,112 @@
+/* tslint:disable */
+/* eslint-disable */
+/**
+ * Catalog
+ * Manage products, brands and categories. To learn more about catalog resources see [Catalog Overview](https://developer.bigcommerce.com/api-docs/catalog/products-overview).  - [Authentication](#authentication) - [Differentiating Variants and Modifiers](#differentiating-variants-and-modifiers) - [Available Endpoints](#available-endpoints) - [Resources](#resources)  ## Authentication Requests can be authenticated by sending an `access_token` via `X-Auth-Token` HTTP header:  ```http GET /stores/{$$.env.store_hash}/v3/catalog/summary host: api.bigcommerce.com Accept: application/json X-Auth-Token: {access_token} ```  |Header|Parameter|Description| |-|-|-| |`X-Auth-Token`|`access_token `|Obtained by creating an API account or installing an app in a BigCommerce control panel.|  ### OAuth Scopes | UI Name  | Permission | Parameter                     | |----------|------------|-------------------------------| | Products | modify     | `store_v2_products`           | | Products | read-only  | `store_v2_products_read_only` |  For more information on OAuth Scopes, see: [Authentication](https://developer.bigcommerce.com/api-docs/getting-started/authentication).  For more information on Authenticating BigCommerce APIs, see: [Authentication](https://developer.bigcommerce.com/api-docs/getting-started/authentication).  ## Differentiating Variants and Modifiers [Variants](https://support.bigcommerce.com/s/article/Product-Options-v3#variations) represent a physical product made up of [Product Option](https://support.bigcommerce.com/s/article/Product-Options-v3) choices, i.e. a large blue t-shirt. Each variant can have a unique SKU.  Modifiers represent a choice a customer makes about a product that doesn\'t represent a physical item, i.e. text to be printed on a t-shirt. Assigning a SKU to a modifier will turn it into a variant.  See [Variant Options](https://developer.bigcommerce.com/api-docs/catalog/products-overview#variant-options) and [Modifier Options](https://developer.bigcommerce.com/api-docs/catalog/products-overview#modifier-options) for more information.  ## Available Endpoints | Resource / Endpoint                     | Description                                                             | |-----------------------------------------|-------------------------------------------------------------------------| | Brand Images                            | Create and manage brand images                                          | | Brand Metafields                        | Create and manage brand metafields                                      | | Brands                                  | Create and manage brands                                                | | Catalog                                 | Create and manage store categories, products, and brands                | | Categories                              | Create and manage categorties                                           | | Category Images                         | Create and manage category images                                       | | Category Metafields                     | Create and manage category metafields                                   | | Product Bulk Pricing Rules              | Create and manage product bulk pricing rules                            | | Product Complex Rules                   | Create and manage product complex rules                                 | | Product Custom Fields                   | Create and manage product custom fields                                 | | Product Images                          | Create and manage product images                                        | | Product Metafields                      | Create and manage product meta fields                                   | | Product Modifier Images                 | Create and manage product modifer images                                | | Product Modifier Values                 | Create and manage product modifier values                               | | Product Modifiers                       | Create and manage product midifiers                                     | | Product Reviews                         | Create and manage product reviews                                       | | Product Variant Option Values           | Create and manage product variant option values                         | | Product Variant Options                 | Create and manage product variant options                               | | Product Variants                        | Create and manage product variants                                      | | Product Videos                          | Create and manage product videos                                        | | Products                                | Create and manage products                                              | | ProductVariant Metafields               | Create and manage product meta flields                                  | | Variants                                | Get and update all variants                                             |  ## Resources  ### Webhooks * [Products](/api-docs/store-management/webhooks/events#products) * [Categories](/api-docs/store-management/webhooks/events#category) * [SKU](/api-docs/store-management/webhooks/events#sku)
+ *
+ * The version of the OpenAPI document: 
+ * 
+ *
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+
+import { exists, mapValues } from '../runtime';
+import {
+    ProductVariantOptionValueFull,
+    ProductVariantOptionValueFullFromJSON,
+    ProductVariantOptionValueFullFromJSONTyped,
+    ProductVariantOptionValueFullToJSON,
+} from './';
+
+/**
+ * 
+ * @export
+ * @interface ProductVariantFullAllOf
+ */
+export interface ProductVariantFullAllOf {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductVariantFullAllOf
+     */
+    id?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductVariantFullAllOf
+     */
+    productId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductVariantFullAllOf
+     */
+    sku?: string;
+    /**
+     * Read-only reference to v2 API's SKU ID. Null if it is a base variant.
+     * @type {number}
+     * @memberof ProductVariantFullAllOf
+     */
+    skuId?: number | null;
+    /**
+     * Array of option and option values IDs that make up this variant. Will be empty if the variant is the product's base variant.
+     * @type {Array<ProductVariantOptionValueFull>}
+     * @memberof ProductVariantFullAllOf
+     */
+    optionValues?: Array<ProductVariantOptionValueFull>;
+    /**
+     * The price of the variant as seen on the storefront. This price takes into account `sale_price` and any price adjustment rules that are applicable to this variant.
+     * @type {number}
+     * @memberof ProductVariantFullAllOf
+     */
+    calculatedPrice?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductVariantFullAllOf
+     */
+    calculatedWeight?: number;
+}
+
+export function ProductVariantFullAllOfFromJSON(json: any): ProductVariantFullAllOf {
+    return ProductVariantFullAllOfFromJSONTyped(json, false);
+}
+
+export function ProductVariantFullAllOfFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProductVariantFullAllOf {
+    if ((json === undefined) || (json === null)) {
+        return json;
+    }
+    return {
+        
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'productId': !exists(json, 'product_id') ? undefined : json['product_id'],
+        'sku': !exists(json, 'sku') ? undefined : json['sku'],
+        'skuId': !exists(json, 'sku_id') ? undefined : json['sku_id'],
+        'optionValues': !exists(json, 'option_values') ? undefined : ((json['option_values'] as Array<any>).map(ProductVariantOptionValueFullFromJSON)),
+        'calculatedPrice': !exists(json, 'calculated_price') ? undefined : json['calculated_price'],
+        'calculatedWeight': !exists(json, 'calculated_weight') ? undefined : json['calculated_weight'],
+    };
+}
+
+export function ProductVariantFullAllOfToJSON(value?: ProductVariantFullAllOf | null): any {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (value === null) {
+        return null;
+    }
+    return {
+        
+        'id': value.id,
+        'product_id': value.productId,
+        'sku': value.sku,
+        'sku_id': value.skuId,
+        'option_values': value.optionValues === undefined ? undefined : ((value.optionValues as Array<any>).map(ProductVariantOptionValueFullToJSON)),
+        'calculated_price': value.calculatedPrice,
+        'calculated_weight': value.calculatedWeight,
+    };
+}
+
+
