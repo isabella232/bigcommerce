@@ -1,17 +1,18 @@
 import { apiClientFactory } from '@vue-storefront/core';
-import type { Setttings, Endpoints } from './types';
+import type { MiddlewareSettingsConfig, Endpoints } from './types';
+const BigCommerce = require('node-bigcommerce');
 
-function onCreate(settings: Setttings) {
+function onCreate(settings: MiddlewareSettingsConfig) {
+  const bigCommerceClient = new BigCommerce(settings.sdkSettings);
   return {
     config: settings,
-    client: {}
+    client: bigCommerceClient
   };
 }
 
-const { createApiClient } = apiClientFactory<Setttings, Endpoints>({
+const { createApiClient } = apiClientFactory<MiddlewareSettingsConfig, Endpoints>({
   onCreate,
   api: {
-
   }
 });
 

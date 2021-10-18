@@ -1,6 +1,20 @@
 export type TODO = unknown;
 
-export type Setttings = TODO;
+export interface MiddlewareSettingsConfig {
+  sdkSettings: {
+    logLevel: string,
+    clientId: string,
+    secret: string,
+    callback: string,
+    responseType: string,
+    headers: { 'Accept-Encoding': string },
+    apiVersion: string
+  },
+  secureCookies: boolean;
+  currency: string;
+  lang: string;
+  mediaHost: string;
+}
 
 export type Endpoints = TODO;
 
