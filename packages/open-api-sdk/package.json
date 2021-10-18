@@ -10,7 +10,8 @@
     "generate-sdk": "npx @openapitools/openapi-generator-cli generate -i https://gdm-tvpage.demo.hybris.com/rest/v2/api-docs -g typescript-axios -o src --skip-validate-spec && yarn build"
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "node-fetch": "^3.0.0"
   },
   "files": [
     "lib/**/*"
