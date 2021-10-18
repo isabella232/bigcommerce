@@ -6,7 +6,7 @@ const controllers = require('./open-api-sources.json');
 const extensions = ['.ts', '.js'];
 
 const config = controllers.map(controller => ({
-  input: `src/api/${controller.name}/index.ts`,
+  input: `src/api/${controller.name}/api.ts`,
   output: [
     {
       file: `${controller.name}/index.cjs.js`,
