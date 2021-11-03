@@ -2,7 +2,7 @@ name: Deploy to Vue Storefront Cloud
 on:
   push:
     branches:
-    - main
+    - develop
 jobs:
   build:
     runs-on: ubuntu-latest
