@@ -1,20 +1,10 @@
-export type TODO = unknown;
+export * from './api';
+export * from './context';
+export * from './nodeBigcommerceSDK';
 
-export interface MiddlewareSettingsConfig {
-  sdkSettings: {
-    logLevel: string,
-    clientId: string,
-    secret: string,
-    callback: string,
-    responseType: string,
-    headers: { 'Accept-Encoding': string },
-    apiVersion: string
-  },
-  secureCookies: boolean;
-  currency: string;
-  lang: string;
-  mediaHost: string;
-}
+// TODO types:
+
+export type TODO = unknown;
 
 export type Endpoints = TODO;
 

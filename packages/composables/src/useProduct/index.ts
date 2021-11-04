@@ -12,8 +12,7 @@ const params: UseProductFactoryParams<Product, SearchParams> = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   productsSearch: async (context: Context, params) => {
     console.log('Mocked: useProduct.productsSearch');
-
-    return {};
+    return await context.$bigcommerce.api.products();
   }
 };
 
