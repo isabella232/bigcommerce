@@ -3,10 +3,7 @@ export * from './context';
 export * from './nodeBigcommerceSDK';
 
 // TODO types:
-
 export type TODO = unknown;
-
-export type Endpoints = TODO;
 
 export type BillingAddress = TODO;
 
