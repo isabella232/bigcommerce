@@ -13,6 +13,7 @@
     "precommit": "lint-staged",
     "prepublish": "yarn build",
     "test": "jest",
+    "test:watch": "jest --watchAll",
     "update:check": "ncu",
     "update:update": "ncu -u"
   },

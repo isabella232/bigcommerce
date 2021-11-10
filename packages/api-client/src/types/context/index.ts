@@ -1,20 +1,20 @@
 import { IntegrationContext } from '@vue-storefront/core';
 import { NodeBigcommerceSDK } from '../nodeBigcommerceSDK';
-import { Endpoints } from '../api/endpoints';
+import { Endpoints } from '../api';
 
 /**
  * SDK Settings provided in the `middleware.config.js` file.
  */
 export interface MiddlewareSDKSettingsConfig {
-    logLevel: string;
-    clientId: string;
-    secret: string;
-    callback: string;
-    responseType: string;
-    storeHash: string;
-    accessToken: string;
-    headers: { 'Accept-Encoding': string };
-    apiVersion: string;
+  logLevel: string;
+  clientId: string;
+  secret: string;
+  callback: string;
+  responseType: string;
+  storeHash: string;
+  accessToken: string;
+  headers: { 'Accept-Encoding': string };
+  apiVersion: string;
 }
 
 /**
