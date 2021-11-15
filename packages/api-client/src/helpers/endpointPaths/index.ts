@@ -1,5 +1,6 @@
 const BigCommerceEndpoints = {
-  customers: '/customers'
+  customers: '/customers',
+  validateCredentials: '/customers/validate-credentials'
 };
 
 export default BigCommerceEndpoints;

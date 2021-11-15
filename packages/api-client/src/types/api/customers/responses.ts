@@ -34,3 +34,11 @@ export type CreateCustomerResponse = {
   data: Array<CustomerData>;
   meta: unknown;
 };
+
+/**
+ * Format of response returned by `/customers/validate-credentials` BigCommerce API endpoint.
+ */
+export type ValidateCredentialsResponse = {
+  customer_id?: number | null;
+  is_valid?: boolean;
+};

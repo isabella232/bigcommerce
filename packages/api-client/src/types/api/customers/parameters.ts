@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 
 /**
- * Format of parameters that can be passed to CreateCustomer endpoint method.
+ * Format of parameters that can be passed to `createCustomer` endpoint method.
  */
 export type CreateCustomerParameters = {
   first_name: string;
@@ -13,4 +13,13 @@ export type CreateCustomerParameters = {
     fieldId: string;
     fieldValue: string;
   }>;
+};
+
+/**
+ * Format of parameters that can be passed to `validateCredentials` endpoint method.
+ */
+export type ValidateCredentialsParameter = {
+  email: string;
+  password: string;
+  channel_id?: number;
 };
