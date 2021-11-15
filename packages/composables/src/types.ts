@@ -56,7 +56,7 @@ export type UseBillingAddParams = TODO;
 
 export type UseCategorySearchParams = TODO;
 
-export type UseFacetSearchParams = TODO;
+export type UseSearchParams = TODO;
 
 export type UseProductSearchParams = ProductsSearchParams;
 
