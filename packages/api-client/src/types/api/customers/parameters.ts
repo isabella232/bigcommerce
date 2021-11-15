@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 /**
  * Format of parameters that can be passed to `createCustomer` endpoint method.
  */

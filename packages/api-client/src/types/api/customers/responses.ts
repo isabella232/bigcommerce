@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 /**
  * Format of customer data that's returned inside the response of `/customers` BigCommerce API endpoint.
  * See at {@link CreateCustomerResponse}
