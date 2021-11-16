@@ -3,13 +3,12 @@ import {
   useReviewFactory,
   UseReviewFactoryParams
 } from '@vue-storefront/core';
-import type { Review } from '@vue-storefront/bigcommerce-api';
 import type {
   UseReviewSearchParams as SearchParams,
   UseReviewAddParams as AddParams
 } from '../types';
 
-const params: UseReviewFactoryParams<Review, SearchParams, AddParams> = {
+const params: UseReviewFactoryParams<Record<string, unknown>, SearchParams, AddParams> = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   searchReviews: async (context: Context, params) => {
     console.log('Mocked: useReview.searchReviews');
@@ -23,4 +22,4 @@ const params: UseReviewFactoryParams<Review, SearchParams, AddParams> = {
   }
 };
 
-export const useReview = useReviewFactory<Review, SearchParams, AddParams>(params);
+export const useReview = useReviewFactory<Record<string, unknown>, SearchParams, AddParams>(params);

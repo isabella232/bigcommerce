@@ -1,6 +1,7 @@
 export * from './api';
 export * from './context';
 export * from './nodeBigcommerceSDK';
+export * from './review';
 
 // TODO types:
 export type TODO = unknown;
@@ -28,8 +29,6 @@ export type PasswordResetResult = TODO;
 export type Product = TODO;
 
 export type ProductFilter = TODO;
-
-export type Review = TODO;
 
 export type ReviewItem = TODO;
 
