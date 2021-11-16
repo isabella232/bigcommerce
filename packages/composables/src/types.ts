@@ -1,15 +1,11 @@
-import {
-  IntegrationContext,
-  ProductsSearchParams
-} from '@vue-storefront/core';
+import { IntegrationContext, ProductsSearchParams } from '@vue-storefront/core';
 import { ContextualizedEndpoints } from '@vue-storefront/bigcommerce-api';
 import { AxiosInstance } from 'axios';
 
 /**
  * Contains configuration for [axios client](https://github.com/axios/axios).
  */
- interface AxiosClientConfig {
-
+interface AxiosClientConfig {
   /**
    * Base API address.
    */
@@ -24,8 +20,7 @@ import { AxiosInstance } from 'axios';
 /**
  * Configuration for `$vsf` context.
  */
- interface ContextConfig {
-
+interface ContextConfig {
   /**
    * Api Client.
    */
@@ -65,9 +60,5 @@ export type UseReviewSearchParams = TODO;
 export type UseReviewAddParams = TODO;
 
 export type UseShippingAddParams = TODO;
-
-export type UseUserUpdateParams = TODO;
-
-export type UseUserRegisterParams = TODO;
 
 export type useUserOrderSearchParams = TODO;
