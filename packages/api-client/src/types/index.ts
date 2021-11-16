@@ -2,9 +2,9 @@ export * from './api';
 export * from './context';
 export * from './meta';
 export * from './nodeBigcommerceSDK';
-export * from './pagination';
 export * from './product';
 export * from './review';
+export * from './meta';
 
 // TODO types:
 export type TODO = unknown;

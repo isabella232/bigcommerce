@@ -1,57 +1,57 @@
 import { ReviewGetters, AgnosticRateCount } from '@vue-storefront/core';
-import type { Review, ReviewItem } from '@vue-storefront/bigcommerce-api';
+import type { ProductReview, ProductReviewCollectionResponse } from '@vue-storefront/bigcommerce-api';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getItems (review: Review): ReviewItem[] {
+function getItems (review: ProductReviewCollectionResponse): ProductReview[] {
   return [];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getReviewId(item: ReviewItem): string {
+function getReviewId(item: ProductReview): string {
   return '';
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getReviewAuthor(item: ReviewItem): string {
+function getReviewAuthor(item: ProductReview): string {
   return '';
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getReviewMessage(item: ReviewItem): string {
+function getReviewMessage(item: ProductReview): string {
   return '';
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getReviewRating(item: ReviewItem): number {
+function getReviewRating(item: ProductReview): number {
   return 0;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getReviewDate(item: ReviewItem): string {
+function getReviewDate(item: ProductReview): string {
   return '';
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getTotalReviews(review: Review): number {
+function getTotalReviews(review: ProductReviewCollectionResponse): number {
   return 0;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getAverageRating(review: Review): number {
+function getAverageRating(review: ProductReviewCollectionResponse): number {
   return 0;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getRatesCount(review: Review): AgnosticRateCount[] {
+function getRatesCount(review: ProductReviewCollectionResponse): AgnosticRateCount[] {
   return [];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getReviewsPage(review: Review): number {
+function getReviewsPage(review: ProductReviewCollectionResponse): number {
   return 0;
 }
 
-export const reviewGetters: ReviewGetters<Review, ReviewItem> = {
+export const reviewGetters: ReviewGetters<ProductReviewCollectionResponse, ProductReview> = {
   getItems,
   getReviewId,
   getReviewAuthor,
