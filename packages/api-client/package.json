@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "@vue-storefront/core": "~2.4.3",
-    "node-bigcommerce": "^4.1.0"
+    "node-bigcommerce": "^4.1.0",
+    "query-string": "^7.0.1"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.0",
