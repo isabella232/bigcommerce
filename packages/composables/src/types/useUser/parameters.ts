@@ -1,4 +1,4 @@
-import { TODO } from '../..';
+import { TODO } from '..';
 
 /**
  * Format of parameters to use when calling `register` method of `useUser` composable.

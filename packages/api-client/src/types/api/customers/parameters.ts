@@ -6,8 +6,8 @@ export type CreateCustomerParameters = {
   last_name: string;
   email: string;
   password: string;
-  acceptsMarketingEmails: boolean;
-  customFields: Array<{
+  accepts_marketing_emails: boolean;
+  custom_fields: Array<{
     fieldId: string;
     fieldValue: string;
   }>;

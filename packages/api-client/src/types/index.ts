@@ -3,7 +3,6 @@ export * from './context';
 export * from './meta';
 export * from './nodeBigcommerceSDK';
 export * from './product';
-export * from './review';
 export * from './meta';
 
 // TODO types:

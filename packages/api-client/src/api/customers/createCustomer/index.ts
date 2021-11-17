@@ -27,8 +27,8 @@ function checkParameters(params: CreateCustomerParameters) {
     !params.last_name ||
     !params.email ||
     !params.password ||
-    !params.acceptsMarketingEmails ||
-    !Array.isArray(params.customFields)
+    !params.accepts_marketing_emails ||
+    !Array.isArray(params.custom_fields)
   ) {
     throw new Error('Required parameters missing.');
   }

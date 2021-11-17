@@ -1,4 +1,4 @@
-import { GetProductReviewProps } from '../../../src/types/review';
+import { GetProductReviewProps } from '../../../src/types';
 import { getProductReview } from '../../../src/api/review';
 import { contextMock } from '../../../__mocks__/context.mock';
 

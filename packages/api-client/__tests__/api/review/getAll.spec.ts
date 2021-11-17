@@ -1,5 +1,5 @@
 import { stringifyUrl } from 'query-string';
-import { GetProductReviewCollectionProps, GetProductReviewCollectionQuery } from '../../../src/types/review';
+import { GetProductReviewCollectionProps, GetProductReviewCollectionQuery } from '../../../src/types';
 import { getProductReviewCollection } from '../../../src/api/review';
 import { contextMock } from '../../../__mocks__/context.mock';
 

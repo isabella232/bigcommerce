@@ -1,5 +1,4 @@
-import { UseUserRegisterParams } from '../../types/useUser';
-import { Context } from '@vue-storefront/core';
+import { Context, UseUserRegisterParams } from '../../types';
 import type { User } from '@vue-storefront/bigcommerce-api';
 
 /**

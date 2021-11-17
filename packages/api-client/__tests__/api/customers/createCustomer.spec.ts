@@ -1,6 +1,6 @@
-import { createCustomer } from '../../src/api/customers/createCustomer';
-import { CreateCustomerParameters } from '../../src/types';
-import { contextMock } from '../../__mocks__/context.mock';
+import { createCustomer } from '../../../src/api/customers/createCustomer';
+import { CreateCustomerParameters } from '../../../src/types';
+import { contextMock } from '../../../__mocks__/context.mock';
 
 describe('[bigcommerce-api-client] createCustomer', () => {
   beforeEach(() => {
@@ -10,8 +10,8 @@ describe('[bigcommerce-api-client] createCustomer', () => {
   it('registers a customer', async () => {
     /* eslint-disable camelcase */
     const parameters = {
-      acceptsMarketingEmails: true,
-      customFields: [
+      accepts_marketing_emails: true,
+      custom_fields: [
         {
           fieldId: '25',
           fieldValue: 'Leave in backyard'
@@ -89,8 +89,8 @@ describe('[bigcommerce-api-client] createCustomer', () => {
   it('throws an error if there is a error response from the API', async () => {
     /* eslint-disable camelcase */
     const parameters = {
-      acceptsMarketingEmails: true,
-      customFields: [
+      accepts_marketing_emails: true,
+      custom_fields: [
         {
           fieldId: '25',
           fieldValue: 'Leave in backyard'

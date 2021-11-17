@@ -7,10 +7,11 @@ import {
   GetProductReviewCollectionQuery,
   ProductReviewResponse,
   ProductReviewCollectionResponse
-} from '../review';
+} from './review';
 
 export * from './customers';
 export * from './product';
+export * from './review';
 
 /**
  * Definition of all API-client methods available in context.

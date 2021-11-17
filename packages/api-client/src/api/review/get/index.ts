@@ -1,5 +1,8 @@
-import { BigcommerceIntegrationContext } from '../../../types/context';
-import { GetProductReviewProps, ProductReviewResponse } from '../../../types/review';
+import {
+  BigcommerceIntegrationContext,
+  GetProductReviewProps,
+  ProductReviewResponse
+} from '../../../types';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
 
 export async function getProductReview(

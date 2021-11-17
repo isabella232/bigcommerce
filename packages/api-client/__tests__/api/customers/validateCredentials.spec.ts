@@ -1,7 +1,7 @@
-import { validateCredentials } from '../../src/api/customers';
-import { ValidateCredentialsParameter } from '../../src/types';
+import { validateCredentials } from '../../../src/api/customers';
+import { ValidateCredentialsParameter } from '../../../src/types';
 
-import { contextMock } from '../../__mocks__/context.mock';
+import { contextMock } from '../../../__mocks__/context.mock';
 
 describe('[bigcommerce-api-client] validateCredentials', () => {
   beforeEach(() => {
