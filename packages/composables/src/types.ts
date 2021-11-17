@@ -1,4 +1,4 @@
-import { IntegrationContext, ProductsSearchParams } from '@vue-storefront/core';
+import { IntegrationContext } from '@vue-storefront/core';
 import { ContextualizedEndpoints } from '@vue-storefront/bigcommerce-api';
 import { AxiosInstance } from 'axios';
 
@@ -52,8 +52,6 @@ export type UseBillingAddParams = TODO;
 export type UseCategorySearchParams = TODO;
 
 export type UseSearchParams = TODO;
-
-export type UseProductSearchParams = ProductsSearchParams;
 
 export type UseReviewSearchParams = TODO;
 

@@ -23,7 +23,7 @@ describe('[Composable] useUser', () => {
         };
         contextMock.$bigcommerce.api.createCustomer = jest.fn(
           () => expectedResponse
-        ) as any;
+        );
 
         const response = await register(contextMock, userParameters);
 

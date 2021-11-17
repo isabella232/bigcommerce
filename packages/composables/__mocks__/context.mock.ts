@@ -1,7 +1,17 @@
-import { Context, BigcommerceIntegrationContext } from '../src/types';
+import { mockedProduct } from './product.mock';
 
 export const contextMock = {
   $bigcommerce: {
-    api: {} as any
-  } as BigcommerceIntegrationContext
-} as Context;
+    config: {
+      axios: {
+        baseUrl: '',
+        headers: {}
+      }
+    },
+    client: {},
+    api: {
+      getProducts: jest.fn(() => Promise.resolve({ data: [mockedProduct] })),
+      createCustomer: jest.fn()
+    }
+  }
+};
