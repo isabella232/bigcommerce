@@ -5,7 +5,7 @@ import {
 } from '../../../types';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
 
-export const getProductReviewCollection: Endpoints['getProductReviewCollection'] = (
+export const getProductReviewCollection: Endpoints['getProductReviewCollection'] = async (
   context,
   props,
   query?

@@ -226,9 +226,7 @@ export default defineComponent({
     const configuration = computed(() =>
       productGetters.getAttributes(product.value, ['color', 'size'])
     );
-    const reviews = computed(() =>
-      reviewGetters.getItems(productReviews.value)
-    );
+    const reviews = computed(() => productReviews.value.data);
     // TODO: Breadcrumbs are temporary disabled because productGetters return undefined. We have a mocks in data
     // const breadcrumbs = computed(() => productGetters.getBreadcrumbs ? productGetters.getBreadcrumbs(product.value) : props.fallbackBreadcrumbs);
     const productGallery = computed(() =>
@@ -252,9 +250,10 @@ export default defineComponent({
           limit: 8
         });
       }
-
-      await searchReviews({ productId: id });
     });
+
+    searchReviews({ productId: Number(id) });
+
     const updateFilter = (filter) => {
       context.root.$router.push({
         path: context.root.$route.path,

@@ -2,6 +2,9 @@ import { IntegrationContext } from '@vue-storefront/core';
 import { ContextualizedEndpoints } from '@vue-storefront/bigcommerce-api';
 import { AxiosInstance } from 'axios';
 
+export * from './useReview';
+export * from './useUser';
+
 /**
  * Contains configuration for [axios client](https://github.com/axios/axios).
  */
@@ -53,12 +56,9 @@ export type UseCategorySearchParams = TODO;
 
 export type UseSearchParams = TODO;
 
-export type UseReviewSearchParams = TODO;
-
 export type UseReviewAddParams = TODO;
 
 export type UseShippingAddParams = TODO;
 
 export type useUserOrderSearchParams = TODO;
 
-export * from './useUser';
