@@ -19,10 +19,15 @@ export async function getProducts(
   params.is_visible = params.is_visible ?? true;
 
   return await context.client.get(
-    queryString.stringifyUrl({
-      url: BigCommerceEndpoints.products,
-      query: params
-    })
+    queryString.stringifyUrl(
+      {
+        url: BigCommerceEndpoints.products,
+        query: params
+      },
+      {
+        arrayFormat: 'comma'
+      }
+    )
   );
 }
 

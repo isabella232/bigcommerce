@@ -70,6 +70,10 @@ export const useProductData = () => {
       : 0;
   };
 
+  const getRelatedProducts = (product: Product): number[] => {
+    return product?.related_products ?? [];
+  };
+
   return {
     getName,
     getSlug,
@@ -80,6 +84,7 @@ export const useProductData = () => {
     getCategoryIds,
     getId,
     getTotalReviews,
-    getAverageRating
+    getAverageRating,
+    getRelatedProducts
   };
 };

@@ -130,4 +130,14 @@ describe('[bigcommerce-theme] useProductData', () => {
   it('getAverageRating should return 0 when the product is not defined', async () => {
     expect(productData.getAverageRating(undefined)).toEqual(0);
   });
+
+  it('getRelatedProducts should return the array of ids of related products', async () => {
+    expect(productData.getRelatedProducts(mockedProduct as Product)).toEqual(
+      mockedProduct.related_products
+    );
+  });
+
+  it('getRelatedProducts should return empty array when the product is not defined', async () => {
+    expect(productData.getRelatedProducts(undefined)).toEqual([]);
+  });
 });

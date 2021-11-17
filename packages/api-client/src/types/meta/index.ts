@@ -5,14 +5,13 @@ import { Pagination } from './pagination';
  * @export
  * @interface MetaCollection
  */
-export interface MetaCollection{
-
-    /**
-     * Pagination model including all necessary information for pagination.
-     * @type {Pagination}
-     * @memberof MetaCollection
-     */
-    pagination?: Pagination;
+export interface MetaCollection {
+  /**
+   * Pagination model including all necessary information for pagination.
+   * @type {Pagination}
+   * @memberof MetaCollection
+   */
+  pagination?: Pagination;
 }
 
 export * from './pagination';

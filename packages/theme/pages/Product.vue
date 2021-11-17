@@ -226,9 +226,6 @@ export default defineComponent({
     const configuration = computed(() =>
       productGetters.getAttributes(product.value, ['color', 'size'])
     );
-    const categories = computed(() =>
-      productGetters.getCategoryIds(product.value)
-    );
     const reviews = computed(() =>
       reviewGetters.getItems(productReviews.value)
     );
@@ -249,7 +246,12 @@ export default defineComponent({
         context.root.$nuxt.error({ statusCode: 404 });
       }
 
-      await searchRelatedProducts({ catId: [categories.value[0]], limit: 8 });
+      if (product.value) {
+        await searchRelatedProducts({
+          'id:in': productData.getRelatedProducts(product.value),
+          limit: 8
+        });
+      }
 
       await searchReviews({ productId: id });
     });
@@ -273,9 +275,7 @@ export default defineComponent({
         productData.getAverageRating(product.value)
       ),
       totalReviews: computed(() => productData.getTotalReviews(product.value)),
-      relatedProducts: computed(() =>
-        productGetters.getFiltered(relatedProducts.value, { master: true })
-      ),
+      relatedProducts,
       relatedLoading,
       options,
       qty,
