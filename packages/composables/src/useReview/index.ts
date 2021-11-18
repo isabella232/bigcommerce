@@ -2,7 +2,7 @@ import { Ref, computed } from '@vue/composition-api';
 import { sharedRef, UseReviewErrors, Logger, generateContext } from '@vue-storefront/core';
 import { ProductReviewCollectionResponse } from '@vue-storefront/bigcommerce-api';
 import { params } from './params';
-import { UseReviewSearchParams, Context, UseReviewResponse } from '../index';
+import { UseReviewSearchParams, UseReviewAddParams, Context, UseReviewResponse } from '../index';
 
 /**
  *  Returns product reviews data and actions.
@@ -62,10 +62,27 @@ export const useReview = (id: string): UseReviewResponse => {
     }
   };
 
+  const add = async (addParams: UseReviewAddParams): Promise<void> => {
+    Logger.debug(`useReview/${id}/add`, addParams);
+
+    try {
+      loading.value = true;
+      const response = await params.addReview(context, addParams);
+      reviews.value.data.push(response.data);
+      error.value.addReview = null;
+    } catch (err) {
+      error.value.addReview = err;
+      Logger.error(`useReview/${id}/add`, err);
+    } finally {
+      loading.value = false;
+    }
+  };
+
   return {
     reviews: computed(() => reviews.value),
     loading: computed(() => loading.value),
     error: computed(() => error.value),
-    search
+    search,
+    add
   };
 };

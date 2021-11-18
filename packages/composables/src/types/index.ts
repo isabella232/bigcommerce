@@ -56,8 +56,6 @@ export type UseCategorySearchParams = TODO;
 
 export type UseSearchParams = TODO;
 
-export type UseReviewAddParams = TODO;
-
 export type UseShippingAddParams = TODO;
 
 export type useUserOrderSearchParams = TODO;

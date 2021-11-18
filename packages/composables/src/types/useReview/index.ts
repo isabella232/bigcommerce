@@ -1,9 +1,10 @@
 import { ComputedRef } from '@nuxtjs/composition-api';
 import { ProductReviewCollectionResponse } from '@vue-storefront/bigcommerce-api';
 import { UseReviewErrors } from '@vue-storefront/core';
-import { UseReviewSearchParams } from '../../types';
+import { UseReviewSearchParams, UseReviewAddParams } from '../../types';
 
 export { UseReviewSearchParams } from './search';
+export { UseReviewAddParams } from './add';
 
 /**
  * Response of useReview composable.
@@ -29,4 +30,9 @@ export interface UseReviewResponse {
      * Function for searching for product reviews. Result is stored in reviews property.
      */
     search: (searchParams: UseReviewSearchParams) => Promise<void>
+
+    /**
+     * Function for searching for product reviews. Result is stored in reviews property.
+     */
+     add: (params: UseReviewAddParams) => Promise<void>
 }
