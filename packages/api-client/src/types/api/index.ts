@@ -6,7 +6,8 @@ import {
   GetProductReviewCollectionProps,
   GetProductReviewCollectionQuery,
   ProductReviewResponse,
-  ProductReviewCollectionResponse
+  ProductReviewCollectionResponse,
+  CreateProductReviewProps
 } from './review';
 
 export * from './customers';
@@ -57,5 +58,15 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     props: GetProductReviewCollectionProps,
     query?: GetProductReviewCollectionQuery
-  ): Promise<ProductReviewCollectionResponse>;
+  ): Promise<ProductReviewCollectionResponse>
+
+  /**
+   * Creates a Product Review.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {CreateProductReviewProps} props An object which contains necessary properties for creating a product review.
+  */
+  createProductReview(
+    context: BigcommerceIntegrationContext,
+    props: CreateProductReviewProps
+  ): Promise<ProductReviewResponse>
 }
