@@ -1,0 +1,19 @@
+{
+  "data": [
+    {
+      "id": 19,
+      "parent_id": 0,
+      "name": "Garden",
+      "url": "/garden/",
+      "children": [
+        {
+          "id": 39,
+          "parent_id": 19,
+          "name": "Bath",
+          "url": "/garden/bath/",
+          "children": []
+        }
+      ]
+    }
+  ]
+}

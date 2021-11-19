@@ -24,20 +24,20 @@
           :loading="loading">
             <SfAccordion
               v-e2e="'categories-accordion'"
-              :open="activeCategory"
+              :open="activeCategory ? activeCategory.name: ''"
               :show-chevron="true"
             >
               <SfAccordionItem
                 v-for="(cat, i) in categoryTree && categoryTree.items"
                 :key="i"
-                :header="cat.label"
+                :header="cat.name"
               >
                 <template>
                   <SfList class="list">
                     <SfListItem class="list__item">
                       <SfMenuItem
                         :count="cat.count || ''"
-                        :label="cat.label"
+                        :label="cat.name"
                       >
                         <template #label>
                           <nuxt-link
@@ -51,12 +51,12 @@
                     </SfListItem>
                     <SfListItem
                       class="list__item"
-                      v-for="(subCat, j) in cat.items"
+                      v-for="(subCat, j) in cat.children"
                       :key="j"
                     >
                       <SfMenuItem
                         :count="subCat.count || ''"
-                        :label="subCat.label"
+                        :label="subCat.name"
                       >
                         <template #label="{ label }">
                           <nuxt-link
@@ -211,8 +211,9 @@ import {
   SfProperty
 } from '@storefront-ui/vue';
 import { computed, ref } from '@vue/composition-api';
-import { useCart, useWishlist, productGetters, useSearch, facetGetters } from '@vue-storefront/bigcommerce';
+import { useCart, useWishlist, productGetters, useSearch, facetGetters, useCategory } from '@vue-storefront/bigcommerce';
 import { useUiHelpers, useUiState } from '~/composables';
+import { getBreadcrumbs, getCategoryBySlug } from '~/composables/useCategoryData';
 import { onSSR } from '@vue-storefront/core';
 import LazyHydrate from 'vue-lazy-hydration';
 import cacheControl from './../helpers/cacheControl';
@@ -231,26 +232,42 @@ export default {
     const { addItem: addItemToCart, isInCart } = useCart();
     const { addItem: addItemToWishlist, isInWishlist, removeItem: removeItemFromWishlist } = useWishlist();
     const { result, search, loading, error } = useSearch();
+    const { categories, search: categorySearch } = useCategory('category-tree');
 
     const productsQuantity = ref({});
     const products = computed(() => facetGetters.getProducts(result.value));
-    const categoryTree = computed(() => facetGetters.getCategoryTree(result.value));
-    const breadcrumbs = computed(() => facetGetters.getBreadcrumbs(result.value));
+    const categoryTree = computed(() => {
+      return { items: categories.value };
+    });
     const pagination = computed(() => facetGetters.getPagination(result.value));
-    const activeCategory = computed(() => {
-      const items = categoryTree.value.items;
+    const { categorySlug } = th.getFacetsFromURL();
 
-      if (!items || !items.length) {
+    const activeCategory = computed(() => {
+      const categories = categoryTree.value.items;
+      if (!categories || !categories.length) {
         return '';
       }
 
-      const category = items.find(({ isCurrent, items }) => isCurrent || items.find(({ isCurrent }) => isCurrent));
+      const category = categories.find(({ url, children }) => (url === categorySlug) ||
+        children.find(({ url }) => (url === categorySlug)));
+      return category;
+    });
 
-      return category?.label || items[0].label;
+    const breadcrumbs = computed(() => {
+      const categories = categoryTree.value.items;
+
+      if (!categories || !categories.length) {
+        return '';
+      }
+
+      const category = getCategoryBySlug(categorySlug, categories);
+      const breadcrumbs = getBreadcrumbs(category?.id, categories);
+      return breadcrumbs;
     });
 
     onSSR(async () => {
       await search(th.getFacetsFromURL());
+      await categorySearch();
       if (error?.value?.search) context.root.$nuxt.error({ statusCode: 404 });
     });
 

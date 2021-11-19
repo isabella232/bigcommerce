@@ -1,4 +1,4 @@
-import { MetaCollection, ProductReview } from '../../../index';
+import { MetaCollection, ProductReview } from '../../index';
 
 /**
  * An object which contains necessary properties for getting a product review collection.

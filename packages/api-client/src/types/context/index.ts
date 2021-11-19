@@ -1,6 +1,6 @@
 import { IntegrationContext } from '@vue-storefront/core';
 import { NodeBigcommerceSDK } from '../nodeBigcommerceSDK';
-import { Endpoints } from '../api';
+import { Endpoints } from '../endpoints';
 
 /**
  * SDK Settings provided in the `middleware.config.js` file.

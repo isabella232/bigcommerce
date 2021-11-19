@@ -144,6 +144,8 @@
     },
     {
       "files": [
+        "./packages/**/src/types/**/*.ts",
+        "./packages/**/src/types/**/*.tsx",
         "./packages/api-client/src/types/**/*.ts",
         "./packages/api-client/src/types/**/*.tsx",
         "./packages/api-client/**/*.spec.ts",

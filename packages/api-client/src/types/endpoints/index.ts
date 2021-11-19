@@ -1,5 +1,5 @@
-import { CreateCustomerParameters, CustomerData } from './customers';
-import { GetProductsParameters, ProductsResponse } from './product';
+import { CreateCustomerParameters, CustomerData } from '../customers';
+import { GetProductsParameters, ProductsResponse } from '../product';
 import { BigcommerceIntegrationContext } from '../context';
 import {
   GetProductReviewProps,
@@ -8,11 +8,12 @@ import {
   ProductReviewResponse,
   ProductReviewCollectionResponse,
   CreateProductReviewProps
-} from './review';
-
-export * from './customers';
-export * from './product';
-export * from './review';
+} from '../review';
+import {
+  CategoryParameters,
+  CategoryResponse,
+  CategoryTreeResponse
+} from '../category';
 
 /**
  * Definition of all API-client methods available in context.
@@ -58,15 +59,34 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     props: GetProductReviewCollectionProps,
     query?: GetProductReviewCollectionQuery
-  ): Promise<ProductReviewCollectionResponse>
+  ): Promise<ProductReviewCollectionResponse>;
+
+  /**
+   * Returns a colection of Category.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {GetCategoryParams} params An object which contains necessary parameters for getting a category.
+   */
+  getCategory(
+    context: BigcommerceIntegrationContext,
+    params: CategoryParameters
+  ): Promise<CategoryResponse>;
+
+  /**
+   * Returns a colection of CategoryTree.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   */
+  getCategoryTree(
+    context: BigcommerceIntegrationContext
+  ): Promise<CategoryTreeResponse>;
 
   /**
    * Creates a Product Review.
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
    * @param {CreateProductReviewProps} props An object which contains necessary properties for creating a product review.
   */
-  createProductReview(
+   createProductReview(
     context: BigcommerceIntegrationContext,
     props: CreateProductReviewProps
   ): Promise<ProductReviewResponse>
+
 }

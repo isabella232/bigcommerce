@@ -1,3 +1,6 @@
+export * from './parameters';
+export * from './responses';
+
 /**
  * Definition of product images
  */
