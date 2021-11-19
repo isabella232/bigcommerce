@@ -40,7 +40,7 @@ export type ProductReview = {
     /**
      * Date the product was reviewed.
      */
-    'date_received': string,
+    'date_reviewed': string,
 
     /**
      * The unique numeric ID of the product review; increments sequentially.
