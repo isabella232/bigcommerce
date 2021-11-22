@@ -144,13 +144,12 @@
     },
     {
       "files": [
-        "./packages/**/src/types/**/*.ts",
-        "./packages/**/src/types/**/*.tsx",
-        "./packages/api-client/src/types/**/*.ts",
-        "./packages/api-client/src/types/**/*.tsx",
-        "./packages/api-client/**/*.spec.ts",
-        "./packages/api-client/**/*.mock.ts",
-        "./packages/composables/__mocks__/**/*.mock.ts"
+        "./packages/**/types/**/*.ts",
+        "./packages/**/types/**/*.tsx",
+        "./packages/**/__tests__/**/*.ts",
+        "./packages/**/__tests__/**/*.tsx",
+        "./packages/**/__mocks__/**/*.ts",
+        "./packages/**/__mocks__/**/*.tsx"
       ],
       "rules": {
         "camelcase": "off"
