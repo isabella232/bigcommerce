@@ -1,22 +1,5 @@
-/**
- * Bigcommerce categoryTree
- */
-export type CategoryTree = {
-  id: number;
-  parent_id: number;
-  name: string;
-  is_visible?: boolean;
-  url?: string;
-  children?: CategoryTree[];
-};
-
-/**
- * Bigcommerce getCategoryTree response
- */
-export type CategoryTreeResponse = {
-  data: CategoryTree[];
-  meta: unknown;
-};
+export * from './get';
+export * from './tree';
 
 /**
  * Breadcrumbs
@@ -52,19 +35,4 @@ export type Category = {
   search_keywords?: string;
   default_product_sort?: string;
   custom_url?: CustomUrl;
-};
-
-/**
- * Bigcommerce getCategory response
- */
-export type CategoryResponse = {
-  data: Category[];
-  meta: unknown;
-};
-
-/**
- * Bigcommerce getCategory params
- */
-export type CategoryParameters = {
-  categoryId?: number;
 };
