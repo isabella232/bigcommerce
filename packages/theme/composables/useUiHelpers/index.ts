@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { getCurrentInstance } from '@vue/composition-api';
 
 const nonFilters = ['page', 'sort', 'term', 'itemsPerPage'];
@@ -88,6 +89,10 @@ const useUiHelpers = (): any => {
     console.warn('[VSF] please implement useUiHelpers.getSearchTermFromUrl.');
   };
 
+  const formatDateString = (date: string, format = 'DD.MM.YYYY'): string => {
+    return dayjs(date).format(format);
+  };
+
   return {
     getFacetsFromURL,
     getCatLink,
@@ -97,7 +102,8 @@ const useUiHelpers = (): any => {
     setTermForUrl,
     isFacetColor,
     isFacetCheckbox,
-    getSearchTermFromUrl
+    getSearchTermFromUrl,
+    formatDateString
   };
 };
 

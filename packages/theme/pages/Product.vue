@@ -112,12 +112,12 @@
             <SfTab title="Read reviews">
               <SfReview
                 v-for="review in reviews"
-                :key="reviewGetters.getReviewId(review)"
-                :author="reviewGetters.getReviewAuthor(review)"
-                :date="reviewGetters.getReviewDate(review)"
-                :message="reviewGetters.getReviewMessage(review)"
+                :key="review.id"
+                :author="review.name"
+                :date="uiHelpers.formatDateString(review.date_reviewed, 'DD.MM.YYYY HH:mm')"
+                :message="review.text"
                 :max-rating="5"
-                :rating="reviewGetters.getReviewRating(review)"
+                :rating="review.rating"
                 :char-limit="250"
                 read-more-text="Read more"
                 hide-full-text="Read less"
@@ -197,6 +197,7 @@ import { onSSR } from '@vue-storefront/core';
 import LazyHydrate from 'vue-lazy-hydration';
 import { useProductData } from '../composables/useProductData';
 import cacheControl from './../helpers/cacheControl';
+import useUiHelpers from '~/composables/useUiHelpers';
 
 export default defineComponent({
   name: 'Product',
@@ -208,6 +209,7 @@ export default defineComponent({
   setup(props, context) {
     const qty = ref(1);
     const { id } = context.root.$route.params;
+    const uiHelpers = useUiHelpers();
     const { products, search } = useProduct('products');
     const {
       products: relatedProducts,
@@ -226,7 +228,7 @@ export default defineComponent({
     const configuration = computed(() =>
       productGetters.getAttributes(product.value, ['color', 'size'])
     );
-    const reviews = computed(() => productReviews.value.data);
+    const reviews = computed(() => productReviews.value.data.filter(review => review.status === 'approved'));
     // TODO: Breadcrumbs are temporary disabled because productGetters return undefined. We have a mocks in data
     // const breadcrumbs = computed(() => productGetters.getBreadcrumbs ? productGetters.getBreadcrumbs(product.value) : props.fallbackBreadcrumbs);
     const productGallery = computed(() =>
@@ -282,7 +284,8 @@ export default defineComponent({
       loading,
       productData,
       productGetters,
-      productGallery
+      productGallery,
+      uiHelpers
     };
   },
   components: {
