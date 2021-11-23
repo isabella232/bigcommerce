@@ -58,7 +58,7 @@
 
           <template v-for="option in options">
             <SfSelect
-              :key="option.id"
+              :key="`dropdown_${option.id}`"
               v-e2e="'size-select'"
               v-if="option.type === 'dropdown'"
               :value="
@@ -80,7 +80,7 @@
               </SfSelectOption>
             </SfSelect>
             <div
-              :key="option.id"
+              :key="`swatch_${option.id}`"
               v-else-if="option.type === 'swatch'"
               class="product__colors desktop-only"
             >
@@ -146,13 +146,8 @@
               <SfReview
                 v-for="review in reviews"
                 :key="review.id"
-                :author="review.name"
-                :date="
-                  uiHelpers.formatDateString(
-                    review.date_reviewed,
-                    'DD.MM.YYYY HH:mm'
-                  )
-                "
+                :author="reviewHelpers.getReviewTitle(review)"
+                :date="reviewHelpers.getReviewDate(review)"
                 :message="review.text"
                 :max-rating="5"
                 :rating="review.rating"
@@ -161,6 +156,7 @@
                 hide-full-text="Read less"
                 class="product__review"
               />
+              <AddReview :product-id="Number(product.id)" />
             </SfTab>
             <SfTab
               title="Additional Information"
@@ -223,6 +219,7 @@ import {
 } from '@storefront-ui/vue';
 import InstagramFeed from '~/components/InstagramFeed.vue';
 import RelatedProducts from '~/components/RelatedProducts.vue';
+import AddReview from '~/components/AddReview.vue';
 import {
   ref,
   computed,
@@ -233,14 +230,14 @@ import {
   useProduct,
   useCart,
   productGetters,
-  useReview,
-  reviewGetters
+  useReview
 } from '@vue-storefront/bigcommerce';
 import { onSSR } from '@vue-storefront/core';
 import LazyHydrate from 'vue-lazy-hydration';
 import { useProductData } from '../composables/useProductData';
 import cacheControl from './../helpers/cacheControl';
 import useUiHelpers from '~/composables/useUiHelpers';
+import useReviewData from '~/composables/useReviewData';
 
 export default defineComponent({
   name: 'Product',
@@ -269,8 +266,9 @@ export default defineComponent({
     const options = computed(() => productData.getOptions(product.value));
     const activeVariant = ref();
     const reviews = computed(() =>
-      productReviews.value.data.filter((review) => review.status === 'approved')
+      productReviews.value.data?.filter((review) => review.status === 'approved') || []
     );
+    const reviewHelpers = useReviewData();
     // TODO: Breadcrumbs are temporary disabled because productGetters return undefined. We have a mocks in data
     // const breadcrumbs = computed(() => productGetters.getBreadcrumbs ? productGetters.getBreadcrumbs(product.value) : props.fallbackBreadcrumbs);
     const productGallery = computed(() =>
@@ -342,7 +340,6 @@ export default defineComponent({
       configuration,
       product,
       reviews,
-      reviewGetters,
       averageRating: computed(() =>
         productData.getAverageRating(product.value)
       ),
@@ -356,7 +353,9 @@ export default defineComponent({
       productData,
       productGetters,
       productGallery,
-      uiHelpers
+      uiHelpers,
+      useReviewData,
+      reviewHelpers
     };
   },
   components: {
@@ -379,7 +378,8 @@ export default defineComponent({
     SfButton,
     InstagramFeed,
     RelatedProducts,
-    LazyHydrate
+    LazyHydrate,
+    AddReview
   },
   data() {
     return {

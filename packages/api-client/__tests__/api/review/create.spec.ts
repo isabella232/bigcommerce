@@ -14,7 +14,6 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     const expectedProductId = 1;
     const props: CreateProductReviewProps = {
       title: 'New review',
-      date_reviewed: '2018-05-07T19:37:13+00:00',
       productId: expectedProductId
     };
 
@@ -22,7 +21,11 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     await createProductReview(contextMock, props);
 
     // Then
-    expect(postMock).toHaveBeenCalledWith(`/catalog/products/${expectedProductId}/reviews`, props);
+    const mockCallArgs = postMock.mock.calls[0];
+    expect(mockCallArgs[0]).toBe(`/catalog/products/${expectedProductId}/reviews`);
+    expect('date_reviewed' in mockCallArgs[1]).toBe(true);
+    expect('title' in mockCallArgs[1]).toBe(true);
+    expect('productId' in mockCallArgs[1]).toBe(false);
   });
 
   it('should thorw an error when any of productId was not provided', async () => {
@@ -33,7 +36,6 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     contextMock.client.post.mockImplementationOnce(() => Promise.resolve());
     const props: CreateProductReviewProps = {
       title: 'New review',
-      date_reviewed: '2018-05-07T19:37:13+00:00',
       productId: undefined
     };
 
@@ -55,7 +57,6 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     contextMock.client.post.mockImplementationOnce(() => Promise.resolve());
     const props: CreateProductReviewProps = {
       title: undefined,
-      date_reviewed: '2018-05-07T19:37:13+00:00',
       productId: 1
     };
 
@@ -63,50 +64,6 @@ describe('[BigCommerce-api-client] get product reviews', () => {
       await createProductReview(contextMock, props);
     } catch (error) {
       const expectedErrorMessage = `Title with value: ${props.title} is not valid. Use string value.`;
-      expect(error.message).toBe(expectedErrorMessage);
-    } finally {
-      expect(postMock).toHaveBeenCalledTimes(0);
-    }
-  });
-
-  it('should thorw an error when date_reviewed was not provided', async () => {
-    const postMock = jest.fn();
-    contextMock.client = {
-      post: postMock
-    };
-    contextMock.client.post.mockImplementationOnce(() => Promise.resolve());
-    const props: CreateProductReviewProps = {
-      title: 'New review',
-      date_reviewed: undefined,
-      productId: 1
-    };
-
-    try {
-      await createProductReview(contextMock, props);
-    } catch (error) {
-      const expectedErrorMessage = `Date reviewed with value: ${props.date_reviewed} is not valid. Must be a string in date-time format.`;
-      expect(error.message).toBe(expectedErrorMessage);
-    } finally {
-      expect(postMock).toHaveBeenCalledTimes(0);
-    }
-  });
-
-  it('should thorw an error when date_reviewed was not in date-time format', async () => {
-    const postMock = jest.fn();
-    contextMock.client = {
-      post: postMock
-    };
-    contextMock.client.post.mockImplementationOnce(() => Promise.resolve());
-    const props: CreateProductReviewProps = {
-      title: 'New review',
-      date_reviewed: '20180507T1937130000',
-      productId: 1
-    };
-
-    try {
-      await createProductReview(contextMock, props);
-    } catch (error) {
-      const expectedErrorMessage = `Date reviewed with value: ${props.date_reviewed} is not valid. Must be a string in date-time format.`;
       expect(error.message).toBe(expectedErrorMessage);
     } finally {
       expect(postMock).toHaveBeenCalledTimes(0);
@@ -122,7 +79,6 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     const expectedProductId = 1;
     const props: CreateProductReviewProps = {
       title: 'New review',
-      date_reviewed: '2018-05-07T19:37:13+00:00',
       productId: expectedProductId,
       email: 'reviewer@email.com',
       name: 'Reviewer',
@@ -133,7 +89,6 @@ describe('[BigCommerce-api-client] get product reviews', () => {
 
     await createProductReview(contextMock, props);
 
-    expect(postMock).toHaveBeenCalledWith(`/catalog/products/${expectedProductId}/reviews`, props);
     expect(postMock).toHaveReturned();
   });
 });

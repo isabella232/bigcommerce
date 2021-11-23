@@ -1,5 +1,6 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
+import commonjs from '@rollup/plugin-commonjs';
 import pkg from './package.json';
 import { generateBaseConfig } from '../../rollup.base.config';
 
@@ -25,7 +26,8 @@ const server = {
     typescript({
       // eslint-disable-next-line global-require
       typescript: require('typescript')
-    })
+    }),
+    commonjs()
   ]
 };
 

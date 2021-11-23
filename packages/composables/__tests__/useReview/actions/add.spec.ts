@@ -14,7 +14,6 @@ describe('[BigCommerce - composables] useReview searchReviews', () => {
   it('should call api with required params', async () => {
     const expectedParams: UseReviewAddParams = {
       productId: reviewParamsMock.productId,
-      date_reviewed: reviewParamsMock.date_reviewed,
       title: reviewParamsMock.title
     };
 
@@ -34,7 +33,6 @@ describe('[BigCommerce - composables] useReview searchReviews', () => {
   it('should throw an error when product id is invalid', async () => {
     const addParams: UseReviewAddParams = {
       productId: undefined,
-      date_reviewed: reviewParamsMock.date_reviewed,
       title: reviewParamsMock.title
     };
 
@@ -51,7 +49,6 @@ describe('[BigCommerce - composables] useReview searchReviews', () => {
   it('should throw an error when title is invalid', async () => {
     const addParams: UseReviewAddParams = {
       productId: reviewParamsMock.productId,
-      date_reviewed: reviewParamsMock.date_reviewed,
       title: undefined
     };
 
@@ -59,40 +56,6 @@ describe('[BigCommerce - composables] useReview searchReviews', () => {
       await addReview(contextMock, addParams);
     } catch (error) {
       const exprectedErrorMsg = `Title with value: ${addParams.title} is not valid. Use string value.`;
-      expect(error.message).toBe(exprectedErrorMsg);
-    } finally {
-      expect(addReviewMock).toHaveBeenCalledTimes(0);
-    }
-  });
-
-  it('should throw an error when date reviewed is undefined', async () => {
-    const addParams: UseReviewAddParams = {
-      productId: reviewParamsMock.productId,
-      date_reviewed: undefined,
-      title: reviewParamsMock.title
-    };
-
-    try {
-      await addReview(contextMock, addParams);
-    } catch (error) {
-      const exprectedErrorMsg = `Date reviewed with value: ${addParams.date_reviewed} is not valid. Must be a string in date-time format.`;
-      expect(error.message).toBe(exprectedErrorMsg);
-    } finally {
-      expect(addReviewMock).toHaveBeenCalledTimes(0);
-    }
-  });
-
-  it('should throw an error when date reviewed is not in date-time format', async () => {
-    const addParams: UseReviewAddParams = {
-      productId: reviewParamsMock.productId,
-      date_reviewed: '2021010110:15:10',
-      title: reviewParamsMock.title
-    };
-
-    try {
-      await addReview(contextMock, addParams);
-    } catch (error) {
-      const exprectedErrorMsg = `Date reviewed with value: ${addParams.date_reviewed} is not valid. Must be a string in date-time format.`;
       expect(error.message).toBe(exprectedErrorMsg);
     } finally {
       expect(addReviewMock).toHaveBeenCalledTimes(0);
