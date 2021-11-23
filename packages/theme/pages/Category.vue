@@ -87,18 +87,18 @@
             <SfProductCard
               v-e2e="'category-product-card'"
               v-for="(product, i) in products"
-              :key="productGetters.getSlug(product)"
+              :key="productData.getSlug(product)"
               :style="{ '--index': i }"
-              :title="productGetters.getName(product)"
-              :image="productGetters.getCoverImage(product)"
-              :regular-price="$n(productGetters.getPrice(product).regular, 'currency')"
-              :special-price="productGetters.getPrice(product).special && $n(productGetters.getPrice(product).special, 'currency')"
+              :title="productData.getName(product)"
+              :image="productData.getCoverImage(product)"
+              :regular-price="$n(productData.getPrice(product).regular, 'currency')"
+              :special-price="productData.getPrice(product).special && $n(productData.getPrice(product).special, 'currency')"
               :max-rating="5"
-              :score-rating="productGetters.getAverageRating(product)"
+              :score-rating="productData.getAverageRating(product)"
               :show-add-to-cart-button="true"
               :isOnWishlist="isInWishlist({ product })"
               :isAddedToCart="isInCart({ product })"
-              :link="localePath(`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`)"
+              :link="localePath(`/p/${productData.getId(product)}/${productData.getSlug(product)}`)"
               class="products__product-card"
               @click:wishlist="!isInWishlist({ product }) ? addItemToWishlist({ product }) : removeItemFromWishlist({ product })"
               @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
@@ -114,22 +114,22 @@
             <SfProductCardHorizontal
               v-e2e="'category-product-card'"
               v-for="(product, i) in products"
-              :key="productGetters.getSlug(product)"
+              :key="product.id"
               :style="{ '--index': i }"
-              :title="productGetters.getName(product)"
-              :description="productGetters.getDescription(product)"
-              :image="productGetters.getCoverImage(product)"
-              :regular-price="$n(productGetters.getPrice(product).regular, 'currency')"
-              :special-price="productGetters.getPrice(product).special && $n(productGetters.getPrice(product).special, 'currency')"
+              :title="product.name"
+              :description="product.description"
+              :image="productData.getCoverImage(product)"
+              :regular-price="$n(productData.getPrice(product).regular, 'currency')"
+              :special-price="productData.getPrice(product).special && $n(productData.getPrice(product).special, 'currency')"
               :max-rating="5"
               :score-rating="3"
               :isOnWishlist="isInWishlist({ product })"
               :qty="1"
-              @input="productsQuantity[product._id] = $event"
+              @input="productsQuantity[product.id] = $event"
               class="products__product-card-horizontal"
               @click:wishlist="!isInWishlist({ product }) ? addItemToWishlist({ product }) : removeItemFromWishlist({ product })"
-              @click:add-to-cart="addItemToCart({ product, quantity: Number(productsQuantity[product._id]) })"
-              :link="localePath(`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`)"
+              @click:add-to-cart="addItemToCart({ product, quantity: Number(productsQuantity[productData.getId(product)]) })"
+              :link="localePath(`/p/${productData.getId(product)}/${productData.getSlug(product)}`)"
             >
               <template #configuration>
                 <SfProperty
@@ -211,13 +211,14 @@ import {
   SfProperty
 } from '@storefront-ui/vue';
 import { computed, ref } from '@vue/composition-api';
-import { useCart, useWishlist, productGetters, useSearch, facetGetters, useCategory } from '@vue-storefront/bigcommerce';
+import { useCart, useWishlist, useProduct, useCategory } from '@vue-storefront/bigcommerce';
 import { useUiHelpers, useUiState } from '~/composables';
 import { getBreadcrumbs, getCategoryBySlug } from '~/composables/useCategoryData';
 import { onSSR } from '@vue-storefront/core';
 import LazyHydrate from 'vue-lazy-hydration';
 import cacheControl from './../helpers/cacheControl';
 import CategoryPageHeader from '~/components/CategoryPageHeader';
+import { useProductData } from '../composables/useProductData';
 
 // TODO(addToCart qty, horizontal): https://github.com/vuestorefront/storefront-ui/issues/1606
 export default {
@@ -231,15 +232,15 @@ export default {
     const uiState = useUiState();
     const { addItem: addItemToCart, isInCart } = useCart();
     const { addItem: addItemToWishlist, isInWishlist, removeItem: removeItemFromWishlist } = useWishlist();
-    const { result, search, loading, error } = useSearch();
+    const { products, search, loading, error } = useProduct('category-products');
     const { categories, search: categorySearch } = useCategory('category-tree');
+    const productData = useProductData();
 
     const productsQuantity = ref({});
-    const products = computed(() => facetGetters.getProducts(result.value));
     const categoryTree = computed(() => {
       return { items: categories.value };
     });
-    const pagination = computed(() => facetGetters.getPagination(result.value));
+    const pagination = computed(() => productData.getPagination(products.value));
     const { categorySlug } = th.getFacetsFromURL();
 
     const activeCategory = computed(() => {
@@ -266,8 +267,17 @@ export default {
     });
 
     onSSR(async () => {
-      await search(th.getFacetsFromURL());
       await categorySearch();
+      const { categorySlug } = th.getFacetsFromURL();
+      const category = getCategoryBySlug(categorySlug, categoryTree.value?.items);
+      let productSearchParams;
+      if (category) {
+        productSearchParams = {
+          'categories:in': category?.id
+        };
+      }
+
+      await search(productSearchParams);
       if (error?.value?.search) context.root.$nuxt.error({ statusCode: 404 });
     });
 
@@ -277,7 +287,6 @@ export default {
       products,
       categoryTree,
       loading,
-      productGetters,
       pagination,
       activeCategory,
       breadcrumbs,
@@ -286,7 +295,8 @@ export default {
       isInWishlist,
       addItemToCart,
       isInCart,
-      productsQuantity
+      productsQuantity,
+      productData
     };
   },
   components: {

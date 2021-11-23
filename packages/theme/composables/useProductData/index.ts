@@ -1,5 +1,6 @@
 import { AgnosticMediaGalleryItem, AgnosticPrice } from '@vue-storefront/core';
 import { Product } from '@vue-storefront/bigcommerce-api';
+import { AgnosticPagination } from '@vue-storefront/core';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useProductData = () => {
@@ -74,6 +75,18 @@ export const useProductData = () => {
     return product?.related_products ?? [];
   };
 
+  // TODO: will implement pagination on a separated ticket
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getPagination = (product?: Product): AgnosticPagination => {
+    return {
+      currentPage: 1,
+      totalPages: 1,
+      totalItems: 1,
+      itemsPerPage: 10,
+      pageOptions: []
+    };
+  };
+
   return {
     getName,
     getSlug,
@@ -85,6 +98,7 @@ export const useProductData = () => {
     getId,
     getTotalReviews,
     getAverageRating,
-    getRelatedProducts
+    getRelatedProducts,
+    getPagination
   };
 };
