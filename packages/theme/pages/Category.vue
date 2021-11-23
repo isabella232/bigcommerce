@@ -77,6 +77,9 @@
       </div>
       <SfLoader :class="{ loading }" :loading="loading">
         <div class="products" v-if="!loading">
+          <div v-if="!products || !products.length" class="no-products-message">
+            {{ $t('We have no available products matching your search criteria.') }}
+          </div>
           <transition-group
             v-if="isCategoryGridView"
             appear
@@ -475,4 +478,9 @@ export default {
     }
   }
 }
+.no-products-message {
+  padding: 2rem;
+  font-family: var(--font-family--secondary);
+  font-size: var(--font-size--md);
+ }
 </style>
