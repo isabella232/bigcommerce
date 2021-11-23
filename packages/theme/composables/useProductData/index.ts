@@ -1,5 +1,5 @@
 import { AgnosticMediaGalleryItem, AgnosticPrice } from '@vue-storefront/core';
-import { Product } from '@vue-storefront/bigcommerce-api';
+import { Product, ProductVariant } from '@vue-storefront/bigcommerce-api';
 import { AgnosticPagination } from '@vue-storefront/core';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -12,7 +12,10 @@ export const useProductData = () => {
     return product?.custom_url?.url.replace(/^\/|\/$/g, '') ?? '';
   };
 
-  const getPrice = (product: Product): AgnosticPrice => {
+  const getPrice = (
+    product?: Product,
+    activeVariant?: ProductVariant
+  ): AgnosticPrice => {
     if (product?.is_price_hidden) {
       return {
         regular: 0,
@@ -21,8 +24,8 @@ export const useProductData = () => {
     }
 
     return {
-      regular: product?.price ?? 0,
-      special: product?.sale_price ?? 0
+      regular: activeVariant?.price ?? product?.price ?? 0,
+      special: activeVariant?.sale_price ?? product?.sale_price ?? 0
     };
   };
 
@@ -75,6 +78,35 @@ export const useProductData = () => {
     return product?.related_products ?? [];
   };
 
+  const getOptions = (product: Product, filterByOptionName?: string[]) => {
+    return (
+      product?.options?.filter(
+        (productOption) =>
+          !filterByOptionName ||
+          filterByOptionName.includes(productOption.display_name)
+      ) ?? []
+    );
+  };
+
+  const getActiveVariant = (
+    product: Product,
+    configuration: Record<string, unknown>
+  ) => {
+    if (!product || !configuration) {
+      return undefined;
+    }
+
+    return product.variants.find((variant) => {
+      return Object.entries(configuration).every(([optionKey, optionValue]) => {
+        return variant.option_values.some(
+          (variantOption) =>
+            variantOption.option_display_name === optionKey &&
+            variantOption.label === optionValue
+        );
+      });
+    });
+  };
+
   // TODO: will implement pagination on a separated ticket
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getPagination = (product?: Product): AgnosticPagination => {
@@ -99,6 +131,8 @@ export const useProductData = () => {
     getTotalReviews,
     getAverageRating,
     getRelatedProducts,
+    getOptions,
+    getActiveVariant,
     getPagination
   };
 };

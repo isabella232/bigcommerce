@@ -25,10 +25,18 @@
         </div>
         <div class="product__price-and-rating">
           <SfPrice
-            :regular="$n(productData.getPrice(product).regular, 'currency')"
+            :regular="
+              $n(
+                productData.getPrice(product, activeVariant).regular,
+                'currency'
+              )
+            "
             :special="
-              productData.getPrice(product).special &&
-                $n(productData.getPrice(product).special, 'currency')
+              productData.getPrice(product, activeVariant).special &&
+                $n(
+                  productData.getPrice(product, activeVariant).special,
+                  'currency'
+                )
             "
           />
           <div>
@@ -47,37 +55,53 @@
           <SfButton class="sf-button--text desktop-only product__guide">
             {{ $t('Size guide') }}
           </SfButton>
-          <SfSelect
-            v-e2e="'size-select'"
-            v-if="options.size"
-            :value="configuration.size"
-            @input="(size) => updateFilter({ size })"
-            label="Size"
-            class="sf-select--underlined product__select-size"
-            :required="true"
-          >
-            <SfSelectOption
-              v-for="size in options.size"
-              :key="size.value"
-              :value="size.value"
+
+          <template v-for="option in options">
+            <SfSelect
+              :key="option.id"
+              v-e2e="'size-select'"
+              v-if="option.type === 'dropdown'"
+              :value="
+                configuration
+                  ? configuration[option.display_name]
+                  : option.option_values[0].label
+              "
+              @input="(value) => updateFilter({ [option.display_name]: value })"
+              :label="option.display_name"
+              class="sf-select--underlined product__select-size"
+              :required="true"
             >
-              {{ size.label }}
-            </SfSelectOption>
-          </SfSelect>
-          <div
-            v-if="options.color && options.color.length > 1"
-            class="product__colors desktop-only"
-          >
-            <p class="product__color-label">{{ $t('Color') }}:</p>
-            <SfColor
-              v-for="(color, i) in options.color"
-              :key="i"
-              :color="color.value"
-              class="product__color"
-              @click="updateFilter({ color: color.value })"
-            />
-          </div>
+              <SfSelectOption
+                v-for="optionValue in option.option_values"
+                :key="optionValue.id"
+                :value="optionValue.label"
+              >
+                {{ optionValue.label }}
+              </SfSelectOption>
+            </SfSelect>
+            <div
+              :key="option.id"
+              v-else-if="option.type === 'swatch'"
+              class="product__colors desktop-only"
+            >
+              <p class="product__color-label">{{ option.display_name }}:</p>
+              <SfColor
+                v-for="color in option.option_values"
+                :key="color.id"
+                :color="color.value_data.colors[0]"
+                :selected="
+                  configuration
+                    ? color.label === configuration[option.display_name]
+                    : false
+                "
+                class="product__color"
+                @click="updateFilter({ [option.display_name]: color.label })"
+              />
+            </div>
+          </template>
+
           <SfAddToCart
+            v-if="!activeVariant || !activeVariant.purchasing_disabled"
             v-e2e="'product_add-to-cart'"
             :stock="stock"
             v-model="qty"
@@ -85,6 +109,15 @@
             :canAddToCart="stock > 0"
             class="product__add-to-cart"
             @click="addItem({ product, quantity: parseInt(qty) })"
+          />
+
+          <SfAlert
+            v-else
+            :message="
+              activeVariant.purchasing_disabled_message ||
+                $t('Currently unavailable')
+            "
+            type="warning"
           />
         </div>
 
@@ -114,7 +147,12 @@
                 v-for="review in reviews"
                 :key="review.id"
                 :author="review.name"
-                :date="uiHelpers.formatDateString(review.date_reviewed, 'DD.MM.YYYY HH:mm')"
+                :date="
+                  uiHelpers.formatDateString(
+                    review.date_reviewed,
+                    'DD.MM.YYYY HH:mm'
+                  )
+                "
                 :message="review.text"
                 :max-rating="5"
                 :rating="review.rating"
@@ -185,7 +223,12 @@ import {
 } from '@storefront-ui/vue';
 import InstagramFeed from '~/components/InstagramFeed.vue';
 import RelatedProducts from '~/components/RelatedProducts.vue';
-import { ref, computed, defineComponent } from '@vue/composition-api';
+import {
+  ref,
+  computed,
+  defineComponent,
+  onMounted
+} from '@vue/composition-api';
 import {
   useProduct,
   useCart,
@@ -210,6 +253,7 @@ export default defineComponent({
     const qty = ref(1);
     const { id } = context.root.$route.params;
     const uiHelpers = useUiHelpers();
+    const configuration = ref(context.root.$router.query);
     const { products, search } = useProduct('products');
     const {
       products: relatedProducts,
@@ -222,13 +266,11 @@ export default defineComponent({
       'productReviews'
     );
     const product = computed(() => products.value?.[0]);
-    const options = computed(() =>
-      productGetters.getAttributes(products.value, ['color', 'size'])
+    const options = computed(() => productData.getOptions(product.value));
+    const activeVariant = ref();
+    const reviews = computed(() =>
+      productReviews.value.data.filter((review) => review.status === 'approved')
     );
-    const configuration = computed(() =>
-      productGetters.getAttributes(product.value, ['color', 'size'])
-    );
-    const reviews = computed(() => productReviews.value.data.filter(review => review.status === 'approved'));
     // TODO: Breadcrumbs are temporary disabled because productGetters return undefined. We have a mocks in data
     // const breadcrumbs = computed(() => productGetters.getBreadcrumbs ? productGetters.getBreadcrumbs(product.value) : props.fallbackBreadcrumbs);
     const productGallery = computed(() =>
@@ -239,14 +281,42 @@ export default defineComponent({
         alt: productData.getName(product.value)
       }))
     );
+
+    const calculateOptions = () => {
+      const queryParams = context.root.$route.query;
+
+      configuration.value = product.value.options.reduce((acc, option) => {
+        const newValue =
+          queryParams[option.display_name] ??
+          option.option_values.find((optionValue) => optionValue.is_default)
+            ?.label ??
+          option.option_values[0].label;
+
+        acc[option.display_name] = newValue;
+
+        return acc;
+      }, {});
+
+      activeVariant.value = productData.getActiveVariant(
+        product.value,
+        configuration.value
+      );
+    };
+
+    onMounted(() => {
+      calculateOptions();
+    });
+
     onSSR(async () => {
-      await search({ id });
+      await search({ id, include: 'options,variants' });
 
       if (!products.value.length) {
         context.root.$nuxt.error({ statusCode: 404 });
       }
 
       if (product.value) {
+        calculateOptions();
+
         await searchRelatedProducts({
           'id:in': productData.getRelatedProducts(product.value),
           limit: 8
@@ -267,6 +337,7 @@ export default defineComponent({
     };
 
     return {
+      activeVariant,
       updateFilter,
       configuration,
       product,

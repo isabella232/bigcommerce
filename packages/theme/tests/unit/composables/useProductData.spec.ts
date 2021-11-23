@@ -140,4 +140,46 @@ describe('[bigcommerce-theme] useProductData', () => {
   it('getRelatedProducts should return empty array when the product is not defined', async () => {
     expect(productData.getRelatedProducts(undefined)).toEqual([]);
   });
+
+  it('getOptions should return the array of options configured on the product', async () => {
+    expect(productData.getOptions(mockedProduct as Product)).toEqual(
+      mockedProduct.options
+    );
+  });
+
+  it('getOptions should return a subset of options configured on the product when the filter parameter is given', async () => {
+    expect(productData.getOptions(mockedProduct as Product, ['Size'])).toEqual(
+      mockedProduct.options.filter((option) => option.display_name === 'Size')
+    );
+  });
+
+  it('getOptions should return empty array when the product is not defined', async () => {
+    expect(productData.getOptions(undefined)).toEqual([]);
+  });
+
+  it('getActiveVariant should return the variant which has the exact configuration defined by the second input parameter', async () => {
+    expect(
+      productData.getActiveVariant(mockedProduct as Product, {
+        Size: 'S',
+        Color: 'Blue'
+      }).option_values
+    ).toEqual([
+      {
+        id: 69,
+        label: 'S',
+        option_display_name: 'Size',
+        option_id: 108
+      },
+      {
+        id: 10,
+        label: 'Blue',
+        option_display_name: 'Color',
+        option_id: 109
+      }
+    ]);
+  });
+
+  it('getActiveVariant should return undefined when one of the input parameters are not defined', async () => {
+    expect(productData.getActiveVariant(undefined, {})).toEqual(undefined);
+  });
 });
