@@ -2,6 +2,7 @@ import { IntegrationContext } from '@vue-storefront/core';
 import { ContextualizedEndpoints } from '@vue-storefront/bigcommerce-api';
 import { AxiosInstance } from 'axios';
 
+export * from './useGuestWishlist';
 export * from './useReview';
 export * from './useUser';
 
