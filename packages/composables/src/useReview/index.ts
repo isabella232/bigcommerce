@@ -10,6 +10,7 @@ import { UseReviewSearchParams, UseReviewAddParams, Context, UseReviewResponse }
  *  @remarks
  *  The `useReview` composable has build in actions for searching and adding product reviews:
  *  - `{ search }` - Function for searching for product reviews. Result is stored in `reviews` property.
+ *  - `{ add }` - Function for adding review. Review is being created with `pending` status.
  *
  *  @example
  *  Example of usage:
@@ -22,7 +23,8 @@ import { UseReviewSearchParams, UseReviewAddParams, Context, UseReviewResponse }
  *      reviews,
  *      loading,
  *      error,
- *      search
+ *      search,
+ *      add: addReview
  *    } = useReview('productReviews');
  *
  *    onBeforeMount(() => {
@@ -31,7 +33,8 @@ import { UseReviewSearchParams, UseReviewAddParams, Context, UseReviewResponse }
  *
  *    return {
  *      reviews,
- *      loading
+ *      loading,
+ *      addReview
  *    }
  *  }
  *  </script>
