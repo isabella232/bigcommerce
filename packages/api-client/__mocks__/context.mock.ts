@@ -7,7 +7,11 @@ export const sdkSettings = {
   storeHash: '',
   accessToken: '',
   headers: { 'Accept-Encoding': '' },
-  apiVersion: ''
+  apiVersion: '',
+  devtoolsAppClientId: '',
+  devtoolsAppSecret: '',
+  storeUrl: '',
+  guestToken: ''
 };
 
 export const contextMock = {
@@ -18,6 +22,8 @@ export const contextMock = {
     secureCookies: true,
     currency: '',
     lang: '',
-    mediaHost: ''
-  }
+    mediaHost: '',
+    jwtTokenExpirationDays: 2
+  },
+  res: {} as any
 };

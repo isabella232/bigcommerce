@@ -9,12 +9,16 @@ export interface MiddlewareSDKSettingsConfig {
   logLevel: string;
   clientId: string;
   secret: string;
+  devtoolsAppClientId: string;
+  devtoolsAppSecret: string;
   callback: string;
   responseType: string;
   storeHash: string;
+  storeUrl: string;
   accessToken: string;
   headers: { 'Accept-Encoding': string };
   apiVersion: string;
+  guestToken?: string;
 }
 
 /**
@@ -22,10 +26,8 @@ export interface MiddlewareSDKSettingsConfig {
  */
 export interface MiddlewareSettingsConfig {
   sdkSettings: MiddlewareSDKSettingsConfig;
+  jwtTokenExpirationDays: number;
   secureCookies: boolean;
-  currency: string;
-  lang: string;
-  mediaHost: string;
 }
 
 /**

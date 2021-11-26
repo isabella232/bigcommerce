@@ -1,4 +1,4 @@
-import { createCustomer } from '../../../src/api/customers/createCustomer';
+import { createCustomer } from '../../../src/api/customers/create';
 import { CreateCustomerParameters } from '../../../src/types';
 import { contextMock } from '../../../__mocks__/context.mock';
 

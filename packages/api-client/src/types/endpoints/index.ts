@@ -1,4 +1,8 @@
-import { CreateCustomerParameters, CustomerData } from '../customers';
+import {
+  CreateCustomerParameters,
+  CustomerData,
+  LoginCustomerParameters
+} from '../customers';
 import { GetProductsParameters, ProductsResponse } from '../product';
 import { BigcommerceIntegrationContext } from '../context';
 import {
@@ -29,7 +33,7 @@ export interface Endpoints {
     params: GetProductsParameters
   ): Promise<ProductsResponse>;
 
-  /*
+  /**
    * Creates the new customer
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
    * @param {CreateCustomerParameters} params Parameters for `createCustomer` endpoint
@@ -38,6 +42,16 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     params: CreateCustomerParameters
   ): Promise<CustomerData>;
+
+  /**
+   * Logs in a customer using the Customer Login API and saves her data in cookie in the format of a JWT token coming from the Current Customer API.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {LoginCustomerParameters} params Customer credentials for login (email, password).
+   */
+  loginCustomer(
+    context: BigcommerceIntegrationContext,
+    params: LoginCustomerParameters
+  ): Promise<void>;
 
   /**
    * Returns a single Product Review.
@@ -83,10 +97,9 @@ export interface Endpoints {
    * Creates a Product Review.
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
    * @param {CreateProductReviewProps} props An object which contains necessary properties for creating a product review.
-  */
-   createProductReview(
+   */
+  createProductReview(
     context: BigcommerceIntegrationContext,
     props: CreateProductReviewProps
-  ): Promise<ProductReviewResponse>
-
+  ): Promise<ProductReviewResponse>;
 }

@@ -21,3 +21,11 @@ export type ValidateCredentialsParameter = {
   password: string;
   channel_id?: number;
 };
+
+/**
+ * Format of parameters that can be passed to `loginCustomer` endpoint method.
+ */
+export type LoginCustomerParameters = {
+  email: string;
+  password: string;
+};
