@@ -1,6 +1,7 @@
 import { IntegrationContext } from '@vue-storefront/core';
 import { ContextualizedEndpoints } from '@vue-storefront/bigcommerce-api';
 import { AxiosInstance } from 'axios';
+import { NuxtCookies } from 'cookie-universal-nuxt';
 
 export * from './useGuestWishlist';
 export * from './useReview';
@@ -22,6 +23,16 @@ interface AxiosClientConfig {
 }
 
 /**
+ * Contains configuration for the app.
+ */
+interface AppConfig {
+  /**
+   * Cookie interface.
+   */
+  $cookies: NuxtCookies;
+}
+
+/**
  * Configuration for `$vsf` context.
  */
 interface ContextConfig {
@@ -29,6 +40,11 @@ interface ContextConfig {
    * Api Client.
    */
   axios: AxiosClientConfig;
+
+  /**
+   * App Config.
+   */
+  app: AppConfig;
 }
 
 /**
@@ -60,4 +76,3 @@ export type UseSearchParams = TODO;
 export type UseShippingAddParams = TODO;
 
 export type useUserOrderSearchParams = TODO;
-

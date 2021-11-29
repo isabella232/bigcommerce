@@ -10,21 +10,23 @@
           <SfHeading
             :level="3"
             :title="$t('Categories')"
-            class="navbar__title" />
+            class="navbar__title"
+          />
         </LazyHydrate>
       </div>
-      <CategoryPageHeader :pagination="pagination"/>
+      <CategoryPageHeader :pagination="pagination" />
     </div>
 
     <div class="main section">
       <div class="sidebar desktop-only">
         <LazyHydrate when-idle>
           <SfLoader
-          :class="{ 'loading--categories': loading }"
-          :loading="loading">
+            :class="{ 'loading--categories': loading }"
+            :loading="loading"
+          >
             <SfAccordion
               v-e2e="'categories-accordion'"
-              :open="activeCategory ? activeCategory.name: ''"
+              :open="activeCategory ? activeCategory.name : ''"
               :show-chevron="true"
             >
               <SfAccordionItem
@@ -35,14 +37,13 @@
                 <template>
                   <SfList class="list">
                     <SfListItem class="list__item">
-                      <SfMenuItem
-                        :count="cat.count || ''"
-                        :label="cat.name"
-                      >
+                      <SfMenuItem :count="cat.count || ''" :label="cat.name">
                         <template #label>
                           <nuxt-link
                             :to="localePath(th.getCatLink(cat))"
-                            :class="cat.isCurrent ? 'sidebar--cat-selected' : ''"
+                            :class="
+                              cat.isCurrent ? 'sidebar--cat-selected' : ''
+                            "
                           >
                             All
                           </nuxt-link>
@@ -61,7 +62,9 @@
                         <template #label="{ label }">
                           <nuxt-link
                             :to="localePath(th.getCatLink(subCat))"
-                            :class="subCat.isCurrent ? 'sidebar--cat-selected' : ''"
+                            :class="
+                              subCat.isCurrent ? 'sidebar--cat-selected' : ''
+                            "
                           >
                             {{ label }}
                           </nuxt-link>
@@ -78,7 +81,9 @@
       <SfLoader :class="{ loading }" :loading="loading">
         <div class="products" v-if="!loading">
           <div v-if="!products || !products.length" class="no-products-message">
-            {{ $t('We have no available products matching your search criteria.') }}
+            {{
+              $t('We have no available products matching your search criteria.')
+            }}
           </div>
           <transition-group
             v-if="isCategoryGridView"
@@ -94,16 +99,31 @@
               :style="{ '--index': i }"
               :title="productData.getName(product)"
               :image="productData.getCoverImage(product)"
-              :regular-price="$n(productData.getPrice(product).regular, 'currency')"
-              :special-price="productData.getPrice(product).special && $n(productData.getPrice(product).special, 'currency')"
+              :regular-price="
+                $n(productData.getPrice(product).regular, 'currency')
+              "
+              :special-price="
+                productData.getPrice(product).special &&
+                $n(productData.getPrice(product).special, 'currency')
+              "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
               :show-add-to-cart-button="true"
               :isOnWishlist="isInWishlist({ product })"
               :isAddedToCart="isInCart({ product })"
-              :link="localePath(`/p/${productData.getId(product)}/${productData.getSlug(product)}`)"
+              :link="
+                localePath(
+                  `/p/${productData.getId(product)}/${productData.getSlug(
+                    product
+                  )}`
+                )
+              "
               class="products__product-card"
-              @click:wishlist="!isInWishlist({ product }) ? addItemToWishlist({ product }) : removeItemFromWishlist({ product })"
+              @click:wishlist="
+                !isInWishlist({ product })
+                  ? addItemToWishlist({ product })
+                  : removeItemFromWishlist({ product })
+              "
               @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
             />
           </transition-group>
@@ -122,31 +142,53 @@
               :title="product.name"
               :description="product.description"
               :image="productData.getCoverImage(product)"
-              :regular-price="$n(productData.getPrice(product).regular, 'currency')"
-              :special-price="productData.getPrice(product).special && $n(productData.getPrice(product).special, 'currency')"
+              :regular-price="
+                $n(productData.getPrice(product).regular, 'currency')
+              "
+              :special-price="
+                productData.getPrice(product).special &&
+                $n(productData.getPrice(product).special, 'currency')
+              "
               :max-rating="5"
               :score-rating="3"
               :isOnWishlist="isInWishlist({ product })"
               :qty="1"
               @input="productsQuantity[product.id] = $event"
               class="products__product-card-horizontal"
-              @click:wishlist="!isInWishlist({ product }) ? addItemToWishlist({ product }) : removeItemFromWishlist({ product })"
-              @click:add-to-cart="addItemToCart({ product, quantity: Number(productsQuantity[productData.getId(product)]) })"
-              :link="localePath(`/p/${productData.getId(product)}/${productData.getSlug(product)}`)"
+              @click:wishlist="
+                !isInWishlist({ product })
+                  ? addItemToWishlist({ product })
+                  : removeItemFromWishlist({ product })
+              "
+              @click:add-to-cart="
+                addItemToCart({
+                  product,
+                  quantity: Number(
+                    productsQuantity[productData.getId(product)]
+                  ),
+                })
+              "
+              :link="
+                localePath(
+                  `/p/${productData.getId(product)}/${productData.getSlug(
+                    product
+                  )}`
+                )
+              "
             >
               <template #configuration>
                 <SfProperty
                   class="desktop-only"
                   name="Size"
                   value="XS"
-                  style="margin: 0 0 1rem 0;"
+                  style="margin: 0 0 1rem 0"
                 />
                 <SfProperty class="desktop-only" name="Color" value="white" />
               </template>
               <template #actions>
                 <SfButton
                   class="sf-button--text desktop-only"
-                  style="margin: 0 0 1rem auto; display: block;"
+                  style="margin: 0 0 1rem auto; display: block"
                   @click="() => {}"
                 >
                   {{ $t('Save for later') }}
@@ -170,10 +212,16 @@
             v-show="pagination.totalPages > 1"
             class="products__show-on-page"
           >
-            <span class="products__show-on-page__label">{{ $t('Show on page') }}</span>
+            <span class="products__show-on-page__label">{{
+              $t('Show on page')
+            }}</span>
             <LazyHydrate on-interaction>
               <SfSelect
-                :value="pagination && pagination.itemsPerPage ? pagination.itemsPerPage.toString() : ''"
+                :value="
+                  pagination && pagination.itemsPerPage
+                    ? pagination.itemsPerPage.toString()
+                    : ''
+                "
                 class="products__items-per-page"
                 @input="th.changeItemsPerPage"
               >
@@ -214,9 +262,17 @@ import {
   SfProperty
 } from '@storefront-ui/vue';
 import { computed, ref } from '@vue/composition-api';
-import { useCart, useWishlist, useProduct, useCategory } from '@vue-storefront/bigcommerce';
+import {
+  useCart,
+  useWishlist,
+  useProduct,
+  useCategory
+} from '@vue-storefront/bigcommerce';
 import { useUiHelpers, useUiState } from '~/composables';
-import { getBreadcrumbs, getCategoryBySlug } from '~/composables/useCategoryData';
+import {
+  getBreadcrumbs,
+  getCategoryBySlug
+} from '~/composables/useCategoryData';
 import { onSSR } from '@vue-storefront/core';
 import LazyHydrate from 'vue-lazy-hydration';
 import cacheControl from './../helpers/cacheControl';
@@ -234,8 +290,13 @@ export default {
     const th = useUiHelpers();
     const uiState = useUiState();
     const { addItem: addItemToCart, isInCart } = useCart();
-    const { addItem: addItemToWishlist, isInWishlist, removeItem: removeItemFromWishlist } = useWishlist();
-    const { products, search, loading, error } = useProduct('category-products');
+    const {
+      addItem: addItemToWishlist,
+      isInWishlist,
+      removeItem: removeItemFromWishlist
+    } = useWishlist();
+    const { products, search, loading, error } =
+      useProduct('category-products');
     const { categories, search: categorySearch } = useCategory('category-tree');
     const productData = useProductData();
 
@@ -243,7 +304,9 @@ export default {
     const categoryTree = computed(() => {
       return { items: categories.value };
     });
-    const pagination = computed(() => productData.getPagination(products.value));
+    const pagination = computed(() =>
+      productData.getPagination(products.value)
+    );
     const { categorySlug } = th.getFacetsFromURL();
 
     const activeCategory = computed(() => {
@@ -252,8 +315,11 @@ export default {
         return '';
       }
 
-      const category = categories.find(({ url, children }) => (url === categorySlug) ||
-        children.find(({ url }) => (url === categorySlug)));
+      const category = categories.find(
+        ({ url, children }) =>
+          url === categorySlug ||
+          children.find(({ url }) => url === categorySlug)
+      );
       return category;
     });
 
@@ -272,7 +338,10 @@ export default {
     onSSR(async () => {
       await categorySearch();
       const { categorySlug } = th.getFacetsFromURL();
-      const category = getCategoryBySlug(categorySlug, categoryTree.value?.items);
+      const category = getCategoryBySlug(
+        categorySlug,
+        categoryTree.value?.items
+      );
       let productSearchParams;
       if (category) {
         productSearchParams = {
@@ -358,8 +427,7 @@ export default {
       padding: 0;
     }
   }
-  &__aside,
-  {
+  &__aside {
     display: flex;
     align-items: center;
     padding: var(--spacer-sm) 0;
@@ -482,5 +550,5 @@ export default {
   padding: 2rem;
   font-family: var(--font-family--secondary);
   font-size: var(--font-size--md);
- }
+}
 </style>

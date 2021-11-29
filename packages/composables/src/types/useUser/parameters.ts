@@ -15,4 +15,12 @@ export type UseUserRegisterParams = {
   }>;
 };
 
+/**
+ * Format of parameters to use when calling `logIn` method of `useUser` composable.
+ */
+export type UseUserLoginParams = {
+  username: string;
+  password: string;
+};
+
 export type UseUserUpdateParams = TODO;

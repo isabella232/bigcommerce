@@ -5,6 +5,9 @@ const bigcommerceIntegrationContextMock = {
     axios: {
       baseURL: '',
       headers: {}
+    },
+    app: {
+      $cookies: {} as any
     }
   }
 };

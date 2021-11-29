@@ -4,7 +4,7 @@ import {
   UseUserUpdateParams as UpdateParams,
   UseUserRegisterParams as RegisterParams
 } from '../types/useUser';
-import { register } from './actions';
+import { register, logIn } from './actions';
 
 /**
  * Parameter object for `useUserFactory`.
@@ -29,11 +29,7 @@ const params: UseUserFactoryParams<User, UpdateParams, RegisterParams> = {
 
   register,
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  logIn: async (context: Context, { username, password }): Promise<User> => {
-    console.log('Mocked: useUser.logIn');
-    return {};
-  },
+  logIn,
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   changePassword: async (context: Context, { currentUser, currentPassword, newPassword }): Promise<User> => {

@@ -18,11 +18,12 @@
   },
   "dependencies": {
     "@vue-storefront/bigcommerce-api": "~0.0.1",
-    "@vue-storefront/core": "~2.4.3"
+    "@vue-storefront/core": "~2.4.3",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
-    "rollup-plugin-typescript2": "^0.30.0",
-    "@rollup/plugin-node-resolve": "^13.0.0"
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "rollup-plugin-typescript2": "^0.30.0"
   },
   "peerDependencies": {
     "@vue/composition-api": "1.0.0-beta.21"
