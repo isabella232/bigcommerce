@@ -18,6 +18,7 @@ import {
   CategoryResponse,
   CategoryTreeResponse
 } from '../category';
+import { AddLineItemsParameters, AddLineItemsResponse } from '../cart';
 
 /**
  * Definition of all API-client methods available in context.
@@ -102,4 +103,14 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     props: CreateProductReviewProps
   ): Promise<ProductReviewResponse>;
+
+  /**
+   * Adds new items to the cart
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {AddLineItemsParameters} props An object which contains necessary properties for adding new items to the cart.
+   */
+  addCartItems(
+    context: BigcommerceIntegrationContext,
+    params: AddLineItemsParameters
+  ): Promise<AddLineItemsResponse>;
 }

@@ -2,8 +2,6 @@ export type TODO = unknown;
 
 export type BillingAddress = TODO;
 
-export type Cart = TODO;
-
 export type CartItem = TODO;
 
 export type Coupon = TODO;
@@ -43,4 +41,3 @@ export type ShippingProvider = TODO;
 export type Wishlist = TODO;
 
 export type WishlistItem = TODO;
-
