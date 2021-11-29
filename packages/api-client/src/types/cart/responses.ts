@@ -6,3 +6,8 @@ import { Cart } from '.';
 export type AddLineItemsResponse = {
   data: Cart;
 };
+
+/**
+ * Definition of the response to the create cart request.
+ */
+export type CreateCartResponse = AddLineItemsResponse;

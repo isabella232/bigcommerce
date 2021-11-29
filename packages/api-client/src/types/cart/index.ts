@@ -21,6 +21,16 @@ type AppliedCoupon = {
 };
 
 /**
+ * Definition of currency of the cart
+ */
+export type CartCurrency = {
+  /**
+   * The [transactional currency](https://developer.bigcommerce.com/api-docs/multi-currency/guide/introduction#multi-currency-definitions) code for the cart as a [ISO-4217](https://www.iso.org/iso-4217-currency-codes.html) formatted string.
+   */
+  code?: string;
+};
+
+/**
  * A cart contains a collection of items, prices, discounts, etc.. It does not contain customer-related data.
  */
 export type Cart = {
@@ -43,12 +53,7 @@ export type Cart = {
   /**
    * This will always be the same between cart and checkout.
    */
-  currency?: {
-    /**
-     * The [transactional currency](https://developer.bigcommerce.com/api-docs/multi-currency/guide/introduction#multi-currency-definitions) code for the cart as a [ISO-4217](https://www.iso.org/iso-4217-currency-codes.html) formatted string.
-     */
-    code?: string;
-  };
+  currency?: CartCurrency;
   tax_included?: boolean;
   /**
    * Sum of cart line-item amounts before cart-level discounts, coupons, or taxes.

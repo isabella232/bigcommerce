@@ -1,4 +1,5 @@
 import queryString from 'query-string';
+import { CartIncludeEnum } from '../../../src';
 import { addCartItems } from '../../../src/api/cart';
 import { contextMock } from '../../../__mocks__/context.mock';
 import BigCommerceEndpoints from '../../../src/helpers/endpointPaths';
@@ -85,7 +86,7 @@ describe('[bigcommerce-api-client] add items to cart', () => {
   });
 
   it('should pass include as a query parameter', async () => {
-    const include = 'line_items.physical_items.options';
+    const include = CartIncludeEnum.LineItemsPhysicalItemsOptions;
 
     contextMock.client.post = (url: string) => {
       const [, query] = url.split('?');

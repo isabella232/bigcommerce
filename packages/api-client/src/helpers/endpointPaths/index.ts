@@ -13,6 +13,7 @@ const BigCommerceEndpoints = {
     categoryId ? `/catalog/categories/${categoryId}` : '/catalog/categories',
   categoryTree: (): string => '/catalog/categories/tree',
   cartItems: (cartId: string): string => `/carts/${cartId}/items`,
+  cart: (cartId?: string): string => (cartId ? `/carts/${cartId}` : '/carts'),
   storefrontLoginWithToken: (token: string): string => `/login/token/${token}`,
   storefrontCurrentlyLoggedInCustomer: '/customer/current.jwt'
 };

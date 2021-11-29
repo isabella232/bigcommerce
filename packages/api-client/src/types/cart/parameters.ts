@@ -1,3 +1,4 @@
+import { CartCurrency } from '.';
 import { CustomItem } from './customItem';
 import { GiftCertificate } from './giftCertificate';
 
@@ -51,6 +52,28 @@ type LineItem =
     })
   | (LineItemBase & { option_selections: ProductOptionSelection[] });
 
+export enum CartIncludeEnum {
+  RedirectUrls = 'redirect_urls',
+  LineItemsPhysicalItemsOptions = 'line_items.physical_items.options',
+  LineItemsDigitalItemsOptions = 'line_items.digital_items.options'
+}
+
+/**
+ * Definition of create cart request parameters
+ */
+export type CreateCartParameters = {
+  include?: CartIncludeEnum;
+  data: {
+    customer_id?: number;
+    line_items: LineItem[];
+    gift_certificates?: GiftCertificateRequest[];
+    custom_items?: CustomItem[];
+    channel_id?: number;
+    currency?: CartCurrency;
+    locale?: string;
+  };
+};
+
 /**
  * Definition of add line items to cart request parameters
  */
@@ -62,10 +85,7 @@ export type AddLineItemsParameters = {
   /**
    * Add more information to the response
    */
-  include?:
-    | 'redirect_urls'
-    | 'line_items.physical_items.options'
-    | 'line_items.digital_items.options';
+  include?: CartIncludeEnum;
   /**
    * Description of items which will be added to the cart
    */
