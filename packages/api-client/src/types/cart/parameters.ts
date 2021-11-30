@@ -75,6 +75,20 @@ export type CreateCartParameters = {
 };
 
 /**
+ * Definition of get cart request parameters
+ */
+export type GetCartParameters = {
+  /**
+   * ID of the cart
+   */
+  id: string;
+  /**
+   * Add more information to the response
+   */
+  include?: CartIncludeEnum;
+};
+
+/**
  * Definition of add line items to cart request parameters
  */
 export type AddLineItemsParameters = {

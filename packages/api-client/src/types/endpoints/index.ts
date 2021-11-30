@@ -22,7 +22,9 @@ import {
   AddLineItemsParameters,
   AddLineItemsResponse,
   CreateCartParameters,
-  CreateCartResponse
+  CreateCartResponse,
+  GetCartParameters,
+  GetCartResponse
 } from '../cart';
 
 /**
@@ -128,4 +130,14 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     params: CreateCartParameters
   ): Promise<CreateCartResponse>;
+
+  /**
+   * Get a cart
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {GetCartParameters} params An object which contains necessary properties for getting a new cart.
+   */
+  getCart(
+    context: BigcommerceIntegrationContext,
+    params: GetCartParameters
+  ): Promise<GetCartResponse>;
 }

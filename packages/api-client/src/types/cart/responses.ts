@@ -5,9 +5,15 @@ import { Cart } from '.';
  */
 export type AddLineItemsResponse = {
   data: Cart;
+  meta: Record<string, never>;
 };
 
 /**
  * Definition of the response to the create cart request.
  */
 export type CreateCartResponse = AddLineItemsResponse;
+
+/**
+ * Definition of the response to the get cart request.
+ */
+export type GetCartResponse = AddLineItemsResponse;
