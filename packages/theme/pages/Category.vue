@@ -26,7 +26,7 @@
           >
             <SfAccordion
               v-e2e="'categories-accordion'"
-              :open="activeCategory ? activeCategory.name : ''"
+              :open="activeCategory"
               :show-chevron="true"
             >
               <SfAccordionItem
@@ -299,49 +299,50 @@ export default {
       useProduct('category-products');
     const { categories, search: categorySearch } = useCategory('category-tree');
     const productData = useProductData();
+    const { categorySlug } = th.getFacetsFromURL();
 
     const productsQuantity = ref({});
     const categoryTree = computed(() => {
-      return { items: categories.value };
+      let categoriesData = categories.value;
+      const category = getCategoryBySlug(categorySlug, categories.value);
+      const breadcrumbs = getBreadcrumbs(category?.id, categories.value);
+      const rootSlug = breadcrumbs && breadcrumbs[1] ? breadcrumbs[1]?.link?.substring(2) : '';
+      const rootCategory = getCategoryBySlug(rootSlug, categoriesData);
+      if (rootCategory) {
+        categoriesData = rootCategory.children;
+      }
+
+      return {
+        items: categoriesData
+      };
     });
-    const pagination = computed(() =>
-      productData.getPagination(products.value)
-    );
-    const { categorySlug } = th.getFacetsFromURL();
+    const pagination = computed(() => productData.getPagination(products.value));
 
     const activeCategory = computed(() => {
-      const categories = categoryTree.value.items;
-      if (!categories || !categories.length) {
+      const categoriesArr = categoryTree.value.items;
+      if (!categoriesArr || !categoriesArr.length) {
         return '';
       }
 
-      const category = categories.find(
-        ({ url, children }) =>
-          url === categorySlug ||
-          children.find(({ url }) => url === categorySlug)
-      );
-      return category;
+      const category = categoriesArr.find(({ url, children }) => (url === categorySlug) ||
+        children.find(({ url }) => (url === categorySlug)));
+      return category?.name;
     });
 
     const breadcrumbs = computed(() => {
-      const categories = categoryTree.value.items;
-
-      if (!categories || !categories.length) {
+      if (!categories.value || !categories.value?.length) {
         return '';
       }
 
-      const category = getCategoryBySlug(categorySlug, categories);
-      const breadcrumbs = getBreadcrumbs(category?.id, categories);
+      const category = getCategoryBySlug(categorySlug, categories.value);
+      const breadcrumbs = getBreadcrumbs(category?.id, categories.value);
       return breadcrumbs;
     });
 
     onSSR(async () => {
       await categorySearch();
       const { categorySlug } = th.getFacetsFromURL();
-      const category = getCategoryBySlug(
-        categorySlug,
-        categoryTree.value?.items
-      );
+      const category = getCategoryBySlug(categorySlug, categories.value);
       let productSearchParams;
       if (category) {
         productSearchParams = {
@@ -550,5 +551,8 @@ export default {
   padding: 2rem;
   font-family: var(--font-family--secondary);
   font-size: var(--font-size--md);
-}
+ }
+ .sf-menu-item {
+   text-align: left;
+ }
 </style>
