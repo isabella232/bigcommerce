@@ -1,7 +1,7 @@
 import { Ref, computed } from '@vue/composition-api';
-import { sharedRef, UseReviewErrors } from '@vue-storefront/core';
+import { sharedRef, UseWishlistErrors, Logger, generateContext } from '@vue-storefront/core';
 import { GuestWishlist } from '../types';
-
+import { params } from './params';
 /**
  *  Returns guest wishlist data and actions.
  *
@@ -40,9 +40,9 @@ import { GuestWishlist } from '../types';
  *  ```
  */
 const useGuestWishlist = (id: string): any => {
-  const wishlist: Ref<GuestWishlist> = sharedRef([], `useGuestWishlist-guestWishlist-${id}`);
+  const wishlist: Ref<GuestWishlist> = sharedRef([], `useGuestWishlist-wishlist-${id}`);
   const loading: Ref<boolean> = sharedRef(false, `useGuestWishlist-loading-${id}`);
-  const error: Ref<UseReviewErrors> = sharedRef({
+  const error: Ref<UseWishlistErrors> = sharedRef({
     load: null,
     addItem: null,
     removeItem: null,
@@ -50,8 +50,20 @@ const useGuestWishlist = (id: string): any => {
     isInWishlist: null
   }, `useGuestWishlist-error-${id}`);
 
-  const load = () => {
+  const context = generateContext(params);
 
+  const load = async (name: string, isPublic = true) => {
+    try {
+      loading.value = true;
+      const response = await params.load(context, name, isPublic);
+      wishlist.value = response;
+      error.value.load = null;
+    } catch (err) {
+      error.value.load = err;
+      Logger.error(`useGuestWishlist/${id}/load`, err);
+    } finally {
+      loading.value = false;
+    }
   };
 
   const addItem = () => {
