@@ -1,7 +1,5 @@
-const jwt = require('jsonwebtoken');
 import { Context, UseUserLoginParams } from '../../types';
 import type { User } from '@vue-storefront/bigcommerce-api';
-import { COOKIE_KEY_CUSTOMER_DATA } from '@vue-storefront/bigcommerce-api';
 
 /**
  * `logIn` method in `useUser` composable.
@@ -15,12 +13,9 @@ export const logIn = async (context: Context, params: UseUserLoginParams): Promi
   } = params;
 
   const loginResponse = await context.$bigcommerce.api.loginCustomer({ email: username, password });
-  if (!loginResponse.success) {
-    throw new Error(loginResponse.message);
+  if (!loginResponse.is_valid) {
+    throw new Error(loginResponse.errorMessage);
   }
 
-  const customerDataJwt = context.$bigcommerce.config.app.$cookies.get(COOKIE_KEY_CUSTOMER_DATA);
-  const customerData = jwt.decode(customerDataJwt);
-  return { user: customerData.customer };
-
+  return { user: { id: loginResponse.customer_id, email: username }};
 };

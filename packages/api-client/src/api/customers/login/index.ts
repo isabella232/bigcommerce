@@ -6,7 +6,8 @@ import queryString from 'query-string';
 import {
   BigcommerceIntegrationContext,
   LoginCustomerParameters,
-  LoginCustomerResponse
+  LoginCustomerResponse,
+  ValidateCredentialsResponse
 } from '../../../types';
 import {
   COOKIE_KEY_CUSTOMER_DATA,
@@ -24,16 +25,14 @@ export async function loginCustomer(
   params: LoginCustomerParameters
 ): Promise<LoginCustomerResponse> {
   try {
-    await Login.performLogin(context, params);
+    const loginResponse = await Login.performLogin(context, params);
     const customerDataToken = await Login.verifyLogin(context);
     Login.setTokenCookie(context, customerDataToken);
-    return {
-      success: true
-    };
+    return loginResponse;
   } catch (error) {
     return {
-      success: false,
-      message: error.message
+      is_valid: false,
+      errorMessage: error.message
     };
   }
 }
@@ -41,7 +40,7 @@ export async function loginCustomer(
 export async function performLogin(
   context: BigcommerceIntegrationContext,
   customerCredentials: LoginCustomerParameters
-): Promise<void> {
+): Promise<ValidateCredentialsResponse> {
   const {
     customer_id: customerId,
     is_valid: isValid
@@ -57,6 +56,11 @@ export async function performLogin(
   if (ssoResponse?.status !== 200 || ssoResponse?.url?.includes('/login.php')) {
     throw new Error(MESSAGE_LOGIN_TOKEN_ERROR);
   }
+
+  return {
+    customer_id: customerId,
+    is_valid: isValid
+  };
 }
 
 export async function verifyLogin(

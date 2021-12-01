@@ -42,9 +42,10 @@ export type ValidateCredentialsResponse = {
 };
 
 /**
- * Format of the response returned by the `loginCustomer` endpoint.
+ * Format of the response returned by the `loginCustomer` endpoint in the api package.
  */
 export type LoginCustomerResponse = {
-  success: boolean;
-  message?: string;
+  customer_id?: number | null;
+  is_valid?: boolean;
+  errorMessage?: string;
 };

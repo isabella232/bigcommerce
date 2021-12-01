@@ -1,5 +1,3 @@
-import { COOKIE_KEY_CUSTOMER_DATA } from '../../../api-client/src/helpers/consts';
-const jwt = require('jsonwebtoken');
 import { contextMock } from '../../__mocks__';
 import { logIn } from '../../src/useUser/actions';
 
@@ -16,38 +14,16 @@ describe('[bigcommerce-composables] useUser logIn', () => {
       username: 'janedoe@example.com',
       password: 'string'
     };
-    const customerData = {
-      customer: {
-        email: 'janedoe@example.com',
-        id: 1
-      }
-    };
-    const customerToken = 'asdf123456789';
-    const loginRsponse = {
-      success: true
+    const loginResponse = {
+      customer_id: 1,
+      is_valid: true
     };
     contextMock.$bigcommerce.api.loginCustomer = jest
       .fn()
-      .mockReturnValue(loginRsponse);
-    contextMock.$bigcommerce.config.app.$cookies.get = jest
-      .fn()
-      .mockReturnValue(customerToken);
-
-    jwt.decode.mockReturnValue(customerData);
+      .mockReturnValue(loginResponse);
 
     const response = await logIn(contextMock, loginCredentials);
 
-    expect(contextMock.$bigcommerce.api.loginCustomer).toBeCalledTimes(1);
-    expect(contextMock.$bigcommerce.api.loginCustomer).toBeCalledWith({
-      email: loginCredentials.username,
-      password: loginCredentials.password
-    });
-    expect(contextMock.$bigcommerce.config.app.$cookies.get).toBeCalledTimes(1);
-    expect(contextMock.$bigcommerce.config.app.$cookies.get).toBeCalledWith(
-      COOKIE_KEY_CUSTOMER_DATA
-    );
-    expect(jwt.decode).toBeCalledTimes(1);
-    expect(jwt.decode).toBeCalledWith(customerToken);
     expect(response).toMatchInlineSnapshot(`
       Object {
         "user": Object {
