@@ -1,5 +1,10 @@
 import { contextMock } from '../../../__mocks__/context.mock';
 import { mockModulePartially } from '../../helpers/test';
+import {
+  MESSAGE_LOGIN_ERROR,
+  MESSAGE_LOGIN_TOKEN_ERROR,
+  MESSAGE_INVALID_TOKEN_RESPONSE
+} from '../../../src/helpers/consts';
 
 describe('[bigcommerce-api-client] loginCustomer', () => {
   beforeEach(() => {
@@ -82,7 +87,7 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
         email: 'invalid',
         password: 'invalid'
       })
-    ).rejects.toMatchInlineSnapshot('[Error: Wrong email or password]');
+    ).rejects.toMatchInlineSnapshot(`[Error: ${MESSAGE_LOGIN_ERROR}]`);
   });
 
   it('throws an error if Customer Login API response is invalid', async () => {
@@ -108,7 +113,9 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
 
     await expect(
       module.performLogin(contextMock, loginCredentials)
-    ).rejects.toMatchInlineSnapshot('[Error: Wrong email or password]');
+    ).rejects.toMatchInlineSnapshot(
+      '[Error: Something went wrong during the authentication]'
+    );
   });
 
   it('throws an error if Customer Login API redirected to the login URL', async () => {
@@ -135,7 +142,7 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
 
     await expect(
       module.performLogin(contextMock, loginCredentials)
-    ).rejects.toMatchInlineSnapshot('[Error: Wrong email or password]');
+    ).rejects.toMatchInlineSnapshot(`[Error: ${MESSAGE_LOGIN_TOKEN_ERROR}]`);
   });
 
   it('generates SSO login link', async () => {
@@ -262,7 +269,7 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
     };
 
     await expect(module.verifyLogin(contextMock)).rejects.toMatchInlineSnapshot(
-      '[Error: Invalid token response]'
+      `[Error: ${MESSAGE_INVALID_TOKEN_RESPONSE}]`
     );
   });
 

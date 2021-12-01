@@ -1,7 +1,8 @@
 import {
   CreateCustomerParameters,
   CustomerData,
-  LoginCustomerParameters
+  LoginCustomerParameters,
+  LoginCustomerResponse
 } from '../customers';
 import { GetProductsParameters, ProductsResponse } from '../product';
 import { BigcommerceIntegrationContext } from '../context';
@@ -53,13 +54,14 @@ export interface Endpoints {
 
   /**
    * Logs in a customer using the Customer Login API and saves her data in cookie in the format of a JWT token coming from the Current Customer API.
+   * Return an object containing the status of authentication and an error message if applicable
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
    * @param {LoginCustomerParameters} params Customer credentials for login (email, password).
    */
   loginCustomer(
     context: BigcommerceIntegrationContext,
     params: LoginCustomerParameters
-  ): Promise<void>;
+  ): Promise<LoginCustomerResponse>;
 
   /**
    * Returns a single Product Review.

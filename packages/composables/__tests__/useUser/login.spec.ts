@@ -23,7 +23,12 @@ describe('[bigcommerce-composables] useUser logIn', () => {
       }
     };
     const customerToken = 'asdf123456789';
-    contextMock.$bigcommerce.api.loginCustomer = jest.fn();
+    const loginRsponse = {
+      success: true
+    };
+    contextMock.$bigcommerce.api.loginCustomer = jest
+      .fn()
+      .mockReturnValue(loginRsponse);
     contextMock.$bigcommerce.config.app.$cookies.get = jest
       .fn()
       .mockReturnValue(customerToken);

@@ -40,3 +40,11 @@ export type ValidateCredentialsResponse = {
   customer_id?: number | null;
   is_valid?: boolean;
 };
+
+/**
+ * Format of the response returned by the `loginCustomer` endpoint.
+ */
+export type LoginCustomerResponse = {
+  success: boolean;
+  message?: string;
+};

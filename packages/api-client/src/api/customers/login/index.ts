@@ -5,12 +5,14 @@ const fetch = require('fetch-cookie/node-fetch')(nodeFetch);
 import queryString from 'query-string';
 import {
   BigcommerceIntegrationContext,
-  LoginCustomerParameters
+  LoginCustomerParameters,
+  LoginCustomerResponse
 } from '../../../types';
 import {
   COOKIE_KEY_CUSTOMER_DATA,
   MESSAGE_INVALID_TOKEN_RESPONSE,
-  MESSAGE_LOGIN_ERROR
+  MESSAGE_LOGIN_ERROR,
+  MESSAGE_LOGIN_TOKEN_ERROR
 } from '../../../helpers/consts';
 import { validateCredentials } from '../validateCredentials';
 import endpoints from '../../../helpers/endpointPaths';
@@ -20,10 +22,20 @@ import * as Login from '.';
 export async function loginCustomer(
   context: BigcommerceIntegrationContext,
   params: LoginCustomerParameters
-): Promise<void> {
-  await Login.performLogin(context, params);
-  const customerDataToken = await Login.verifyLogin(context);
-  Login.setTokenCookie(context, customerDataToken);
+): Promise<LoginCustomerResponse> {
+  try {
+    await Login.performLogin(context, params);
+    const customerDataToken = await Login.verifyLogin(context);
+    Login.setTokenCookie(context, customerDataToken);
+    return {
+      success: true
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message
+    };
+  }
 }
 
 export async function performLogin(
@@ -43,7 +55,7 @@ export async function performLogin(
   const ssoResponse = await fetch(ssoLoginLink);
 
   if (ssoResponse?.status !== 200 || ssoResponse?.url?.includes('/login.php')) {
-    throw new Error(MESSAGE_LOGIN_ERROR);
+    throw new Error(MESSAGE_LOGIN_TOKEN_ERROR);
   }
 }
 
