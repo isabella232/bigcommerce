@@ -80,8 +80,18 @@ const useGuestWishlist = (id: string): any => {
     }
   };
 
-  const removeItem = () => {
-
+  const removeItem = () => async (item: GuestWishlistItem) => {
+    try {
+      loading.value = true;
+      const response = await params.removeItem(context, item);
+      wishlist.value = response;
+      error.value.removeItem = null;
+    } catch (err) {
+      error.value.removeItem = err;
+      Logger.error(`useGuestWishlist/${id}/removeItem`, err);
+    } finally {
+      loading.value = false;
+    }
   };
 
   const clear = () => {

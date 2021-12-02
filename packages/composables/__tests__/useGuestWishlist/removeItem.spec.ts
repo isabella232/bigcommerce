@@ -1,10 +1,11 @@
-import { addItem } from '../../src/useGuestWishlist/actions';
+import { removeItem } from '../../src/useGuestWishlist/actions';
 import { guestWishlistMock } from '../../__mocks__/useGuestWishlist/guestWishlist.mock';
 import { contextMock } from '../../__mocks__/context.mock';
 import { GuestWishlist, GuestWishlistItem } from '../../src/types';
 
-describe('[BigCommerce - composables] useGuestWishlist addItem', () => {
+describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
   let getProductsMock: jest.Mock<any, any>;
+  let wishlistMock: GuestWishlist;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -16,18 +17,21 @@ describe('[BigCommerce - composables] useGuestWishlist addItem', () => {
 
     getProductsMock = jest.fn();
     contextMock.$bigcommerce.api.getProducts = getProductsMock;
+
+    wishlistMock = JSON.parse(JSON.stringify(guestWishlistMock));
   });
 
-  it('should add item to the items array', async () => {
-    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(guestWishlistMock));
-
+  it('should remove item from the items array', async () => {
     const wishlistItem: GuestWishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
-    const expectedItems: GuestWishlist['items'] = [wishlistItem];
+    wishlistMock.items.push(wishlistItem);
+    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
 
-    const res = await addItem(contextMock, wishlistItem);
+    const expectedLength = 0;
 
+    const res = await removeItem(contextMock, wishlistItem);
+
+    expect(res.items).toHaveLength(expectedLength);
     expect(getProductsMock).toHaveBeenCalledTimes(1);
-    expect(res.items).toStrictEqual(expectedItems);
   });
 
   it('should return null if wishlist is not in local storage', async () => {
@@ -35,35 +39,36 @@ describe('[BigCommerce - composables] useGuestWishlist addItem', () => {
 
     const wishlistItem: GuestWishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
 
-    const res = await addItem(contextMock, wishlistItem);
+    const res = await removeItem(contextMock, wishlistItem);
 
     expect(getProductsMock).toHaveBeenCalledTimes(0);
     expect(res).toBe(null);
   });
 
   it('should call api to get products from guest wishlists', async () => {
-    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(guestWishlistMock));
+    const wishlistItems: GuestWishlistItem[] = [
+      { id: '1_1', product_id: 1, variant_id: 1 },
+      { id: '2_2', product_id: 2, variant_id: 2 }
+    ];
+    wishlistMock.items.push(...wishlistItems);
+    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
 
-    const wishlistItem: GuestWishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
-    const expectedParams = { 'id:in': [1], include: 'variants' };
+    const expectedParams = { 'id:in': [2], include: 'variants' };
 
-    await addItem(contextMock, wishlistItem);
+    await removeItem(contextMock, wishlistItems[0]);
 
     expect(getProductsMock).toHaveBeenCalledTimes(1);
     expect(getProductsMock).toHaveBeenCalledWith(expectedParams);
   });
 
-  it('should not add item to items array if it is there', async () => {
+  it('should set new guest wishlist in the localstorage', async () => {
     const wishlistItem: GuestWishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
-    const wishlistMock: GuestWishlist = JSON.parse(JSON.stringify(guestWishlistMock));
     wishlistMock.items.push(wishlistItem);
-    const expectedLength = 1;
 
     window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
 
-    const res = await addItem(contextMock, wishlistItem);
+    await removeItem(contextMock, wishlistItem);
 
-    expect(getProductsMock).toHaveBeenCalledTimes(0);
-    expect(res.items).toHaveLength(expectedLength);
+    expect(localStorage.setItem).toHaveBeenCalledTimes(1);
   });
 });
