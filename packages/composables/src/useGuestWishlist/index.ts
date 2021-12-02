@@ -94,8 +94,18 @@ const useGuestWishlist = (id: string): any => {
     }
   };
 
-  const clear = () => {
-
+  const clear = async () => {
+    try {
+      loading.value = true;
+      const response = await params.clear(context);
+      wishlist.value = response;
+      error.value.clear = null;
+    } catch (err) {
+      error.value.clear = err;
+      Logger.error(`useGuestWishlist/${id}/clear`, err);
+    } finally {
+      loading.value = false;
+    }
   };
 
   const isInWishlist = () => {
