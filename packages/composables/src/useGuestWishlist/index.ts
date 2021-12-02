@@ -1,6 +1,6 @@
 import { Ref, computed } from '@vue/composition-api';
 import { sharedRef, UseWishlistErrors, Logger, generateContext } from '@vue-storefront/core';
-import { GuestWishlist } from '../types';
+import { GuestWishlist, GuestWishlistItem } from '../types';
 import { params } from './params';
 /**
  *  Returns guest wishlist data and actions.
@@ -66,8 +66,18 @@ const useGuestWishlist = (id: string): any => {
     }
   };
 
-  const addItem = () => {
-
+  const addItem = async (item: GuestWishlistItem) => {
+    try {
+      loading.value = true;
+      const response = await params.addItem(context, item);
+      wishlist.value = response;
+      error.value.addItem = null;
+    } catch (err) {
+      error.value.addItem = err;
+      Logger.error(`useGuestWishlist/${id}/addItem`, err);
+    } finally {
+      loading.value = false;
+    }
   };
 
   const removeItem = () => {
