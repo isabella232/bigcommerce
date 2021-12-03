@@ -108,7 +108,15 @@
             :disabled="loading"
             :canAddToCart="stock > 0"
             class="product__add-to-cart"
-            @click="addItem({ product, quantity: parseInt(qty) })"
+            @click="
+              addItem({
+                product,
+                quantity: parseInt(qty),
+                customQuery: {
+                  variant_id: activeVariant && activeVariant.id
+                }
+              })
+            "
           />
 
           <SfAlert
@@ -265,8 +273,11 @@ export default defineComponent({
     const product = computed(() => products.value?.[0]);
     const options = computed(() => productData.getOptions(product.value));
     const activeVariant = ref();
-    const reviews = computed(() =>
-      productReviews.value.data?.filter((review) => review.status === 'approved') || []
+    const reviews = computed(
+      () =>
+        productReviews.value.data?.filter(
+          (review) => review.status === 'approved'
+        ) || []
     );
     const reviewHelpers = useReviewData();
     // TODO: Breadcrumbs are temporary disabled because productGetters return undefined. We have a mocks in data

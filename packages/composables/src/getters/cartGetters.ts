@@ -8,54 +8,61 @@ import {
 } from '@vue-storefront/core';
 import type { Cart, CartItem } from '@vue-storefront/bigcommerce-api';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getItems (cart: Cart): CartItem[] {
-  return [
-    {}
-  ];
+function getItems(cart: Cart): CartItem[] {
+  if (!cart) {
+    return [];
+  }
+
+  return [...cart.line_items.physical_items, ...cart.line_items.digital_items];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getItemName(item: CartItem): string {
-  return 'Name';
+  return item?.name ?? '';
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getItemImage(item: CartItem): string {
-  return 'https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg';
+  return item?.image_url ?? '';
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getItemPrice(item: CartItem): AgnosticPrice {
+  if (item && item.extended_list_price !== item.extended_sale_price) {
+    return {
+      regular: item.extended_list_price,
+      special: item.extended_sale_price
+    };
+  }
+
   return {
-    regular: 12,
-    special: 10
+    regular: item?.extended_sale_price ?? 0
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getItemQty(item: CartItem): number {
-  return 1;
+  return item?.quantity ?? 0;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getItemAttributes(item: CartItem, filterByAttributeName?: Array<string>): Record<string, AgnosticAttribute | string> {
-  return {
-    color: 'red'
-  };
+  return (
+    item?.options?.reduce((acc, attribute) => {
+      if (!filterByAttributeName ||
+      filterByAttributeName.includes(attribute.name)) {
+        acc[attribute.name] = attribute.value;
+      }
+
+      return acc;
+    }, {} as Record<string, string>) ?? {}
+  );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getItemSku(item: CartItem): string {
-  return '';
+  return item?.sku ?? '';
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getTotals(cart: Cart): AgnosticTotals {
   return {
-    total: 12,
-    subtotal: 12,
-    special: 10
+    total: cart.base_amount,
+    subtotal: cart.base_amount,
+    special: cart.cart_amount
   };
 }
 
@@ -64,9 +71,11 @@ function getShippingPrice(cart: Cart): number {
   return 0;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getTotalItems(cart: Cart): number {
-  return 1;
+  return cart
+    ? cart.line_items.physical_items.length +
+        cart.line_items.digital_items.length
+    : 0;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

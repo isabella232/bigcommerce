@@ -104,7 +104,7 @@
               "
               :special-price="
                 productData.getPrice(product).special &&
-                $n(productData.getPrice(product).special, 'currency')
+                  $n(productData.getPrice(product).special, 'currency')
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
@@ -147,7 +147,7 @@
               "
               :special-price="
                 productData.getPrice(product).special &&
-                $n(productData.getPrice(product).special, 'currency')
+                  $n(productData.getPrice(product).special, 'currency')
               "
               :max-rating="5"
               :score-rating="3"
@@ -163,9 +163,7 @@
               @click:add-to-cart="
                 addItemToCart({
                   product,
-                  quantity: Number(
-                    productsQuantity[productData.getId(product)]
-                  ),
+                  quantity: Number(productsQuantity[productData.getId(product)])
                 })
               "
               :link="
@@ -295,8 +293,9 @@ export default {
       isInWishlist,
       removeItem: removeItemFromWishlist
     } = useWishlist();
-    const { products, search, loading, error } =
-      useProduct('category-products');
+    const { products, search, loading, error } = useProduct(
+      'category-products'
+    );
     const { categories, search: categorySearch } = useCategory('category-tree');
     const productData = useProductData();
     const { categorySlug } = th.getFacetsFromURL();
@@ -306,7 +305,8 @@ export default {
       let categoriesData = categories.value;
       const category = getCategoryBySlug(categorySlug, categories.value);
       const breadcrumbs = getBreadcrumbs(category?.id, categories.value);
-      const rootSlug = breadcrumbs && breadcrumbs[1] ? breadcrumbs[1]?.link?.substring(2) : '';
+      const rootSlug =
+        breadcrumbs && breadcrumbs[1] ? breadcrumbs[1]?.link?.substring(2) : '';
       const rootCategory = getCategoryBySlug(rootSlug, categoriesData);
       if (rootCategory) {
         categoriesData = rootCategory.children;
@@ -316,7 +316,9 @@ export default {
         items: categoriesData
       };
     });
-    const pagination = computed(() => productData.getPagination(products.value));
+    const pagination = computed(() =>
+      productData.getPagination(products.value)
+    );
 
     const activeCategory = computed(() => {
       const categoriesArr = categoryTree.value.items;
@@ -324,8 +326,11 @@ export default {
         return '';
       }
 
-      const category = categoriesArr.find(({ url, children }) => (url === categorySlug) ||
-        children.find(({ url }) => (url === categorySlug)));
+      const category = categoriesArr.find(
+        ({ url, children }) =>
+          url === categorySlug ||
+          children.find(({ url }) => url === categorySlug)
+      );
       return category?.name;
     });
 
@@ -343,9 +348,13 @@ export default {
       await categorySearch();
       const { categorySlug } = th.getFacetsFromURL();
       const category = getCategoryBySlug(categorySlug, categories.value);
-      let productSearchParams;
+      let productSearchParams = {
+        include: 'options,variants'
+      };
+
       if (category) {
         productSearchParams = {
+          ...productSearchParams,
           'categories:in': category?.id
         };
       }
@@ -551,8 +560,8 @@ export default {
   padding: 2rem;
   font-family: var(--font-family--secondary);
   font-size: var(--font-size--md);
- }
- .sf-menu-item {
-   text-align: left;
- }
+}
+.sf-menu-item {
+  text-align: left;
+}
 </style>

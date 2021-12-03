@@ -1,11 +1,13 @@
 import { CouponCode } from './coupon';
 import { CustomItem } from './customItem';
 import { GiftCertificate } from './giftCertificate';
+import { DigitalCartItem, PhysicalCartItem } from '.';
 
 export * from './parameters';
 export * from './responses';
+export * from './item';
 
-type AppliedDiscount = {
+export type AppliedDiscount = {
   /**
    * ID of the applied discount.
    */
@@ -13,11 +15,13 @@ type AppliedDiscount = {
   /**
    * The discounted amount.
    */
-  discountedAmount?: number;
+  discounted_amount?: number;
 };
 
-type AppliedCoupon = {
-  coupons?: CouponCode[];
+export type AppliedCoupon = {
+  coupons?: {
+    coupon_code: CouponCode;
+  };
 };
 
 /**
@@ -69,9 +73,9 @@ export type Cart = {
   cart_amount?: number;
   coupons?: Array<AppliedCoupon>;
   discounts?: Array<AppliedDiscount>;
-  lineItems?: {
-    physical_items: Record<string, unknown>[];
-    digital_items: Record<string, unknown>[];
+  line_items?: {
+    physical_items: PhysicalCartItem[];
+    digital_items: DigitalCartItem[];
     gift_certificates: GiftCertificate[];
     custom_items: CustomItem &
       {
