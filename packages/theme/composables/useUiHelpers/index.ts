@@ -41,7 +41,7 @@ const useUiHelpers = () => {
       page: parseInt(query.page, 10) || 1,
       sort: query.sort || 'latest',
       filters: getFiltersDataFromUrl(instance, true),
-      itemsPerPage: parseInt(query.itemsPerPage, 10) || 24,
+      itemsPerPage: parseInt(query.itemsperpage, 10) || 20,
       term: query.term
     };
   };
@@ -50,11 +50,9 @@ const useUiHelpers = () => {
     return `/c${category?.url}`;
   };
 
-  // eslint-disable-next-line
   const changeSorting = (sort) => {
-    console.warn('[VSF] please implement useUiHelpers.changeSorting.');
-
-    return 'latest';
+    const { query } = instance.$router.history.current;
+    instance.$router.push({ query: { ...query, sort } });
   };
 
   // eslint-disable-next-line
@@ -62,9 +60,14 @@ const useUiHelpers = () => {
     console.warn('[VSF] please implement useUiHelpers.changeFilters.');
   };
 
-  // eslint-disable-next-line
-  const changeItemsPerPage = (itemsPerPage) => {
-    console.warn('[VSF] please implement useUiHelpers.changeItemsPerPage.');
+  const changeItemsPerPage = (itemsperpage) => {
+    instance.$router.push({
+      query: {
+        ...getFiltersDataFromUrl(instance, false),
+        itemsperpage,
+        page: 1
+      }
+    });
   };
 
   // eslint-disable-next-line

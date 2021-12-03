@@ -1,6 +1,7 @@
 import { AgnosticMediaGalleryItem, AgnosticPrice } from '@vue-storefront/core';
 import { Product, ProductVariant } from '@vue-storefront/bigcommerce-api';
 import { AgnosticPagination } from '@vue-storefront/core';
+import themeConfig from '@vue-storefront/bigcommerce-theme/themeConfig';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useProductData = () => {
@@ -107,15 +108,23 @@ export const useProductData = () => {
     });
   };
 
-  // TODO: will implement pagination on a separated ticket
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getPagination = (product?: Product): AgnosticPagination => {
+  const getPagination = (meta): AgnosticPagination => {
+    if (!meta?.pagination) {
+      return {
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 1,
+        itemsPerPage: 12,
+        pageOptions: themeConfig?.itemsPerPage
+      };
+    }
+
     return {
-      currentPage: 1,
-      totalPages: 1,
-      totalItems: 1,
-      itemsPerPage: 10,
-      pageOptions: []
+      currentPage: meta?.pagination?.current_page,
+      totalPages: meta?.pagination?.total_pages,
+      totalItems: meta?.pagination?.total,
+      itemsPerPage: meta?.pagination?.per_page,
+      pageOptions: themeConfig?.itemsPerPage
     };
   };
 

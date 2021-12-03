@@ -1,4 +1,5 @@
 export default {
+  itemsPerPage: [10, 20, 50, 100],
   home: {
     bannerA: {
       link: '/',

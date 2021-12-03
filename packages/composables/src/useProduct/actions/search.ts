@@ -1,15 +1,15 @@
-import { Product, GetProductsParameters as SearchParams } from '@vue-storefront/bigcommerce-api';
+import { ProductsResponse, GetProductsParameters as SearchParams } from '@vue-storefront/bigcommerce-api';
 import { UseProductFactoryParams } from '@vue-storefront/core';
 import type {
   Context
 } from '../../types';
 
-export const productsSearch: UseProductFactoryParams<Product[], SearchParams>['productsSearch'] = async (
+export const productsSearch: UseProductFactoryParams<ProductsResponse, SearchParams>['productsSearch'] = async (
   context: Context,
-  params
-) => {
-  const { data } = await context.$bigcommerce.api.getProducts(
+  params: SearchParams
+) : Promise<ProductsResponse> => {
+  const response = await context.$bigcommerce.api.getProducts(
     params
   );
-  return data;
+  return response;
 };

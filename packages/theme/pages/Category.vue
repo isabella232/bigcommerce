@@ -205,7 +205,6 @@
               :visible="5"
             />
           </LazyHydrate>
-
           <div
             v-show="pagination.totalPages > 1"
             class="products__show-on-page"
@@ -293,7 +292,7 @@ export default {
       isInWishlist,
       removeItem: removeItemFromWishlist
     } = useWishlist();
-    const { products, search, loading, error } = useProduct(
+    const { products: productsResult, search, loading, error } = useProduct(
       'category-products'
     );
     const { categories, search: categorySearch } = useCategory('category-tree');
@@ -301,6 +300,7 @@ export default {
     const { categorySlug } = th.getFacetsFromURL();
 
     const productsQuantity = ref({});
+    const products = computed(() => productsResult.value?.data);
     const categoryTree = computed(() => {
       let categoriesData = categories.value;
       const category = getCategoryBySlug(categorySlug, categories.value);
@@ -317,7 +317,7 @@ export default {
       };
     });
     const pagination = computed(() =>
-      productData.getPagination(products.value)
+      productData.getPagination(productsResult.value?.meta)
     );
 
     const activeCategory = computed(() => {
@@ -346,9 +346,11 @@ export default {
 
     onSSR(async () => {
       await categorySearch();
-      const { categorySlug } = th.getFacetsFromURL();
+      const { categorySlug, page, itemsPerPage } = th.getFacetsFromURL();
       const category = getCategoryBySlug(categorySlug, categories.value);
       let productSearchParams = {
+        page,
+        limit: itemsPerPage,
         include: 'options,variants'
       };
 

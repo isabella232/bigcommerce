@@ -7,11 +7,11 @@ describe('[bigcommerce-composables] useProduct search', () => {
     const getProductMock = jest.fn(() => Promise.resolve({ data: [mockedProduct] }));
     contextMock.$bigcommerce.api.getProducts = getProductMock;
 
-    const data = await productsSearch(contextMock, { id: 77 });
+    const response = await productsSearch(contextMock, { id: 77 });
 
     expect(getProductMock).toHaveBeenCalledTimes(1);
     expect(getProductMock).toBeCalledWith({ id: 77 });
 
-    expect(data[0]).toEqual(mockedProduct);
+    expect(response.data[0]).toEqual(mockedProduct);
   });
 });

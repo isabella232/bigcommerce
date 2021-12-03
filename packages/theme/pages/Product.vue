@@ -270,7 +270,7 @@ export default defineComponent({
     const { reviews: productReviews, search: searchReviews } = useReview(
       'productReviews'
     );
-    const product = computed(() => products.value?.[0]);
+    const product = computed(() => products.value?.data[0]);
     const options = computed(() => productData.getOptions(product.value));
     const activeVariant = ref();
     const reviews = computed(
@@ -319,7 +319,7 @@ export default defineComponent({
     onSSR(async () => {
       await search({ id, include: 'options,variants' });
 
-      if (!products.value.length) {
+      if (!products.value?.data?.length) {
         context.root.$nuxt.error({ statusCode: 404 });
       }
 
@@ -355,7 +355,7 @@ export default defineComponent({
         productData.getAverageRating(product.value)
       ),
       totalReviews: computed(() => productData.getTotalReviews(product.value)),
-      relatedProducts,
+      relatedProducts: computed(() => relatedProducts.value?.data),
       relatedLoading,
       options,
       qty,
