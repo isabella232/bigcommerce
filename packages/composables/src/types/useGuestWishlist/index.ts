@@ -12,7 +12,7 @@ export interface GuestWishlistItem {
   /**
    * Id of the product's vartiant
    */
-  variant_id: number,
+  variant_id?: number,
 
   /**
    * Id of the product from wishlist

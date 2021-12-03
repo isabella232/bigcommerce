@@ -1,6 +1,6 @@
 import { Ref, computed } from '@vue/composition-api';
 import { sharedRef, UseWishlistErrors, Logger, generateContext } from '@vue-storefront/core';
-import { GuestWishlist, GuestWishlistItem } from '../types';
+import { Context, GuestWishlist, GuestWishlistItem } from '../types';
 import { params } from './params';
 /**
  *  Returns guest wishlist data and actions.
@@ -50,7 +50,7 @@ const useGuestWishlist = (id: string): any => {
     isInWishlist: null
   }, `useGuestWishlist-error-${id}`);
 
-  const context = generateContext(params);
+  const context = generateContext(params) as Context;
 
   const load = async (name: string, isPublic = true) => {
     try {
@@ -108,8 +108,21 @@ const useGuestWishlist = (id: string): any => {
     }
   };
 
-  const isInWishlist = () => {
+  const isInWishlist = (wishlist: GuestWishlist, wishlistItem: GuestWishlistItem): boolean => {
+    let result = false;
 
+    try {
+      loading.value = true;
+      result = params.isInWishlist(wishlist, wishlistItem);
+      error.value.clear = null;
+    } catch (err) {
+      error.value.clear = err;
+      Logger.error(`useGuestWishlist/${id}/isInWishlist`, err);
+    } finally {
+      loading.value = false;
+    }
+
+    return result;
   };
 
   return {
