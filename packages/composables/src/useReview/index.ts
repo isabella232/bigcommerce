@@ -41,7 +41,7 @@ import { UseReviewSearchParams, UseReviewAddParams, Context, UseReviewResponse }
  *  ```
  */
 export const useReview = (id: string): UseReviewResponse => {
-  const reviews: Ref<ProductReviewCollectionResponse> = sharedRef([], `useReviews-reviews-${id}`);
+  const reviews: Ref<ProductReviewCollectionResponse> = sharedRef(null, `useReviews-reviews-${id}`);
   const loading: Ref<boolean> = sharedRef(false, `useReviews-loading-${id}`);
   const error: Ref<UseReviewErrors> = sharedRef({
     search: null,

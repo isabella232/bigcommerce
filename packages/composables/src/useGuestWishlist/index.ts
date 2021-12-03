@@ -40,7 +40,7 @@ import { params } from './params';
  *  ```
  */
 const useGuestWishlist = (id: string): any => {
-  const wishlist: Ref<GuestWishlist> = sharedRef([], `useGuestWishlist-wishlist-${id}`);
+  const wishlist: Ref<GuestWishlist> = sharedRef(null, `useGuestWishlist-wishlist-${id}`);
   const loading: Ref<boolean> = sharedRef(false, `useGuestWishlist-loading-${id}`);
   const error: Ref<UseWishlistErrors> = sharedRef({
     load: null,
