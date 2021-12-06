@@ -3,7 +3,7 @@ import { mockedCart } from '../../__mocks__/cart.mock';
 import { contextMock } from '../../__mocks__/context.mock';
 
 describe('[BigCommerce - composables] useCart removeItem', () => {
-  it('should add item to the cart', async () => {
+  it('should remove an item from the cart', async () => {
     const removeCartItemsMock = jest.fn(() =>
       Promise.resolve({ data: mockedCart })
     );

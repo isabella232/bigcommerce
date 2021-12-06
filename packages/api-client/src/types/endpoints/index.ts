@@ -27,7 +27,9 @@ import {
   GetCartParameters,
   GetCartResponse,
   RemoveLineItemParameters,
-  RemoveLineItemResponse
+  RemoveLineItemResponse,
+  UpdateLineItemParameters,
+  UpdateLineItemResponse
 } from '../cart';
 
 /**
@@ -134,6 +136,16 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     params: RemoveLineItemParameters
   ): Promise<RemoveLineItemResponse>;
+
+  /**
+   * Updates the list price or the quantity of an item from the cart
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {UpdateLineItemParameters} params An object which contains necessary properties for updating a cart item.
+   */
+  updateCartItem(
+    context: BigcommerceIntegrationContext,
+    params: UpdateLineItemParameters
+  ): Promise<UpdateLineItemResponse>;
 
   /**
    * Creates a new Cart.

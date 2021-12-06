@@ -110,6 +110,9 @@ export type AddLineItemsParameters = {
   };
 };
 
+/**
+ * Definition of remove line item from cart request parameters
+ */
 export type RemoveLineItemParameters = {
   /**
    * ID of the cart
@@ -123,4 +126,20 @@ export type RemoveLineItemParameters = {
    * Add more information to the response
    */
   include?: CartIncludeEnum;
+};
+
+/**
+ * Definition of update cart line item request parameters
+ */
+export type UpdateLineItemParameters = RemoveLineItemParameters & {
+  /**
+   * Describes the details of the modified cart item
+   */
+  data: {
+    line_item: {
+      product_id: number;
+      quantity?: number;
+      list_price?: number;
+    };
+  };
 };
