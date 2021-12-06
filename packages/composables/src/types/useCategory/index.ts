@@ -59,3 +59,12 @@ export type CategoryTree = {
   isCurrent?: boolean;
   children?: CategoryTree[];
 };
+
+/**
+ * SearchResultNavigationItem for categories from the search results
+ */
+export type SearchResultNavigationItem = {
+  slug: string;
+  label: string;
+  key: string;
+};

@@ -16,7 +16,7 @@
         </nuxt-link>
       </template>
       <template #navigation>
-        <HeaderNavigation :isMobile="isMobile" />
+        <HeaderNavigation :categories="navigation" :isMobile="isMobile" />
       </template>
       <template #aside>
         <LocaleSelector class="smartphone-only" />
@@ -113,6 +113,7 @@ import {
 } from '@storefront-ui/vue';
 import { useUiState } from '~/composables';
 import { useCart, useUser } from '@vue-storefront/bigcommerce';
+import { useProduct } from '@vue-storefront/bigcommerce';
 import {
   computed,
   defineComponent,
@@ -129,8 +130,11 @@ import {
   mapMobileObserver,
   unMapMobileObserver
 } from '@storefront-ui/vue/src/utilities/mobile-observer.js';
+import { useCategory } from '@vue-storefront/bigcommerce';
+import { onSSR } from '@vue-storefront/core';
+import { buildCategoryNavigation } from '../composables/useCategoryData/buildCategoryNavigation';
+import { buildSearchCategories } from '../composables/useCategoryData/buildSearchCategories';
 import debounce from 'lodash.debounce';
-import mockedSearchProducts from '../mockedSearchProducts.json';
 import { useCartData } from '../composables/useCartData';
 
 export default defineComponent({
@@ -148,6 +152,7 @@ export default defineComponent({
   },
   directives: { clickOutside },
   setup(props, { root }) {
+    const { products, search } = useProduct('search-products');
     const {
       toggleCartSidebar,
       toggleWishlistSidebar,
@@ -161,8 +166,17 @@ export default defineComponent({
     const term = ref(getFacetsFromURL().phrase);
     const isSearchOpen = ref(false);
     const searchBarRef = ref(null);
-    const result = ref(null);
+    const result = ref({});
     const isMobile = ref(mapMobileObserver().isMobile.get());
+    const { categories: categoryResults, search: categorySearch } =
+      useCategory('category-tree');
+    const navigation = computed(() =>
+      buildCategoryNavigation(categoryResults.value)
+    );
+
+    onSSR(async () => {
+      await categorySearch();
+    });
 
     const cartTotalItems = computed(() => {
       const count = getTotalItems(cart.value);
@@ -187,7 +201,6 @@ export default defineComponent({
 
     const closeSearch = () => {
       if (!isSearchOpen.value) return;
-
       term.value = '';
       isSearchOpen.value = false;
     };
@@ -199,7 +212,12 @@ export default defineComponent({
         term.value = paramValue.target.value;
       }
 
-      result.value = mockedSearchProducts;
+      await search({ 'keyword:like:': term.value });
+      const categories = buildSearchCategories(
+        products.value.data,
+        categoryResults.value
+      );
+      result.value = { products: products.value.data, categories };
     }, 1000);
 
     const closeOrFocusSearchBar = () => {
@@ -249,7 +267,9 @@ export default defineComponent({
       searchBarRef,
       isMobile,
       isMobileMenuOpen,
-      removeSearchResults
+      removeSearchResults,
+      products,
+      navigation
     };
   }
 });

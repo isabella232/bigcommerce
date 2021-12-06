@@ -1,26 +1,26 @@
 <template>
   <div class="sf-header__navigation desktop" v-if="!isMobile">
     <SfHeaderNavigationItem
-      v-for="(category, index) in categories"
-      :key="index"
+      v-for="(category, key) in categories"
+      :key="key"
       class="nav-item"
-      v-e2e="`app-header-url_${category.name}`"
-      :label="category.name"
-      :link="localePath(`/c${category.url}`)"
+      v-e2e="`app-header-url_${category.slug}`"
+      :label="category.label"
+      :link="localePath(`/c${category.slug}`)"
     />
   </div>
   <SfModal v-else :visible="isMobileMenuOpen">
     <SfHeaderNavigationItem
-      v-for="(category, index) in categories"
-      :key="index"
+      v-for="(category, key) in categories"
+      :key="key"
       class="nav-item"
-      v-e2e="`app-header-url_${category.name}`"
+      v-e2e="`app-header-url_${category.slug}`"
     >
       <template #mobile-navigation-item>
         <SfMenuItem
-          :label="category"
+          :label="category.label"
           class="sf-header-navigation-item__menu-item"
-          :link="localePath(`/c${category.url}`)"
+          :link="localePath(`/c${category.slug}`)"
           @click="toggleMobileMenu"
         />
       </template>
@@ -31,8 +31,6 @@
 <script>
 import { SfMenuItem, SfModal } from '@storefront-ui/vue';
 import { useUiState } from '~/composables';
-import { useCategory } from '@vue-storefront/bigcommerce';
-import { onSSR } from '@vue-storefront/core';
 
 export default {
   name: 'HeaderNavigation',
@@ -44,18 +42,15 @@ export default {
     isMobile: {
       type: Boolean,
       default: false
+    },
+    categories: {
+      type: Array,
+      default: false
     }
   },
   setup() {
     const { isMobileMenuOpen, toggleMobileMenu } = useUiState();
-    const { categories: categoryResults, search: categorySearch } =
-      useCategory('category-tree');
-    const categories = categoryResults.value;
-    onSSR(async () => {
-      await categorySearch();
-    });
     return {
-      categories,
       isMobileMenuOpen,
       toggleMobileMenu
     };
