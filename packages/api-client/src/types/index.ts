@@ -8,3 +8,4 @@ export * from './nodeBigcommerceSDK';
 export * from './product';
 export * from './review';
 export * from './shared';
+export * from './wishlist';

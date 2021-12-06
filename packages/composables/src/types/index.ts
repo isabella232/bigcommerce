@@ -3,6 +3,7 @@ import { ContextualizedEndpoints } from '@vue-storefront/bigcommerce-api';
 import { AxiosInstance } from 'axios';
 import { NuxtCookies } from 'cookie-universal-nuxt';
 
+export * from './useWishlist';
 export * from './useGuestWishlist';
 export * from './useReview';
 export * from './useUser';

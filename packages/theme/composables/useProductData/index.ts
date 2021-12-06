@@ -108,6 +108,10 @@ export const useProductData = () => {
     });
   };
 
+  const getVariant = (product: Product, variantId: number): ProductVariant => {
+    return product.variants?.find(variant => variant.id === variantId);
+  };
+
   const getPagination = (meta): AgnosticPagination => {
     if (!meta?.pagination) {
       return {
@@ -142,6 +146,7 @@ export const useProductData = () => {
     getRelatedProducts,
     getOptions,
     getActiveVariant,
-    getPagination
+    getPagination,
+    getVariant
   };
 };

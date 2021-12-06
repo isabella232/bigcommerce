@@ -4,9 +4,9 @@ import {
   useWishlistFactory,
   UseWishlistFactoryParams
 } from '@vue-storefront/core';
-import type { Wishlist, WishlistItem, Product } from '@vue-storefront/bigcommerce-api';
+import type { WishlistItem, Product } from '@vue-storefront/bigcommerce-api';
 
-const params: UseWishlistFactoryParams<Wishlist, WishlistItem, Product> = {
+const params: UseWishlistFactoryParams<any, WishlistItem, Product> = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   load: async (context: Context) => {
     console.log('Mocked: useWishlist.load');
@@ -38,4 +38,4 @@ const params: UseWishlistFactoryParams<Wishlist, WishlistItem, Product> = {
   }
 };
 
-export const useWishlist = useWishlistFactory<Wishlist, WishlistItem, Product>(params);
+export const useWishlist = useWishlistFactory<any, WishlistItem, Product>(params);

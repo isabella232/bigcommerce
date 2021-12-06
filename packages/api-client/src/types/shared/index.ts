@@ -35,7 +35,3 @@ export type ShippingAddress = TODO;
 export type ShippingMethod = TODO;
 
 export type ShippingProvider = TODO;
-
-export type Wishlist = TODO;
-
-export type WishlistItem = TODO;

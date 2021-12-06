@@ -1,6 +1,6 @@
 import { Ref, computed } from '@vue/composition-api';
 import { sharedRef, UseWishlistErrors, Logger, generateContext } from '@vue-storefront/core';
-import { Context, GuestWishlist, GuestWishlistItem } from '../types';
+import { Context, Wishlist, WishlistItem } from '../types';
 import { params } from './params';
 /**
  *  Returns guest wishlist data and actions.
@@ -40,7 +40,7 @@ import { params } from './params';
  *  ```
  */
 const useGuestWishlist = (id: string): any => {
-  const wishlist: Ref<GuestWishlist> = sharedRef(null, `useGuestWishlist-wishlist-${id}`);
+  const wishlist: Ref<Wishlist> = sharedRef(null, `useGuestWishlist-wishlist-${id}`);
   const loading: Ref<boolean> = sharedRef(false, `useGuestWishlist-loading-${id}`);
   const error: Ref<UseWishlistErrors> = sharedRef({
     load: null,
@@ -66,7 +66,7 @@ const useGuestWishlist = (id: string): any => {
     }
   };
 
-  const addItem = async (item: GuestWishlistItem) => {
+  const addItem = async (item: WishlistItem) => {
     try {
       loading.value = true;
       const response = await params.addItem(context, item);
@@ -80,7 +80,7 @@ const useGuestWishlist = (id: string): any => {
     }
   };
 
-  const removeItem = () => async (item: GuestWishlistItem) => {
+  const removeItem = () => async (item: WishlistItem) => {
     try {
       loading.value = true;
       const response = await params.removeItem(context, item);
@@ -108,7 +108,7 @@ const useGuestWishlist = (id: string): any => {
     }
   };
 
-  const isInWishlist = (wishlist: GuestWishlist, wishlistItem: GuestWishlistItem): boolean => {
+  const isInWishlist = (wishlist: Wishlist, wishlistItem: WishlistItem): boolean => {
     let result = false;
 
     try {

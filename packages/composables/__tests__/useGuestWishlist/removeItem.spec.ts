@@ -1,11 +1,11 @@
 import { removeItem } from '../../src/useGuestWishlist/actions';
 import { guestWishlistMock } from '../../__mocks__/useGuestWishlist/guestWishlist.mock';
 import { contextMock } from '../../__mocks__/context.mock';
-import { GuestWishlist, GuestWishlistItem } from '../../src/types';
+import { Wishlist, WishlistItem } from '../../src/types';
 
 describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
   let getProductsMock: jest.Mock<any, any>;
-  let wishlistMock: GuestWishlist;
+  let wishlistMock: Wishlist;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -22,7 +22,7 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
   });
 
   it('should remove item from the items array', async () => {
-    const wishlistItem: GuestWishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
+    const wishlistItem: WishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
     wishlistMock.items.push(wishlistItem);
     window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
 
@@ -37,7 +37,7 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
   it('should return null if wishlist is not in local storage', async () => {
     window.localStorage.__proto__.getItem = jest.fn(() => null);
 
-    const wishlistItem: GuestWishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
+    const wishlistItem: WishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
 
     const res = await removeItem(contextMock, wishlistItem);
 
@@ -46,7 +46,7 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
   });
 
   it('should call api to get products from guest wishlists', async () => {
-    const wishlistItems: GuestWishlistItem[] = [
+    const wishlistItems: WishlistItem[] = [
       { id: '1_1', product_id: 1, variant_id: 1 },
       { id: '2_2', product_id: 2, variant_id: 2 }
     ];
@@ -62,7 +62,7 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
   });
 
   it('should set new guest wishlist in the localstorage', async () => {
-    const wishlistItem: GuestWishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
+    const wishlistItem: WishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
     wishlistMock.items.push(wishlistItem);
 
     window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
