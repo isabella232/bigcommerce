@@ -25,7 +25,9 @@ import {
   CreateCartParameters,
   CreateCartResponse,
   GetCartParameters,
-  GetCartResponse
+  GetCartResponse,
+  RemoveLineItemParameters,
+  RemoveLineItemResponse
 } from '../cart';
 
 /**
@@ -122,6 +124,16 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     params: AddLineItemsParameters
   ): Promise<AddLineItemsResponse>;
+
+  /**
+   * Removes an item from the cart
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {RemoveLineItemParameters} params An object which contains necessary properties for removing an item from the cart.
+   */
+  removeCartItem(
+    context: BigcommerceIntegrationContext,
+    params: RemoveLineItemParameters
+  ): Promise<RemoveLineItemResponse>;
 
   /**
    * Creates a new Cart.

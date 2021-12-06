@@ -1,17 +1,16 @@
 import { UseCartFactoryParams } from '@vue-storefront/core';
-import { Cart, CartItem, Product } from '@vue-storefront/bigcommerce-api';
+import {
+  Cart,
+  CartItem,
+  Product
+} from '@vue-storefront/bigcommerce-api';
 import { Context } from '../types';
-import { addItem, load } from './actions';
+import { addItem, load, removeItem } from './actions';
 
 export const params: UseCartFactoryParams<Cart, CartItem, Product> = {
   load,
   addItem,
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  removeItem: async (context: Context, { currentCart, product, customQuery }) => {
-    console.log('Mocked: useCart.removeItem');
-    return {};
-  },
+  removeItem,
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateItemQty: async (context: Context, { currentCart, product, quantity, customQuery }) => {

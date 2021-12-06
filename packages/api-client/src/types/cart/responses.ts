@@ -17,3 +17,8 @@ export type CreateCartResponse = AddLineItemsResponse;
  * Definition of the response to the get cart request.
  */
 export type GetCartResponse = AddLineItemsResponse;
+
+/**
+ * Definition of the response to remove an item from the cart request.
+ */
+export type RemoveLineItemResponse = AddLineItemsResponse;

@@ -109,3 +109,18 @@ export type AddLineItemsParameters = {
     custom_items?: CustomItem[];
   };
 };
+
+export type RemoveLineItemParameters = {
+  /**
+   * ID of the cart
+   */
+  cartId: string;
+  /**
+   * ID of the cart item
+   */
+  itemId: string;
+  /**
+   * Add more information to the response
+   */
+  include?: CartIncludeEnum;
+};
