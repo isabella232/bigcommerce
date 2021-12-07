@@ -7,7 +7,8 @@ const bigcommerceIntegrationContextMock = {
       headers: {}
     },
     app: {
-      $cookies: {} as any
+      $cookies: {} as any,
+      $config: {} as any
     }
   }
 };

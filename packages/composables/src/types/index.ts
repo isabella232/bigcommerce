@@ -31,6 +31,7 @@ interface AppConfig {
    * Cookie interface.
    */
   $cookies: NuxtCookies;
+  $config: any;
 }
 
 /**

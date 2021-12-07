@@ -7,10 +7,14 @@ export type CreateCustomerParameters = {
   email: string;
   password: string;
   accepts_marketing_emails: boolean;
+  channel_ids: number[];
   custom_fields: Array<{
     fieldId: string;
     fieldValue: string;
   }>;
+  authentication?: {
+    new_password?: string;
+  };
 };
 
 /**

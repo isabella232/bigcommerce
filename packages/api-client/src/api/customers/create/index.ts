@@ -11,7 +11,9 @@ export async function createCustomer(
   params: CreateCustomerParameters
 ): Promise<CustomerData> {
   checkParameters(params);
-
+  params.authentication = {
+    new_password: params.password
+  };
   const { client } = context;
   const { data } = await client.post<
     CreateCustomerResponse,

@@ -9,7 +9,8 @@ describe('[bigcommerce-composables] useUser register', () => {
       lastName: 'Doe',
       password: 'string',
       acceptsMarketingEmails: true,
-      customFields: []
+      customFields: [],
+      channelIds: [1]
     };
     const expectedResponse = {
       email: 'janedoe@example.com',
@@ -28,6 +29,7 @@ describe('[bigcommerce-composables] useUser register', () => {
       email: userParameters.email,
       password: userParameters.password,
       accepts_marketing_emails: userParameters.acceptsMarketingEmails,
+      channel_ids: userParameters.channelIds,
       custom_fields: userParameters.customFields
     });
     expect(response).toMatchInlineSnapshot(`

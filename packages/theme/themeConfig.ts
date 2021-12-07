@@ -1,5 +1,6 @@
 export default {
   itemsPerPage: [10, 20, 50, 100],
+  channelIds: [1],
   home: {
     bannerA: {
       link: '/',

@@ -16,7 +16,8 @@ export const register = async (
     email,
     password,
     acceptsMarketingEmails = true,
-    customFields = []
+    customFields = [],
+    channelIds = context.$bigcommerce.config.app.$config.channelIds || [1]
   } = params;
 
   /* eslint-disable camelcase */
@@ -26,6 +27,7 @@ export const register = async (
     email,
     password,
     accepts_marketing_emails: acceptsMarketingEmails,
+    channel_ids: channelIds,
     custom_fields: customFields
   });
 

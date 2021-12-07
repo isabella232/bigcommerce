@@ -6,7 +6,6 @@ describe('[bigcommerce-api-client] createCustomer', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-
   it('registers a customer', async () => {
     /* eslint-disable camelcase */
     const parameters = {
@@ -20,7 +19,8 @@ describe('[bigcommerce-api-client] createCustomer', () => {
       email: 'janedoe@example.com',
       first_name: 'Jane',
       last_name: 'Doe',
-      password: 'string'
+      password: 'string',
+      channel_ids: [1]
     };
     const expectedResponse = {
       data: [
@@ -46,7 +46,7 @@ describe('[bigcommerce-api-client] createCustomer', () => {
               amount: 0
             }
           ],
-          channel_ids: null
+          channel_ids: [1]
         }
       ]
     };
@@ -64,7 +64,9 @@ describe('[bigcommerce-api-client] createCustomer', () => {
         "authentication": Object {
           "force_password_reset": false,
         },
-        "channel_ids": null,
+        "channel_ids": Array [
+          1,
+        ],
         "company": "",
         "customer_group_id": 0,
         "date_created": "2021-11-05T12:08:22Z",
@@ -99,7 +101,8 @@ describe('[bigcommerce-api-client] createCustomer', () => {
       email: 'janedoe@example.com',
       first_name: 'Jane',
       last_name: 'Doe',
-      password: 'string'
+      password: 'string',
+      channel_ids: [1]
     };
     const expectedError = 'API error';
     contextMock.client.post = jest.fn(() => Promise.reject(expectedError));

@@ -9,6 +9,7 @@ export type UseUserRegisterParams = {
   email: string;
   password: string;
   acceptsMarketingEmails: boolean;
+  channelIds: number[];
   customFields: Array<{
     fieldId: string;
     fieldValue: string;
