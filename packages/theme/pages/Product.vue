@@ -33,10 +33,10 @@
             "
             :special="
               productData.getPrice(product, activeVariant).special &&
-                $n(
-                  productData.getPrice(product, activeVariant).special,
-                  'currency'
-                )
+              $n(
+                productData.getPrice(product, activeVariant).special,
+                'currency'
+              )
             "
           />
           <div>
@@ -113,8 +113,8 @@
                 product,
                 quantity: parseInt(qty),
                 customQuery: {
-                  variant_id: activeVariant && activeVariant.id
-                }
+                  variant_id: activeVariant && activeVariant.id,
+                },
               })
             "
           />
@@ -123,7 +123,7 @@
             v-else
             :message="
               activeVariant.purchasing_disabled_message ||
-                $t('Currently unavailable')
+              $t('Currently unavailable')
             "
             type="warning"
           />
@@ -136,19 +136,6 @@
                 class="product__description"
                 v-html="productData.getDescription(product)"
               />
-              <SfProperty
-                v-for="(property, i) in properties"
-                :key="i"
-                :name="property.name"
-                :value="property.value"
-                class="product__property"
-              >
-                <template v-if="property.name === 'Category'" #value>
-                  <SfButton class="product__property__button sf-button--text">
-                    {{ property.value }}
-                  </SfButton>
-                </template>
-              </SfProperty>
             </SfTab>
             <SfTab title="Read reviews">
               <SfReview
@@ -171,8 +158,6 @@
               class="product__additional-info"
             >
               <div class="product__additional-info">
-                <p class="product__additional-info__title">{{ $t('Brand') }}</p>
-                <p>{{ brand }}</p>
                 <p class="product__additional-info__title">
                   {{ $t('Instruction1') }}
                 </p>
@@ -182,7 +167,6 @@
                 <p class="product__additional-info__paragraph">
                   {{ $t('Instruction3') }}
                 </p>
-                <p>{{ careInstructions }}</p>
               </div>
             </SfTab>
           </SfTabs>
@@ -246,6 +230,8 @@ import { useProductData } from '../composables/useProductData';
 import cacheControl from './../helpers/cacheControl';
 import useUiHelpers from '~/composables/useUiHelpers';
 import useReviewData from '~/composables/useReviewData';
+import { getBreadcrumbs } from '~/composables/useCategoryData';
+import { useCategory } from '@vue-storefront/bigcommerce';
 
 export default defineComponent({
   name: 'Product',
@@ -255,6 +241,7 @@ export default defineComponent({
     'stale-when-revalidate': 5
   }),
   setup(props, context) {
+    const { categories, search: categorySearch } = useCategory('category-tree');
     const qty = ref(1);
     const { id } = context.root.$route.params;
     const uiHelpers = useUiHelpers();
@@ -267,9 +254,8 @@ export default defineComponent({
     } = useProduct('relatedProducts');
     const { addItem, loading } = useCart();
     const productData = useProductData();
-    const { reviews: productReviews, search: searchReviews } = useReview(
-      'productReviews'
-    );
+    const { reviews: productReviews, search: searchReviews } =
+      useReview('productReviews');
     const product = computed(() => products.value?.data[0]);
     const options = computed(() => productData.getOptions(product.value));
     const activeVariant = ref();
@@ -280,8 +266,6 @@ export default defineComponent({
         ) || []
     );
     const reviewHelpers = useReviewData();
-    // TODO: Breadcrumbs are temporary disabled because productGetters return undefined. We have a mocks in data
-    // const breadcrumbs = computed(() => productGetters.getBreadcrumbs ? productGetters.getBreadcrumbs(product.value) : props.fallbackBreadcrumbs);
     const productGallery = computed(() =>
       productData.getGallery(product.value).map((image) => ({
         mobile: { url: image.small },
@@ -290,7 +274,21 @@ export default defineComponent({
         alt: productData.getName(product.value)
       }))
     );
+    const breadcrumbs = computed(() => {
+      if (
+        !categories.value ||
+        !categories.value?.length ||
+        !product.value ||
+        !product.value.categories
+      ) {
+        return '';
+      }
 
+      const categoryId = product.value.categories[0];
+      const breadcrumbs = getBreadcrumbs(categoryId, categories.value);
+      breadcrumbs.push({ text: product.value.name, link: '#' });
+      return breadcrumbs;
+    });
     const calculateOptions = () => {
       const queryParams = context.root.$route.query;
 
@@ -318,6 +316,7 @@ export default defineComponent({
 
     onSSR(async () => {
       await search({ id, include: 'options,variants' });
+      await categorySearch();
 
       if (!products.value?.data?.length) {
         context.root.$nuxt.error({ statusCode: 404 });
@@ -350,6 +349,7 @@ export default defineComponent({
       updateFilter,
       configuration,
       product,
+      breadcrumbs,
       reviews,
       averageRating: computed(() =>
         productData.getAverageRating(product.value)
@@ -391,53 +391,6 @@ export default defineComponent({
     RelatedProducts,
     LazyHydrate,
     AddReview
-  },
-  data() {
-    return {
-      stock: 5,
-      properties: [
-        {
-          name: 'Product Code',
-          value: '578902-00'
-        },
-        {
-          name: 'Category',
-          value: 'Pants'
-        },
-        {
-          name: 'Material',
-          value: 'Cotton'
-        },
-        {
-          name: 'Country',
-          value: 'Germany'
-        }
-      ],
-      detailsIsActive: false,
-      brand:
-        'Brand name is the perfect pairing of quality and design. This label creates major everyday vibes with its collection of modern brooches, silver and gold jewellery, or clips it back with hair accessories in geo styles.',
-      careInstructions: 'Do not wash!',
-      breadcrumbs: [
-        {
-          text: 'Home',
-          route: {
-            link: '#'
-          }
-        },
-        {
-          text: 'Category',
-          route: {
-            link: '#'
-          }
-        },
-        {
-          text: 'Pants',
-          route: {
-            link: '#'
-          }
-        }
-      ]
-    };
   }
 });
 </script>
