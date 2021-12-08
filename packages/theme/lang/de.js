@@ -162,5 +162,6 @@ export default {
   'Forgot Password Modal Email': 'E-Mail, mit der Sie sich anmelden:',
   forgotPasswordConfirmation:
     'Vielen Dank! Wenn ein Konto mit der E-Mail-Adresse {0} registriert ist, finden Sie in Ihrem Posteingang eine Nachricht mit einem Link zum Zurücksetzen des Passworts.',
-  'Currently unavailable': 'Derzeit nicht verfügbar.'
+  'Currently unavailable': 'Derzeit nicht verfügbar.',
+  'Clear cart': 'Warenkorb löschen'
 };

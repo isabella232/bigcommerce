@@ -99,6 +99,9 @@
                 />
               </template>
             </SfProperty>
+            <SfLink @click.prevent="clearCart" class="my-cart__clear">
+              {{ $t('Clear cart') }}
+            </SfLink>
             <nuxt-link :to="localePath({ name: 'shipping' })">
               <SfButton
                 class="sf-button--full-width color-secondary"
@@ -128,6 +131,7 @@ import {
   SfIcon,
   SfProperty,
   SfPrice,
+  SfLink,
   SfCollectedProduct,
   SfImage,
   SfQuantitySelector
@@ -146,6 +150,7 @@ export default defineComponent({
     SfButton,
     SfHeading,
     SfIcon,
+    SfLink,
     SfProperty,
     SfPrice,
     SfCollectedProduct,
@@ -159,7 +164,8 @@ export default defineComponent({
       removeItem,
       updateItemQty,
       load: loadCart,
-      loading
+      loading,
+      clear: clearCart
     } = useCart();
     const { isAuthenticated } = useUser();
     const cartData = useCartData();
@@ -181,6 +187,7 @@ export default defineComponent({
       isAuthenticated,
       products,
       removeItem,
+      clearCart,
       isCartSidebarOpen,
       toggleCartSidebar,
       totals,
@@ -216,6 +223,12 @@ export default defineComponent({
     --price-font-size: var(--font-size--xl);
     --price-font-weight: var(--font-weight--medium);
     margin: 0 0 var(--spacer-base) 0;
+  }
+  &__clear {
+    display: block;
+    margin: var(--spacer-base) 0;
+    font-size: var(--font-size--xl);
+    text-align: center;
   }
 }
 .empty-cart {

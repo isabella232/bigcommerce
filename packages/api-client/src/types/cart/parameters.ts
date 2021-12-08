@@ -75,6 +75,16 @@ export type CreateCartParameters = {
 };
 
 /**
+ * Definition of delete cart request parameters
+ */
+export type DeleteCartParameters = {
+  /**
+   * ID of the cart
+   */
+  id: string;
+};
+
+/**
  * Definition of get cart request parameters
  */
 export type GetCartParameters = {
