@@ -281,7 +281,7 @@ export default defineComponent({
         !product.value ||
         !product.value.categories
       ) {
-        return '';
+        return [];
       }
 
       const categoryId = product.value.categories[0];
