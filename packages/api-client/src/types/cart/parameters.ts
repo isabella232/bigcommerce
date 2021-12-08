@@ -99,6 +99,26 @@ export type GetCartParameters = {
 };
 
 /**
+ * Definition of update cart request parameters
+ */
+export type UpdateCartParameters = {
+  /**
+   * ID of the cart
+   */
+  id: string;
+  /**
+   * Add more information to the response
+   */
+  include?: CartIncludeEnum;
+  /**
+   * The updated value for customer_id
+   */
+  data: {
+    customer_id: number;
+  };
+};
+
+/**
  * Definition of add line items to cart request parameters
  */
 export type AddLineItemsParameters = {
