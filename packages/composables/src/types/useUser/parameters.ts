@@ -24,4 +24,12 @@ export type UseUserLoginParams = {
   password: string;
 };
 
+/**
+ * Format of response to use when calling `logIn` method of `useUser` composable.
+ */
+export type UseUserLoginResponse = {
+  id: number;
+  email: string;
+};
+
 export type UseUserUpdateParams = TODO;

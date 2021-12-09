@@ -2,11 +2,25 @@
   <SfTabs :open-tab="1">
     <!-- Personal data update -->
     <SfTab title="Personal data">
-      <p class="message">
-        {{ $t('Feel free to edit') }}
-      </p>
+      <div v-if="!showEditProfileForm">
+        <p class="profile">
+          <span class="profile__label">{{ $t('Email') }}</span>
+          {{ user.email }}
+        </p>
+        <p class="profile">
+          <span class="profile__label">{{ $t('First Name') }}</span>
+          {{ user.first_name }}
+        </p>
+        <p class="profile">
+          <span class="profile__label">{{ $t('Last Name') }}</span>
+          {{ user.last_name }}
+        </p>
 
-      <ProfileUpdateForm @submit="updatePersonalData" />
+        <SfButton class="form__button" @click="showEditProfileForm=true" >
+            {{ $t("Edit Personal Data") }}
+        </SfButton>
+      </div>
+      <ProfileUpdateForm :cancel="closeEditProfileForm" v-if="showEditProfileForm"  @submit="updatePersonalData" />
 
       <p class="notice">
         {{ $t('Use your personal data') }}
@@ -19,7 +33,7 @@
       <p class="message">
         {{ $t('Change password your account') }}:<br />
         {{ $t('Your current email address is') }}
-        <span class="message__label">example@email.com</span>
+        <span class="message__label">{{user.email}}</span>
       </p>
 
       <PasswordResetForm @submit="updatePassword" />
@@ -28,12 +42,15 @@
 </template>
 
 <script>
+
+import { ref } from '@vue/composition-api';
 import { extend } from 'vee-validate';
 import { email, required, min, confirmed } from 'vee-validate/dist/rules';
 import ProfileUpdateForm from '~/components/MyAccount/ProfileUpdateForm';
 import PasswordResetForm from '~/components/MyAccount/PasswordResetForm';
 import { SfTabs, SfInput, SfButton } from '@storefront-ui/vue';
 import { useUser } from '@vue-storefront/bigcommerce';
+import { onSSR } from '@vue-storefront/core';
 
 extend('email', {
   ...email,
@@ -70,9 +87,12 @@ export default {
     ProfileUpdateForm,
     PasswordResetForm
   },
-
   setup() {
-    const { updateUser, changePassword } = useUser();
+    const { updateUser, changePassword, user, load } = useUser();
+    const showEditProfileForm = ref(false);
+    const closeEditProfileForm = () => {
+      showEditProfileForm.value = false;
+    };
 
     const formHandler = async (fn, onComplete, onError) => {
       try {
@@ -86,11 +106,19 @@ export default {
     const updatePersonalData = ({ form, onComplete, onError }) => formHandler(() => updateUser({ user: form.value }), onComplete, onError);
     const updatePassword = ({ form, onComplete, onError }) => formHandler(() => changePassword({ current: form.value.currentPassword, new: form.value.newPassword }), onComplete, onError);
 
+    onSSR(async () => {
+      await load();
+    });
+
     return {
       updatePersonalData,
-      updatePassword
+      updatePassword,
+      user,
+      showEditProfileForm,
+      closeEditProfileForm
     };
   }
+
 };
 </script>
 
@@ -111,5 +139,13 @@ export default {
   margin: var(--spacer-lg) 0 0 0;
   font-size: var(--font-size--sm);
 }
-
+.profile {
+  margin: 0 0 var(--spacer-lg) 0;
+  font-size: var(--font-size--base);
+  &__label {
+    font-weight: 400;
+    width: 120px;
+    display: inline-flex;
+  }
+}
 </style>

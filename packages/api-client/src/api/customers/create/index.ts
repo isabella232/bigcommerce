@@ -1,7 +1,7 @@
 import {
   BigcommerceIntegrationContext,
   CreateCustomerParameters,
-  CustomerData,
+  User,
   CreateCustomerResponse
 } from '../../../types';
 import endpointPaths from '../../../helpers/endpointPaths';
@@ -9,7 +9,7 @@ import endpointPaths from '../../../helpers/endpointPaths';
 export async function createCustomer(
   context: BigcommerceIntegrationContext,
   params: CreateCustomerParameters
-): Promise<CustomerData> {
+): Promise<User> {
   checkParameters(params);
   params.authentication = {
     new_password: params.password

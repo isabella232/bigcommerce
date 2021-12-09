@@ -16,8 +16,6 @@ export type PasswordResetResult = TODO;
 
 export type ProductFilter = TODO;
 
-export type User = TODO;
-
 export type UserBillingAddress = TODO;
 
 export type UserBillingAddressItem = TODO;

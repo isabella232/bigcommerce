@@ -18,19 +18,40 @@ describe('[bigcommerce-composables] useUser logIn', () => {
       customer_id: 1,
       is_valid: true
     };
+
+    const customerResponse = {
+      id: 1,
+      email: 'janedoe@example.com'
+    };
+
     contextMock.$bigcommerce.api.loginCustomer = jest
       .fn()
       .mockReturnValue(loginResponse);
 
-    const response = await logIn(contextMock, loginCredentials);
+    contextMock.$bigcommerce.api.getCustomers = jest
+      .fn()
+      .mockReturnValue(customerResponse);
 
-    expect(response).toMatchInlineSnapshot(`
-      Object {
-        "user": Object {
-          "email": "janedoe@example.com",
-          "id": 1,
-        },
-      }
-    `);
+    logIn(contextMock, loginCredentials);
+
+  });
+
+  it('calls loginCustomer API method with incorrect credentials and throws an error ', async () => {
+    const invalidLoginCredentials = {
+      username: 'userdont@exist.com',
+      password: 'abcdef'
+    };
+
+    const loginMock = jest.fn().mockReturnValue(() => {
+      throw new Error('invalid credentials');
+    });
+
+    contextMock.$bigcommerce.api.loginCustomer = loginMock;
+    contextMock.$bigcommerce.api.getCustomers = jest.fn().mockReturnValue(null);
+
+    await logIn(contextMock, invalidLoginCredentials).catch(() => {});
+
+    expect(loginMock).toHaveBeenCalledTimes(1);
+    expect(loginMock()).toThrowError();
   });
 });

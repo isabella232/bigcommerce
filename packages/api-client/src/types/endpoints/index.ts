@@ -1,8 +1,10 @@
 import {
   CreateCustomerParameters,
-  CustomerData,
+  User,
+  GetCustomersParameters,
   LoginCustomerParameters,
-  LoginCustomerResponse
+  LoginCustomerResponse,
+  GetCustomersResponse
 } from '../customers';
 import { GetProductsParameters, ProductsResponse } from '../product';
 import { BigcommerceIntegrationContext } from '../context';
@@ -51,6 +53,16 @@ export interface Endpoints {
   ): Promise<ProductsResponse>;
 
   /**
+   * Get customers
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {GetCustomersParameters} params Parameters for `getCustomers` endpoint
+   */
+  getCustomers(
+    context: BigcommerceIntegrationContext,
+    params: GetCustomersParameters
+  ): Promise<GetCustomersResponse>;
+
+  /**
    * Creates the new customer
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
    * @param {CreateCustomerParameters} params Parameters for `createCustomer` endpoint
@@ -58,7 +70,7 @@ export interface Endpoints {
   createCustomer(
     context: BigcommerceIntegrationContext,
     params: CreateCustomerParameters
-  ): Promise<CustomerData>;
+  ): Promise<User>;
 
   /**
    * Logs in a customer using the Customer Login API and saves her data in cookie in the format of a JWT token coming from the Current Customer API.

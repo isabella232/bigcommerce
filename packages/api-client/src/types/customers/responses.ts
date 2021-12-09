@@ -2,34 +2,34 @@
  * Format of customer data that's returned inside the response of `/customers` BigCommerce API endpoint.
  * See at {@link CreateCustomerResponse}
  */
-export type CustomerData = {
-  id: number;
-  authentication: {
+export type User = {
+  id?: number;
+  authentication?: {
     force_password_reset: boolean;
   };
-  company: string;
-  customer_group_id: number;
+  company?: string;
+  customer_group_id?: number;
   email: string;
   first_name: string;
   last_name: string;
-  notes: string;
-  phone: string;
-  registration_ip_address: string;
-  tax_exempt_category: string;
-  date_created: string;
-  date_modified: string;
-  accepts_product_review_abandoned_cart_emails: boolean;
-  store_credit_amounts: Array<{
+  notes?: string;
+  phone?: string;
+  registration_ip_address?: string;
+  tax_exempt_category?: string;
+  date_created?: string;
+  date_modified?: string;
+  accepts_product_review_abandoned_cart_emails?: boolean;
+  store_credit_amounts?: Array<{
     amount: number;
   }>;
-  channel_ids: unknown;
+  channel_ids?: number[];
 };
 
 /**
  * Format of response returned by `/customers` BigCommerce API endpoint.
  */
 export type CreateCustomerResponse = {
-  data: Array<CustomerData>;
+  data: Array<User>;
   meta: unknown;
 };
 
@@ -48,4 +48,12 @@ export type LoginCustomerResponse = {
   customer_id?: number | null;
   is_valid?: boolean;
   errorMessage?: string;
+};
+
+/**
+ * Format of response for getCustomers BigCommerce API endpoint.
+ */
+export type GetCustomersResponse = {
+  data: Array<User>;
+  meta: unknown;
 };

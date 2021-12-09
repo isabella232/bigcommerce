@@ -1,3 +1,73 @@
+import { CustomersIncludeEnum, CustomersSortEnum } from '.';
+
+/**
+ * Format of parameters that can be passed to `getCustomer` endpoint method.
+ */
+export type GetCustomersParameters = {
+  /**
+   * Page number
+   */
+  page?: number;
+  /**
+   * Items count per page. limit=50
+   */
+  limit?: number;
+  /**
+   * Filter items by ID.
+   */
+  'id:in'?: number[];
+  /**
+   * Filter items by company.
+   */
+  'company:in'?: string[];
+  /**
+   * Filter items by customer_group_id.
+   */
+  'customer_group_id:in'?: string[];
+  /**
+   * Filter items by date_created. date_created=2018-09-05T13:43:54
+   */
+  date_created?: string;
+  /**
+   * Filter items by maximum date_created. date_created:max=2018-09-10
+   */
+  'date_created:max'?: string;
+  /**
+   * Filter items by date_created. date_created:min=2018-09-05
+   */
+  'date_created:min'?: string;
+  /**
+   * Filter items by date_modified. date_modified=2018-09-05T13:45:03
+   */
+  date_modified?: string;
+  /**
+   * Filter items by mininum date_modified. date_modified:min=2019-09-04T:00:00:00 or date_modified:min=2019-09-04
+   */
+  'date_modified:min'?: string;
+  /**
+   * Filter items by maximum date_modified date_modified:max=2018-09-05T13:45:03 or date_modified:max=2019-09-04
+   */
+  'date_modified:max'?: string;
+  /**
+   * Filter items by email.
+   */
+  'email:in'?: string;
+  /**
+   * Filter items by first_name and last_name.
+   */
+  'name:in'?: string[];
+  /**
+   * Filter items by substring in first_name and last_name. name:like=moriarty, sherlock Concatenates the first_name and last_name fields.
+   */
+  'name:like'?: string[];
+  /**
+   * Filter items by registration_ip_address. If the customer was created using the API, then registration address is blank. registration_ip_address:in=12.345.6.789
+   */
+  'registration_ip_address:in'?: number[];
+  include?: CustomersIncludeEnum;
+  sort?: CustomersSortEnum;
+};
+
 /**
  * Format of parameters that can be passed to `createCustomer` endpoint method.
  */

@@ -6,22 +6,22 @@
         <div class="highlighted highlighted--total">
           <SfProperty
             name="Order ID"
-            :value="orderGetters.getId(currentOrder)"
+            :value="orderHelpers.getId(currentOrder)"
             class="sf-property--full-width property"
           />
           <SfProperty
             name="Date"
-            :value="orderGetters.getDate(currentOrder)"
+            :value="orderHelpers.getDate(currentOrder)"
             class="sf-property--full-width property"
           />
           <SfProperty
             name="Status"
-            :value="orderGetters.getStatus(currentOrder)"
+            :value="orderHelpers.getStatus(currentOrder)"
             class="sf-property--full-width property"
           />
           <SfProperty
             name="Total"
-            :value="$n(orderGetters.getPrice(currentOrder), 'currency')"
+            :value="$n(orderHelpers.getPrice(currentOrder), 'currency')"
             class="sf-property--full-width property"
           />
         </div>
@@ -31,14 +31,14 @@
             <SfTableHeader>{{ $t('Quantity') }}</SfTableHeader>
             <SfTableHeader>{{ $t('Price') }}</SfTableHeader>
           </SfTableHeading>
-          <SfTableRow v-for="(item, i) in orderGetters.getItems(currentOrder)" :key="i">
+          <SfTableRow v-for="(item, i) in orderHelpers.getItems(currentOrder)" :key="i">
             <SfTableData class="products__name">
-              <nuxt-link :to="'/p/'+orderGetters.getItemSku(item)+'/'+orderGetters.getItemSku(item)">
-                {{orderGetters.getItemName(item)}}
+              <nuxt-link :to="'/p/'+orderHelpers.getItemSku(item)+'/'+orderHelpers.getItemSku(item)">
+                {{orderHelpers.getItemName(item)}}
               </nuxt-link>
             </SfTableData>
-            <SfTableData>{{orderGetters.getItemQty(item)}}</SfTableData>
-            <SfTableData>{{$n(orderGetters.getItemPrice(item), 'currency')}}</SfTableData>
+            <SfTableData>{{orderHelpers.getItemQty(item)}}</SfTableData>
+            <SfTableData>{{$n(orderHelpers.getItemPrice(item), 'currency')}}</SfTableData>
           </SfTableRow>
         </SfTable>
       </div>
@@ -58,12 +58,12 @@
               >{{ tableHeader }}</SfTableHeader>
             <SfTableHeader class="orders__element--right" />
           </SfTableHeading>
-          <SfTableRow v-for="order in orders" :key="orderGetters.getId(order)">
-            <SfTableData v-e2e="'order-number'">{{ orderGetters.getId(order) }}</SfTableData>
-            <SfTableData>{{ orderGetters.getDate(order) }}</SfTableData>
-            <SfTableData>{{ $n(orderGetters.getPrice(order), 'currency') }}</SfTableData>
+          <SfTableRow v-for="order in orders" :key="orderHelpers.getId(order)">
+            <SfTableData v-e2e="'order-number'">{{ orderHelpers.getId(order) }}</SfTableData>
+            <SfTableData>{{ orderHelpers.getDate(order) }}</SfTableData>
+            <SfTableData>{{ $n(orderHelpers.getPrice(order), 'currency') }}</SfTableData>
             <SfTableData>
-              <span :class="getStatusTextClass(order)">{{ orderGetters.getStatus(order) }}</span>
+              <span :class="getStatusTextClass(order)">{{ orderHelpers.getStatus(order) }}</span>
             </SfTableData>
             <SfTableData class="orders__view orders__element--right">
               <SfButton class="sf-button--text desktop-only" @click="currentOrder = order">
@@ -95,9 +95,10 @@ import {
   SfLink
 } from '@storefront-ui/vue';
 import { computed, ref } from '@vue/composition-api';
-import { useUserOrder, orderGetters } from '@vue-storefront/bigcommerce';
+import { useUserOrder } from '@vue-storefront/bigcommerce';
 import { AgnosticOrderStatus } from '@vue-storefront/core';
 import { onSSR } from '@vue-storefront/core';
+import useOrderData from '../../composables/useOrderData';
 
 export default {
   name: 'PersonalDetails',
@@ -111,6 +112,7 @@ export default {
   setup() {
     const { orders, search } = useUserOrder();
     const currentOrder = ref(null);
+    const orderHelpers = useOrderData();
 
     onSSR(async () => {
       await search();
@@ -124,7 +126,7 @@ export default {
     ];
 
     const getStatusTextClass = (order) => {
-      const status = orderGetters.getStatus(order);
+      const status = orderHelpers.getStatus(order);
       switch (status) {
         case AgnosticOrderStatus.Open:
           return 'text-warning';
@@ -138,9 +140,9 @@ export default {
     return {
       tableHeaders,
       orders: computed(() => orders ? orders.value.results : []),
-      totalOrders: computed(() => orderGetters.getOrdersTotal(orders.value)),
+      totalOrders: computed(() => orderHelpers.getOrdersTotal(orders.value)),
       getStatusTextClass,
-      orderGetters,
+      orderHelpers,
       currentOrder
     };
   }

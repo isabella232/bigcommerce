@@ -1,5 +1,6 @@
+import { User } from '@vue-storefront/bigcommerce-api';
 import { Context, UseUserLoginParams } from '../../types';
-import type { User } from '@vue-storefront/bigcommerce-api';
+import { getCustomer } from '.';
 
 /**
  * `logIn` method in `useUser` composable.
@@ -17,5 +18,8 @@ export const logIn = async (context: Context, params: UseUserLoginParams): Promi
     throw new Error(loginResponse.errorMessage);
   }
 
-  return { user: { id: loginResponse.customer_id, email: username }};
+  const id = loginResponse.customer_id;
+  const customer = await getCustomer(context, { 'id:in': [id] });
+
+  return customer;
 };
