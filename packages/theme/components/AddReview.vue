@@ -13,28 +13,43 @@
       </SfButton>
 
       <div v-if="isFormVisible" class="add_review--form">
-          <form @submit="submit">
+          <form class="form" @submit="submit">
               <SfInput
                 v-model="title"
                 class="form__element"
                 name="title"
                 label="Review title"
                 :required="true"
+                :valid="titleBlur || validText(title)"
+                :error-message="$t('Please type review title. It should have at least three characters.')"
+                @blur="titleBlur = false"
               />
-              <SfRating
+              <SfRating :max="5" :score="rating" />
+               <SfSelect
                 class="form__element"
-                :max="5"
-                :score="rating"
-                @click="submit"
-              />
+                label="Review rating"
+                :required="true"
+                v-model="rating"
+              >
+                <SfSelectOption
+                  v-for="star in Array.from(Array(5).keys())"
+                  :key="star"
+                  class="form__element"
+                  :value="star + 1"
+                >{{ star + 1 }}</SfSelectOption>
+              </SfSelect>
               <SfTextarea
                   v-model="message"
                   class="form__element"
+                  label="Review message"
                   name="message"
                   placeholder="type review message"
                   cols="50"
                   rows="5"
                   :required="true"
+                  :valid="messageBlur || validText(message)"
+                  :error-message="$t('Please type review message. It should have at least three characters.')"
+                  @blur="messageBlur = false"
               >
               </SfTextarea>
               <SfButton>Submit</SfButton>
@@ -43,10 +58,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent, ref } from '@vue/composition-api';
 import { useReview } from '@vue-storefront/bigcommerce';
-import { SfButton, SfInput, SfTextarea, SfRating } from '@storefront-ui/vue';
+import { SfButton, SfInput, SfTextarea, SfRating, SfSelect } from '@storefront-ui/vue';
 
 export default defineComponent({
   name: 'AddReviewForm',
@@ -65,21 +80,36 @@ export default defineComponent({
     const title = ref('');
     const rating = ref(5);
     const message = ref('');
+    const titleBlur = ref(true);
+    const messageBlur = ref(true);
 
     const showForm = () => {
       isThanksVisible.value = false;
       isFormVisible.value = true;
     };
 
+    const validText = (text) => {
+      return text.length > 3;
+    };
+
     // eslint-disable-next-line no-undef
-    const submit = (e: Event) => {
+    const submit = (e) => {
       e.preventDefault();
+
+      if (!(validText(message.value) && validText(title.value))) {
+        titleBlur.value = false;
+        messageBlur.value = false;
+        return;
+      }
+
       add({
         productId: props.productId,
         title: title.value,
         text: message.value,
         rating: rating.value
       });
+      titleBlur.value = true;
+      messageBlur.value = true;
       title.value = '';
       message.value = '';
       rating.value = 5;
@@ -94,7 +124,10 @@ export default defineComponent({
       rating,
       message,
       showForm,
-      submit
+      submit,
+      titleBlur,
+      messageBlur,
+      validText
     };
   },
 
@@ -102,15 +135,21 @@ export default defineComponent({
     SfButton,
     SfInput,
     SfTextarea,
-    SfRating
+    SfRating,
+    SfSelect
   }
 });
 </script>
 
 <style lang="scss" scoped>
 @import "~@storefront-ui/vue/styles";
-
 .form {
+  .sf-rating {
+    padding: 0 0 var(--spacer-sm) 0;
+    &__icon {
+      --icon-size: var(--font-size--lg) !important;
+    }
+  }
   padding: var(--spacer-sm) 0;
   &__group {
     display: flex;
@@ -126,11 +165,6 @@ export default defineComponent({
   }
   &__button {
     --button-width: 100%;
-  }
-  .sf-rating {
-      &__icon {
-        --icon-size: 5rem;
-      }
   }
   @include for-desktop {
     display: flex;

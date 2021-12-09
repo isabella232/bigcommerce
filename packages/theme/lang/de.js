@@ -163,5 +163,7 @@ export default {
   forgotPasswordConfirmation:
     'Vielen Dank! Wenn ein Konto mit der E-Mail-Adresse {0} registriert ist, finden Sie in Ihrem Posteingang eine Nachricht mit einem Link zum Zurücksetzen des Passworts.',
   'Currently unavailable': 'Derzeit nicht verfügbar.',
-  'Clear cart': 'Warenkorb löschen'
+  'Clear cart': 'Warenkorb löschen',
+  'Please type review title. It should have at least three characters.': 'Bitte geben Sie den Titel der Rezension ein. Es sollte mindestens drei Zeichen haben.',
+  'Please type review message. It should have at least three characters.': 'Bitte geben Sie eine Bewertungsnachricht ein. Es sollte mindestens drei Zeichen haben.'
 };

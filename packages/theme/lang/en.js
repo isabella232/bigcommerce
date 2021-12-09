@@ -159,5 +159,7 @@ export default {
   forgotPasswordConfirmation:
     'Thanks! If there is an account registered with the {0} email, you will find message with a password reset link in your inbox.',
   'Currently unavailable': 'Currently unavailable.',
-  'Clear cart': 'Clear cart'
+  'Clear cart': 'Clear cart',
+  'Please type review title. It should have at least three characters.': 'Please type review title. It should have at least three characters.',
+  'Please type review message. It should have at least three characters.': 'Please type review message. It should have at least three characters.'
 };
