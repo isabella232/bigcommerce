@@ -1,21 +1,18 @@
-import { Wishlist, WishlistItem, Context } from '../../types';
-import { refreshWishlistProducts } from './helpers';
+import { Wishlist, WishlistParams, Context } from '../../types';
+import { refreshWishlistProducts } from '../helpers';
 import { BIGCOMMERCE_GUEST_WISHLIST_KEY } from '../../helpers/consts';
+import { isInWishlist } from '../helpers';
 
-export const addItem = async (context: Context, wishlistItem: WishlistItem): Promise<Wishlist | null> => {
-  const localStorageItem = localStorage.getItem(BIGCOMMERCE_GUEST_WISHLIST_KEY);
-
-  if (!localStorageItem) {
-    return null;
+export const addItem = async (context: Context, wishlist: Wishlist, params: WishlistParams): Promise<Wishlist | null> => {
+  if (!isInWishlist(wishlist, params)) {
+    wishlist.items.push({
+      id: `${params.productId}_${params.variantId}`,
+      product_id: params.productId,
+      variant_id: params.variantId
+    });
+    await refreshWishlistProducts(context, wishlist);
+    localStorage.setItem(BIGCOMMERCE_GUEST_WISHLIST_KEY, JSON.stringify(wishlist));
   }
 
-  const guestWishlist: Wishlist = JSON.parse(localStorageItem);
-
-  if (!guestWishlist.items.find(item => item.id === wishlistItem.id)) {
-    guestWishlist.items.push(wishlistItem);
-    refreshWishlistProducts(context, guestWishlist);
-    localStorage.setItem(BIGCOMMERCE_GUEST_WISHLIST_KEY, JSON.stringify(guestWishlist));
-  }
-
-  return guestWishlist;
+  return wishlist;
 };

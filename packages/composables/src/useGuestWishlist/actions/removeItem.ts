@@ -1,20 +1,12 @@
 import { Wishlist, WishlistItem, Context } from '../../types';
-import { refreshWishlistProducts } from './helpers';
+import { refreshWishlistProducts } from '../helpers';
 import { BIGCOMMERCE_GUEST_WISHLIST_KEY } from '../../helpers/consts';
 
-export const removeItem = async (context: Context, wishlistItem: WishlistItem): Promise<Wishlist | null> => {
-  const localStorageItem = localStorage.getItem(BIGCOMMERCE_GUEST_WISHLIST_KEY);
+export const removeItem = async (context: Context, wishlist: Wishlist, wishlistItem: WishlistItem): Promise<Wishlist | null> => {
+  wishlist.items = wishlist.items.filter(item => item.id !== wishlistItem.id);
 
-  if (!localStorageItem) {
-    return null;
-  }
+  await refreshWishlistProducts(context, wishlist);
+  localStorage.setItem(BIGCOMMERCE_GUEST_WISHLIST_KEY, JSON.stringify(wishlist));
 
-  const guestWishlist: Wishlist = JSON.parse(localStorageItem);
-
-  guestWishlist.items = guestWishlist.items.filter(item => item.id !== wishlistItem.id);
-
-  refreshWishlistProducts(context, guestWishlist);
-  localStorage.setItem(BIGCOMMERCE_GUEST_WISHLIST_KEY, JSON.stringify(guestWishlist));
-
-  return guestWishlist;
+  return wishlist;
 };

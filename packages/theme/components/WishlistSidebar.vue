@@ -21,21 +21,21 @@
           <div class="collected-product-list">
             <transition-group name="fade" tag="div">
               <SfCollectedProduct
-                v-for="product in products"
-                :key="wishlistGetters.getItemSku(product)"
-                :image="wishlistGetters.getItemImage(product)"
-                :title="wishlistGetters.getItemName(product)"
-                :regular-price="$n(wishlistGetters.getItemPrice(product).regular, 'currency')"
-                :special-price="wishlistGetters.getItemPrice(product).special && $n(wishlistGetters.getItemPrice(product).special, 'currency')"
-                :stock="99999"
+                v-for="wishlistItem in wishlistItems"
+                :key="wishlistHelpers.getItemSku(wishlist, wishlistItem)"
+                :image="wishlistHelpers.getItemImage(wishlist, wishlistItem)"
+                :title="wishlistHelpers.getItemName(wishlist, wishlistItem)"
+                :regular-price="$n(wishlistHelpers.getItemPrice(wishlist, wishlistItem).regular, 'currency')"
+                :special-price="wishlistHelpers.getItemPrice(wishlist, wishlistItem).special && $n(wishlistHelpers.getItemPrice(wishlist, wishlistItem).special, 'currency')"
+                :stock="wishlistHelpers.getItemQty(wishlist, wishlistItem)"
                 image-width="180"
                 image-height="200"
-                @click:remove="removeItem({ product })"
+                @click:remove="removeItem(wishlistItem)"
                 class="collected-product"
               >
                <template #configuration>
                   <div class="collected-product__properties">
-                    <SfProperty v-for="(attribute, key) in wishlistGetters.getItemAttributes(product, ['color', 'size'])" :key="key" :name="key" :value="attribute"/>
+                    <SfProperty v-for="(attribute, key) in wishlistHelpers.getItemOptions(wishlist, wishlistItem, ['color', 'size'])" :key="key" :name="key" :value="attribute"/>
                   </div>
                 </template>
                 <template #input="{}">&nbsp;</template>
@@ -84,11 +84,12 @@ import {
   SfCollectedProduct,
   SfImage
 } from '@storefront-ui/vue';
-import { computed } from '@vue/composition-api';
-import { useWishlist, useUser, wishlistGetters } from '@vue-storefront/bigcommerce';
+import { computed, defineComponent, onMounted } from '@vue/composition-api';
+import { useGuestWishlist, useUser } from '@vue-storefront/bigcommerce';
 import { useUiState } from '~/composables';
+import { useWishlistData } from '../composables/useWishlistData';
 
-export default {
+export default defineComponent({
   name: 'Wishlist',
   components: {
     SfSidebar,
@@ -101,27 +102,31 @@ export default {
     SfImage
   },
   setup() {
-    const { isWishlistSidebarOpen, toggleWishlistSidebar } = useUiState();
-    const { wishlist, removeItem, load: loadWishlist } = useWishlist();
+    const wishlistHelpers = useWishlistData();
     const { isAuthenticated } = useUser();
-    const products = computed(() => wishlistGetters.getItems(wishlist.value));
-    const totals = computed(() => wishlistGetters.getTotals(wishlist.value));
-    const totalItems = computed(() => wishlistGetters.getTotalItems(wishlist.value));
+    const { isWishlistSidebarOpen, toggleWishlistSidebar } = useUiState();
+    const { wishlist, removeItem, load: loadWishlist } = useGuestWishlist('guest-wishlist');
+    const wishlistItems = computed(() => wishlistHelpers.getItems(wishlist.value));
+    const totals = computed(() => wishlistHelpers.getTotals(wishlist.value));
+    const totalItems = computed(() => wishlistHelpers.getTotalItems(wishlist.value));
 
-    loadWishlist();
+    onMounted(() => {
+      loadWishlist();
+    });
 
     return {
       isAuthenticated,
-      products,
+      wishlist,
+      wishlistItems,
       removeItem,
       isWishlistSidebarOpen,
       toggleWishlistSidebar,
       totals,
       totalItems,
-      wishlistGetters
+      wishlistHelpers
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

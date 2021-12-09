@@ -16,7 +16,7 @@ describe('[bigcommerce-theme] useProductData', () => {
 
   describe('[bigcommerce-theme] useProductData getTotals', () => {
     it('should return totals', () => {
-      const expectedTotals = {subtotal: 1, total: 1};
+      const expectedTotals = {subtotal: 49, total: 49};
       expect(wishlistData.getTotals(wishlistMock as Wishlist)).toStrictEqual(expectedTotals);
     });
   });
@@ -56,6 +56,13 @@ describe('[bigcommerce-theme] useProductData', () => {
   describe('[bigcommerce-theme] useProductData getTotalItems', () => {
     it('should return total amount of the items', () => {
       expect(wishlistData.getTotalItems(wishlistMock as Wishlist)).toBe(wishlistMock.items.length);
+    });
+  });
+
+  describe('[bigcommerce-theme] useProductData getItemQty', () => {
+    it('should return item qty', () => {
+      const expectedQty = 0;
+      expect(wishlistData.getItemQty(wishlistMock as Wishlist, wishlistItem)).toBe(expectedQty);
     });
   });
 });

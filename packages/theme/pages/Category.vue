@@ -109,7 +109,12 @@
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
               :show-add-to-cart-button="true"
-              :isOnWishlist="isInWishlist({ product })"
+              wishlistIcon="heart"
+              isInWishlistIcon="heart_fill"
+              :isInWishlist="isInWishlist({
+                productId: product.id,
+                variantId: getDefaultVariant(product).id
+              })"
               :isAddedToCart="isInCart({ product })"
               :link="
                 localePath(
@@ -120,9 +125,18 @@
               "
               class="products__product-card"
               @click:wishlist="
-                !isInWishlist({ product })
-                  ? addItemToWishlist({ product })
-                  : removeItemFromWishlist({ product })
+                isInWishlist({
+                  productId: product.id,
+                  variantId: getDefaultVariant(product).id
+                })
+                  ? removeItemFromWishlist(wishlistHelpers.getItem(wishlist, {
+                    productId: product.id,
+                    variantId: getDefaultVariant(product).id
+                  }))
+                  : addItemToWishlist({
+                    productId: product.id,
+                    variantId: getDefaultVariant(product).id
+                  })
               "
               @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
             />
@@ -151,15 +165,14 @@
               "
               :max-rating="5"
               :score-rating="3"
-              :isOnWishlist="isInWishlist({ product })"
+              :isInWishlist="isInWishlist({
+                productId: product.id,
+                variantId: getDefaultVariant(product).id
+              })"
               :qty="1"
               @input="productsQuantity[product.id] = $event"
               class="products__product-card-horizontal"
-              @click:wishlist="
-                !isInWishlist({ product })
-                  ? addItemToWishlist({ product })
-                  : removeItemFromWishlist({ product })
-              "
+              @click:wishlist="null"
               @click:add-to-cart="
                 addItemToCart({
                   product,
@@ -258,12 +271,13 @@ import {
   SfColor,
   SfProperty
 } from '@storefront-ui/vue';
-import { computed, ref } from '@vue/composition-api';
+import { computed, ref, defineComponent, onMounted } from '@vue/composition-api';
 import {
   useCart,
-  useWishlist,
+  useGuestWishlist,
   useProduct,
-  useCategory
+  useCategory,
+  getDefaultVariant
 } from '@vue-storefront/bigcommerce';
 import { useUiHelpers, useUiState } from '~/composables';
 import {
@@ -275,9 +289,10 @@ import LazyHydrate from 'vue-lazy-hydration';
 import cacheControl from './../helpers/cacheControl';
 import CategoryPageHeader from '~/components/CategoryPageHeader';
 import { useProductData } from '../composables/useProductData';
+import { useWishlistData } from '../composables/useWishlistData';
 
 // TODO(addToCart qty, horizontal): https://github.com/vuestorefront/storefront-ui/issues/1606
-export default {
+export default defineComponent({
   transition: 'fade',
   middleware: cacheControl({
     'max-age': 60,
@@ -288,10 +303,13 @@ export default {
     const uiState = useUiState();
     const { addItem: addItemToCart, isInCart } = useCart();
     const {
+      wishlist,
+      load: loadWishlist,
       addItem: addItemToWishlist,
       isInWishlist,
       removeItem: removeItemFromWishlist
-    } = useWishlist();
+    } = useGuestWishlist('guest-wishlist');
+    const wishlistHelpers = useWishlistData();
     const { products: productsResult, search, loading, error } = useProduct(
       'category-products'
     );
@@ -344,6 +362,10 @@ export default {
       return breadcrumbs;
     });
 
+    onMounted(() => {
+      loadWishlist();
+    });
+
     onSSR(async () => {
       await categorySearch();
       const { categorySlug, page, itemsPerPage } = th.getFacetsFromURL();
@@ -374,13 +396,16 @@ export default {
       pagination,
       activeCategory,
       breadcrumbs,
+      wishlist,
       addItemToWishlist,
       removeItemFromWishlist,
       isInWishlist,
+      wishlistHelpers,
       addItemToCart,
       isInCart,
       productsQuantity,
-      productData
+      productData,
+      getDefaultVariant
     };
   },
   components: {
@@ -403,7 +428,7 @@ export default {
     SfProperty,
     LazyHydrate
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

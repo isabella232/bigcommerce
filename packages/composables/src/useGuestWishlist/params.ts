@@ -1,9 +1,8 @@
-import { load, addItem, removeItem, clear, isInWishlist } from './actions';
+import { load, addItem, removeItem, clear } from './actions';
 
 export const params = {
   load,
   addItem,
   removeItem,
-  clear,
-  isInWishlist
+  clear
 };

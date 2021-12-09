@@ -15,6 +15,7 @@ export { useUserBilling } from './useUserBilling';
 export { useUserOrder } from './useUserOrder';
 export { useUserShipping } from './useUserShipping';
 export { useWishlist } from './useWishlist';
+export { useGuestWishlist } from './useGuestWishlist';
 
 // Getters
 export { cartGetters } from './getters/cartGetters';
@@ -28,7 +29,9 @@ export { reviewGetters } from './getters/reviewGetters';
 export { userBillingGetters } from './getters/userBillingGetters';
 export { userGetters } from './getters/userGetters';
 export { userShippingGetters } from './getters/userShippingGetters';
-export { wishlistGetters } from './getters/wishlistGetters';
+
+// Helpers
+export { getDefaultVariant } from './helpers/product';
 
 // Types
 export * from './types';

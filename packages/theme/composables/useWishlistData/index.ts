@@ -2,7 +2,7 @@ import {
   AgnosticPrice,
   AgnosticTotals
 } from '@vue-storefront/core';
-import { Wishlist, WishlistItem } from '@vue-storefront/bigcommerce';
+import { Wishlist, WishlistItem, WishlistParams } from '@vue-storefront/bigcommerce';
 import { Product } from '@vue-storefront/bigcommerce-api';
 import { useProductData } from '../useProductData';
 
@@ -17,54 +17,77 @@ export const useWishlistData = () => {
   };
 
   const getItems = (wishlist: Wishlist): WishlistItem[] => {
-    return wishlist.items || [];
+    return wishlist?.items || [];
+  };
+
+  const getItem = (wishlist: Wishlist, params: WishlistParams): WishlistItem | undefined => {
+    return wishlist?.items.find(item =>
+      item.product_id === params.productId && item.variant_id === params.variantId
+    );
+  };
+
+  const getItemName = (wishlist: Wishlist, item: WishlistItem): string => {
+    const product = getProduct(wishlist, item);
+    return product?.name || '';
+  };
+
+  const getItemImage = (wishlist: Wishlist, item: WishlistItem): string => {
+    const product = getProduct(wishlist, item);
+    return product ? getCoverImage(product) : '';
+  };
+
+  const getItemPrice = (wishlist: Wishlist, item: WishlistItem): AgnosticPrice => {
+    const product = getProduct(wishlist, item);
+    const variant = getVariant(product, item.variant_id);
+    return product ? getPrice(product, variant) : { regular: null };
+  };
+
+  const getItemOptions = (wishlist: Wishlist, item: WishlistItem, filters?: string[]): ReturnType<typeof getOptions> => {
+    const product = getProduct(wishlist, item);
+    return product ? getOptions(product, filters) : null;
+  };
+
+  const getItemSku = (wishlist: Wishlist, item: WishlistItem): string => {
+    const product = getProduct(wishlist, item);
+    return product?.sku || '';
+  };
+
+  const getItemQty = (wishlist: Wishlist, item: WishlistItem): number => {
+    const product = getProduct(wishlist, item);
+    const variant = getVariant(product, item.variant_id);
+    return variant?.inventory_level || product?.inventory_level || 0;
+  };
+
+  const getShippingPrice = (wishlist: Wishlist): number => {
+    return wishlist?.wishlist_product_data?.data
+      .reduce((price, product) => {
+        price += product.fixed_cost_shipping_price;
+        return price;
+      }, 0) || 0;
+  };
+
+  const getTotalItems = (wishlist: Wishlist): number => {
+    return wishlist?.items?.length || 0;
   };
 
   const getTotals = (wishlist: Wishlist): AgnosticTotals => {
+    const subtotal = wishlist?.items
+      .reduce((sum, item) => {
+        const product = getProduct(wishlist, item);
+        const variant = getVariant(product, item.variant_id);
+        const price = getPrice(product, variant);
+        return sum + (price.special || price.regular || 0);
+      }, 0);
+
+    const shippingPrice = getShippingPrice(wishlist);
+
+    const total = subtotal + shippingPrice;
+
     return {
-      total: wishlist.items?.length || 0,
-      subtotal: wishlist.items?.length || 0
+      total,
+      subtotal
     };
   };
-
-  function getItemName(wishlist: Wishlist, item: WishlistItem): string {
-    const product = getProduct(wishlist, item);
-    return product.name || '';
-  }
-
-  function getItemImage(wishlist: Wishlist, item: WishlistItem): string {
-    const product = getProduct(wishlist, item);
-    return getCoverImage(product) ?? '';
-  }
-
-  function getItemPrice(wishlist: Wishlist, item: WishlistItem): AgnosticPrice {
-    const product = getProduct(wishlist, item);
-    const variant = getVariant(product, item.variant_id);
-    return getPrice(product, variant) || { regular: null };
-  }
-
-  function getItemOptions(wishlist: Wishlist, item: WishlistItem, filters?: string[]): ReturnType<typeof getOptions> {
-    const product = getProduct(wishlist, item);
-    return getOptions(product, filters);
-  }
-
-  function getItemSku(wishlist: Wishlist, item: WishlistItem): string {
-    const product = getProduct(wishlist, item);
-    return product.sku || '';
-  }
-
-  function getShippingPrice(wishlist: Wishlist): number {
-    return wishlist.wishlist_product_data?.data
-      .map(product => product.fixed_cost_shipping_price)
-      .reduce((price, currentPrice) => {
-        price += currentPrice;
-        return price;
-      }, 0);
-  }
-
-  function getTotalItems(wishlist: Wishlist): number {
-    return wishlist.items?.length || 0;
-  }
 
   return {
     getItems,
@@ -75,6 +98,8 @@ export const useWishlistData = () => {
     getItemSku,
     getItemOptions,
     getShippingPrice,
-    getTotalItems
+    getTotalItems,
+    getItemQty,
+    getItem
   };
 };

@@ -9,10 +9,7 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-
     jest.spyOn(window.localStorage.__proto__, 'setItem');
-    jest.spyOn(window.localStorage.__proto__, 'getItem');
-
     window.localStorage.__proto__.setItem = jest.fn();
 
     getProductsMock = jest.fn();
@@ -24,25 +21,12 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
   it('should remove item from the items array', async () => {
     const wishlistItem: WishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
     wishlistMock.items.push(wishlistItem);
-    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
 
     const expectedLength = 0;
 
-    const res = await removeItem(contextMock, wishlistItem);
+    const res = await removeItem(contextMock, wishlistMock, wishlistItem);
 
     expect(res.items).toHaveLength(expectedLength);
-    expect(getProductsMock).toHaveBeenCalledTimes(1);
-  });
-
-  it('should return null if wishlist is not in local storage', async () => {
-    window.localStorage.__proto__.getItem = jest.fn(() => null);
-
-    const wishlistItem: WishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
-
-    const res = await removeItem(contextMock, wishlistItem);
-
-    expect(getProductsMock).toHaveBeenCalledTimes(0);
-    expect(res).toBe(null);
   });
 
   it('should call api to get products from guest wishlists', async () => {
@@ -51,11 +35,10 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
       { id: '2_2', product_id: 2, variant_id: 2 }
     ];
     wishlistMock.items.push(...wishlistItems);
-    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
 
     const expectedParams = { 'id:in': [2], include: 'variants' };
 
-    await removeItem(contextMock, wishlistItems[0]);
+    await removeItem(contextMock, wishlistMock, wishlistItems[0]);
 
     expect(getProductsMock).toHaveBeenCalledTimes(1);
     expect(getProductsMock).toHaveBeenCalledWith(expectedParams);
@@ -65,9 +48,7 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
     const wishlistItem: WishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
     wishlistMock.items.push(wishlistItem);
 
-    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
-
-    await removeItem(contextMock, wishlistItem);
+    await removeItem(contextMock, wishlistMock, wishlistItem);
 
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
   });

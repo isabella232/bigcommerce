@@ -4,6 +4,7 @@ import {
   BIGCOMMERCE_GUEST_CUSTOMER_ID,
   BIGCOMMERCE_GUEST_WISHLIST_TOKEN
 } from '../../src/helpers/consts';
+import { emptyWishlistResponse } from '../../src/useGuestWishlist/helpers';
 
 export const guestWishlistMock: Wishlist = {
   id: BIGCOMMERCE_GUEST_WISHLIST_ID,
@@ -11,6 +12,6 @@ export const guestWishlistMock: Wishlist = {
   token: BIGCOMMERCE_GUEST_WISHLIST_TOKEN,
   name: 'Guest Wishlist',
   items: [],
-  wishlist_product_data: { data: [], meta: {} },
+  wishlist_product_data: emptyWishlistResponse,
   is_public: true
 };

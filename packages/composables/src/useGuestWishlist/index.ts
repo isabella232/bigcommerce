@@ -1,7 +1,14 @@
 import { Ref, computed } from '@vue/composition-api';
 import { sharedRef, UseWishlistErrors, Logger, generateContext } from '@vue-storefront/core';
-import { Context, Wishlist, WishlistItem } from '../types';
+import {
+  Context,
+  Wishlist,
+  WishlistItem,
+  WishlistParams,
+  UseWishlistResponse
+} from '../types';
 import { params } from './params';
+import { isInWishlist as isInWishlistHelper } from './helpers';
 /**
  *  Returns guest wishlist data and actions.
  *
@@ -39,15 +46,14 @@ import { params } from './params';
  *  </script>
  *  ```
  */
-const useGuestWishlist = (id: string): any => {
+export const useGuestWishlist = (id: string): UseWishlistResponse => {
   const wishlist: Ref<Wishlist> = sharedRef(null, `useGuestWishlist-wishlist-${id}`);
   const loading: Ref<boolean> = sharedRef(false, `useGuestWishlist-loading-${id}`);
   const error: Ref<UseWishlistErrors> = sharedRef({
     load: null,
     addItem: null,
     removeItem: null,
-    clear: null,
-    isInWishlist: null
+    clear: null
   }, `useGuestWishlist-error-${id}`);
 
   const context = generateContext(params) as Context;
@@ -66,10 +72,10 @@ const useGuestWishlist = (id: string): any => {
     }
   };
 
-  const addItem = async (item: WishlistItem) => {
+  const addItem = async (wishlistParams: WishlistParams) => {
     try {
       loading.value = true;
-      const response = await params.addItem(context, item);
+      const response = await params.addItem(context, wishlist.value, wishlistParams);
       wishlist.value = response;
       error.value.addItem = null;
     } catch (err) {
@@ -80,10 +86,10 @@ const useGuestWishlist = (id: string): any => {
     }
   };
 
-  const removeItem = () => async (item: WishlistItem) => {
+  const removeItem = async (wishlistItem: WishlistItem) => {
     try {
       loading.value = true;
-      const response = await params.removeItem(context, item);
+      const response = await params.removeItem(context, wishlist.value, wishlistItem);
       wishlist.value = response;
       error.value.removeItem = null;
     } catch (err) {
@@ -97,7 +103,7 @@ const useGuestWishlist = (id: string): any => {
   const clear = async () => {
     try {
       loading.value = true;
-      const response = await params.clear(context);
+      const response = await params.clear(context, wishlist.value);
       wishlist.value = response;
       error.value.clear = null;
     } catch (err) {
@@ -108,21 +114,8 @@ const useGuestWishlist = (id: string): any => {
     }
   };
 
-  const isInWishlist = (wishlist: Wishlist, wishlistItem: WishlistItem): boolean => {
-    let result = false;
-
-    try {
-      loading.value = true;
-      result = params.isInWishlist(wishlist, wishlistItem);
-      error.value.clear = null;
-    } catch (err) {
-      error.value.clear = err;
-      Logger.error(`useGuestWishlist/${id}/isInWishlist`, err);
-    } finally {
-      loading.value = false;
-    }
-
-    return result;
+  const isInWishlist = (wishlistParams: WishlistParams): boolean => {
+    return isInWishlistHelper(wishlist.value, wishlistParams);
   };
 
   return {
@@ -136,5 +129,3 @@ const useGuestWishlist = (id: string): any => {
     isInWishlist
   };
 };
-
-export default useGuestWishlist;
