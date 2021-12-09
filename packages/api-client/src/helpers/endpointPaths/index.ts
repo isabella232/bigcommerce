@@ -16,7 +16,8 @@ const BigCommerceEndpoints = {
     `/carts/${cartId}/items${itemId ? `/${itemId}` : ''}`,
   cart: (cartId?: string): string => (cartId ? `/carts/${cartId}` : '/carts'),
   storefrontLoginWithToken: (token: string): string => `/login/token/${token}`,
-  storefrontCurrentlyLoggedInCustomer: '/customer/current.jwt'
+  storefrontCurrentlyLoggedInCustomer: '/customer/current.jwt',
+  wishlist: '/wishlists'
 };
 
 export default BigCommerceEndpoints;

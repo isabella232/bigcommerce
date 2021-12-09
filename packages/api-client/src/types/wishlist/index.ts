@@ -1,3 +1,5 @@
+export * from './create';
+
 /**
  * Wishlist item model.
  */
@@ -5,7 +7,7 @@ export interface WishlistItem {
   /**
    * The ID of the item.
    */
-  id: number,
+  id?: number,
 
   /**
    * The ID of the product.

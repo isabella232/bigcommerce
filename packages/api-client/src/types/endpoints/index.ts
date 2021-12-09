@@ -34,6 +34,7 @@ import {
   UpdateLineItemParameters,
   UpdateLineItemResponse
 } from '../cart';
+import { CreateWishlistProps, CreateWishlistResponse } from '../wishlist';
 
 /**
  * Definition of all API-client methods available in context.
@@ -189,4 +190,14 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     params: UpdateCartParameters
   ): Promise<UpdateCartResponse>;
+
+  /**
+   * Creates a wishlist and wishlist item. More than one item can be added.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {CreateWishlistProps} params An object which contains necessary properties for creating a new wishlist.
+   */
+   createWishlist(
+    context: BigcommerceIntegrationContext,
+    params: CreateWishlistProps
+  ): Promise<CreateWishlistResponse>;
 }

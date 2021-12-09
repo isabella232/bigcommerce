@@ -1,0 +1,1 @@
+export { createWishlist } from './create';
