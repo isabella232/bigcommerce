@@ -161,21 +161,23 @@ export default defineComponent({
     } = useUiState();
     const { setTermForUrl, getFacetsFromURL } = useUiHelpers();
     const { isAuthenticated, load: loadUser } = useUser();
-    const { cart } = useCart();
+    const { cart, load: loadCart } = useCart();
     const { getTotalItems } = useCartData();
     const term = ref(getFacetsFromURL().phrase);
     const isSearchOpen = ref(false);
     const searchBarRef = ref(null);
     const result = ref({});
     const isMobile = ref(mapMobileObserver().isMobile.get());
-    const { categories: categoryResults, search: categorySearch } =
-      useCategory('category-tree');
+    const { categories: categoryResults, search: categorySearch } = useCategory(
+      'category-tree'
+    );
     const navigation = computed(() =>
       buildCategoryNavigation(categoryResults.value)
     );
 
     onSSR(async () => {
       await categorySearch();
+      await loadCart();
     });
 
     const cartTotalItems = computed(() => {

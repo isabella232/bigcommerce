@@ -137,7 +137,6 @@ import {
   SfQuantitySelector
 } from '@storefront-ui/vue';
 import { computed, defineComponent } from '@vue/composition-api';
-import { onSSR } from '@vue-storefront/core';
 import { useCart, useUser } from '@vue-storefront/bigcommerce';
 import { useUiState } from '~/composables';
 import { useCartData } from '../composables/useCartData';
@@ -163,7 +162,6 @@ export default defineComponent({
       cart,
       removeItem,
       updateItemQty,
-      load: loadCart,
       loading,
       clear: clearCart
     } = useCart();
@@ -172,10 +170,6 @@ export default defineComponent({
     const products = computed(() => cartData.getItems(cart.value));
     const totals = computed(() => cartData.getTotals(cart.value));
     const totalItems = computed(() => cartData.getTotalItems(cart.value));
-
-    onSSR(async () => {
-      await loadCart();
-    });
 
     const updateQuantity = debounce(async ({ product, quantity }) => {
       await updateItemQty({ product, quantity });

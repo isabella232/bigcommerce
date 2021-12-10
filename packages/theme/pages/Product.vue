@@ -33,10 +33,10 @@
             "
             :special="
               productData.getPrice(product, activeVariant).special &&
-              $n(
-                productData.getPrice(product, activeVariant).special,
-                'currency'
-              )
+                $n(
+                  productData.getPrice(product, activeVariant).special,
+                  'currency'
+                )
             "
           />
           <div>
@@ -113,8 +113,8 @@
                 product,
                 quantity: parseInt(qty),
                 customQuery: {
-                  variant_id: activeVariant && activeVariant.id,
-                },
+                  variant_id: activeVariant && activeVariant.id
+                }
               })
             "
           />
@@ -123,7 +123,7 @@
             v-else
             :message="
               activeVariant.purchasing_disabled_message ||
-              $t('Currently unavailable')
+                $t('Currently unavailable')
             "
             type="warning"
           />
@@ -254,9 +254,10 @@ export default defineComponent({
     } = useProduct('relatedProducts');
     const { addItem, loading } = useCart();
     const productData = useProductData();
-    const { reviews: productReviews, search: searchReviews } =
-      useReview('productReviews');
-    const product = computed(() => products.value?.data[0]);
+    const { reviews: productReviews, search: searchReviews } = useReview(
+      'productReviews'
+    );
+    const product = computed(() => products.value?.data?.[0]);
     const options = computed(() => productData.getOptions(product.value));
     const activeVariant = ref();
     const reviews = computed(
