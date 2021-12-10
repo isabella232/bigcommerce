@@ -221,7 +221,7 @@ export interface Endpoints {
   /**
    * Returns a list of wishlists. Optional filter parameters can be passed in.
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
-   * @param {CreateWishlistProps} params An object which contains optional properties for retrieving a list of wishlist.
+   * @param {GetAllWishlistQuery} query (Optional) An object which contains optional properties for retrieving a list of wishlist.
    */
   getAllWishlists(
     context: BigcommerceIntegrationContext,
