@@ -23,3 +23,23 @@ export enum CustomersSortEnum {
   DateModifieddesc = 'date_modified:desc'
 }
 
+/**
+ * Base type for possible variants of form field value
+ */
+type FormFieldBase = {
+  /**
+   * The form field name.
+   */
+  name: string;
+  /**
+   * The value of the form field
+   */
+  value: string | number | string[];
+};
+
+/**
+ * Definition of a form field value
+ */
+export type FormField =
+  | (FormFieldBase & { customer_id?: number })
+  | (FormFieldBase & { address_id: number });

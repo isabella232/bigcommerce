@@ -14,6 +14,8 @@ export const clear: UseCartFactoryParams<
   CartItem,
   Product
 >['clear'] = async (context: Context, { currentCart }) => {
+  const { customer_id: customerId } = currentCart;
+
   await context.$bigcommerce.api.deleteCart({
     id: currentCart.id
   });
@@ -23,5 +25,5 @@ export const clear: UseCartFactoryParams<
     COOKIE_KEY_EMBEDDED_CHECKOUT_URL
   );
 
-  return await load(context, {});
+  return await load(context, { customQuery: { customerId } });
 };

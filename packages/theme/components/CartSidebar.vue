@@ -14,6 +14,7 @@
           name="Total items"
           :value="totalItems"
         />
+        <div>{{ cart && cart.id }}</div>
       </template>
       <transition name="sf-fade" mode="out-in">
         <div v-if="totalItems" key="my-cart" class="my-cart">
@@ -186,7 +187,8 @@ export default defineComponent({
       toggleCartSidebar,
       totals,
       totalItems,
-      cartData
+      cartData,
+      cart
     };
   }
 });

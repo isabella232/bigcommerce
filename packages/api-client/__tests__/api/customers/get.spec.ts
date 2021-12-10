@@ -4,7 +4,6 @@ import { GetCustomersParameters, GetCustomersResponse } from '../../../src';
 
 describe('[bigcommerce-api-client] getCustomer', () => {
   it('gets customer by id', async () => {
-
     const params: GetCustomersParameters = {
       'id:in': [11]
     };

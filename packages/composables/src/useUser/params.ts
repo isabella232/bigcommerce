@@ -1,22 +1,24 @@
-import { UseUserFactoryParams } from '@vue-storefront/core';
 import { Context } from '../types';
-import type { User } from '@vue-storefront/bigcommerce-api';
+import {
+  COOKIE_KEY_CUSTOMER_DATA,
+  CustomersIncludeEnum,
+  User
+} from '@vue-storefront/bigcommerce-api';
 import {
   UseUserUpdateParams as UpdateParams,
   UseUserRegisterParams as RegisterParams
 } from '../types/useUser';
 import { register, logIn, getCustomer } from './actions';
 import { useCart } from '../useCart';
-import {
-  COOKIE_KEY_CUSTOMER_DATA
-} from '@vue-storefront/bigcommerce-api';
+import { UseUserFactoryParams } from '@vue-storefront/core';
 import jwt from 'jsonwebtoken';
+import { loadCustomerCart } from '../helpers/customer/loadCart';
+import { load as loadCart } from '../useCart/actions';
 
 /**
  * Parameter object for `useUserFactory`.
  */
 const params: UseUserFactoryParams<User, UpdateParams, RegisterParams> = {
-
   provide() {
     return {
       cart: useCart()
@@ -29,10 +31,19 @@ const params: UseUserFactoryParams<User, UpdateParams, RegisterParams> = {
     );
 
     if (loggedInCustomerToken) {
-
       const decodedToken = jwt.decode(loggedInCustomerToken);
       const id = decodedToken.customer.id;
-      return await getCustomer(context, {'id:in': [id]});
+      const customer = await getCustomer(context, {
+        'id:in': [id],
+        include: CustomersIncludeEnum.Formfields
+      });
+
+      const formFields = await loadCustomerCart(context, customer);
+      if (formFields) {
+        customer.form_fields = formFields;
+      }
+
+      return customer;
     }
 
     return null;
@@ -40,6 +51,9 @@ const params: UseUserFactoryParams<User, UpdateParams, RegisterParams> = {
 
   logOut: async (context: Context): Promise<void> => {
     context.$bigcommerce.config.app.$cookies.remove(COOKIE_KEY_CUSTOMER_DATA);
+
+    const newCart = await loadCart(context, {});
+    context.cart.setCart(newCart);
   },
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

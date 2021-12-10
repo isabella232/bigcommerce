@@ -24,7 +24,9 @@ export const removeItem: UseCartFactoryParams<
     context.$bigcommerce.config.app.$cookies.remove(COOKIE_KEY_CART_ID);
 
     // no item remained in the cart, so it is deleted automatically and have to create a new cart
-    return await load(context, {});
+    return await load(context, {
+      customQuery: { customerId: currentCart.customer_id }
+    });
   }
 
   return data;

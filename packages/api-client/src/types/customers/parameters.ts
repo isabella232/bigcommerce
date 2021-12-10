@@ -1,4 +1,4 @@
-import { CustomersIncludeEnum, CustomersSortEnum } from '.';
+import { CustomersIncludeEnum, CustomersSortEnum, FormField } from '.';
 
 /**
  * Format of parameters that can be passed to `getCustomer` endpoint method.
@@ -102,4 +102,11 @@ export type ValidateCredentialsParameter = {
 export type LoginCustomerParameters = {
   email: string;
   password: string;
+};
+
+/**
+ * Format of parameters that can be passed to `updateCustomerFormFields` endpoint method.
+ */
+export type UpdateCustomerFormFieldsParameters = {
+  data: FormField[];
 };

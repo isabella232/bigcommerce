@@ -55,7 +55,7 @@
       >
         {{
           $t(
-            "Please type your current password to change your personal details."
+            'Please type your current password to change your personal details.'
           )
         }}
         <SfInput
@@ -72,14 +72,18 @@
           {{ error.authentication }}
         </div>
         <SfButton class="form__button" @click="handleSubmit(submitForm(reset))">
-          {{ $t("Update personal data") }}
+          {{ $t('Update personal data') }}
         </SfButton>
       </SfModal>
       <SfButton class="form__button form__button-inline">
-        {{ $t("Update personal data") }}
+        {{ $t('Update personal data') }}
       </SfButton>
-       <SfButton @click="cancel()" type="button" class="form__button form__button-inline form__button-width-auto">
-        {{ $t("Cancel") }}
+      <SfButton
+        @click="cancel()"
+        type="button"
+        class="form__button form__button-inline form__button-width-auto"
+      >
+        {{ $t('Cancel') }}
       </SfButton>
     </form>
   </ValidationObserver>
@@ -177,7 +181,7 @@ export default defineComponent({
   }
 });
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .form {
   &__element {
     display: block;

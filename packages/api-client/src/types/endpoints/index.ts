@@ -4,7 +4,9 @@ import {
   GetCustomersParameters,
   LoginCustomerParameters,
   LoginCustomerResponse,
-  GetCustomersResponse
+  GetCustomersResponse,
+  UpdateCustomerFormFieldsParameters,
+  UpdateCustomerFormFieldsResponse
 } from '../customers';
 import { GetProductsParameters, ProductsResponse } from '../product';
 import { BigcommerceIntegrationContext } from '../context';
@@ -87,6 +89,16 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     params: LoginCustomerParameters
   ): Promise<LoginCustomerResponse>;
+
+  /**
+   * Updates form field values on the Customer or Customer Address objects.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {UpdateCustomerFormFieldsParameters} params Parameters for `updateCustomerFormFields` endpoint
+   */
+  updateCustomerFormFields(
+    context: BigcommerceIntegrationContext,
+    params: UpdateCustomerFormFieldsParameters
+  ): Promise<UpdateCustomerFormFieldsResponse>;
 
   /**
    * Returns a single Product Review.

@@ -5,22 +5,26 @@
       <div v-if="!showEditProfileForm">
         <p class="profile">
           <span class="profile__label">{{ $t('Email') }}</span>
-          {{ user.email }}
+          {{ userData.getEmailAddress(user) }}
         </p>
         <p class="profile">
           <span class="profile__label">{{ $t('First Name') }}</span>
-          {{ user.first_name }}
+          {{ userData.getFirstName(user) }}
         </p>
         <p class="profile">
           <span class="profile__label">{{ $t('Last Name') }}</span>
-          {{ user.last_name }}
+          {{ userData.getLastName(user) }}
         </p>
 
-        <SfButton class="form__button" @click="showEditProfileForm=true" >
-            {{ $t("Edit Personal Data") }}
+        <SfButton class="form__button" @click="showEditProfileForm = true">
+          {{ $t('Edit Personal Data') }}
         </SfButton>
       </div>
-      <ProfileUpdateForm :cancel="closeEditProfileForm" v-if="showEditProfileForm"  @submit="updatePersonalData" />
+      <ProfileUpdateForm
+        :cancel="closeEditProfileForm"
+        v-if="showEditProfileForm"
+        @submit="updatePersonalData"
+      />
 
       <p class="notice">
         {{ $t('Use your personal data') }}
@@ -33,7 +37,7 @@
       <p class="message">
         {{ $t('Change password your account') }}:<br />
         {{ $t('Your current email address is') }}
-        <span class="message__label">{{user.email}}</span>
+        <span class="message__label">{{ userData.getEmailAddress(user) }}</span>
       </p>
 
       <PasswordResetForm @submit="updatePassword" />
@@ -42,8 +46,7 @@
 </template>
 
 <script>
-
-import { ref } from '@vue/composition-api';
+import { defineComponent, ref } from '@vue/composition-api';
 import { extend } from 'vee-validate';
 import { email, required, min, confirmed } from 'vee-validate/dist/rules';
 import ProfileUpdateForm from '~/components/MyAccount/ProfileUpdateForm';
@@ -51,6 +54,7 @@ import PasswordResetForm from '~/components/MyAccount/PasswordResetForm';
 import { SfTabs, SfInput, SfButton } from '@storefront-ui/vue';
 import { useUser } from '@vue-storefront/bigcommerce';
 import { onSSR } from '@vue-storefront/core';
+import { useUserData } from '../../composables/useUserData';
 
 extend('email', {
   ...email,
@@ -68,8 +72,12 @@ extend('min', {
 });
 
 extend('password', {
-  validate: value => String(value).length >= 8 && String(value).match(/[A-Za-z]/gi) && String(value).match(/[0-9]/gi),
-  message: 'Password must have at least 8 characters including one letter and a number'
+  validate: (value) =>
+    String(value).length >= 8 &&
+    String(value).match(/[A-Za-z]/gi) &&
+    String(value).match(/[0-9]/gi),
+  message:
+    'Password must have at least 8 characters including one letter and a number'
 });
 
 extend('confirmed', {
@@ -77,7 +85,7 @@ extend('confirmed', {
   message: 'Passwords don\'t match'
 });
 
-export default {
+export default defineComponent({
   name: 'PersonalDetails',
 
   components: {
@@ -89,6 +97,7 @@ export default {
   },
   setup() {
     const { updateUser, changePassword, user, load } = useUser();
+    const userData = useUserData();
     const showEditProfileForm = ref(false);
     const closeEditProfileForm = () => {
       showEditProfileForm.value = false;
@@ -103,14 +112,29 @@ export default {
       }
     };
 
-    const updatePersonalData = ({ form, onComplete, onError }) => formHandler(() => updateUser({ user: form.value }), onComplete, onError);
-    const updatePassword = ({ form, onComplete, onError }) => formHandler(() => changePassword({ current: form.value.currentPassword, new: form.value.newPassword }), onComplete, onError);
+    const updatePersonalData = ({ form, onComplete, onError }) =>
+      formHandler(() => updateUser({ user: form.value }), onComplete, onError);
+    const updatePassword = ({ form, onComplete, onError }) =>
+      formHandler(
+        () =>
+          changePassword({
+            current: form.value.currentPassword,
+            new: form.value.newPassword
+          }),
+        onComplete,
+        onError
+      );
+
+    onSSR(async () => {
+      await load();
+    });
 
     onSSR(async () => {
       await load();
     });
 
     return {
+      userData,
       updatePersonalData,
       updatePassword,
       user,
@@ -118,11 +142,10 @@ export default {
       closeEditProfileForm
     };
   }
-
-};
+});
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .message,
 .notice {
   font-family: var(--font-family--primary);

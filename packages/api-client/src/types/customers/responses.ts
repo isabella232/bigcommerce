@@ -1,3 +1,6 @@
+import { FormField } from '.';
+import { MetaCollection } from '..';
+
 /**
  * Format of customer data that's returned inside the response of `/customers` BigCommerce API endpoint.
  * See at {@link CreateCustomerResponse}
@@ -23,6 +26,7 @@ export type User = {
     amount: number;
   }>;
   channel_ids?: number[];
+  form_fields?: FormField[];
 };
 
 /**
@@ -55,5 +59,10 @@ export type LoginCustomerResponse = {
  */
 export type GetCustomersResponse = {
   data: Array<User>;
-  meta: unknown;
+  meta: MetaCollection;
+};
+
+export type UpdateCustomerFormFieldsResponse = {
+  data: FormField[];
+  meta: Record<string, never>;
 };

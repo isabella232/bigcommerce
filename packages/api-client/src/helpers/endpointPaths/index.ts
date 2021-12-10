@@ -17,6 +17,7 @@ const BigCommerceEndpoints = {
   cart: (cartId?: string): string => (cartId ? `/carts/${cartId}` : '/carts'),
   storefrontLoginWithToken: (token: string): string => `/login/token/${token}`,
   storefrontCurrentlyLoggedInCustomer: '/customer/current.jwt',
+  formFieldValues: '/customers/form-field-values',
   wishlists: '/wishlists'
 };
 

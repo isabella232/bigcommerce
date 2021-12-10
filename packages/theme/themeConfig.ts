@@ -1,5 +1,6 @@
 export default {
   itemsPerPage: [10, 20, 50, 100],
+  userCartKey: 'Cart ID',
   channelIds: [871856],
   storePreviewToken: 'tnbAR8COKx',
   home: {

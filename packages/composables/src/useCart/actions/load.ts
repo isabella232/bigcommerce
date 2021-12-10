@@ -1,18 +1,22 @@
 import {
   Cart,
+  CartIncludeEnum,
   CartItem,
   COOKIE_KEY_CART_ID,
   COOKIE_KEY_EMBEDDED_CHECKOUT_URL,
   Product
 } from '@vue-storefront/bigcommerce-api';
 import { UseCartFactoryParams } from '@vue-storefront/core';
-import { BIGCOMMERCE_COOKIE_MAXAGE } from '../../helpers/consts';
+import {
+  BIGCOMMERCE_COOKIE_MAXAGE,
+  BIGCOMMERCE_USER_CART_KEY
+} from '../../helpers/consts';
 
 export const load: UseCartFactoryParams<
   Cart,
   CartItem,
   Product
->['load'] = async (context) => {
+>['load'] = async (context, { customQuery }) => {
   const cookies = context.$bigcommerce.config.app.$cookies;
   const cartId = cookies.get(COOKIE_KEY_CART_ID);
   const channelIds =
@@ -23,16 +27,32 @@ export const load: UseCartFactoryParams<
   if (!cartId) {
     const { data } = await context.$bigcommerce.api.createCart({
       data: {
+        customer_id: customQuery?.customerId,
         line_items: [],
         ...(channelId ? { channel_id: channelId } : {})
       },
-      include: 'redirect_urls'
+      include: CartIncludeEnum.RedirectUrls
     });
 
-    cookies.set(COOKIE_KEY_CART_ID, data.id, {
-      path: '/',
-      maxAge: BIGCOMMERCE_COOKIE_MAXAGE
-    });
+    // after the cart is cleared by a logged-in user the new cart should be assigned to the user
+    if (customQuery?.customerId) {
+      await context.$bigcommerce.api.updateCustomerFormFields({
+        data: [
+          {
+            customer_id: customQuery.customerId,
+            name:
+              context.$bigcommerce.config.app.$config.theme?.userCartKey ||
+              BIGCOMMERCE_USER_CART_KEY,
+            value: data.id
+          }
+        ]
+      });
+    } else {
+      cookies.set(COOKIE_KEY_CART_ID, data.id, {
+        path: '/',
+        maxAge: BIGCOMMERCE_COOKIE_MAXAGE
+      });
+    }
 
     const storePreviewToken =
       context.$bigcommerce?.config?.app?.$config?.theme?.storePreviewToken;
