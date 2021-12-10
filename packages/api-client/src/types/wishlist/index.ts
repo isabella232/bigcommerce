@@ -1,4 +1,5 @@
 export * from './create';
+export * from './getAll';
 
 /**
  * Wishlist item model.

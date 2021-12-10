@@ -20,7 +20,7 @@ export const createWishlist: Endpoints['createWishlist'] = async (
   }
 
   return context.client.post<CreateWishlistResponse, CreateWishlistProps>(
-    BigCommerceEndpoints.wishlist,
+    BigCommerceEndpoints.wishlists,
     props
   );
 };

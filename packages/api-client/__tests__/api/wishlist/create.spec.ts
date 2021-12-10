@@ -21,7 +21,7 @@ describe('[BigCommerce-api-client] create wishlist', () => {
     await createWishlist(contextMock, props);
 
     // Then
-    expect(contextMock.client.post).toHaveBeenLastCalledWith(BigCommerceEndpoints.wishlist, props);
+    expect(contextMock.client.post).toHaveBeenLastCalledWith(BigCommerceEndpoints.wishlists, props);
   });
 
   it('should throw an error when name was not provided', async () => {
