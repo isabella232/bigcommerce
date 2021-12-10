@@ -2,6 +2,7 @@ import {
   Cart,
   CartItem,
   COOKIE_KEY_CART_ID,
+  COOKIE_KEY_EMBEDDED_CHECKOUT_URL,
   Product
 } from '@vue-storefront/bigcommerce-api';
 import { UseCartFactoryParams } from '@vue-storefront/core';
@@ -12,22 +13,39 @@ export const load: UseCartFactoryParams<
   CartItem,
   Product
 >['load'] = async (context) => {
-  const cartId = context.$bigcommerce.config.app.$cookies.get(
-    COOKIE_KEY_CART_ID
-  );
+  const cookies = context.$bigcommerce.config.app.$cookies;
+  const cartId = cookies.get(COOKIE_KEY_CART_ID);
+  const channelIds =
+    context.$bigcommerce?.config?.app?.$config?.theme?.channelIds;
+  const channelId =
+    Array.isArray(channelIds) && channelIds.length ? channelIds[0] : null;
 
   if (!cartId) {
     const { data } = await context.$bigcommerce.api.createCart({
       data: {
-        line_items: []
-      }
+        line_items: [],
+        ...(channelId ? { channel_id: channelId } : {})
+      },
+      include: 'redirect_urls'
     });
 
-    context.$bigcommerce.config.app.$cookies.set(COOKIE_KEY_CART_ID, data.id, {
+    cookies.set(COOKIE_KEY_CART_ID, data.id, {
       path: '/',
       maxAge: BIGCOMMERCE_COOKIE_MAXAGE
     });
 
+    const storePreviewToken =
+      context.$bigcommerce?.config?.app?.$config?.theme?.storePreviewToken;
+    cookies.set(
+      COOKIE_KEY_EMBEDDED_CHECKOUT_URL,
+      `${data.redirect_urls.embedded_checkout_url}${
+        storePreviewToken ? `&guestTkn=${storePreviewToken}` : ''
+      }`,
+      {
+        path: '/',
+        maxAge: BIGCOMMERCE_COOKIE_MAXAGE
+      }
+    );
     return data;
   }
 

@@ -101,4 +101,12 @@ export type Cart = {
    * Locale of the cart.
    */
   locale?: string;
+  /**
+   * Redirect URLs for checkout.
+   */
+  redirect_urls?: {
+    cart_url: string;
+    checkout_url: string;
+    embedded_checkout_url: string;
+  };
 };

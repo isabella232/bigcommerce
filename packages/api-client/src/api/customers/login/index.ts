@@ -127,7 +127,8 @@ export async function getLoggedInCustomerToken(
 
 export function generateSsoLoginLink(
   context: BigcommerceIntegrationContext,
-  customerId: number
+  customerId: number,
+  redirectUrl?: string
 ): string {
   const {
     config: {
@@ -142,7 +143,8 @@ export function generateSsoLoginLink(
     jti: uuidv4(),
     operation: 'customer_login',
     store_hash: storeHash,
-    customer_id: `${customerId}`
+    customer_id: `${customerId}`,
+    ...(redirectUrl ? { redirectUrl } : {})
   };
 
   const token = jwt.sign(payload, secret, {

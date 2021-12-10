@@ -180,6 +180,7 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
       storeUrl,
       guestToken
     };
+    const redirectUrl = 'a-valid-URL';
 
     const getTimestampInSeconds = jest.fn().mockReturnValue(dateCreated);
     jest.doMock('../../../src/helpers/date', () => ({
@@ -188,7 +189,11 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
     mockModulePartially('../../../src/api/customers/login', () => ({}));
     const module = await import('../../../src/api/customers/login');
 
-    const loginUrl = await module.generateSsoLoginLink(contextMock, customerId);
+    const loginUrl = await module.generateSsoLoginLink(
+      contextMock,
+      customerId,
+      redirectUrl
+    );
 
     expect(jwtSign).toBeCalledTimes(1);
     expect(jwtSign).toBeCalledWith(
@@ -198,7 +203,8 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
         iss: clientId,
         jti: uniqueId,
         operation: 'customer_login',
-        store_hash: storeHash
+        store_hash: storeHash,
+        redirectUrl
       },
       secret,
       {

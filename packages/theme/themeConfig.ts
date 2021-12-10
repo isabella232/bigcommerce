@@ -1,6 +1,7 @@
 export default {
   itemsPerPage: [10, 20, 50, 100],
-  channelIds: [1],
+  channelIds: [871856],
+  storePreviewToken: 'tnbAR8COKx',
   home: {
     bannerA: {
       link: '/',

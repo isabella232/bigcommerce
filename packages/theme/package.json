@@ -19,6 +19,7 @@
     "update:update": "ncu -u"
   },
   "dependencies": {
+    "@bigcommerce/checkout-sdk": "^1.201.2",
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/style-resources": "^1.2.1",
     "@storefront-ui/vue": "^0.11.0",

@@ -122,5 +122,10 @@ export const mockedCart: Cart = {
   },
   created_time: '2021-11-30T13:06:50+00:00',
   updated_time: '2021-12-01T09:59:33+00:00',
-  locale: 'en'
+  locale: 'en',
+  redirect_urls: {
+    cart_url: 'https://valid.url',
+    checkout_url: 'https://valid.url',
+    embedded_checkout_url: 'https://valid.url'
+  }
 };
