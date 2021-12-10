@@ -1,21 +1,23 @@
-import {
-  BigcommerceIntegrationContext,
-  GetProductReviewProps,
-  ProductReviewResponse
-} from '../../../types';
+import { Endpoints, ProductReviewResponse } from '../../../types';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
 
-export async function getProductReview(
-  context: BigcommerceIntegrationContext,
-  props: GetProductReviewProps
-): Promise<ProductReviewResponse> {
+export const getProductReview: Endpoints['getProductReview'] = async (
+  context,
+  props
+) => {
   const { productId, reviewId } = props;
 
   if (!productId || typeof productId !== 'number')
-    throw Error(`ProductId with value: ${productId} is not valid. Use number value.`);
+    throw Error(
+      `ProductId with value: ${productId} is not valid. Use number value.`
+    );
 
   if (!reviewId || typeof reviewId !== 'number')
-    throw Error(`ReviewId with value: ${reviewId} is not valid. Use number value.`);
+    throw Error(
+      `ReviewId with value: ${reviewId} is not valid. Use number value.`
+    );
 
-  return context.client.get<ProductReviewResponse>(BigCommerceEndpoints.review(productId, reviewId));
-}
+  return context.client.get<ProductReviewResponse>(
+    BigCommerceEndpoints.review(productId, reviewId)
+  );
+};

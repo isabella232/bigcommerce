@@ -1,15 +1,8 @@
 import queryString from 'query-string';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
-import {
-  BigcommerceIntegrationContext,
-  CreateCartResponse,
-  CreateCartParameters
-} from '../../../types';
+import { Endpoints } from '../../../types';
 
-export async function createCart(
-  context: BigcommerceIntegrationContext,
-  params: CreateCartParameters
-): Promise<CreateCartResponse> {
+export const createCart: Endpoints['createCart'] = async (context, params) => {
   const { data, include } = params;
 
   return await context.client.post(
@@ -19,6 +12,6 @@ export async function createCart(
     }),
     data
   );
-}
+};
 
 export default createCart;

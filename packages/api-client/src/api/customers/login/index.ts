@@ -5,8 +5,8 @@ const fetch = require('fetch-cookie/node-fetch')(nodeFetch);
 import queryString from 'query-string';
 import {
   BigcommerceIntegrationContext,
+  Endpoints,
   LoginCustomerParameters,
-  LoginCustomerResponse,
   ValidateCredentialsResponse
 } from '../../../types';
 import {
@@ -20,10 +20,10 @@ import endpoints from '../../../helpers/endpointPaths';
 import { getTimestampInSeconds, getDateDaysLater } from '../../../helpers/date';
 import * as Login from '.';
 
-export async function loginCustomer(
-  context: BigcommerceIntegrationContext,
-  params: LoginCustomerParameters
-): Promise<LoginCustomerResponse> {
+export const loginCustomer: Endpoints['loginCustomer'] = async (
+  context,
+  params
+) => {
   try {
     const loginResponse = await Login.performLogin(context, params);
     const customerDataToken = await Login.verifyLogin(context);
@@ -35,7 +35,7 @@ export async function loginCustomer(
       errorMessage: error.message
     };
   }
-}
+};
 
 export async function performLogin(
   context: BigcommerceIntegrationContext,

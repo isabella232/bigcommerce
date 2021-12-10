@@ -1,20 +1,17 @@
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
-import {
-  BigcommerceIntegrationContext,
-  CategoryTreeResponse
-} from '../../../types';
+import { CategoryTreeResponse, Endpoints } from '../../../types';
 
 /**
  *
  * @param context BigcommerceIntegrationContext
  * @returns CategoryTree array with children categories
  */
-export async function getCategoryTree(
-  context: BigcommerceIntegrationContext
-): Promise<CategoryTreeResponse> {
+export const getCategoryTree: Endpoints['getCategoryTree'] = async (
+  context
+) => {
   const { categoryTree } = BigCommerceEndpoints;
   const response = await context.client.get<CategoryTreeResponse>(
     categoryTree()
   );
   return response;
-}
+};

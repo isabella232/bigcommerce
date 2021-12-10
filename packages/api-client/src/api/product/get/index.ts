@@ -1,15 +1,11 @@
 import queryString from 'query-string';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
-import {
-  BigcommerceIntegrationContext,
-  GetProductsParameters,
-  ProductsResponse
-} from '../../../types';
+import { Endpoints } from '../../../types';
 
-export async function getProducts(
-  context: BigcommerceIntegrationContext,
-  params: GetProductsParameters
-): Promise<ProductsResponse> {
+export const getProducts: Endpoints['getProducts'] = async (
+  context,
+  params
+) => {
   if (params.include && !params.include.includes('images')) {
     params.include = params.include.concat(',images');
   } else if (!params.include) {
@@ -29,6 +25,6 @@ export async function getProducts(
       }
     )
   );
-}
+};
 
 export default getProducts;

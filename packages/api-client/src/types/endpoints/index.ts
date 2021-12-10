@@ -129,7 +129,7 @@ export interface Endpoints {
    */
   getCategory(
     context: BigcommerceIntegrationContext,
-    params: CategoryParameters
+    params?: CategoryParameters
   ): Promise<CategoryResponse>;
 
   /**

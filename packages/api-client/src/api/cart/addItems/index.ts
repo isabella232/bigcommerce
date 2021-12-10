@@ -1,15 +1,11 @@
 import queryString from 'query-string';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
-import {
-  BigcommerceIntegrationContext,
-  AddLineItemsParameters,
-  AddLineItemsResponse
-} from '../../../types';
+import { Endpoints } from '../../../types';
 
-export async function addCartItems(
-  context: BigcommerceIntegrationContext,
-  params: AddLineItemsParameters
-): Promise<AddLineItemsResponse> {
+export const addCartItems: Endpoints['addCartItems'] = async (
+  context,
+  params
+) => {
   const { cartId, data, include } = params;
 
   return await context.client.post(
@@ -19,6 +15,6 @@ export async function addCartItems(
     }),
     data
   );
-}
+};
 
 export default addCartItems;
