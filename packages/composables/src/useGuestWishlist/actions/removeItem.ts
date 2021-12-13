@@ -1,5 +1,5 @@
 import { Wishlist, WishlistItem, Context } from '../../types';
-import { refreshWishlistProducts } from '../helpers';
+import { refreshWishlistProducts } from '../../helpers';
 import { BIGCOMMERCE_GUEST_WISHLIST_KEY } from '../../helpers/consts';
 
 export const removeItem = async (context: Context, wishlist: Wishlist, wishlistItem: WishlistItem): Promise<Wishlist | null> => {

@@ -1,4 +1,4 @@
-import { isInWishlist } from '../../src/useGuestWishlist/helpers';
+import { isInWishlist } from '../../src/helpers';
 import { guestWishlistMock } from '../../__mocks__/useGuestWishlist/guestWishlist.mock';
 
 describe('[BigCommerce - composables] useGuestWishlist isInWishlist', () => {

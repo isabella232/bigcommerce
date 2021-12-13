@@ -1,7 +1,6 @@
 import { Wishlist, WishlistParams, Context } from '../../types';
-import { refreshWishlistProducts } from '../helpers';
 import { BIGCOMMERCE_GUEST_WISHLIST_KEY } from '../../helpers/consts';
-import { isInWishlist } from '../helpers';
+import { isInWishlist, refreshWishlistProducts } from '../../helpers';
 
 export const addItem = async (context: Context, wishlist: Wishlist, params: WishlistParams): Promise<Wishlist | null> => {
   if (!isInWishlist(wishlist, params)) {

@@ -1,5 +1,5 @@
 import { load } from '../../src/useGuestWishlist/actions';
-import { emptyWishlistResponse } from '../../src/useGuestWishlist/helpers';
+import { emptyWishlistResponse } from '../../src/helpers';
 import { guestWishlistMock } from '../../__mocks__/useGuestWishlist/guestWishlist.mock';
 import { contextMock } from '../../__mocks__/context.mock';
 import {

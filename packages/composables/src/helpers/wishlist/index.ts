@@ -1,6 +1,6 @@
 import { Context, Wishlist, WishlistParams } from '../../types';
 
-export const emptyWishlistResponse = {
+export const emptyWishlistResponse: Wishlist['wishlist_product_data'] = {
   data: [],
   meta: {
     pagination: {

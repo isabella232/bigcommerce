@@ -5,7 +5,7 @@ import {
   BIGCOMMERCE_GUEST_WISHLIST_KEY,
   BIGCOMMERCE_GUEST_WISHLIST_TOKEN
 } from '../../helpers/consts';
-import { refreshWishlistProducts, emptyWishlistResponse } from '../helpers';
+import { refreshWishlistProducts, emptyWishlistResponse } from '../../helpers';
 
 export const load = async (context: Context, name: string, isPublic = true): Promise<Wishlist> => {
   let guestWishlist: Wishlist = {

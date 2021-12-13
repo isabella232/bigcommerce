@@ -8,7 +8,7 @@ import {
   UseWishlistResponse
 } from '../types';
 import { params } from './params';
-import { isInWishlist as isInWishlistHelper } from './helpers';
+import { isInWishlist as isInWishlistHelper } from '../helpers';
 /**
  *  Returns guest wishlist data and actions.
  *
