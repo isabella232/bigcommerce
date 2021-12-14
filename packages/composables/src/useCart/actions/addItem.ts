@@ -26,7 +26,7 @@ export const addItem: UseCartFactoryParams<
 
   const { data } = await context.$bigcommerce.api.addCartItems({
     cartId: currentCart.id,
-    include: 'line_items.physical_items.options,line_items.digital_items.options' as CartIncludeEnum,
+    include: `line_items.physical_items.options,line_items.digital_items.options,${CartIncludeEnum.RedirectUrls}` as CartIncludeEnum,
     data: {
       line_items: [
         {

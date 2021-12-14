@@ -9,11 +9,10 @@ import {
   UseUserUpdateParams as UpdateParams,
   UseUserRegisterParams as RegisterParams
 } from '../types/useUser';
-import { register, logIn, getCustomer } from './actions';
+import { register, logIn, getCustomer, logOut } from './actions';
 import { useCart } from '../useCart';
 import jwt from 'jsonwebtoken';
 import { loadCustomerCart } from '../helpers/customer/loadCart';
-import { load as loadCart } from '../useCart/actions';
 
 /**
  * Parameter object for `useUserFactory`.
@@ -49,15 +48,10 @@ const params: UseUserFactoryParams<User, UpdateParams, RegisterParams> = {
     return null;
   },
 
-  logOut: async (context: Context): Promise<void> => {
-    context.$bigcommerce.config.app.$cookies.remove(COOKIE_KEY_CUSTOMER_DATA);
-
-    const newCart = await loadCart(context, {});
-    context.cart.setCart(newCart);
-  },
+  logOut,
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateUser: async (context: Context, { currentUser, updatedUserData }): Promise<User> => {
+  updateUser: async (context: Context): Promise<User> => {
     console.log('Mocked: useUser.updateUser');
     return null;
   },
@@ -67,7 +61,7 @@ const params: UseUserFactoryParams<User, UpdateParams, RegisterParams> = {
   logIn,
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  changePassword: async (context: Context, { currentUser, currentPassword, newPassword }): Promise<User> => {
+  changePassword: async (context: Context): Promise<User> => {
     console.log('Mocked: useUser.changePassword');
     return null;
   }

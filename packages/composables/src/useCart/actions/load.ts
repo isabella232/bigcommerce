@@ -3,7 +3,6 @@ import {
   CartIncludeEnum,
   CartItem,
   COOKIE_KEY_CART_ID,
-  COOKIE_KEY_EMBEDDED_CHECKOUT_URL,
   Product
 } from '@vue-storefront/bigcommerce-api';
 import { UseCartFactoryParams } from '@vue-storefront/core';
@@ -54,25 +53,12 @@ export const load: UseCartFactoryParams<
       });
     }
 
-    const storePreviewToken =
-      context.$bigcommerce?.config?.app?.$config?.theme?.storePreviewToken;
-    cookies.set(
-      COOKIE_KEY_EMBEDDED_CHECKOUT_URL,
-      `${data.redirect_urls.embedded_checkout_url}${
-        storePreviewToken ? `&guestTkn=${storePreviewToken}` : ''
-      }`,
-      {
-        path: '/',
-        maxAge: BIGCOMMERCE_COOKIE_MAXAGE
-      }
-    );
     return data;
   }
 
   const { data } = await context.$bigcommerce.api.getCart({
     id: cartId,
-    include:
-      'line_items.physical_items.options,line_items.digital_items.options'
+    include: `line_items.physical_items.options,line_items.digital_items.options,${CartIncludeEnum.RedirectUrls}`
   });
 
   return data;

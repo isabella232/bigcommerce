@@ -32,3 +32,12 @@ export type RemoveLineItemResponse = AddLineItemsResponse;
  * Definition of the response to update a cart item request.
  */
 export type UpdateLineItemResponse = AddLineItemsResponse;
+
+/**
+ * Generic type for multiple cart related endpoints responses.
+ */
+export type CartResponse =
+  | CreateCartResponse
+  | GetCartResponse
+  | UpdateLineItemResponse
+  | AddLineItemsResponse;

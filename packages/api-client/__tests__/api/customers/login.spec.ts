@@ -45,11 +45,33 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
       email: 'example@email.com',
       password: 'secretpass'
     };
+    const setCookieHeaderFromLogin = 'cookie-string1, cookie-string2';
     const fetch = jest.fn().mockResolvedValue({
       status: 200,
-      url: '/account.php'
+      url: '/account.php',
+      headers: {
+        get: (headerName) => {
+          expect(headerName).toEqual('set-cookie');
+          return setCookieHeaderFromLogin;
+        }
+      }
     });
     jest.doMock('fetch-cookie/node-fetch', () => () => fetch);
+    const expectedLoginCookieStrings = ['cookie-string1', 'cookie-string2'];
+    const expectedLoginCookies = [
+      { name: 'firstCookie', value: 'firstCookieValue', other: 'options' },
+      { name: 'secondCookie', value: 'secondCookieValue', other: 'options' }
+    ];
+    const setCookieParserMock = {
+      parse: jest.fn(() => expectedLoginCookies),
+      splitCookiesString: jest.fn(() => expectedLoginCookieStrings)
+    };
+    jest.doMock('set-cookie-parser', () => setCookieParserMock);
+    const cookie = jest.fn();
+    contextMock.res = {
+      cookie
+    };
+
     const validateCredentials = jest.fn().mockResolvedValue({
       customer_id: customerId,
       is_valid: true
@@ -71,6 +93,18 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
     expect(generateSsoLoginLink).toBeCalledWith(contextMock, customerId);
     expect(fetch).toBeCalledTimes(1);
     expect(fetch).toBeCalledWith(generatedLoginLink);
+    expectedLoginCookies.forEach(({ name, value, ...options }) =>
+      expect(contextMock.res.cookie).toBeCalledWith(name, value, options)
+    );
+    expect(contextMock.res.cookie).toBeCalledTimes(expectedLoginCookies.length);
+    expect(setCookieParserMock.splitCookiesString).toBeCalledTimes(1);
+    expect(setCookieParserMock.splitCookiesString).toBeCalledWith(
+      setCookieHeaderFromLogin
+    );
+    expect(setCookieParserMock.parse).toBeCalledTimes(1);
+    expect(setCookieParserMock.parse).toBeCalledWith(
+      expectedLoginCookieStrings
+    );
   });
 
   it('throws an error if login credentials are invalid', async () => {

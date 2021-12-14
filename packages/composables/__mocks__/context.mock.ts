@@ -14,5 +14,6 @@ const bigcommerceIntegrationContextMock = {
 };
 
 export const contextMock = {
-  $bigcommerce: bigcommerceIntegrationContextMock
+  $bigcommerce: bigcommerceIntegrationContextMock,
+  cart: {} as any
 };

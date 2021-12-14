@@ -1,41 +1,78 @@
 <template>
-  <div id="checkout"></div>
+  <div>
+    <div v-if="isSuccess" class="success message">
+      <h1>{{ $t('Thank you for your order!') }}</h1>
+      <SfButton class="form__button" @click="continueShopping">
+        {{ $t('Continue shopping') }}
+      </SfButton>
+    </div>
+
+    <div v-else-if="isError" class="error message">
+      <h1>{{ $t('An error occured during the checkout.') }}</h1>
+      <SfButton class="form__button" @click="tryAgain">
+        {{ $t('Try again') }}
+      </SfButton>
+    </div>
+
+    <div id="checkout"></div>
+  </div>
 </template>
 <script>
-import { onMounted } from '@vue/composition-api';
+import { SfButton } from '@storefront-ui/vue';
+import { onMounted, ref } from '@vue/composition-api';
 import { embedCheckout } from '@bigcommerce/checkout-sdk';
-import { COOKIE_KEY_EMBEDDED_CHECKOUT_URL } from '@vue-storefront/bigcommerce-api';
-import { useCart } from '@vue-storefront/bigcommerce';
+import { useCart, useUser } from '@vue-storefront/bigcommerce';
 
 export default {
   name: 'Checkout',
+  components: {
+    SfButton
+  },
   setup(props, context) {
-    const { clear: clearCart } = useCart();
-    onMounted(() => {
+    const { clear: clearCart, cart, load: loadCart } = useCart();
+    const { logout, load: loadUser } = useUser();
+    const isSuccess = ref(false);
+    const isError = ref(false);
+    const onError = () => {
+      document.querySelector('#checkout').innerHTML = '';
+      isError.value = true;
+    };
+
+    onMounted(async () => {
       if (process.client) {
-        const embeddedCheckoutUrl = context.root.context.$cookies.get(
-          COOKIE_KEY_EMBEDDED_CHECKOUT_URL
-        );
+        await loadUser();
+        await loadCart();
+        const embeddedCheckoutUrl =
+          cart.value?.redirect_urls?.embedded_checkout_url;
         embedCheckout({
           containerId: 'checkout',
           url: embeddedCheckoutUrl,
-          onComplete: async (event) => {
+          onComplete: async () => {
             await clearCart();
-            console.log('checkout is done', event);
-            document.querySelector('#checkout').innerHTML =
-              'Thank you for your order!';
+            document.querySelector('#checkout').innerHTML = '';
+            isSuccess.value = true;
           },
-          onError: (event) => {
-            console.error('Checkout error', event);
-          },
-          onFrameError: (event) => {
-            console.error('Checkout frame error', event);
+          onError,
+          onFrameError: onError,
+          onSignOut: async () => {
+            await logout();
+            context.root.$router.replace(
+              context.root.localePath({ name: 'home' })
+            );
           }
         });
       }
     });
 
-    return {};
+    const continueShopping = async () => {
+      context.root.$router.replace(context.root.localePath({ name: 'home' }));
+    };
+
+    const tryAgain = async () => {
+      window.location.reload();
+    };
+
+    return { continueShopping, tryAgain, isSuccess, isError };
   }
 };
 </script>
@@ -50,5 +87,11 @@ export default {
     min-height: 600px;
     margin: 0 auto;
   }
+}
+
+.message {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 </style>

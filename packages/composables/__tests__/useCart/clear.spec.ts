@@ -21,7 +21,7 @@ describe('[BigCommerce - composables] useCart clear', () => {
     expect(deleteCartMock).toHaveBeenCalledTimes(1);
     expect(cart).toEqual(mockedCart);
 
-    expect(contextMock.$bigcommerce.config.app.$cookies.set).toBeCalledTimes(2);
+    expect(contextMock.$bigcommerce.config.app.$cookies.set).toBeCalledTimes(1);
     expect(createCartMock).toBeCalledTimes(1);
   });
 });
