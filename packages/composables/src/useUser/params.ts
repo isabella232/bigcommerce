@@ -1,4 +1,5 @@
 import { Context } from '../types';
+import { UseUserFactoryParams } from '@vue-storefront/core';
 import {
   COOKIE_KEY_CUSTOMER_DATA,
   CustomersIncludeEnum,
@@ -10,7 +11,6 @@ import {
 } from '../types/useUser';
 import { register, logIn, getCustomer } from './actions';
 import { useCart } from '../useCart';
-import { UseUserFactoryParams } from '@vue-storefront/core';
 import jwt from 'jsonwebtoken';
 import { loadCustomerCart } from '../helpers/customer/loadCart';
 import { load as loadCart } from '../useCart/actions';

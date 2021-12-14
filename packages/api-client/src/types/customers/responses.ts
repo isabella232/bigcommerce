@@ -27,6 +27,7 @@ export type User = {
   }>;
   channel_ids?: number[];
   form_fields?: FormField[];
+  addresses?: Record<string, unknown>;
 };
 
 /**

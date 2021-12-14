@@ -1,5 +1,6 @@
-export const mockedUser = {
-  accepts_marketing: false,
+import { User } from '@vue-storefront/bigcommerce-api';
+
+export const mockedUser: User = {
   addresses: {
     resource: '/customers/11/addresses',
     url:
@@ -22,7 +23,5 @@ export const mockedUser = {
   notes: '',
   phone: '',
   registration_ip_address: '',
-  reset_pass_on_login: false,
-  store_credit: '0.0000',
   tax_exempt_category: ''
 };

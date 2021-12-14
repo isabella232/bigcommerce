@@ -17,9 +17,8 @@ export const register = async (
     password,
     acceptsMarketingEmails = true,
     customFields = [],
-    channelIds = context.$bigcommerce.config.app.$config.channelIds || [1]
+    channelIds = context.$bigcommerce.config.app.$config.theme.channelIds || [1]
   } = params;
-
   /* eslint-disable camelcase */
   const result = await context.$bigcommerce.api.createCustomer({
     first_name: firstName,
