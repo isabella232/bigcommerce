@@ -1,4 +1,5 @@
-import { Context, Wishlist, WishlistParams } from '../../types';
+import { Context, Wishlist, WishlistItem, WishlistParams } from '../../types';
+import { BIGCOMMERCE_GUEST_WISHLIST_KEY } from '../../helpers/consts';
 
 export const emptyWishlistResponse: Wishlist['wishlist_product_data'] = {
   data: [],
@@ -35,4 +36,29 @@ export const isInWishlist = (wishlist: Wishlist, wishlistParams: WishlistParams)
   return wishlist.items.some(item =>
     item.product_id === wishlistParams.productId && item.variant_id === wishlistParams.variantId
   );
+};
+
+export const mergeWishlists = async (
+  context: Context,
+  guestWishlist: Wishlist,
+  wishlist: Wishlist
+): Promise<Wishlist> => {
+  const guestWishlistItems: WishlistItem[] = guestWishlist.items
+    .map(item => ({
+      product_id: item.product_id,
+      variant_id: item.variant_id
+    }));
+
+  const mergedWishlistRes = await context.$bigcommerce.api
+    .addWishlistItems({
+      wishlistId: wishlist.id,
+      items: guestWishlistItems
+    });
+
+  window.localStorage.removeItem(BIGCOMMERCE_GUEST_WISHLIST_KEY);
+
+  return {
+    ...wishlist,
+    ...mergedWishlistRes.data
+  };
 };

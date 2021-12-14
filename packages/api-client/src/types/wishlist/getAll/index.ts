@@ -1,20 +1,3 @@
-import { Wishlist, MetaCollection } from '../..';
-
-/**
- * Get all wishlists response.
- */
-export interface GetAllWishlistResponse {
-  /**
-   * Collection of the wishlists
-   */
-  data: Wishlist[],
-
-  /**
-   * Data about the response, including pagination and collection totals.
-   */
-  meta: MetaCollection
-}
-
 /**
  * Optional filter parameters to retrieve.
  */

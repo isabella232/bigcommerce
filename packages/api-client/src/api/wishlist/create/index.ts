@@ -1,5 +1,5 @@
 import {
-  CreateWishlistResponse,
+  WishlistResponse,
   CreateWishlistProps,
   Endpoints
 } from '../../../types';
@@ -19,7 +19,7 @@ export const createWishlist: Endpoints['createWishlist'] = async (
     throw Error(`Customer ID with value: ${customerId} is not valid. Use number value.`);
   }
 
-  return context.client.post<CreateWishlistResponse, CreateWishlistProps>(
+  return context.client.post<WishlistResponse, CreateWishlistProps>(
     BigCommerceEndpoints.wishlists,
     props
   );

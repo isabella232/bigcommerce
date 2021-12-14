@@ -44,9 +44,10 @@ import {
 } from '../cart';
 import {
   CreateWishlistProps,
-  CreateWishlistResponse,
   GetAllWishlistQuery,
-  GetAllWishlistResponse
+  AddWishlistItemsParams,
+  WishlistResponse,
+  WishlistCollectionResponse
 } from '../wishlist';
 
 /**
@@ -242,7 +243,7 @@ export interface Endpoints {
   createWishlist(
     context: BigcommerceIntegrationContext,
     params: CreateWishlistProps
-  ): Promise<CreateWishlistResponse>;
+  ): Promise<WishlistResponse>;
 
   /**
    * Returns a list of wishlists. Optional filter parameters can be passed in.
@@ -252,7 +253,17 @@ export interface Endpoints {
   getAllWishlists(
     context: BigcommerceIntegrationContext,
     query?: GetAllWishlistQuery
-  ): Promise<GetAllWishlistResponse>;
+  ): Promise<WishlistCollectionResponse>;
+
+  /**
+   * Creates a wishlist and wishlist item. More than one item can be added.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {CreateWishlistProps} params An object which contains necessary properties for creating a new wishlist.
+   */
+  addWishlistItems(
+    context: BigcommerceIntegrationContext,
+    params: AddWishlistItemsParams
+  ): Promise<WishlistResponse>;
 
   /**
    * Checks if customer credentials are valid and is used as part of the authentication process

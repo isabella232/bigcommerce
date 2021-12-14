@@ -1,6 +1,6 @@
-import { Wishlist, WishlistItem } from '..';
+import { WishlistItem } from '..';
 
-export type CreateWishlistItem = Omit<WishlistItem, 'id'>;
+type CreateWishlistItem = Omit<WishlistItem, 'id'>;
 
 /**
  * Necessary props for creating the wishlist.
@@ -32,19 +32,3 @@ export interface CreateWishlistProps {
   items?: CreateWishlistItem[];
 }
 
-/**
- * Response of creating the wishlist.
- */
-export interface CreateWishlistResponse {
-  /**
-   * Wishlist model.
-   * @memberof CreateWishlistResponse
-   */
-  data: Wishlist,
-
-  /**
-   * Empty meta object; may be used later.
-   * @memberof CreateWishlistResponse
-   */
-  meta: Record<string, unknown>
-}

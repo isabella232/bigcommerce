@@ -1,5 +1,7 @@
+export * from './responses';
 export * from './create';
 export * from './getAll';
+export * from './addItems';
 
 /**
  * Wishlist item model.
