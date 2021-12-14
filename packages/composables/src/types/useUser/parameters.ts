@@ -1,5 +1,3 @@
-import { TODO } from '..';
-
 /**
  * Format of parameters to use when calling `register` method of `useUser` composable.
  */
@@ -32,4 +30,11 @@ export type UseUserLoginResponse = {
   email: string;
 };
 
-export type UseUserUpdateParams = TODO;
+export type UseUserUpdateParams = {
+  id: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  acceptsMarketingEmails?: boolean;
+};

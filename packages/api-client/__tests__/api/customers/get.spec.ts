@@ -1,10 +1,10 @@
 import { getCustomers } from '../../../src/api/customers';
 import { contextMock } from '../../../__mocks__/context.mock';
-import { GetCustomersParameters, GetCustomersResponse } from '../../../src';
+import { GetCustomerParameters, GetCustomersResponse } from '../../../src';
 
 describe('[bigcommerce-api-client] getCustomer', () => {
   it('gets customer by id', async () => {
-    const params: GetCustomersParameters = {
+    const params: GetCustomerParameters = {
       'id:in': [11]
     };
 

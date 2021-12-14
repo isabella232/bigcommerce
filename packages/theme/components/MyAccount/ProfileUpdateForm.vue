@@ -71,12 +71,16 @@
         <div v-if="error.authentication">
           {{ error.authentication }}
         </div>
-        <SfButton class="form__button" @click="handleSubmit(submitForm(reset))">
-          {{ $t('Update personal data') }}
+        <SfButton class="form__button form__button-inline form__button-width-auto" :class="{ 'button--loader': loading }" :disabled="loading" >
+          <SfLoader :class="{ loader: loading }" :loading="loading">
+            <div>{{ $t('Update personal data') }}</div>
+          </SfLoader>
         </SfButton>
       </SfModal>
-      <SfButton class="form__button form__button-inline">
-        {{ $t('Update personal data') }}
+      <SfButton class="form__button form__button-inline form__button-width-auto" :class="{ 'button--loader': loading }" :disabled="loading" >
+        <SfLoader :class="{ loader: loading }" :loading="loading">
+          <div>{{ $t('Update personal data') }}</div>
+        </SfLoader>
       </SfButton>
       <SfButton
         @click="cancel()"
@@ -94,13 +98,14 @@ import { defineComponent, ref, reactive } from '@vue/composition-api';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import { useUser } from '@vue-storefront/bigcommerce';
 import { useUserData } from '../../composables/useUserData';
-import { SfInput, SfButton, SfModal } from '@storefront-ui/vue';
+import { SfInput, SfButton, SfModal, SfLoader } from '@storefront-ui/vue';
 export default defineComponent({
   name: 'ProfileUpdateForm',
   components: {
     SfInput,
     SfButton,
     SfModal,
+    SfLoader,
     ValidationProvider,
     ValidationObserver
   },
@@ -117,17 +122,17 @@ export default defineComponent({
   },
   emits: ['submit'],
   setup(props, { emit }) {
-    const { getFirstName, getLastName, getEmailAddress } = useUserData();
-    const { user, login, error: userError } = useUser();
+    const userData = useUserData();
+    const { user, login, error: userError, loading } = useUser();
     const currentPassword = ref('');
     const requirePassword = ref(false);
     const error = reactive({
       authentication: null
     });
     const resetForm = () => ({
-      firstName: getFirstName(user.value),
-      lastName: getLastName(user.value),
-      email: getEmailAddress(user.value)
+      firstName: userData.getFirstName(user.value),
+      lastName: userData.getLastName(user.value),
+      email: userData.getEmailAddress(user.value)
     });
     const form = ref<{
       firstName: string;
@@ -138,7 +143,6 @@ export default defineComponent({
     const submitForm = (resetValidationFn) => () => {
       requirePassword.value = true;
       const onComplete = () => {
-        form.value = resetForm();
         requirePassword.value = false;
         currentPassword.value = '';
         resetValidationFn();
@@ -153,7 +157,7 @@ export default defineComponent({
       if (currentPassword.value) {
         form.value.password = currentPassword.value;
         const logInForm = {
-          username: getEmailAddress(user.value),
+          username: userData.getEmailAddress(user.value),
           password: currentPassword.value
         };
 
@@ -176,7 +180,8 @@ export default defineComponent({
       currentPassword,
       form,
       error,
-      submitForm
+      submitForm,
+      loading
     };
   }
 });
@@ -216,6 +221,15 @@ export default defineComponent({
         margin-right: 0;
       }
     }
+  }
+  .button--loader {
+    padding: var(--spacer-md);
+    border: 1px solid red;
+    height: 50px;
+    margin: auto;
+    display: inline-block;
+    width: 200px;
+    overflow: hidden;
   }
 }
 </style>

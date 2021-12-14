@@ -19,10 +19,15 @@ export const useUserData = () => {
     return user?.email;
   };
 
+  const getId = (user: User): number => {
+    return user?.id;
+  };
+
   return {
     getFirstName,
     getLastName,
     getFullName,
-    getEmailAddress
+    getEmailAddress,
+    getId
   };
 };

@@ -1,5 +1,5 @@
 import { FormField } from '.';
-import { MetaCollection } from '..';
+import { UserAddress, MetaCollection } from '..';
 
 /**
  * Format of customer data that's returned inside the response of `/customers` BigCommerce API endpoint.
@@ -8,7 +8,8 @@ import { MetaCollection } from '..';
 export type User = {
   id?: number;
   authentication?: {
-    force_password_reset: boolean;
+    force_password_reset?: boolean;
+    new_password?: string;
   };
   company?: string;
   customer_group_id?: number;
@@ -27,7 +28,9 @@ export type User = {
   }>;
   channel_ids?: number[];
   form_fields?: FormField[];
-  addresses?: Record<string, unknown>;
+  addresses?: UserAddress[];
+  address_count?: number;
+  attribute_count?: number;
 };
 
 /**
@@ -35,7 +38,7 @@ export type User = {
  */
 export type CreateCustomerResponse = {
   data: Array<User>;
-  meta: unknown;
+  meta: MetaCollection;
 };
 
 /**
@@ -56,14 +59,25 @@ export type LoginCustomerResponse = {
 };
 
 /**
- * Format of response for getCustomers BigCommerce API endpoint.
+ * Format of response for getCustomer BigCommerce API endpoint.
  */
 export type GetCustomersResponse = {
   data: Array<User>;
   meta: MetaCollection;
 };
 
+/**
+ * Format of response for updating CustomerFields BigCommerce API endpoint.
+ */
 export type UpdateCustomerFormFieldsResponse = {
   data: FormField[];
   meta: Record<string, never>;
+};
+
+/**
+ * Format of parameters that can be passed to `updateCustomer` endpoint method.
+ */
+export type updateCustomerResponse = {
+  data: Array<User>;
+  meta: MetaCollection;
 };

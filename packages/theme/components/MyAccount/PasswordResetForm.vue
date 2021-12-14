@@ -63,7 +63,8 @@
 import { defineComponent, ref, reactive } from '@vue/composition-api';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import { SfInput, SfButton } from '@storefront-ui/vue';
-import { useUser, userGetters } from '@vue-storefront/bigcommerce';
+import { useUser } from '@vue-storefront/bigcommerce';
+import { useUserData } from '../../composables/useUserData';
 
 export default defineComponent({
   name: 'PasswordResetForm',
@@ -74,6 +75,7 @@ export default defineComponent({
     ValidationObserver
   },
   setup(_, { emit }) {
+    const userData = useUserData();
     const { user, login, error: userError } = useUser();
     const resetForm = () => ({
       currentPassword: '',
@@ -95,7 +97,7 @@ export default defineComponent({
       };
 
       const logInForm = {
-        username: userGetters.getEmailAddress(user.value),
+        username: userData.getEmailAddress(user.value),
         password: form.value.currentPassword
       };
 
@@ -116,7 +118,8 @@ export default defineComponent({
     return {
       form,
       error,
-      submitForm
+      submitForm,
+      userData
     };
   }
 });

@@ -1,18 +1,18 @@
-import { Context } from '../types';
-import { UseUserFactoryParams } from '@vue-storefront/core';
-import {
-  COOKIE_KEY_CUSTOMER_DATA,
-  CustomersIncludeEnum,
-  User
-} from '@vue-storefront/bigcommerce-api';
+import { User } from '@vue-storefront/bigcommerce-api';
 import {
   UseUserUpdateParams as UpdateParams,
   UseUserRegisterParams as RegisterParams
 } from '../types/useUser';
-import { register, logIn, getCustomer, logOut } from './actions';
+import {
+  register,
+  load,
+  logIn,
+  logOut,
+  changePassword,
+  updateCustomer as updateUser
+} from './actions';
 import { useCart } from '../useCart';
-import jwt from 'jsonwebtoken';
-import { loadCustomerCart } from '../helpers/customer/loadCart';
+import { UseUserFactoryParams } from '@vue-storefront/core';
 
 /**
  * Parameter object for `useUserFactory`.
@@ -24,47 +24,17 @@ const params: UseUserFactoryParams<User, UpdateParams, RegisterParams> = {
     };
   },
 
-  load: async (context: Context): Promise<User> => {
-    const loggedInCustomerToken = context.$bigcommerce.config.app.$cookies.get(
-      COOKIE_KEY_CUSTOMER_DATA
-    );
-
-    if (loggedInCustomerToken) {
-      const decodedToken = jwt.decode(loggedInCustomerToken);
-      const id = decodedToken.customer.id;
-      const customer = await getCustomer(context, {
-        'id:in': [id],
-        include: CustomersIncludeEnum.Formfields
-      });
-
-      const formFields = await loadCustomerCart(context, customer);
-      if (formFields) {
-        customer.form_fields = formFields;
-      }
-
-      return customer;
-    }
-
-    return null;
-  },
+  load,
 
   logOut,
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateUser: async (context: Context): Promise<User> => {
-    console.log('Mocked: useUser.updateUser');
-    return null;
-  },
+  updateUser,
 
   register,
 
   logIn,
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  changePassword: async (context: Context): Promise<User> => {
-    console.log('Mocked: useUser.changePassword');
-    return null;
-  }
+  changePassword
 };
 
 export default params;

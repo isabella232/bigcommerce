@@ -3,7 +3,7 @@ import { CustomersIncludeEnum, CustomersSortEnum, FormField } from '.';
 /**
  * Format of parameters that can be passed to `getCustomer` endpoint method.
  */
-export type GetCustomersParameters = {
+export type GetCustomerParameters = {
   /**
    * Page number
    */
@@ -109,4 +109,29 @@ export type LoginCustomerParameters = {
  */
 export type UpdateCustomerFormFieldsParameters = {
   data: FormField[];
+};
+
+/**
+ * Format of parameters that can be passed to `updateCustomer` endpoint method.
+ */
+export type UpdateCustomerParameters = {
+  id: number;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  company?: string;
+  phone?: string;
+  registration_ip_address?: string;
+  notes?: string;
+  customer_group_id?: number;
+  tax_exempt_category?: string;
+  authentication?: {
+    force_password_reset?: boolean;
+    new_password?: string;
+  };
+  accepts_product_review_abandoned_cart_emails?: boolean;
+  store_credit_amounts?: Array<{
+    amount: number;
+  }>;
+  channel_ids?: number[];
 };

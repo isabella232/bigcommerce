@@ -1,12 +1,16 @@
 import {
   CreateCustomerParameters,
   User,
-  GetCustomersParameters,
+  GetCustomerParameters,
   LoginCustomerParameters,
   LoginCustomerResponse,
   GetCustomersResponse,
+  UpdateCustomerParameters,
+  updateCustomerResponse,
   UpdateCustomerFormFieldsParameters,
-  UpdateCustomerFormFieldsResponse
+  UpdateCustomerFormFieldsResponse,
+  ValidateCredentialsParameter,
+  ValidateCredentialsResponse
 } from '../customers';
 import { GetProductsParameters, ProductsResponse } from '../product';
 import { BigcommerceIntegrationContext } from '../context';
@@ -62,11 +66,11 @@ export interface Endpoints {
   /**
    * Get customers
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
-   * @param {GetCustomersParameters} params Parameters for `getCustomers` endpoint
+   * @param {GetCustomerParameters} params Parameters for `getCustomer` endpoint
    */
   getCustomers(
     context: BigcommerceIntegrationContext,
-    params: GetCustomersParameters
+    params: GetCustomerParameters
   ): Promise<GetCustomersResponse>;
 
   /**
@@ -78,6 +82,16 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     params: CreateCustomerParameters
   ): Promise<User>;
+
+  /**
+   * Update customers
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {UpdateCustomerParameters} params Parameters for `updateCustomer` endpoint
+   */
+  updateCustomer(
+    context: BigcommerceIntegrationContext,
+    params: UpdateCustomerParameters
+  ): Promise<updateCustomerResponse>;
 
   /**
    * Logs in a customer using the Customer Login API and saves her data in cookie in the format of a JWT token coming from the Current Customer API.
@@ -239,4 +253,14 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     query?: GetAllWishlistQuery
   ): Promise<GetAllWishlistResponse>;
+
+  /**
+   * Checks if customer credentials are valid and is used as part of the authentication process
+   * @param {ValidateCredentialsParameter} context An auto-generated value prepended to the method as a first parameter.
+   * @param {ValidateCredentialsResponse} params An object which contains customers credentials.
+   */
+  validateCredentials(
+    context: BigcommerceIntegrationContext,
+    params: ValidateCredentialsParameter
+  ): Promise<ValidateCredentialsResponse>;
 }

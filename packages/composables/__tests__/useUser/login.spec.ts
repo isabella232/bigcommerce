@@ -28,12 +28,11 @@ describe('[bigcommerce-composables] useUser logIn', () => {
       .fn()
       .mockReturnValue(loginResponse);
 
-    contextMock.$bigcommerce.api.getCustomers = jest
+    contextMock.$bigcommerce.api.getCustomer = jest
       .fn()
       .mockReturnValue(customerResponse);
 
     logIn(contextMock, loginCredentials);
-
   });
 
   it('calls loginCustomer API method with incorrect credentials and throws an error ', async () => {
@@ -47,7 +46,7 @@ describe('[bigcommerce-composables] useUser logIn', () => {
     });
 
     contextMock.$bigcommerce.api.loginCustomer = loginMock;
-    contextMock.$bigcommerce.api.getCustomers = jest.fn().mockReturnValue(null);
+    contextMock.$bigcommerce.api.getCustomer = jest.fn().mockReturnValue(null);
 
     await logIn(contextMock, invalidLoginCredentials).catch(() => {});
 
