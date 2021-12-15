@@ -71,15 +71,25 @@
         <div v-if="error.authentication">
           {{ error.authentication }}
         </div>
-        <SfButton class="form__button form__button-inline form__button-width-auto" :class="{ 'button--loader': loading }" :disabled="loading" >
+        <SfButton
+          class="form__button form__button-inline form__button-width-auto"
+          :disabled="loading"
+        >
           <SfLoader :class="{ loader: loading }" :loading="loading">
-            <div>{{ $t('Update personal data') }}</div>
+            <div>
+              {{ $t('Update personal data') }}
+            </div>
           </SfLoader>
         </SfButton>
       </SfModal>
-      <SfButton class="form__button form__button-inline form__button-width-auto" :class="{ 'button--loader': loading }" :disabled="loading" >
+      <SfButton
+        class="form__button form__button-inline form__button-width-auto"
+        :disabled="loading"
+      >
         <SfLoader :class="{ loader: loading }" :loading="loading">
-          <div>{{ $t('Update personal data') }}</div>
+          <div>
+            {{ $t('Update personal data') }}
+          </div>
         </SfLoader>
       </SfButton>
       <SfButton
@@ -110,11 +120,6 @@ export default defineComponent({
     ValidationObserver
   },
   props: {
-    loading: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
     cancel: {
       type: Function,
       required: true
@@ -202,9 +207,6 @@ export default defineComponent({
     &-inline {
       display: inline-block;
     }
-    &-width-auto {
-      width: auto;
-    }
   }
   &__horizontal {
     @include for-desktop {
@@ -221,15 +223,6 @@ export default defineComponent({
         margin-right: 0;
       }
     }
-  }
-  .button--loader {
-    padding: var(--spacer-md);
-    border: 1px solid red;
-    height: 50px;
-    margin: auto;
-    display: inline-block;
-    width: 200px;
-    overflow: hidden;
   }
 }
 </style>

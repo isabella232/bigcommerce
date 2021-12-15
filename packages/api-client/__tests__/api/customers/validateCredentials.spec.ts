@@ -13,7 +13,6 @@ describe('[bigcommerce-api-client] validateCredentials', () => {
       email: 'janedoe@example.com',
       password: 'string'
     };
-    /* eslint-disable camelcase */
     const expectedResponse = {
       is_valid: true
     };

@@ -6,7 +6,7 @@ import {
   LoginCustomerResponse,
   GetCustomersResponse,
   UpdateCustomerParameters,
-  updateCustomerResponse,
+  UpdateCustomerResponse,
   UpdateCustomerFormFieldsParameters,
   UpdateCustomerFormFieldsResponse,
   ValidateCredentialsParameter,
@@ -92,7 +92,7 @@ export interface Endpoints {
   updateCustomer(
     context: BigcommerceIntegrationContext,
     params: UpdateCustomerParameters
-  ): Promise<updateCustomerResponse>;
+  ): Promise<UpdateCustomerResponse>;
 
   /**
    * Logs in a customer using the Customer Login API and saves her data in cookie in the format of a JWT token coming from the Current Customer API.

@@ -129,10 +129,6 @@ export default defineComponent({
       await load();
     });
 
-    onSSR(async () => {
-      await load();
-    });
-
     return {
       userData,
       updatePersonalData,

@@ -77,7 +77,7 @@ export type UpdateCustomerFormFieldsResponse = {
 /**
  * Format of parameters that can be passed to `updateCustomer` endpoint method.
  */
-export type updateCustomerResponse = {
+export type UpdateCustomerResponse = {
   data: Array<User>;
   meta: MetaCollection;
 };

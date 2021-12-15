@@ -30,6 +30,9 @@ export type UseUserLoginResponse = {
   email: string;
 };
 
+/**
+ * Format of parameters to use when calling `updateUser` method of `useUser` composable.
+ */
 export type UseUserUpdateParams = {
   id: number;
   firstName?: string;

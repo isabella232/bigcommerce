@@ -7,9 +7,8 @@ describe('[bigcommerce-api-client] createCustomer', () => {
     jest.clearAllMocks();
   });
   it('registers a customer', async () => {
-    /* eslint-disable camelcase */
     const parameters = {
-      accepts_marketing_emails: true,
+      accepts_product_review_abandoned_cart_emails: true,
       custom_fields: [
         {
           fieldId: '25',
@@ -89,9 +88,8 @@ describe('[bigcommerce-api-client] createCustomer', () => {
   });
 
   it('throws an error if there is a error response from the API', async () => {
-    /* eslint-disable camelcase */
     const parameters = {
-      accepts_marketing_emails: true,
+      accepts_product_review_abandoned_cart_emails: true,
       custom_fields: [
         {
           fieldId: '25',
@@ -117,7 +115,6 @@ describe('[bigcommerce-api-client] createCustomer', () => {
   });
 
   it('throws an error if parameters are missing', async () => {
-    /* eslint-disable camelcase */
     const parameters = {
       acceptsMarketingEmails: true,
       password: 'string'

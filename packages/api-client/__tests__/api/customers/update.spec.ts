@@ -86,7 +86,7 @@ describe('[bigcommerce-api-client] updateCustomer', () => {
   it('throws an error if there is a error response from the API', async () => {
     const parameters = {
       id: 1,
-      accepts_marketing_emails: true,
+      accepts_product_review_abandoned_cart_emails: true,
       custom_fields: [
         {
           fieldId: '25',

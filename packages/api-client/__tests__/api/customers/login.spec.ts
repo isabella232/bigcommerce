@@ -43,7 +43,8 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
     const generatedLoginLink = 'https://login.link';
     const loginCredentials = {
       email: 'example@email.com',
-      password: 'secretpass'
+      password: 'secretpass',
+      channel_id: 1
     };
     const setCookieHeaderFromLogin = 'cookie-string1, cookie-string2';
     const fetch = jest.fn().mockResolvedValue({

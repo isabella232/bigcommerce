@@ -15,17 +15,16 @@ export const register = async (
     lastName,
     email,
     password,
-    acceptsMarketingEmails = true,
+    acceptsMarketingEmails = false,
     customFields = [],
     channelIds = context.$bigcommerce.config.app.$config.theme.channelIds || [1]
   } = params;
-  /* eslint-disable camelcase */
   const result = await context.$bigcommerce.api.createCustomer({
     first_name: firstName,
     last_name: lastName,
     email,
     password,
-    accepts_marketing_emails: acceptsMarketingEmails,
+    accepts_product_review_abandoned_cart_emails: acceptsMarketingEmails,
     channel_ids: channelIds,
     custom_fields: customFields
   });

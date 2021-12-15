@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { ProductReviewCollectionResponse } from '@vue-storefront/bigcommerce-api';
 
 export const reviewCollectionMock: ProductReviewCollectionResponse = {

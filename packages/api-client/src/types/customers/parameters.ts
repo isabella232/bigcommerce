@@ -76,7 +76,7 @@ export type CreateCustomerParameters = {
   last_name: string;
   email: string;
   password: string;
-  accepts_marketing_emails: boolean;
+  accepts_product_review_abandoned_cart_emails: boolean;
   channel_ids: number[];
   custom_fields: Array<{
     fieldId: string;
@@ -102,6 +102,7 @@ export type ValidateCredentialsParameter = {
 export type LoginCustomerParameters = {
   email: string;
   password: string;
+  channel_id?: number;
 };
 
 /**

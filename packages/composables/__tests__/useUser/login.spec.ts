@@ -12,7 +12,8 @@ describe('[bigcommerce-composables] useUser logIn', () => {
   it('calls loginCustomer API method and returns the data from it', async () => {
     const loginCredentials = {
       username: 'janedoe@example.com',
-      password: 'string'
+      password: 'string',
+      channel_id: 1
     };
     const loginResponse = {
       customer_id: 1,
@@ -38,7 +39,8 @@ describe('[bigcommerce-composables] useUser logIn', () => {
   it('calls loginCustomer API method with incorrect credentials and throws an error ', async () => {
     const invalidLoginCredentials = {
       username: 'userdont@exist.com',
-      password: 'abcdef'
+      password: 'abcdef',
+      channel_id: 1
     };
 
     const loginMock = jest.fn().mockReturnValue(() => {

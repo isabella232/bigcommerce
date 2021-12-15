@@ -20,10 +20,6 @@
           <ShippingDetails />
         </SfContentPage>
 
-        <SfContentPage title="Billing details">
-          <BillingDetails />
-        </SfContentPage>
-
         <SfContentPage title="My newsletter">
           <MyNewsletter />
         </SfContentPage>
@@ -45,7 +41,6 @@ import { computed, onBeforeUnmount } from '@vue/composition-api';
 import { useUser } from '@vue-storefront/bigcommerce';
 import MyProfile from './MyAccount/MyProfile';
 import ShippingDetails from './MyAccount/ShippingDetails';
-import BillingDetails from './MyAccount/BillingDetails';
 import MyNewsletter from './MyAccount/MyNewsletter';
 import OrderHistory from './MyAccount/OrderHistory';
 import {
@@ -60,7 +55,6 @@ export default {
     SfContentPages,
     MyProfile,
     ShippingDetails,
-    BillingDetails,
     MyNewsletter,
     OrderHistory
   },

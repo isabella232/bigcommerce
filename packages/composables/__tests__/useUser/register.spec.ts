@@ -28,7 +28,8 @@ describe('[bigcommerce-composables] useUser register', () => {
       last_name: userParameters.lastName,
       email: userParameters.email,
       password: userParameters.password,
-      accepts_marketing_emails: userParameters.acceptsMarketingEmails,
+      accepts_product_review_abandoned_cart_emails:
+        userParameters.acceptsMarketingEmails,
       channel_ids: userParameters.channelIds,
       custom_fields: userParameters.customFields
     });
