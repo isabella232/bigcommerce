@@ -1,4 +1,3 @@
-import { stringifyUrl } from 'query-string';
 import { GetAllWishlistQuery } from '../../../src/types';
 import { getAllWishlists } from '../../../src/api/wishlist';
 import { contextMock } from '../../../__mocks__/context.mock';
@@ -30,6 +29,7 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     await getAllWishlists(contextMock, query);
 
     // Then
-    expect(contextMock.client.get).toHaveBeenCalledWith(stringifyUrl({ url: BigCommerceEndpoints.wishlists, query }));
+    expect(contextMock.client.get)
+      .toHaveBeenCalledWith(`/wishlists?customer_id=${query.customer_id}&limit=${query.limit}&page=${query.page}`);
   });
 });

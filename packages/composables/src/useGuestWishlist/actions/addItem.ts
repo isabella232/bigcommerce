@@ -9,7 +9,7 @@ export const addItem = async (context: Context, wishlist: Wishlist, params: Wish
       product_id: params.productId,
       variant_id: params.variantId
     });
-    await refreshWishlistProducts(context, wishlist);
+    wishlist.wishlist_product_data = await refreshWishlistProducts(context, wishlist);
     localStorage.setItem(BIGCOMMERCE_GUEST_WISHLIST_KEY, JSON.stringify(wishlist));
   }
 

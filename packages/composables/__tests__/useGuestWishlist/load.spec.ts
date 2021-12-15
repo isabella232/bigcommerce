@@ -1,5 +1,5 @@
 import { load } from '../../src/useGuestWishlist/actions';
-import { emptyWishlistResponse } from '../../src/helpers';
+import { emptyProductsResponse } from '../../src/helpers';
 import { guestWishlistMock } from '../../__mocks__/useGuestWishlist/guestWishlist.mock';
 import { contextMock } from '../../__mocks__/context.mock';
 import {
@@ -18,7 +18,7 @@ describe('[BigCommerce - composables] useGuestWishlist load', () => {
     name: wishlistName,
     customer_id: BIGCOMMERCE_GUEST_CUSTOMER_ID,
     items: [],
-    wishlist_product_data: emptyWishlistResponse,
+    wishlist_product_data: emptyProductsResponse,
     is_public: true,
     token: BIGCOMMERCE_GUEST_WISHLIST_TOKEN
   };

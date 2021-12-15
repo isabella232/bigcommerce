@@ -3,7 +3,7 @@ import {
 } from '@vue-storefront/core';
 import { Product } from '@vue-storefront/bigcommerce-api';
 import { Context, Wishlist, WishlistItem } from '../../types';
-import { getUserId, refreshWishlistProducts, emptyWishlistResponse, mergeWishlists } from '../../helpers';
+import { getUserId, refreshWishlistProducts, emptyProductsResponse, mergeWishlists } from '../../helpers';
 import {
   BIGCOMMERCE_LOAD_WISHLIST_FAILED,
   BIGCOMMERCE_GUEST_WISHLIST_KEY
@@ -26,7 +26,7 @@ export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['lo
   if (customerWishlists.length) {
     wishlist = {
       ...customerWishlists[0],
-      wishlist_product_data: emptyWishlistResponse
+      wishlist_product_data: emptyProductsResponse
     };
   } else {
     const { data: newWishlist } = await context.$bigcommerce.api
@@ -37,7 +37,7 @@ export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['lo
 
     wishlist = {
       ...newWishlist,
-      wishlist_product_data: emptyWishlistResponse
+      wishlist_product_data: emptyProductsResponse
     };
   }
 
@@ -48,7 +48,7 @@ export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['lo
     wishlist = mergedWishlist;
   }
 
-  await refreshWishlistProducts(context, wishlist);
+  wishlist.wishlist_product_data = await refreshWishlistProducts(context, wishlist);
 
   return wishlist;
 };
