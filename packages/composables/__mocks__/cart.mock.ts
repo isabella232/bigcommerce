@@ -39,9 +39,9 @@ export const mockedCart: Cart = {
       {
         id: '678d5cca-93ac-4e8e-90ae-c11fae197446',
         parent_id: null,
-        variant_id: 18,
+        variant_id: 3,
         product_id: 77,
-        sku: 'SLCTBS-7113955F',
+        sku: 'SLCTBS-08950B35',
         name: '[Sample] Fog Linen Chambray Towel - Beige Stripe',
         url:
           'https://vuestorefront.mybigcommerce.com/fog-linen-chambray-towel-beige-stripe/',
@@ -60,7 +60,7 @@ export const mockedCart: Cart = {
         is_require_shipping: true,
         options: [
           { name: 'Size', nameId: 108, value: 'M', valueId: 70 },
-          { name: 'Color', nameId: 109, value: 'Blue', valueId: 10 }
+          { name: 'Color', nameId: 109, value: 'Silver', valueId: 7 }
         ]
       },
       {

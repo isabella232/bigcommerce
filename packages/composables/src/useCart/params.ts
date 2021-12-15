@@ -1,7 +1,14 @@
 import { UseCartFactoryParams } from '@vue-storefront/core';
 import { Cart, CartItem, Product } from '@vue-storefront/bigcommerce-api';
 import { Context } from '../types';
-import { addItem, clear, load, removeItem, updateItemQty } from './actions';
+import {
+  addItem,
+  clear,
+  isInCart,
+  load,
+  removeItem,
+  updateItemQty
+} from './actions';
 
 export const params: UseCartFactoryParams<Cart, CartItem, Product> = {
   load,
@@ -26,10 +33,5 @@ export const params: UseCartFactoryParams<Cart, CartItem, Product> = {
       updatedCart: {}
     };
   },
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  isInCart: (context: Context, { currentCart, product }) => {
-    console.log('Mocked: useCart.isInCart');
-    return false;
-  }
+  isInCart
 };
