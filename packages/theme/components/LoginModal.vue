@@ -188,7 +188,7 @@
               v-model="acceptsMarketingEmails"
               value="true"
               name="accept-marketing-emails"
-              label="I want to recive marketing emails"
+              label="I want to receive marketing emails"
               class="form__element"
             />
             <div v-if="error.register">
