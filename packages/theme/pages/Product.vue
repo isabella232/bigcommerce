@@ -151,7 +151,7 @@
                 hide-full-text="Read less"
                 class="product__review"
               />
-              <AddReview :product-id="Number(product.id)" />
+              <AddReview :product-id="Number(productData.getId(product))" />
             </SfTab>
             <SfTab
               title="Additional Information"
@@ -262,7 +262,7 @@ export default defineComponent({
     const activeVariant = ref();
     const reviews = computed(
       () =>
-        productReviews.value.data?.filter(
+        productReviews.value?.data?.filter(
           (review) => review.status === 'approved'
         ) || []
     );
@@ -312,7 +312,9 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      calculateOptions();
+      if (product.value) {
+        calculateOptions();
+      }
     });
 
     onSSR(async () => {
@@ -326,10 +328,13 @@ export default defineComponent({
       if (product.value) {
         calculateOptions();
 
-        await searchRelatedProducts({
-          'id:in': productData.getRelatedProducts(product.value),
-          limit: 8
-        });
+        const relatedProductIds = productData.getRelatedProducts(product.value);
+        if (relatedProductIds.length) {
+          await searchRelatedProducts({
+            'id:in': relatedProductIds,
+            limit: 8
+          });
+        }
       }
     });
 
@@ -356,7 +361,7 @@ export default defineComponent({
         productData.getAverageRating(product.value)
       ),
       totalReviews: computed(() => productData.getTotalReviews(product.value)),
-      relatedProducts: computed(() => relatedProducts.value?.data),
+      relatedProducts: computed(() => relatedProducts.value?.data ?? []),
       relatedLoading,
       options,
       qty,
