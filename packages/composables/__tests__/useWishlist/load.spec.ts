@@ -7,7 +7,7 @@ const customerId = 1;
 const decode = jest.spyOn(jwt, 'decode');
 decode.mockImplementation(() => ({ customer: { id: customerId } }));
 
-describe('[BigCommerce - composables] useGuestWishlist load', () => {
+describe('[BigCommerce - composables] useWishlist load', () => {
   const wishlistName = 'Mocked wishlist';
   const wishlistMock: WishlistAPI = {
     id: 1,
