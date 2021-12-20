@@ -17,20 +17,20 @@ describe('[BigCommerce - composables] useGuestWishlist isInWishlist', () => {
   };
   guestWishlistMock.items.push(existingItem);
 
-  it('should return true if item is in the wishlist', async () => {
-    const res = await isInWishlist(guestWishlistMock, existingItemParams);
+  it('should return true if item is in the wishlist', () => {
+    const res = isInWishlist(guestWishlistMock, existingItemParams);
 
     expect(res).toBe(true);
   });
 
-  it('should return false if there product is not in the wishlist', async () => {
-    const res = await isInWishlist(guestWishlistMock, nonExistingItemParams);
+  it('should return false if there product is not in the wishlist', () => {
+    const res = isInWishlist(guestWishlistMock, nonExistingItemParams);
 
     expect(res).toBe(false);
   });
 
-  it('should return false if there is no wishlist', async () => {
-    const res = await isInWishlist(null, nonExistingItemParams);
+  it('should return false if there is no wishlist', () => {
+    const res = isInWishlist(null, nonExistingItemParams);
 
     expect(res).toBe(false);
   });
