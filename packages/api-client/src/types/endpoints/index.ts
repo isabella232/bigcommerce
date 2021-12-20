@@ -266,6 +266,16 @@ export interface Endpoints {
   ): Promise<WishlistResponse>;
 
   /**
+   * Deletes a wishlist.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {number} wishlistId A wishlist id.
+   */
+   deleteWishlist(
+    context: BigcommerceIntegrationContext,
+    wishlistId: number
+  ): Promise<null>;
+
+  /**
    * Checks if customer credentials are valid and is used as part of the authentication process
    * @param {ValidateCredentialsParameter} context An auto-generated value prepended to the method as a first parameter.
    * @param {ValidateCredentialsResponse} params An object which contains customers credentials.
