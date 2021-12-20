@@ -12,6 +12,6 @@ export const deleteWishlist: Endpoints['deleteWishlist'] = async (
   }
 
   return await context.client.delete(
-    BigCommerceEndpoints.wishlist(wishlistId)
+    BigCommerceEndpoints.wishlists(wishlistId)
   );
 };

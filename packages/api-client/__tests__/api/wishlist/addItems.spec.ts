@@ -26,7 +26,7 @@ describe('[BigCommerce-api-client] add wishlist items', () => {
 
     // Then
     expect(contextMock.client.post)
-      .toHaveBeenLastCalledWith(BigCommerceEndpoints.wishlist(wishlistId), expectedParams);
+      .toHaveBeenLastCalledWith(BigCommerceEndpoints.wishlistItems(wishlistId), expectedParams);
   });
 
   it('should throw an error when wishlist id was not provided', async () => {

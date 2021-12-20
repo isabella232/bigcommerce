@@ -1,7 +1,6 @@
 import { CreateWishlistProps } from '../../../src/types';
 import { createWishlist } from '../../../src/api/wishlist';
 import { contextMock } from '../../../__mocks__/context.mock';
-import BigCommerceEndpoints from '../../../src/helpers/endpointPaths';
 
 describe('[BigCommerce-api-client] create wishlist', () => {
   beforeEach(() => {
@@ -16,12 +15,13 @@ describe('[BigCommerce-api-client] create wishlist', () => {
       is_public: true,
       items: []
     };
+    const expectedEndpoint = '/wishlists';
 
     // When
     await createWishlist(contextMock, props);
 
     // Then
-    expect(contextMock.client.post).toHaveBeenLastCalledWith(BigCommerceEndpoints.wishlists, props);
+    expect(contextMock.client.post).toHaveBeenLastCalledWith(expectedEndpoint, props);
   });
 
   it('should throw an error when name was not provided', async () => {

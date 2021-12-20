@@ -46,6 +46,7 @@ import {
   CreateWishlistProps,
   GetAllWishlistQuery,
   AddWishlistItemsParams,
+  RemoveWishlistItemParams,
   WishlistResponse,
   WishlistCollectionResponse
 } from '../wishlist';
@@ -256,13 +257,23 @@ export interface Endpoints {
   ): Promise<WishlistCollectionResponse>;
 
   /**
-   * Creates a wishlist and wishlist item. More than one item can be added.
+   * Adds a wishlist item. More than one item can be added at a time.
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
-   * @param {CreateWishlistProps} params An object which contains necessary properties for creating a new wishlist.
+   * @param {AddWishlistItemsParams} params An object which contains necessary properties for adding items to the  wishlist.
    */
   addWishlistItems(
     context: BigcommerceIntegrationContext,
     params: AddWishlistItemsParams
+  ): Promise<WishlistResponse>;
+
+  /**
+   * Deletes a wishlist item.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {RemoveWishlistItemParams} params An object which contains necessary properties for delete a wishlist item.
+   */
+   removeWishlistItem(
+    context: BigcommerceIntegrationContext,
+    params: RemoveWishlistItemParams
   ): Promise<WishlistResponse>;
 
   /**

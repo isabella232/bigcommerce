@@ -11,7 +11,7 @@ export const getAllWishlists: Endpoints['getAllWishlists'] = async (
 ) => {
   return context.client.get<WishlistCollectionResponse>(
     stringifyUrl({
-      url: BigCommerceEndpoints.wishlists,
+      url: BigCommerceEndpoints.wishlists(),
       query
     })
   );
