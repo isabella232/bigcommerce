@@ -1,3 +1,15 @@
+export enum ProductsSortEnum {
+  Id = 'id',
+  Name = 'name',
+  Sku = 'sku',
+  Price = 'price',
+  DateModified = 'date_modified',
+  DateLastImported = 'date_last_imported',
+  InventoryLevel = 'inventory_level',
+  IsVisible = 'is_visible',
+  TotalSold = 'total_sold'
+}
+
 /**
  * Definition of products request parameters
  */
@@ -47,16 +59,7 @@ export type GetProductsParameters = {
   page?: number;
   limit?: number;
   direction?: 'asc' | 'desc';
-  sort?:
-    | 'id'
-    | 'name'
-    | 'sku'
-    | 'price'
-    | 'date_modified'
-    | 'date_last_imported'
-    | 'inventory_level'
-    | 'is_visible'
-    | 'total_sold';
+  sort?: ProductsSortEnum;
   sku?: string;
   'sku:in'?: string[];
 };

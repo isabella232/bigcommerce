@@ -18,30 +18,32 @@
 
     <div class="navbar__sort desktop-only">
       <span class="navbar__label">{{ $t('Sort by') }}:</span>
-      <LazyHydrate on-interaction>
-        <SfSelect
-          :value="sortBy.selected"
-          :placeholder="$t('Select sorting')"
-          class="navbar__select"
-          @input="th.changeSorting"
+
+      <SfSelect
+        v-model="sortBy.selected"
+        :placeholder="$t('Select sorting')"
+        class="navbar__select"
+        @input="th.changeSorting"
+      >
+        <SfSelectOption
+          v-for="option in sortBy.options"
+          :key="option.id"
+          :value="option.id"
+          class="sort-by__option"
         >
-          <SfSelectOption
-            v-for="option in sortBy.options"
-            :key="option.id"
-            :value="option.id"
-            class="sort-by__option"
-          >
-            {{ option.value }}
-          </SfSelectOption
-          >
-        </SfSelect>
-      </LazyHydrate>
+          {{ option.value }}
+        </SfSelectOption>
+      </SfSelect>
     </div>
 
     <div class="navbar__counter">
-      <span class="navbar__label desktop-only">{{ $t('Products found') }}: </span>
+      <span class="navbar__label desktop-only"
+        >{{ $t('Products found') }}:
+      </span>
       <span class="desktop-only">{{ pagination.totalItems }}</span>
-      <span class="navbar__label smartphone-only">{{ pagination.totalItems }} {{ $t('Items') }}</span>
+      <span class="navbar__label smartphone-only"
+        >{{ pagination.totalItems }} {{ $t('Items') }}</span
+      >
     </div>
 
     <div class="navbar__view">
@@ -70,7 +72,7 @@
       />
     </div>
     <LazyHydrate when-idle>
-      <FiltersSidebar @close="toggleFilterSidebar"/>
+      <FiltersSidebar @close="toggleFilterSidebar" />
     </LazyHydrate>
   </div>
 </template>
@@ -79,12 +81,9 @@
 import { computed } from '@vue/composition-api';
 import { useUiHelpers, useUiState } from '~/composables';
 import { useSearch, facetGetters } from '@vue-storefront/bigcommerce';
+import { useFacetData } from '../composables/useFacetData';
 import FiltersSidebar from '~/components/FiltersSidebar';
-import {
-  SfButton,
-  SfIcon,
-  SfSelect
-} from '@storefront-ui/vue';
+import { SfButton, SfIcon, SfSelect } from '@storefront-ui/vue';
 import { onSSR } from '@vue-storefront/core';
 import LazyHydrate from 'vue-lazy-hydration';
 
@@ -104,11 +103,19 @@ export default {
   },
   setup() {
     const th = useUiHelpers();
-    const { toggleFilterSidebar, isCategoryGridView, changeToCategoryGridView, changeToCategoryListView } = useUiState();
+    const {
+      toggleFilterSidebar,
+      isCategoryGridView,
+      changeToCategoryGridView,
+      changeToCategoryListView
+    } = useUiState();
     const { result, search } = useSearch();
+    const { getSortOptions } = useFacetData();
 
-    const sortBy = computed(() => facetGetters.getSortOptions(result.value));
-    const facets = computed(() => facetGetters.getGrouped(result.value, ['color', 'size']));
+    const sortBy = computed(() => getSortOptions(result.value));
+    const facets = computed(() =>
+      facetGetters.getGrouped(result.value, ['color', 'size'])
+    );
 
     onSSR(async () => {
       await search(th.getFacetsFromURL());
@@ -238,7 +245,7 @@ export default {
     &-label {
       margin: 0 var(--spacer-sm) 0 0;
       font: var(--font-weight--normal) var(--font-size--base) / 1.6
-      var(--font-family--secondary);
+        var(--font-family--secondary);
       text-decoration: none;
       color: var(--c-link);
     }

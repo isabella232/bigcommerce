@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 import { getCurrentInstance } from '@vue/composition-api';
 
-const nonFilters = ['page', 'sort', 'term', 'itemsPerPage'];
+const nonFilters = ['page', 'sort', 'direction', 'term', 'itemsPerPage'];
 
-const getInstance = () => {
+export const getInstance = (): any => {
   const vm = getCurrentInstance();
-  return vm.$root as any;
+  return vm.$root;
 };
 
 const reduceFilters = (query) => (prev, curr) => {
@@ -39,7 +39,8 @@ const useUiHelpers = () => {
     return {
       categorySlug,
       page: parseInt(query.page, 10) || 1,
-      sort: query.sort || 'latest',
+      sort: query.sort,
+      direction: query.direction,
       filters: getFiltersDataFromUrl(instance, true),
       itemsPerPage: parseInt(query.itemsperpage, 10) || 20,
       term: query.term
@@ -50,9 +51,21 @@ const useUiHelpers = () => {
     return `/c${category?.url}`;
   };
 
-  const changeSorting = (sort) => {
+  const changeSorting = (sort: string) => {
+    const sortOptions =
+      instance.context.$config.theme?.productsSortOptions ?? [];
+    const selectedOption = sortOptions.find(
+      (option) => option.id === Number.parseInt(sort)
+    );
+
     const { query } = instance.$router.history.current;
-    instance.$router.push({ query: { ...query, sort } });
+    instance.$router.push({
+      query: {
+        ...query,
+        sort: selectedOption?.value.sort,
+        direction: selectedOption?.value.direction
+      }
+    });
   };
 
   // eslint-disable-next-line

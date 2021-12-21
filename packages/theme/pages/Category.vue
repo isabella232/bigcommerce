@@ -111,10 +111,12 @@
               :show-add-to-cart-button="true"
               wishlistIcon="heart"
               isInWishlistIcon="heart_fill"
-              :isInWishlist="isInWishlist({
-                productId: product.id,
-                variantId: getDefaultVariant(product).id
-              })"
+              :isInWishlist="
+                isInWishlist({
+                  productId: product.id,
+                  variantId: getDefaultVariant(product).id
+                })
+              "
               :isAddedToCart="isInCart({ product })"
               :link="
                 localePath(
@@ -129,14 +131,16 @@
                   productId: product.id,
                   variantId: getDefaultVariant(product).id
                 })
-                  ? removeItemFromWishlist(wishlistHelpers.getItem(wishlist, {
-                    productId: product.id,
-                    variantId: getDefaultVariant(product).id
-                  }))
+                  ? removeItemFromWishlist(
+                      wishlistHelpers.getItem(wishlist, {
+                        productId: product.id,
+                        variantId: getDefaultVariant(product).id
+                      })
+                    )
                   : addItemToWishlist({
-                    productId: product.id,
-                    variantId: getDefaultVariant(product).id
-                  })
+                      productId: product.id,
+                      variantId: getDefaultVariant(product).id
+                    })
               "
               @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
             />
@@ -165,10 +169,12 @@
               "
               :max-rating="5"
               :score-rating="3"
-              :isInWishlist="isInWishlist({
-                productId: product.id,
-                variantId: getDefaultVariant(product).id
-              })"
+              :isInWishlist="
+                isInWishlist({
+                  productId: product.id,
+                  variantId: getDefaultVariant(product).id
+                })
+              "
               :qty="1"
               @input="productsQuantity[product.id] = $event"
               class="products__product-card-horizontal"
@@ -271,7 +277,12 @@ import {
   SfColor,
   SfProperty
 } from '@storefront-ui/vue';
-import { computed, ref, defineComponent, onMounted } from '@vue/composition-api';
+import {
+  computed,
+  ref,
+  defineComponent,
+  onMounted
+} from '@vue/composition-api';
 import {
   useCart,
   useGuestWishlist,
@@ -290,6 +301,7 @@ import cacheControl from './../helpers/cacheControl';
 import CategoryPageHeader from '~/components/CategoryPageHeader';
 import { useProductData } from '../composables/useProductData';
 import { useWishlistData } from '../composables/useWishlistData';
+import { ProductsSortEnum } from '@vue-storefront/bigcommerce-api';
 
 // TODO(addToCart qty, horizontal): https://github.com/vuestorefront/storefront-ui/issues/1606
 export default defineComponent({
@@ -368,9 +380,24 @@ export default defineComponent({
 
     onSSR(async () => {
       await categorySearch();
-      const { categorySlug, page, itemsPerPage } = th.getFacetsFromURL();
+      const {
+        categorySlug,
+        page,
+        itemsPerPage,
+        sort,
+        direction
+      } = th.getFacetsFromURL();
       const category = getCategoryBySlug(categorySlug, categories.value);
+      const isSortValid =
+        [
+          ProductsSortEnum.Id,
+          ProductsSortEnum.Name,
+          ProductsSortEnum.Price
+        ].includes(sort) &&
+        (direction === 'desc' || direction === 'asc');
       let productSearchParams = {
+        sort: isSortValid ? sort : undefined,
+        direction: isSortValid ? direction : undefined,
         page,
         limit: itemsPerPage,
         include: 'options,variants'
