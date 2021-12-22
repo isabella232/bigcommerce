@@ -32,7 +32,8 @@ export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['lo
     const { data: newWishlist } = await context.$bigcommerce.api
       .createWishlist({
         customer_id: customerId,
-        name: context.$bigcommerce.config.app.$config.wishlist.authenticatedName
+        name: context.$bigcommerce.config.app
+          .$config.wishlist.authenticatedName
       });
 
     wishlist = {
