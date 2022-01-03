@@ -4,11 +4,6 @@ import { addItem } from '../../src/useWishlist/actions';
 import { wishlistMock } from '../../__mocks__/wishlist.mock';
 import { mockedProduct } from '../../__mocks__/product.mock';
 import { contextMock } from '../../__mocks__/context.mock';
-import jwt from 'jsonwebtoken';
-
-const customerId = 1;
-const decode = jest.spyOn(jwt, 'decode');
-decode.mockImplementation(() => ({ customer: { id: customerId } }));
 
 describe('[BigCommerce - composables] useWishlist addItem', () => {
   beforeEach(() => {
