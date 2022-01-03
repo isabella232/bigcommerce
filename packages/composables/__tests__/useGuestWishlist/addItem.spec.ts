@@ -1,13 +1,15 @@
 /* eslint-disable global-require */
+import { Product } from '@vue-storefront/bigcommerce-api';
 import { addItem } from '../../src/useGuestWishlist/actions';
 import { contextMock } from '../../__mocks__/context.mock';
+import { mockedProduct } from '../../__mocks__/product.mock';
 import { Wishlist, WishlistItem } from '../../src/types';
 
 describe('[BigCommerce - composables] useGuestWishlist addItem', () => {
   let getProductsMock: jest.Mock<any, any>;
   const wishlistItemParams = {
-    productId: 1,
-    variantId: 1
+    productId: mockedProduct.id,
+    variantId: undefined
   };
 
   beforeEach(() => {
@@ -25,10 +27,17 @@ describe('[BigCommerce - composables] useGuestWishlist addItem', () => {
       '../../__mocks__/useGuestWishlist/guestWishlist.mock'
     );
 
-    const wishlistItem: WishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
+    const wishlistItem: WishlistItem = {
+      id: `${wishlistItemParams.productId}_${wishlistItemParams.variantId}`,
+      product_id: wishlistItemParams.productId,
+      variant_id: wishlistItemParams.variantId
+    };
     const expectedItems: Wishlist['items'] = [wishlistItem];
 
-    const res = await addItem(contextMock, wishlistMock, wishlistItemParams);
+    const res = await addItem(contextMock, {
+      currentWishlist: wishlistMock,
+      product: mockedProduct as Product
+    });
 
     expect(res.items).toStrictEqual(expectedItems);
   });
@@ -37,9 +46,12 @@ describe('[BigCommerce - composables] useGuestWishlist addItem', () => {
     const { guestWishlistMock: wishlistMock }: { guestWishlistMock: Wishlist } = require(
       '../../__mocks__/useGuestWishlist/guestWishlist.mock'
     );
-    const expectedParams = { 'id:in': [1], include: 'variants' };
+    const expectedParams = { 'id:in': [mockedProduct.id], include: 'variants' };
 
-    await addItem(contextMock, wishlistMock, wishlistItemParams);
+    await addItem(contextMock, {
+      currentWishlist: wishlistMock,
+      product: mockedProduct as Product
+    });
 
     expect(getProductsMock).toHaveBeenCalledTimes(1);
     expect(getProductsMock).toHaveBeenCalledWith(expectedParams);
@@ -49,11 +61,18 @@ describe('[BigCommerce - composables] useGuestWishlist addItem', () => {
     const { guestWishlistMock: wishlistMock }: { guestWishlistMock: Wishlist } = require(
       '../../__mocks__/useGuestWishlist/guestWishlist.mock'
     );
-    const wishlistItem: WishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
+    const wishlistItem: WishlistItem = {
+      id: `${wishlistItemParams.productId}_${wishlistItemParams.variantId}`,
+      product_id: wishlistItemParams.productId,
+      variant_id: wishlistItemParams.variantId
+    };
     wishlistMock.items.push(wishlistItem);
     const expectedLength = 1;
 
-    const res = await addItem(contextMock, wishlistMock, wishlistItemParams);
+    const res = await addItem(contextMock, {
+      currentWishlist: wishlistMock,
+      product: mockedProduct as Product
+    });
 
     expect(getProductsMock).toHaveBeenCalledTimes(0);
     expect(res.items).toHaveLength(expectedLength);

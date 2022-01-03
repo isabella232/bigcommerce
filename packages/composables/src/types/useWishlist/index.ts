@@ -6,7 +6,6 @@ import {
 import { GuestWishlistItem } from '..';
 
 export * from './parameters';
-export * from './responses';
 
 /**
  * Wishlist item common for guest wishlist and authenticated one.

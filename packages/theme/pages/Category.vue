@@ -113,8 +113,8 @@
               isInWishlistIcon="heart_fill"
               :isInWishlist="
                 isInWishlist({
-                  productId: product.id,
-                  variantId: getDefaultVariant(product).id
+                  currentWishlist: wishlist,
+                  product
                 })
               "
               :isAddedToCart="isInCart({ product })"
@@ -128,18 +128,19 @@
               class="products__product-card"
               @click:wishlist="
                 isInWishlist({
-                  productId: product.id,
-                  variantId: getDefaultVariant(product).id
+                  currentWishlist: wishlist,
+                  product
                 })
-                  ? removeItemFromWishlist(
-                      wishlistHelpers.getItem(wishlist, {
+                  ? removeItemFromWishlist({
+                      currentWishlist: wishlist,
+                      product: wishlistHelpers.getItem(wishlist, {
                         productId: product.id,
                         variantId: getDefaultVariant(product).id
                       })
-                    )
+                    })
                   : addItemToWishlist({
-                      productId: product.id,
-                      variantId: getDefaultVariant(product).id
+                      currentWishlist: wishlist,
+                      product
                     })
               "
               @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
@@ -171,14 +172,30 @@
               :score-rating="3"
               :isInWishlist="
                 isInWishlist({
-                  productId: product.id,
-                  variantId: getDefaultVariant(product).id
+                  currentWishlist: wishlist,
+                  product
                 })
               "
               :qty="1"
               @input="productsQuantity[product.id] = $event"
               class="products__product-card-horizontal"
-              @click:wishlist="null"
+              @click:wishlist="
+                isInWishlist({
+                  currentWishlist: wishlist,
+                  product
+                })
+                  ? removeItemFromWishlist({
+                      currentWishlist: wishlist,
+                      product: wishlistHelpers.getItem(wishlist, {
+                        productId: product.id,
+                        variantId: getDefaultVariant(product).id
+                      })
+                    })
+                  : addItemToWishlist({
+                      currentWishlist: wishlist,
+                      product
+                    })
+              "
               @click:add-to-cart="
                 addItemToCart({
                   product,
@@ -286,6 +303,8 @@ import {
 import {
   useCart,
   useGuestWishlist,
+  useWishlist,
+  useUser,
   useProduct,
   useCategory,
   getDefaultVariant
@@ -311,6 +330,7 @@ export default defineComponent({
     'stale-when-revalidate': 5
   }),
   setup(props, context) {
+    const { isAuthenticated } = useUser();
     const th = useUiHelpers();
     const uiState = useUiState();
     const { addItem: addItemToCart, isInCart } = useCart();
@@ -320,7 +340,7 @@ export default defineComponent({
       addItem: addItemToWishlist,
       isInWishlist,
       removeItem: removeItemFromWishlist
-    } = useGuestWishlist('guest-wishlist');
+    } = isAuthenticated.value ? useWishlist() : useGuestWishlist();
     const wishlistHelpers = useWishlistData();
     const { products: productsResult, search, loading, error } = useProduct(
       'category-products'

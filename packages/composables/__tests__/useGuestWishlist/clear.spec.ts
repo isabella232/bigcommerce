@@ -1,5 +1,5 @@
+/* eslint-disable global-require */
 import { clear } from '../../src/useGuestWishlist/actions';
-import { guestWishlistMock } from '../../__mocks__/useGuestWishlist/guestWishlist.mock';
 import { contextMock } from '../../__mocks__/context.mock';
 import { Wishlist, WishlistItem } from '../../src/types';
 
@@ -9,6 +9,7 @@ describe('[BigCommerce - composables] useGuestWishlist clear', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetModules();
 
     jest.spyOn(window.localStorage.__proto__, 'setItem');
     jest.spyOn(window.localStorage.__proto__, 'getItem');
@@ -18,7 +19,11 @@ describe('[BigCommerce - composables] useGuestWishlist clear', () => {
     getProductsMock = jest.fn();
     contextMock.$bigcommerce.api.getProducts = getProductsMock;
 
-    wishlistMock = JSON.parse(JSON.stringify(guestWishlistMock));
+    const { guestWishlistMock }: { guestWishlistMock: Wishlist } = require(
+      '../../__mocks__/useGuestWishlist/guestWishlist.mock'
+    );
+
+    wishlistMock = guestWishlistMock;
   });
 
   it('should remove all items from the items array', async () => {
@@ -30,7 +35,7 @@ describe('[BigCommerce - composables] useGuestWishlist clear', () => {
 
     const expectedLength = 0;
 
-    const res = await clear(contextMock, wishlistMock);
+    const res = await clear(contextMock, { currentWishlist: wishlistMock });
 
     expect(res.items).toHaveLength(expectedLength);
   });
@@ -43,7 +48,7 @@ describe('[BigCommerce - composables] useGuestWishlist clear', () => {
     wishlistMock.items.push(...wishlistItems);
     window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
 
-    await clear(contextMock, wishlistMock);
+    await clear(contextMock, { currentWishlist: wishlistMock });
 
     expect(getProductsMock).toHaveBeenCalledTimes(0);
   });
@@ -54,7 +59,7 @@ describe('[BigCommerce - composables] useGuestWishlist clear', () => {
 
     window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
 
-    await clear(contextMock, wishlistMock);
+    await clear(contextMock, { currentWishlist: wishlistMock });
 
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
   });

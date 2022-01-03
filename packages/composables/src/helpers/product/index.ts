@@ -3,7 +3,7 @@ import {
   ProductVariant
 } from '@vue-storefront/bigcommerce-api';
 
-export const getDefaultVariant = (product: Product): ProductVariant => {
+export const getDefaultVariant = (product: Product): ProductVariant | undefined=> {
   const configuration = product.options?.reduce((acc, option) => {
     const newValue =
       option.option_values.find((optionValue) => optionValue.is_default)

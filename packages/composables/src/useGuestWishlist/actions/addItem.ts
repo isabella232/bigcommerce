@@ -1,17 +1,31 @@
-import { Wishlist, WishlistParams, Context } from '../../types';
-import { BIGCOMMERCE_GUEST_WISHLIST_KEY } from '../../helpers/consts';
-import { isInWishlist, refreshWishlistProducts } from '../../helpers';
+import {
+  UseWishlistFactoryParams
+} from '@vue-storefront/core';
+import { Product } from '@vue-storefront/bigcommerce-api';
+import { Wishlist, WishlistParams, Context, WishlistItem } from '../../types';
+import {
+  isInWishlist,
+  refreshWishlistProducts,
+  getDefaultVariant,
+  BIGCOMMERCE_GUEST_WISHLIST_KEY
+} from '../../helpers';
 
-export const addItem = async (context: Context, wishlist: Wishlist, params: WishlistParams): Promise<Wishlist | null> => {
-  if (!isInWishlist(wishlist, params)) {
-    wishlist.items.push({
+export const addItem: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['addItem'] = async (
+  context: Context,
+  { currentWishlist, product }
+) => {
+  const variantId = getDefaultVariant(product)?.id;
+  const params: WishlistParams = { productId: product.id, variantId };
+
+  if (!isInWishlist(currentWishlist, params)) {
+    currentWishlist.items.push({
       id: `${params.productId}_${params.variantId}`,
       product_id: params.productId,
       variant_id: params.variantId
     });
-    wishlist.wishlist_product_data = await refreshWishlistProducts(context, wishlist);
-    localStorage.setItem(BIGCOMMERCE_GUEST_WISHLIST_KEY, JSON.stringify(wishlist));
+    currentWishlist.wishlist_product_data = await refreshWishlistProducts(context, currentWishlist);
+    localStorage.setItem(BIGCOMMERCE_GUEST_WISHLIST_KEY, JSON.stringify(currentWishlist));
   }
 
-  return wishlist;
+  return currentWishlist;
 };

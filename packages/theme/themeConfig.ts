@@ -39,5 +39,9 @@ export default {
       value: { sort: 'price', direction: 'desc' }
     },
     { label: 'Price from low to high', id: 6, value: { sort: 'price' } }
-  ]
+  ],
+  guestWishlist: {
+    name: 'Guest wishlist',
+    isPublic: true
+  }
 };

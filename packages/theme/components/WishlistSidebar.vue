@@ -85,7 +85,7 @@ import {
   SfImage
 } from '@storefront-ui/vue';
 import { computed, defineComponent, onMounted } from '@vue/composition-api';
-import { useGuestWishlist, useUser } from '@vue-storefront/bigcommerce';
+import { useGuestWishlist, useUser, useWishlist } from '@vue-storefront/bigcommerce';
 import { useUiState } from '~/composables';
 import { useWishlistData } from '../composables/useWishlistData';
 
@@ -105,7 +105,7 @@ export default defineComponent({
     const wishlistHelpers = useWishlistData();
     const { isAuthenticated } = useUser();
     const { isWishlistSidebarOpen, toggleWishlistSidebar } = useUiState();
-    const { wishlist, removeItem, load: loadWishlist } = useGuestWishlist('guest-wishlist');
+    const { wishlist, removeItem, load: loadWishlist } = isAuthenticated.value ? useWishlist() : useGuestWishlist();
     const wishlistItems = computed(() => wishlistHelpers.getItems(wishlist.value));
     const totals = computed(() => wishlistHelpers.getTotals(wishlist.value));
     const totalItems = computed(() => wishlistHelpers.getTotalItems(wishlist.value));

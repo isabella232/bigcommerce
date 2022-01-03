@@ -22,6 +22,12 @@ describe('[BigCommerce - composables] useGuestWishlist load', () => {
     is_public: true,
     token: BIGCOMMERCE_GUEST_WISHLIST_TOKEN
   };
+  contextMock.$bigcommerce.config.app.$config.theme = {
+    guestWishlist: {
+      name: wishlistName,
+      isPublic: true
+    }
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -37,7 +43,7 @@ describe('[BigCommerce - composables] useGuestWishlist load', () => {
     window.localStorage.__proto__.setItem = jest.fn();
     window.localStorage.__proto__.getItem = jest.fn(() => null);
 
-    await load(contextMock, wishlistName);
+    await load(contextMock, {});
 
     expect(getProductsMock).toHaveBeenCalledTimes(0);
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
@@ -51,7 +57,7 @@ describe('[BigCommerce - composables] useGuestWishlist load', () => {
     getProductsMock = jest.fn(() => guestWishlistMock.wishlist_product_data);
     contextMock.$bigcommerce.api.getProducts = getProductsMock;
 
-    const res = await load(contextMock, wishlistName);
+    const res = await load(contextMock, {});
 
     expect(localStorage.getItem).toHaveBeenCalledTimes(1);
     expect(res).toStrictEqual(expectedWishlist);
@@ -61,7 +67,7 @@ describe('[BigCommerce - composables] useGuestWishlist load', () => {
     window.localStorage.__proto__.setItem = jest.fn();
     window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(guestWishlistMock));
 
-    await load(contextMock, wishlistName);
+    await load(contextMock, {});
 
     expect(getProductsMock).toHaveBeenCalledTimes(0);
   });
@@ -71,7 +77,7 @@ describe('[BigCommerce - composables] useGuestWishlist load', () => {
     guestWishlistMock.items.push({ id: '1_1', product_id: 1, variant_id: 1 });
     window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(guestWishlistMock));
 
-    await load(contextMock, wishlistName);
+    await load(contextMock, {});
 
     expect(getProductsMock).toHaveBeenCalledTimes(1);
   });

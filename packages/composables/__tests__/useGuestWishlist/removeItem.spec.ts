@@ -1,5 +1,5 @@
+/* eslint-disable global-require */
 import { removeItem } from '../../src/useGuestWishlist/actions';
-import { guestWishlistMock } from '../../__mocks__/useGuestWishlist/guestWishlist.mock';
 import { contextMock } from '../../__mocks__/context.mock';
 import { Wishlist, WishlistItem } from '../../src/types';
 
@@ -15,7 +15,10 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
     getProductsMock = jest.fn();
     contextMock.$bigcommerce.api.getProducts = getProductsMock;
 
-    wishlistMock = JSON.parse(JSON.stringify(guestWishlistMock));
+    const { guestWishlistMock }: { guestWishlistMock: Wishlist } = require(
+      '../../__mocks__/useGuestWishlist/guestWishlist.mock'
+    );
+    wishlistMock = guestWishlistMock;
   });
 
   it('should remove item from the items array', async () => {
@@ -24,7 +27,10 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
 
     const expectedLength = 0;
 
-    const res = await removeItem(contextMock, wishlistMock, wishlistItem);
+    const res = await removeItem(contextMock, {
+      currentWishlist: wishlistMock,
+      product: wishlistItem
+    });
 
     expect(res.items).toHaveLength(expectedLength);
   });
@@ -38,7 +44,10 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
 
     const expectedParams = { 'id:in': [2], include: 'variants' };
 
-    await removeItem(contextMock, wishlistMock, wishlistItems[0]);
+    await removeItem(contextMock, {
+      currentWishlist: wishlistMock,
+      product: wishlistItems[0]
+    });
 
     expect(getProductsMock).toHaveBeenCalledTimes(1);
     expect(getProductsMock).toHaveBeenCalledWith(expectedParams);
@@ -48,7 +57,10 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
     const wishlistItem: WishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
     wishlistMock.items.push(wishlistItem);
 
-    await removeItem(contextMock, wishlistMock, wishlistItem);
+    await removeItem(contextMock, {
+      currentWishlist: wishlistMock,
+      product: wishlistItem
+    });
 
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
   });

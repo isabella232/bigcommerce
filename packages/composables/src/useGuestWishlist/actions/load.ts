@@ -1,20 +1,27 @@
-import { Wishlist, Context } from '../../types';
 import {
+  UseWishlistFactoryParams
+} from '@vue-storefront/core';
+import { Product } from '@vue-storefront/bigcommerce-api';
+import { Wishlist, Context, WishlistItem } from '../../types';
+import {
+  refreshWishlistProducts,
+  emptyProductsResponse,
   BIGCOMMERCE_GUEST_WISHLIST_ID,
   BIGCOMMERCE_GUEST_CUSTOMER_ID,
   BIGCOMMERCE_GUEST_WISHLIST_KEY,
   BIGCOMMERCE_GUEST_WISHLIST_TOKEN
-} from '../../helpers/consts';
-import { refreshWishlistProducts, emptyProductsResponse } from '../../helpers';
+} from '../../helpers';
 
-export const load = async (context: Context, name: string, isPublic = true): Promise<Wishlist> => {
+export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['load'] = async (
+  context: Context
+) => {
   let guestWishlist: Wishlist = {
     id: BIGCOMMERCE_GUEST_WISHLIST_ID,
-    name,
+    name: context.$bigcommerce.config.app.$config.theme.guestWishlist.name,
     customer_id: BIGCOMMERCE_GUEST_CUSTOMER_ID,
     items: [],
     wishlist_product_data: emptyProductsResponse,
-    is_public: isPublic,
+    is_public: context.$bigcommerce.config.app.$config.theme.guestWishlist.isPublic,
     token: BIGCOMMERCE_GUEST_WISHLIST_TOKEN
   };
 

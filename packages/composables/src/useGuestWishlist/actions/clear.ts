@@ -1,12 +1,21 @@
-import { Wishlist, Context } from '../../types';
-import { refreshWishlistProducts } from '../../helpers';
-import { BIGCOMMERCE_GUEST_WISHLIST_KEY } from '../../helpers/consts';
+import {
+  UseWishlistFactoryParams
+} from '@vue-storefront/core';
+import { Product } from '@vue-storefront/bigcommerce-api';
+import { Wishlist, WishlistItem, Context } from '../../types';
+import {
+  refreshWishlistProducts,
+  BIGCOMMERCE_GUEST_WISHLIST_KEY
+} from '../../helpers';
 
-export const clear = async (context: Context, wishlist: Wishlist): Promise<Wishlist | null> => {
-  wishlist.items = [];
+export const clear: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['clear'] = async (
+  context: Context,
+  { currentWishlist }
+) => {
+  currentWishlist.items = [];
 
-  wishlist.wishlist_product_data = await refreshWishlistProducts(context, wishlist);
-  localStorage.setItem(BIGCOMMERCE_GUEST_WISHLIST_KEY, JSON.stringify(wishlist));
+  currentWishlist.wishlist_product_data = await refreshWishlistProducts(context, currentWishlist);
+  localStorage.setItem(BIGCOMMERCE_GUEST_WISHLIST_KEY, JSON.stringify(currentWishlist));
 
-  return wishlist;
+  return currentWishlist;
 };
