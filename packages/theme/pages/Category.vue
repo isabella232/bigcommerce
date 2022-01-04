@@ -414,7 +414,7 @@ export default defineComponent({
           ProductsSortEnum.Name,
           ProductsSortEnum.Price
         ].includes(sort) &&
-        (direction === 'desc' || direction === 'asc');
+        (!direction || direction === 'desc' || direction === 'asc');
       let productSearchParams = {
         sort: isSortValid ? sort : undefined,
         direction: isSortValid ? direction : undefined,
