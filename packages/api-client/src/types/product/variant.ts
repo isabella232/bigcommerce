@@ -93,6 +93,10 @@ export type ProductVariant = {
    */
   mpn?: string;
   /**
+   * URL of the uploaded image for the variant.
+   */
+  image_url?: string;
+  /**
    * ID of the variant
    */
   id?: number;

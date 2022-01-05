@@ -282,12 +282,14 @@ export default defineComponent({
     );
     const reviewHelpers = useReviewData();
     const productGallery = computed(() =>
-      productData.getGallery(product.value).map((image) => ({
-        mobile: { url: image.small },
-        desktop: { url: image.normal },
-        big: { url: image.big },
-        alt: productData.getName(product.value)
-      }))
+      productData
+        .getGallery(product.value, activeVariant.value)
+        .map((image) => ({
+          mobile: { url: image.small },
+          desktop: { url: image.normal },
+          big: { url: image.big },
+          alt: productData.getName(product.value)
+        }))
     );
     const breadcrumbs = computed(() => {
       if (

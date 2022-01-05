@@ -30,16 +30,30 @@ export const useProductData = () => {
     };
   };
 
-  const getGallery = (product: Product): AgnosticMediaGalleryItem[] => {
-    return (
+  const getGallery = (
+    product: Product,
+    activeVariant?: ProductVariant
+  ): AgnosticMediaGalleryItem[] => {
+    const variantImage = activeVariant?.image_url;
+
+    const productImages =
       product?.images
         ?.sort((first, second) => first.sort_order - second.sort_order)
         .map((image) => ({
           small: image.url_thumbnail,
           normal: image.url_standard,
           big: image.url_standard
-        })) ?? []
-    );
+        })) ?? [];
+
+    if (variantImage) {
+      productImages.unshift({
+        small: variantImage,
+        normal: variantImage,
+        big: variantImage
+      });
+    }
+
+    return productImages;
   };
 
   const getCoverImage = (product: Product): string => {
@@ -109,7 +123,7 @@ export const useProductData = () => {
   };
 
   const getVariant = (product: Product, variantId: number): ProductVariant => {
-    return product?.variants?.find(variant => variant.id === variantId);
+    return product?.variants?.find((variant) => variant.id === variantId);
   };
 
   const getPagination = (meta): AgnosticPagination => {
