@@ -12,9 +12,10 @@
         </p>
 
         <ShippingAddressForm
+          :cancel="cancelChangeAddress"
           :address="activeAddress"
           :isNew="isNewAddress"
-          @submit="saveAddress"
+          :onSubmit="saveAddress"
         />
       </SfTab>
     </SfTabs>
@@ -72,7 +73,6 @@ import { useUserShippingData } from '~/composables/useUserShippingData';
 import { useUserShipping } from '@vue-storefront/bigcommerce';
 import { ref, computed } from '@vue/composition-api';
 import { onSSR } from '@vue-storefront/core';
-
 export default {
   name: 'ShippingDetails',
   components: {
@@ -97,14 +97,17 @@ export default {
     const edittingAddress = ref(false);
     const activeAddress = ref(undefined);
     const isNewAddress = computed(() => !activeAddress.value);
-
     const changeAddress = (address = undefined) => {
       activeAddress.value = address;
       edittingAddress.value = true;
     };
 
-    const removeAddress = (address) => deleteAddress({ address });
+    const cancelChangeAddress = () => {
+      activeAddress.value = undefined;
+      edittingAddress.value = false;
+    };
 
+    const removeAddress = (address) => deleteAddress({ address });
     const saveAddress = async ({ form, onComplete, onError }) => {
       try {
         const actionMethod = isNewAddress.value ? addAddress : updateAddress;
@@ -120,7 +123,6 @@ export default {
     onSSR(async () => {
       await loadUserShipping();
     });
-
     return {
       changeAddress,
       updateAddress,
@@ -130,7 +132,8 @@ export default {
       addresses,
       edittingAddress,
       activeAddress,
-      isNewAddress
+      isNewAddress,
+      cancelChangeAddress
     };
   }
 };
@@ -150,7 +153,6 @@ export default {
   display: flex;
   padding: var(--spacer-xl) 0;
   border-top: 1px solid var(--c-light);
-
   &:last-child {
     border-bottom: 1px solid var(--c-light);
   }
@@ -202,7 +204,6 @@ export default {
       &__title {
         display: none;
       }
-
       &__content {
         border: 0;
         padding: 0;

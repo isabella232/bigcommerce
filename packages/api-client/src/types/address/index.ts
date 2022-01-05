@@ -1,5 +1,8 @@
+export * from './parameters';
+export * from './responses';
+
 /**
- * Format of address from update customer response of `/customers` BigCommerce API endpoint.
+ * Format of address in the BigCommerce API responses.
  * See at {@link UpdateCustomerResponse}
  */
 export type UserAddress = {

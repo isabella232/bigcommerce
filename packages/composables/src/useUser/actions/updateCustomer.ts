@@ -24,6 +24,5 @@ export const updateCustomer = async (
     ...(typeof acceptsMarketingEmails !== 'undefined' && {accepts_product_review_abandoned_cart_emails: acceptsMarketingEmails})
   });
 
-  return updatedCustomerData.data[0];
-
+  return updatedCustomerData?.data?.[0];
 };

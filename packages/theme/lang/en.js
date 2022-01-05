@@ -160,6 +160,30 @@ export default {
     'Thanks! If there is an account registered with the {0} email, you will find message with a password reset link in your inbox.',
   'Currently unavailable': 'Currently unavailable.',
   'Clear cart': 'Clear cart',
-  'Please type review title. It should have at least three characters.': 'Please type review title. It should have at least three characters.',
-  'Please type review message. It should have at least three characters.': 'Please type review message. It should have at least three characters.'
+  'Please type review title. It should have at least three characters.':
+    'Please type review title. It should have at least three characters.',
+  'Please type review message. It should have at least three characters.':
+    'Please type review message. It should have at least three characters.',
+  'Please confirm': 'Please confirm',
+  'First Name': 'First Name',
+  'Please type your first name. Your name should have at least 2 characters.':
+    'Please type your first name. Your name should have at least 2 characters.',
+  'Last Name': 'Last Name',
+  'Please type your last name. Your name should have at least 2 characters.':
+    'Please type your last name. Your name should have at least 2 characters.',
+  'Street Name': 'Street Name',
+  'Please type your street name': 'Please type your street name',
+  City: 'City',
+  'Please type your city.': 'Please type your city.',
+  'State/Province': 'State/Province',
+  'Please type your state/province.': 'Please type your state/province.',
+  'Zip-code': 'Zip-code',
+  'Please type your zip code.': 'Please type your zip code.',
+  Country: 'Country',
+  'Please choose your country.': 'Please choose your country.',
+  'Phone number': 'Phone number',
+  'Please type your phone number.': 'Please type your phone number.',
+  'House/Apartment number': 'House/Apartment number',
+  'Please type your house/apartment number.':
+    'Please type your house/apartment number.'
 };

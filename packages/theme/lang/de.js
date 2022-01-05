@@ -164,6 +164,31 @@ export default {
     'Vielen Dank! Wenn ein Konto mit der E-Mail-Adresse {0} registriert ist, finden Sie in Ihrem Posteingang eine Nachricht mit einem Link zum Zurücksetzen des Passworts.',
   'Currently unavailable': 'Derzeit nicht verfügbar.',
   'Clear cart': 'Warenkorb löschen',
-  'Please type review title. It should have at least three characters.': 'Bitte geben Sie den Titel der Rezension ein. Es sollte mindestens drei Zeichen haben.',
-  'Please type review message. It should have at least three characters.': 'Bitte geben Sie eine Bewertungsnachricht ein. Es sollte mindestens drei Zeichen haben.'
+  'Please type review title. It should have at least three characters.':
+    'Bitte geben Sie den Titel der Rezension ein. Es sollte mindestens drei Zeichen haben.',
+  'Please type review message. It should have at least three characters.':
+    'Bitte geben Sie eine Bewertungsnachricht ein. Es sollte mindestens drei Zeichen haben.',
+  'Please confirm': 'Bitte bestätigen',
+  'First Name': 'Vorname',
+  'Please type your first name. Your name should have at least 2 characters.':
+    'Bitte geben Sie Ihren Vornamen ein. Ihr Name sollte mindestens 2 Zeichen haben.',
+  'Last Name': 'Nachname',
+  'Please type your last name. Your name should have at least 2 characters.':
+    'Bitte geben Sie Ihren Nachnamen ein. Ihr Name sollte mindestens 2 Zeichen haben.',
+  'Street Name': 'Straßenname',
+  'Please type your street name': 'Bitte geben Sie Ihren Straßennamen ein',
+  City: 'Stadt',
+  'Please type your city.': 'Bitte geben Sie Ihre Stadt ein.',
+  'State/Province': 'Staat/Provinz',
+  'Please type your state/province.':
+    'Bitte geben Sie Ihr Bundesland/Ihre Provinz ein.',
+  'Zip-code': 'Postleitzahl',
+  'Please type your zip code.': 'Bitte geben Sie Ihre Postleitzahl ein.',
+  Country: 'Land',
+  'Please choose your country.': 'Bitte wählen Sie Ihr Land.',
+  'Phone number': 'Telefonnummer',
+  'Please type your phone number.': 'Bitte geben Sie Ihre Telefonnummer ein.',
+  'House/Apartment number': 'Haus-/Wohnungsnummer',
+  'Please type your house/apartment number.':
+    'Bitte geben Sie Ihre Haus-/Wohnungsnummer ein.'
 };

@@ -7,63 +7,58 @@ import type {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useUserShippingData = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getAddresses = (shipping: Address, criteria?: UserShippingAddressSearchCriteria): AddressItem[] => {
-    return [];
+  const getAddresses = (addresses: Address, criteria?: UserShippingAddressSearchCriteria): Address => {
+    // todo: filter addresses by form_fields type==='Shipping'
+    return addresses || [];
+  };
+
+  const getDefault = (shipping: Address): AddressItem => {
+    return shipping?.length ? shipping[0] : null;
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getDefault = (shipping: Address): Address => {
-    return {};
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getTotal = (shipping: Address): number => {
+  const getTotal = (shipping: AddressItem): number => {
     return 0;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getPostCode = (address: AddressItem): string => {
-    return '';
+    return address?.postal_code;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getStreetName = (address: AddressItem): string => {
-    return '';
+  const getAddress1 = (address: AddressItem): string => {
+    return address?.address1;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getStreetNumber = (address: AddressItem): string | number => {
-    return '';
+  const getAddress2 = (address: AddressItem): string | number => {
+    return address?.address2;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getCity = (address: AddressItem): string => {
-    return '';
+    return address?.city;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getFirstName = (address: AddressItem): string => {
-    return '';
+    return address?.first_name;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getLastName = (address: AddressItem): string => {
-    return '';
+    return address?.last_name;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getCountry = (address: AddressItem): string => {
-    return '';
+    return address?.country;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getState = (address: AddressItem): string => {
+    return address?.state_or_province;
+  };
+
   const getPhone = (address: AddressItem): string => {
-    return '';
+    return address?.phone;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getId = (address: AddressItem): string => {
-    return '';
+  const getId = (address: AddressItem): number => {
+    return address?.id;
   };
 
   return {
@@ -71,13 +66,14 @@ export const useUserShippingData = () => {
     getDefault,
     getTotal,
     getPostCode,
-    getStreetName,
-    getStreetNumber,
+    getAddress1,
+    getAddress2,
     getCity,
     getFirstName,
     getLastName,
     getCountry,
     getPhone,
+    getState,
     getId
   };
 };

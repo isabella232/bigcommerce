@@ -1,3 +1,5 @@
+import { UserAddress } from '..';
+
 export type TODO = unknown;
 
 export type BillingAddress = TODO;
@@ -22,9 +24,9 @@ export type UserBillingAddressItem = TODO;
 
 export type UserBillingAddressSearchCriteria = TODO;
 
-export type UserShippingAddress = TODO;
+export type UserShippingAddress = UserAddress[];
 
-export type UserShippingAddressItem = TODO;
+export type UserShippingAddressItem = UserAddress;
 
 export type UserShippingAddressSearchCriteria = TODO;
 

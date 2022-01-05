@@ -1,6 +1,6 @@
 import { CustomersIncludeEnum, User } from '@vue-storefront/bigcommerce-api';
 import { Context, UseUserLoginParams } from '../../types';
-import { getCustomer } from '.';
+import { getCustomer } from './getCustomer';
 import { loadCustomerCart } from '../../helpers/customer/loadCart';
 
 /**

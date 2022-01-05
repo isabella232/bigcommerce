@@ -1,5 +1,4 @@
 import {
-  Context,
   useUserShippingFactory,
   UseUserShippingFactoryParams
 } from '@vue-storefront/core';
@@ -8,36 +7,14 @@ import type {
   UserShippingAddressItem as AddressItem
 } from '@vue-storefront/bigcommerce-api';
 
+import { load, addAddress, deleteAddress, updateAddress, setDefaultAddress } from './actions';
+
 const params: UseUserShippingFactoryParams<Address, AddressItem> = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  addAddress: async (context: Context, params) => {
-    console.log('Mocked: useUserShipping.addAddress');
-    return {};
-  },
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  deleteAddress: async (context: Context, params) => {
-    console.log('Mocked: useUserShipping.deleteAddress');
-    return {};
-  },
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateAddress: async (context: Context, params) => {
-    console.log('Mocked: useUserShipping.updateAddress');
-    return {};
-  },
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  load: async (context: Context, params) => {
-    console.log('Mocked: useUserShipping.load');
-    return {};
-  },
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setDefaultAddress: async (context: Context, params) => {
-    console.log('Mocked: useUserShipping.setDefaultAddress');
-    return {};
-  }
+  addAddress,
+  deleteAddress,
+  updateAddress,
+  load,
+  setDefaultAddress
 };
 
 export const useUserShipping = useUserShippingFactory<Address, AddressItem>(params);

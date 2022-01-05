@@ -1,7 +1,7 @@
 import {
   CreateCustomerParameters,
   User,
-  GetCustomerParameters,
+  GetCustomersParameters,
   LoginCustomerParameters,
   LoginCustomerResponse,
   GetCustomersResponse,
@@ -50,6 +50,15 @@ import {
   WishlistResponse,
   WishlistCollectionResponse
 } from '../wishlist';
+import {
+  CreateAddressParameters,
+  CreateAddressResponse,
+  DeleteAddressParameters,
+  GetAddressParameters,
+  GetAddressResponse,
+  UpdateAddressParameters,
+  UpdateAddressResponse
+} from '../address';
 
 /**
  * Definition of all API-client methods available in context.
@@ -68,11 +77,11 @@ export interface Endpoints {
   /**
    * Get customers
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
-   * @param {GetCustomerParameters} params Parameters for `getCustomer` endpoint
+   * @param {GetCustomersParameters} params Parameters for `getCustomer` endpoint
    */
   getCustomers(
     context: BigcommerceIntegrationContext,
-    params: GetCustomerParameters
+    params: GetCustomersParameters
   ): Promise<GetCustomersResponse>;
 
   /**
@@ -295,4 +304,44 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     params: ValidateCredentialsParameter
   ): Promise<ValidateCredentialsResponse>;
+
+  /**
+   * Creates a new Address.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {CreateAddressParameters} params An object which contains necessary properties for creating a new address.
+   */
+  createCustomerAddress(
+    context: BigcommerceIntegrationContext,
+    params: CreateAddressParameters
+  ): Promise<CreateAddressResponse>;
+
+  /**
+   * Deletes an Address.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {DeleteAddressParameters} params An object which contains necessary properties for deleting an address.
+   */
+  deleteCustomerAddress(
+    context: BigcommerceIntegrationContext,
+    params: DeleteAddressParameters
+  ): Promise<null>;
+
+  /**
+   * Get an Adddress
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {GetAddressParameters} params An object which contains necessary properties for getting an address.
+   */
+  getCustomerAddress(
+    context: BigcommerceIntegrationContext,
+    params: GetAddressParameters
+  ): Promise<GetAddressResponse>;
+
+  /**
+   * Update an address
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {UpdateAddressResponse} params An object which contains necessary properties for updating an address.
+   */
+  updateCustomerAddress(
+    context: BigcommerceIntegrationContext,
+    params: UpdateAddressParameters
+  ): Promise<UpdateAddressResponse>;
 }

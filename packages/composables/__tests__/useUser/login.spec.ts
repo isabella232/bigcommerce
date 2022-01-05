@@ -29,7 +29,7 @@ describe('[bigcommerce-composables] useUser logIn', () => {
       .fn()
       .mockReturnValue(loginResponse);
 
-    contextMock.$bigcommerce.api.getCustomer = jest
+    contextMock.$bigcommerce.api.getCustomers = jest
       .fn()
       .mockReturnValue(customerResponse);
 
@@ -48,7 +48,7 @@ describe('[bigcommerce-composables] useUser logIn', () => {
     });
 
     contextMock.$bigcommerce.api.loginCustomer = loginMock;
-    contextMock.$bigcommerce.api.getCustomer = jest.fn().mockReturnValue(null);
+    contextMock.$bigcommerce.api.getCustomers = jest.fn().mockReturnValue(null);
 
     await logIn(contextMock, invalidLoginCredentials).catch(() => {});
 

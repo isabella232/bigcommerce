@@ -6,7 +6,7 @@ import {
   User
 } from '@vue-storefront/bigcommerce-api';
 import { Context } from '../../types';
-import { assignCart } from '.';
+import { assignCart } from './assignCart';
 import { BIGCOMMERCE_USER_CART_KEY } from '../consts';
 
 const mergeCarts = async (

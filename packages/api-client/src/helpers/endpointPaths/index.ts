@@ -18,6 +18,7 @@ const BigCommerceEndpoints = {
   storefrontLoginWithToken: (token: string): string => `/login/token/${token}`,
   storefrontCurrentlyLoggedInCustomer: '/customer/current.jwt',
   formFieldValues: '/customers/form-field-values',
+  addresses: '/customers/addresses',
   wishlistItems: (wishlistId: number, itemId?: number): string => itemId
     ? `/wishlists/${wishlistId}/items/${itemId}`
     : `/wishlists/${wishlistId}/items`,

@@ -28,7 +28,6 @@ export { productGetters } from './getters/productGetters';
 export { reviewGetters } from './getters/reviewGetters';
 export { userBillingGetters } from './getters/userBillingGetters';
 export { userGetters } from './getters/userGetters';
-export { userShippingGetters } from './getters/userShippingGetters';
 
 // Helpers
 export { getDefaultVariant } from './helpers/product';

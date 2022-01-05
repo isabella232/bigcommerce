@@ -59,7 +59,7 @@ export type LoginCustomerResponse = {
 };
 
 /**
- * Format of response for getCustomer BigCommerce API endpoint.
+ * Format of response for getCustomers BigCommerce API endpoint.
  */
 export type GetCustomersResponse = {
   data: Array<User>;

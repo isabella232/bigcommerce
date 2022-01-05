@@ -1,9 +1,9 @@
 import { CustomersIncludeEnum, CustomersSortEnum, FormField } from '.';
 
 /**
- * Format of parameters that can be passed to `getCustomer` endpoint method.
+ * Format of parameters that can be passed to `getCustomers` endpoint method.
  */
-export type GetCustomerParameters = {
+export type GetCustomersParameters = {
   /**
    * Page number
    */

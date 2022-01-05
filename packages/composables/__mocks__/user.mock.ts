@@ -16,7 +16,8 @@ export const mockedUser: User = {
       last_name: 'Swimmer',
       phone: '707070707',
       postal_code: '33333',
-      state_or_province: 'California'
+      state_or_province: 'California',
+      form_fields: null
     }
   ],
   company: '',
