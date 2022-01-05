@@ -283,7 +283,7 @@ export interface Endpoints {
    removeWishlistItem(
     context: BigcommerceIntegrationContext,
     params: RemoveWishlistItemParams
-  ): Promise<WishlistResponse>;
+  ): Promise<null>;
 
   /**
    * Deletes a wishlist.

@@ -297,14 +297,11 @@ import {
 import {
   computed,
   ref,
-  defineComponent,
-  onMounted
+  defineComponent
 } from '@vue/composition-api';
 import {
   useCart,
-  useGuestWishlist,
   useWishlist,
-  useUser,
   useProduct,
   useCategory,
   getDefaultVariant
@@ -330,17 +327,15 @@ export default defineComponent({
     'stale-when-revalidate': 5
   }),
   setup(props, context) {
-    const { isAuthenticated } = useUser();
     const th = useUiHelpers();
     const uiState = useUiState();
     const { addItem: addItemToCart, isInCart } = useCart();
     const {
       wishlist,
-      load: loadWishlist,
       addItem: addItemToWishlist,
       isInWishlist,
       removeItem: removeItemFromWishlist
-    } = isAuthenticated.value ? useWishlist() : useGuestWishlist();
+    } = useWishlist();
     const wishlistHelpers = useWishlistData();
     const { products: productsResult, search, loading, error } = useProduct(
       'category-products'
@@ -392,10 +387,6 @@ export default defineComponent({
       const category = getCategoryBySlug(categorySlug, categories.value);
       const breadcrumbs = getBreadcrumbs(category?.id, categories.value);
       return breadcrumbs;
-    });
-
-    onMounted(() => {
-      loadWishlist();
     });
 
     onSSR(async () => {

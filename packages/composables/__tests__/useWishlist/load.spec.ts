@@ -18,8 +18,11 @@ describe('[BigCommerce - composables] useWishlist load', () => {
     token: 'mocked_token'
   };
   contextMock.$bigcommerce.config.app.$config = {
-    wishlist: {
-      authenticatedName: wishlistName
+    theme: {
+      wishlist: {
+        name: wishlistName,
+        isPublic: true
+      }
     }
   };
   contextMock.$bigcommerce.config.app.$cookies.get = jest.fn(() => 'mocked_token');

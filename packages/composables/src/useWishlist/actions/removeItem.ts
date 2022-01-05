@@ -1,23 +1,29 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   UseWishlistFactoryParams
 } from '@vue-storefront/core';
 import { Product } from '@vue-storefront/bigcommerce-api';
 import { Context, Wishlist, WishlistItem } from '../../types';
-import { refreshWishlistProducts, emptyProductsResponse } from '../../helpers';
+import { removeItem as guestRemoveItem } from '../../useGuestWishlist/actions';
+import { refreshWishlistProducts, emptyProductsResponse, getUserId } from '../../helpers';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const removeItem: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['removeItem'] = async (
   context: Context,
   { currentWishlist, product: wishlistItem }
 ) => {
-  const res = await context.$bigcommerce.api.removeWishlistItem({
+  const customerId = getUserId(context);
+
+  if (!customerId) {
+    return guestRemoveItem(context, { currentWishlist, product: wishlistItem });
+  }
+
+  await context.$bigcommerce.api.removeWishlistItem({
     wishlistId: currentWishlist.id,
     itemId: Number(wishlistItem.id)
   });
 
   const wishlist = {
-    ...res.data,
+    ...currentWishlist,
+    items: currentWishlist.items.filter(item => item.id !== wishlistItem.id),
     wishlist_product_data: emptyProductsResponse
   };
 

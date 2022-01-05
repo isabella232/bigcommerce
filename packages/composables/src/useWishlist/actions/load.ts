@@ -2,10 +2,10 @@ import {
   UseWishlistFactoryParams
 } from '@vue-storefront/core';
 import { Product } from '@vue-storefront/bigcommerce-api';
+import { load as guestLoad } from '../../useGuestWishlist/actions';
 import { Context, Wishlist, WishlistItem } from '../../types';
 import { getUserId, refreshWishlistProducts, emptyProductsResponse, mergeWishlists } from '../../helpers';
 import {
-  BIGCOMMERCE_LOAD_WISHLIST_FAILED,
   BIGCOMMERCE_GUEST_WISHLIST_KEY
 } from '../../helpers/consts';
 
@@ -15,7 +15,7 @@ export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['lo
   const customerId = getUserId(context);
 
   if (!customerId) {
-    throw new Error(BIGCOMMERCE_LOAD_WISHLIST_FAILED);
+    return guestLoad(context, {});
   }
 
   const { data: customerWishlists } = await context.$bigcommerce.api
@@ -33,7 +33,10 @@ export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['lo
       .createWishlist({
         customer_id: customerId,
         name: context.$bigcommerce.config.app
-          .$config.wishlist.authenticatedName
+          .$config.theme.wishlist.name,
+        is_public: context.$bigcommerce.config.app
+          .$config.theme.wishlist.isPublic,
+        items: []
       });
 
     wishlist = {

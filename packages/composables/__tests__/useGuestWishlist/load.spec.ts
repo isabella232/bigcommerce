@@ -22,10 +22,14 @@ describe('[BigCommerce - composables] useGuestWishlist load', () => {
     is_public: true,
     token: BIGCOMMERCE_GUEST_WISHLIST_TOKEN
   };
-  contextMock.$bigcommerce.config.app.$config.theme = {
-    guestWishlist: {
-      name: wishlistName,
-      isPublic: true
+  contextMock.$bigcommerce.config.app.$config = {
+    theme: {
+      wishlist: {
+        guest: {
+          name: wishlistName
+        },
+        isPublic: true
+      }
     }
   };
 

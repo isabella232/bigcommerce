@@ -17,11 +17,13 @@ export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['lo
 ) => {
   let guestWishlist: Wishlist = {
     id: BIGCOMMERCE_GUEST_WISHLIST_ID,
-    name: context.$bigcommerce.config.app.$config.theme.guestWishlist.name,
+    name: context.$bigcommerce.config.app.$config
+      .theme.wishlist.guest.name,
     customer_id: BIGCOMMERCE_GUEST_CUSTOMER_ID,
     items: [],
     wishlist_product_data: emptyProductsResponse,
-    is_public: context.$bigcommerce.config.app.$config.theme.guestWishlist.isPublic,
+    is_public: context.$bigcommerce.config.app.$config
+      .theme.wishlist.isPublic,
     token: BIGCOMMERCE_GUEST_WISHLIST_TOKEN
   };
 

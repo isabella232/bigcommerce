@@ -1,5 +1,4 @@
 import {
-  WishlistResponse,
   Endpoints
 } from '../../../types';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
@@ -18,7 +17,7 @@ export const removeWishlistItem: Endpoints['removeWishlistItem'] = async (
     throw Error(`Item id with value: ${itemId} is not valid. Use number value.`);
   }
 
-  return context.client.delete<WishlistResponse>(
+  return await context.client.delete<null>(
     BigCommerceEndpoints.wishlistItems(wishlistId, itemId)
   );
 };

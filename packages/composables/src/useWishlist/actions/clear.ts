@@ -1,20 +1,22 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   UseWishlistFactoryParams
 } from '@vue-storefront/core';
 import { Product } from '@vue-storefront/bigcommerce-api';
 import { Context, Wishlist, WishlistItem } from '../../types';
-import { BIGCOMMERCE_CREATE_WISHLIST_FAILED } from '../../helpers/consts';
-import { getUserId, emptyProductsResponse, refreshWishlistProducts } from '../../helpers';
+import { clear as guestClear } from '../../useGuestWishlist/actions';
+import { BIGCOMMERCE_CREATE_WISHLIST_FAILED, getUserId, emptyProductsResponse } from '../../helpers';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const clear: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['clear'] = async (
   context: Context,
   { currentWishlist }
 ) => {
-  await context.$bigcommerce.api.deleteWishlist(currentWishlist.id);
-
   const customerId = getUserId(context);
+
+  if (!customerId) {
+    return guestClear(context, { currentWishlist });
+  }
+
+  await context.$bigcommerce.api.deleteWishlist(currentWishlist.id);
 
   if (!customerId) {
     throw new Error(BIGCOMMERCE_CREATE_WISHLIST_FAILED);
