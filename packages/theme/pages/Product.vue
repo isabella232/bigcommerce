@@ -42,11 +42,18 @@
           <div>
             <div class="product__rating">
               <SfRating :score="averageRating" :max="5" />
-              <a v-if="!!totalReviews" href="#" class="product__count">
+              <span
+                v-if="!!totalReviews"
+                class="product__count reviews-count"
+                @click="showReviews"
+              >
                 ({{ totalReviews }})
-              </a>
+              </span>
             </div>
-            <SfButton class="sf-button--text">{{
+            <SfButton
+              class="sf-button--text"
+              @click="showReviews"
+            >{{
               $t('Read all reviews')
             }}</SfButton>
           </div>
@@ -130,7 +137,12 @@
         </div>
 
         <LazyHydrate when-idle>
-          <SfTabs :open-tab="1" class="product__tabs">
+          <SfTabs
+            id="tabs"
+            :open-tab="openTab"
+            class="product__tabs"
+            @click:tab="(tab) => openTab = tab"
+          >
             <SfTab title="Description">
               <div
                 class="product__description"
@@ -246,6 +258,8 @@ export default defineComponent({
     const { id } = context.root.$route.params;
     const uiHelpers = useUiHelpers();
     const configuration = ref(context.root.$router.query);
+    const reviewsTab = 2;
+    const openTab = ref(1);
     const { products, search } = useProduct('products');
     const {
       products: relatedProducts,
@@ -350,10 +364,16 @@ export default defineComponent({
       });
     };
 
+    const showReviews = () => {
+      openTab.value = reviewsTab;
+      location.href = '#tabs';
+    };
+
     return {
       activeVariant,
       updateFilter,
       configuration,
+      openTab,
       product,
       breadcrumbs,
       reviews,
@@ -372,7 +392,8 @@ export default defineComponent({
       productGallery,
       uiHelpers,
       useReviewData,
-      reviewHelpers
+      reviewHelpers,
+      showReviews
     };
   },
   components: {
@@ -449,6 +470,10 @@ export default defineComponent({
     align-items: center;
     justify-content: flex-end;
     margin: var(--spacer-xs) 0 var(--spacer-xs);
+
+    .reviews-count {
+      cursor: pointer;
+    }
   }
   &__count {
     @include font(
