@@ -6,7 +6,11 @@
     />
     <div class="product">
       <LazyHydrate when-idle>
-        <SfGallery :images="productGallery" class="product__gallery" />
+        <SfGallery
+          :key="productGallery.length"
+          :images="productGallery"
+          class="product__gallery"
+        />
       </LazyHydrate>
 
       <div class="product__info">
@@ -33,10 +37,10 @@
             "
             :special="
               productData.getPrice(product, activeVariant).special &&
-                $n(
-                  productData.getPrice(product, activeVariant).special,
-                  'currency'
-                )
+              $n(
+                productData.getPrice(product, activeVariant).special,
+                'currency'
+              )
             "
           />
           <div>
@@ -50,10 +54,7 @@
                 ({{ totalReviews }})
               </span>
             </div>
-            <SfButton
-              class="sf-button--text"
-              @click="showReviews"
-            >{{
+            <SfButton class="sf-button--text" @click="showReviews">{{
               $t('Read all reviews')
             }}</SfButton>
           </div>
@@ -120,8 +121,8 @@
                 product,
                 quantity: parseInt(qty),
                 customQuery: {
-                  variant_id: activeVariant && activeVariant.id
-                }
+                  variant_id: activeVariant && activeVariant.id,
+                },
               })
             "
           />
@@ -130,7 +131,7 @@
             v-else
             :message="
               activeVariant.purchasing_disabled_message ||
-                $t('Currently unavailable')
+              $t('Currently unavailable')
             "
             type="warning"
           />
@@ -141,7 +142,7 @@
             id="tabs"
             :open-tab="openTab"
             class="product__tabs"
-            @click:tab="(tab) => openTab = tab"
+            @click:tab="(tab) => (openTab = tab)"
           >
             <SfTab title="Description">
               <div
@@ -268,9 +269,8 @@ export default defineComponent({
     } = useProduct('relatedProducts');
     const { addItem, loading } = useCart();
     const productData = useProductData();
-    const { reviews: productReviews, search: searchReviews } = useReview(
-      'productReviews'
-    );
+    const { reviews: productReviews, search: searchReviews } =
+      useReview('productReviews');
     const product = computed(() => products.value?.data?.[0]);
     const options = computed(() => productData.getOptions(product.value));
     const activeVariant = ref();
