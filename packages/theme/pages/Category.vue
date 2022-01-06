@@ -210,6 +210,9 @@
                 )
               "
             >
+              <template #description>
+                <div v-html="productData.getDescription(product)" />
+              </template>
               <template #configuration>
                 <SfProperty
                   class="desktop-only"

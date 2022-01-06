@@ -132,7 +132,7 @@ export const useProductData = () => {
         currentPage: 1,
         totalPages: 1,
         totalItems: 1,
-        itemsPerPage: 12,
+        itemsPerPage: themeConfig?.itemsPerPage?.[0],
         pageOptions: themeConfig?.itemsPerPage
       };
     }

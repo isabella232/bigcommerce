@@ -1,5 +1,5 @@
 export default {
-  itemsPerPage: [10, 20, 50, 100],
+  itemsPerPage: [10],
   userCartKey: 'Cart ID',
   channelIds: [871856],
   storePreviewToken: 'tnbAR8COKx',
