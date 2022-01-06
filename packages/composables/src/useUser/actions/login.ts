@@ -1,4 +1,4 @@
-import { CustomersIncludeEnum, User } from '@vue-storefront/bigcommerce-api';
+import { CustomersIncludeEnum, User, STORAGE_KEY_IS_LOGGED_IN } from '@vue-storefront/bigcommerce-api';
 import { Context, UseUserLoginParams } from '../../types';
 import { getCustomer } from './getCustomer';
 import { loadCustomerCart } from '../../helpers/customer/loadCart';
@@ -37,5 +37,6 @@ export const logIn = async (
     customer.form_fields = formFields;
   }
 
+  sessionStorage.setItem(STORAGE_KEY_IS_LOGGED_IN, '1');
   return customer;
 };

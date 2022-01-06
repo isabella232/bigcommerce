@@ -19,6 +19,7 @@ describe('[BigCommerce - composables] useWishlist addItem', () => {
       meta: {}
     }));
     contextMock.$bigcommerce.api.getProducts = jest.fn();
+    contextMock.user = { user: { value: { id: customerId } } };
   });
 
   it('should call api with wishlist id and array of items', async () => {

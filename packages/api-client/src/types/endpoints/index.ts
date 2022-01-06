@@ -116,6 +116,14 @@ export interface Endpoints {
   ): Promise<LoginCustomerResponse>;
 
   /**
+   * Logs out the currently logged-in customer by deleting the authentication related cookies.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   */
+  logoutCustomer(
+    context: BigcommerceIntegrationContext,
+  ): void;
+
+  /**
    * Updates form field values on the Customer or Customer Address objects.
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
    * @param {UpdateCustomerFormFieldsParameters} params Parameters for `updateCustomerFormFields` endpoint

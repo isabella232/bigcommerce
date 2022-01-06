@@ -37,6 +37,7 @@ describe('[BigCommerce - composables] useWishlist clear', () => {
         meta: {}
       })
     );
+    contextMock.user = { user: { value: { id: customerId } } };
   });
 
   it('should call deleteWishlist with expected params', async () => {

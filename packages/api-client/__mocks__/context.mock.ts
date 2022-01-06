@@ -25,5 +25,6 @@ export const contextMock = {
     mediaHost: '',
     jwtTokenExpirationDays: 2
   },
-  res: {} as any
+  res: {} as any,
+  req: {} as any
 };

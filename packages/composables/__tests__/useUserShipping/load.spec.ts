@@ -13,6 +13,7 @@ describe('[BigCommerce - composables] useUserShipping load', () => {
     jest.clearAllMocks();
     const decode = jest.spyOn(jwt, 'decode');
     decode.mockImplementation(() => ({ customer: { id: customerId } }));
+    contextMock.user = { user: { value: { id: customerId } } };
     contextMock.$bigcommerce.api.getCustomerAddress = getCustomerAddressMock;
     contextMock.$bigcommerce.config.app.$cookies.get = jest
       .fn()

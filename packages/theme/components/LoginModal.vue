@@ -254,7 +254,7 @@ export default {
     ValidationObserver,
     SfBar
   },
-  setup() {
+  setup(props, { root }) {
     const { isLoginModalOpen, toggleLoginModal } = useUiState();
     const form = ref({});
     const isLogin = ref(false);
@@ -264,7 +264,7 @@ export default {
     const createAccount = ref(false);
     const rememberMe = ref(false);
     const acceptsMarketingEmails = ref(false);
-    const { register, login, loading, error: userError } = useUser();
+    const { register, login, loading, error: userError, isAuthenticated } = useUser();
     const {
       request,
       error: forgotPasswordError,
@@ -321,6 +321,11 @@ export default {
       }
 
       toggleLoginModal();
+
+      if (isAuthenticated.value) {
+        const localeAccountPath = root.localePath({ name: 'my-account' });
+        return root.$router.push(localeAccountPath);
+      }
     };
 
     const closeModal = () => {

@@ -58,16 +58,6 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
       }
     });
     jest.doMock('fetch-cookie/node-fetch', () => () => fetch);
-    const expectedLoginCookieStrings = ['cookie-string1', 'cookie-string2'];
-    const expectedLoginCookies = [
-      { name: 'firstCookie', value: 'firstCookieValue', other: 'options' },
-      { name: 'secondCookie', value: 'secondCookieValue', other: 'options' }
-    ];
-    const setCookieParserMock = {
-      parse: jest.fn(() => expectedLoginCookies),
-      splitCookiesString: jest.fn(() => expectedLoginCookieStrings)
-    };
-    jest.doMock('set-cookie-parser', () => setCookieParserMock);
     const cookie = jest.fn();
     contextMock.res = {
       cookie
@@ -94,18 +84,6 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
     expect(generateSsoLoginLink).toBeCalledWith(contextMock, customerId);
     expect(fetch).toBeCalledTimes(1);
     expect(fetch).toBeCalledWith(generatedLoginLink);
-    expectedLoginCookies.forEach(({ name, value, ...options }) =>
-      expect(contextMock.res.cookie).toBeCalledWith(name, value, options)
-    );
-    expect(contextMock.res.cookie).toBeCalledTimes(expectedLoginCookies.length);
-    expect(setCookieParserMock.splitCookiesString).toBeCalledTimes(1);
-    expect(setCookieParserMock.splitCookiesString).toBeCalledWith(
-      setCookieHeaderFromLogin
-    );
-    expect(setCookieParserMock.parse).toBeCalledTimes(1);
-    expect(setCookieParserMock.parse).toBeCalledWith(
-      expectedLoginCookieStrings
-    );
   });
 
   it('throws an error if login credentials are invalid', async () => {
@@ -408,6 +386,9 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
 
   it('sets the customer data cookie on the response', async () => {
     const tokenToSet = 'asdf123456789';
+    const decodedToken = { data: 'without expiration' };
+    const jwtDecode = jest.fn().mockReturnValue(decodedToken);
+    jest.doMock('jsonwebtoken', () => ({ decode: jwtDecode }));
     const expirationDate = new Date();
     const getDateDaysLater = jest.fn().mockReturnValue(expirationDate);
     jest.doMock('../../../src/helpers/date', () => ({
@@ -415,7 +396,6 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
     }));
     mockModulePartially('../../../src/api/customers/login', () => ({}));
     const module = await import('../../../src/api/customers/login');
-
     const jwtTokenExpirationDays = 4;
     const secureCookies = false;
     contextMock.config = {
@@ -441,21 +421,17 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
     });
   });
 
-  it('sets the customer data cookie securely on the response', async () => {
+  it('sets the customer data cookie securely on the response with the same expiry date as customer JWT token', async () => {
     const tokenToSet = 'asdf123456789';
-    const expirationDate = new Date();
-    const getDateDaysLater = jest.fn().mockReturnValue(expirationDate);
-    jest.doMock('../../../src/helpers/date', () => ({
-      getDateDaysLater
-    }));
+    const now = 1641374383.081;
+    const decodedToken = { exp: now, data: 'whatever' };
+    const jwtDecode = jest.fn().mockReturnValue(decodedToken);
+    jest.doMock('jsonwebtoken', () => ({ decode: jwtDecode }));
     mockModulePartially('../../../src/api/customers/login', () => ({}));
     const module = await import('../../../src/api/customers/login');
-
-    const jwtTokenExpirationDays = 4;
     const secureCookies = true;
     contextMock.config = {
       ...contextMock.config,
-      jwtTokenExpirationDays,
       secureCookies
     };
     const cookie = jest.fn();
@@ -465,11 +441,11 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
 
     await module.setTokenCookie(contextMock, tokenToSet);
 
-    expect(getDateDaysLater).toBeCalledTimes(1);
-    expect(getDateDaysLater).toBeCalledWith(jwtTokenExpirationDays);
+    expect(jwtDecode).toBeCalledTimes(1);
+    expect(jwtDecode).toBeCalledWith(tokenToSet);
     expect(cookie).toBeCalledTimes(1);
     expect(cookie).toBeCalledWith('customer-data', tokenToSet, {
-      expires: expirationDate,
+      expires: new Date(now * 1000),
       httpOnly: true,
       sameSite: 'Strict',
       secure: true

@@ -1,8 +1,8 @@
-import { COOKIE_KEY_CUSTOMER_DATA } from '@vue-storefront/bigcommerce-api/';
+import { STORAGE_KEY_IS_LOGGED_IN } from '@vue-storefront/bigcommerce-api/';
 
-export default async ({ redirect, $cookies }) => {
-  const customerData = $cookies.get(COOKIE_KEY_CUSTOMER_DATA);
-  if (!customerData) {
+export default async ({ redirect }) => {
+  const isLoggedIn = sessionStorage.getItem(STORAGE_KEY_IS_LOGGED_IN);
+  if (!isLoggedIn) {
     return redirect('/');
   }
 

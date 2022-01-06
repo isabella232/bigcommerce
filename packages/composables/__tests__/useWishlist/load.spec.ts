@@ -34,6 +34,7 @@ describe('[BigCommerce - composables] useWishlist load', () => {
 
     contextMock.$bigcommerce.api.getProducts = jest.fn();
     contextMock.$bigcommerce.api.createWishlist = jest.fn();
+    contextMock.user = { user: { value: { id: customerId } } };
   });
 
   it('should get existing customer wishlist', async () => {
