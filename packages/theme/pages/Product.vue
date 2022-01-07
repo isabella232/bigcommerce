@@ -139,7 +139,7 @@
 
         <LazyHydrate when-idle>
           <SfTabs
-            id="tabs"
+            ref="tabsRef"
             :open-tab="openTab"
             class="product__tabs"
             @click:tab="(tab) => (openTab = tab)"
@@ -261,6 +261,7 @@ export default defineComponent({
     const configuration = ref(context.root.$router.query);
     const reviewsTab = 2;
     const openTab = ref(1);
+    const tabsRef = ref(null);
     const { products, search } = useProduct('products');
     const {
       products: relatedProducts,
@@ -369,7 +370,10 @@ export default defineComponent({
 
     const showReviews = () => {
       openTab.value = reviewsTab;
-      location.href = '#tabs';
+      const tabsElement = tabsRef.value?.$el;
+      if (tabsElement && typeof window !== undefined) {
+        window.scrollTo(0, tabsElement.offsetTop);
+      }
     };
 
     return {
@@ -396,7 +400,8 @@ export default defineComponent({
       uiHelpers,
       useReviewData,
       reviewHelpers,
-      showReviews
+      showReviews,
+      tabsRef
     };
   },
   components: {
