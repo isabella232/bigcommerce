@@ -95,7 +95,6 @@
       :visible="isSearchOpen"
       :result="result"
       @close="closeSearch"
-      @removeSearchResults="removeSearchResults"
     />
     <SfOverlay :visible="isSearchOpen" />
   </div>
@@ -245,10 +244,6 @@ export default defineComponent({
       }
     );
 
-    const removeSearchResults = () => {
-      result.value = null;
-    };
-
     onBeforeUnmount(() => {
       unMapMobileObserver();
     });
@@ -269,7 +264,6 @@ export default defineComponent({
       searchBarRef,
       isMobile,
       isMobileMenuOpen,
-      removeSearchResults,
       products,
       navigation
     };
