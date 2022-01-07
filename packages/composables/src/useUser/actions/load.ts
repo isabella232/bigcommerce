@@ -22,7 +22,10 @@ export const load = async (context: Context): Promise<User> => {
       customer.form_fields = formFields;
     }
 
-    sessionStorage.setItem(STORAGE_KEY_IS_LOGGED_IN, '1');
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem(STORAGE_KEY_IS_LOGGED_IN, '1');
+    }
+
     return customer;
   }
 
