@@ -185,5 +185,6 @@ export default {
   'Please type your phone number.': 'Please type your phone number.',
   'House/Apartment number': 'House/Apartment number',
   'Please type your house/apartment number.':
-    'Please type your house/apartment number.'
+    'Please type your house/apartment number.',
+  'Clear wishlist': 'Clear wishlist'
 };

@@ -190,5 +190,6 @@ export default {
   'Please type your phone number.': 'Bitte geben Sie Ihre Telefonnummer ein.',
   'House/Apartment number': 'Haus-/Wohnungsnummer',
   'Please type your house/apartment number.':
-    'Bitte geben Sie Ihre Haus-/Wohnungsnummer ein.'
+    'Bitte geben Sie Ihre Haus-/Wohnungsnummer ein.',
+  'Clear wishlist': 'Wunschliste löschen'
 };

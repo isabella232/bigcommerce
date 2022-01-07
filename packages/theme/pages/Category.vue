@@ -112,10 +112,7 @@
               wishlistIcon="heart"
               isInWishlistIcon="heart_fill"
               :isInWishlist="
-                isInWishlist({
-                  currentWishlist: wishlist,
-                  product
-                })
+                isInWishlist({ product })
               "
               :isAddedToCart="isInCart({ product })"
               :link="
@@ -127,21 +124,14 @@
               "
               class="products__product-card"
               @click:wishlist="
-                isInWishlist({
-                  currentWishlist: wishlist,
-                  product
-                })
+                isInWishlist({ product })
                   ? removeItemFromWishlist({
-                      currentWishlist: wishlist,
                       product: wishlistHelpers.getItem(wishlist, {
                         productId: product.id,
                         variantId: getDefaultVariant(product).id
                       })
                     })
-                  : addItemToWishlist({
-                      currentWishlist: wishlist,
-                      product
-                    })
+                  : addItemToWishlist({ product })
               "
               @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
             />
@@ -170,31 +160,19 @@
               "
               :max-rating="5"
               :score-rating="3"
-              :isInWishlist="
-                isInWishlist({
-                  currentWishlist: wishlist,
-                  product
-                })
-              "
+              :isInWishlist="isInWishlist({ product })"
               :qty="1"
               @input="productsQuantity[product.id] = $event"
               class="products__product-card-horizontal"
               @click:wishlist="
-                isInWishlist({
-                  currentWishlist: wishlist,
-                  product
-                })
+                isInWishlist({ product })
                   ? removeItemFromWishlist({
-                      currentWishlist: wishlist,
                       product: wishlistHelpers.getItem(wishlist, {
                         productId: product.id,
                         variantId: getDefaultVariant(product).id
                       })
                     })
-                  : addItemToWishlist({
-                      currentWishlist: wishlist,
-                      product
-                    })
+                  : addItemToWishlist({ product })
               "
               @click:add-to-cart="
                 addItemToCart({

@@ -43,6 +43,7 @@
             </transition-group>
           </div>
           <div class="sidebar-bottom">
+
           <SfProperty class="sf-property--full-width my-wishlist__total-price">
             <template #name>
               <span class="my-wishlist__total-price-label">Total price:</span>
@@ -66,6 +67,9 @@
         </div>
       </transition>
       <template #content-bottom>
+        <SfLink @click.prevent="clear" class="my-wishlist__clear">
+          {{ $t('Clear wishlist') }}
+        </SfLink>
         <SfButton @click="toggleWishlistSidebar" class="sf-button--full-width color-secondary">
           {{ $t('Start shopping') }}
         </SfButton>
@@ -82,7 +86,8 @@ import {
   SfProperty,
   SfPrice,
   SfCollectedProduct,
-  SfImage
+  SfImage,
+  SfLink
 } from '@storefront-ui/vue';
 import { computed, defineComponent} from '@vue/composition-api';
 import { useWishlist } from '@vue-storefront/bigcommerce';
@@ -99,14 +104,16 @@ export default defineComponent({
     SfProperty,
     SfPrice,
     SfCollectedProduct,
-    SfImage
+    SfImage,
+    SfLink
   },
   setup() {
     const wishlistHelpers = useWishlistData();
     const { isWishlistSidebarOpen, toggleWishlistSidebar } = useUiState();
     const {
       wishlist,
-      removeItem
+      removeItem,
+      clear
     } = useWishlist();
     const wishlistItems = computed(() => wishlistHelpers.getItems(wishlist.value));
     const totals = computed(() => wishlistHelpers.getTotals(wishlist.value));
@@ -116,6 +123,7 @@ export default defineComponent({
       wishlist,
       wishlistItems,
       removeItem,
+      clear,
       isWishlistSidebarOpen,
       toggleWishlistSidebar,
       totals,
@@ -151,6 +159,12 @@ export default defineComponent({
       font: var(--font-weight--normal) var(--font-size--2xl) / 1.6 var(--font-family--secondary);
       color: var(--c-link);
     }
+  }
+  &__clear {
+    display: block;
+    margin: var(--spacer-base) 0;
+    font-size: var(--font-size--xl);
+    text-align: center;
   }
 }
 .empty-wishlist {

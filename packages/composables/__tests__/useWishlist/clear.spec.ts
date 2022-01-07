@@ -11,9 +11,11 @@ decode.mockImplementation(() => ({ customer: { id: customerId } }));
 
 describe('[BigCommerce - composables] useWishlist clear', () => {
   const wishlistName = 'Mocked wishlist';
-  contextMock.$bigcommerce.config.app.$config = {
+  const isPublic = true;
+  contextMock.$bigcommerce.config.app.$config.theme = {
     wishlist: {
-      authenticatedName: wishlistName
+      name: wishlistName,
+      isPublic
     }
   };
   contextMock.$bigcommerce.config.app.$cookies.get = jest.fn(() => 'mocked_token');
@@ -24,7 +26,7 @@ describe('[BigCommerce - composables] useWishlist clear', () => {
     const newWishlist: WishlistAPI = {
       id: 1,
       customer_id: customerId,
-      is_public: true,
+      is_public: isPublic,
       items: [],
       name: wishlistName,
       token: 'mocked_token'
@@ -51,7 +53,9 @@ describe('[BigCommerce - composables] useWishlist clear', () => {
   it('should create new wishlist after deleting old one', async () => {
     const expectedParams = {
       customer_id: customerId,
-      name: wishlistName
+      name: wishlistName,
+      is_public: isPublic,
+      items: []
     };
 
     await clear(contextMock, { currentWishlist: wishlistMock as Wishlist });
