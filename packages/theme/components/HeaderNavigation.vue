@@ -20,8 +20,7 @@
         <SfMenuItem
           :label="category.label"
           class="sf-header-navigation-item__menu-item"
-          :link="localePath(`/c${category.slug}`)"
-          @click="toggleMobileMenu"
+          @click="navigate(`/c${category.slug}`)"
         />
       </template>
     </SfHeaderNavigationItem>
@@ -54,6 +53,12 @@ export default {
       isMobileMenuOpen,
       toggleMobileMenu
     };
+  },
+  methods: {
+    navigate(path) {
+      this.toggleMobileMenu();
+      this.$nuxt.$router.push(path);
+    }
   }
 };
 </script>
