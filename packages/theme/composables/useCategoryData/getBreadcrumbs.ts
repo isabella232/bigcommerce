@@ -8,7 +8,10 @@ import { flattenCategoryTree } from './flattenCategoryTree';
  * @param breadcrumbs
  * @returns Crumb[]
  */
-export function getBreadcrumbs(categoryId: number, categories: CategoryTree[] = []) : Crumb[] {
+export function getBreadcrumbs(
+  categoryId: number,
+  categories: Readonly<CategoryTree[]> = []
+): Crumb[] {
   const flattenedCategories = flattenCategoryTree(categories);
   const breadcrumbs: Crumb[] = buildBreadcrumbs(
     categoryId,

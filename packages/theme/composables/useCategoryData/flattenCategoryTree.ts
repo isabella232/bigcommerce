@@ -6,7 +6,7 @@ import { CategoryTree } from '@vue-storefront/bigcommerce-api';
  * @returns
  */
 export const flattenCategoryTree = (
-  categories: CategoryTree[],
+  categories: Readonly<CategoryTree[]>,
   flatCategories: CategoryTree[] = []
 ): CategoryTree[] => {
   if (categories && categories.length) {

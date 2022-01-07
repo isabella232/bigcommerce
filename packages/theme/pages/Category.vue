@@ -393,7 +393,7 @@ export default defineComponent({
     });
 
     onSSR(async () => {
-      await categorySearch();
+      await categorySearch({});
       const {
         categorySlug,
         page,

@@ -348,6 +348,7 @@ export default defineComponent({
         if (relatedProductIds.length) {
           await searchRelatedProducts({
             'id:in': relatedProductIds,
+            include: 'options,variants',
             limit: 8
           });
         }

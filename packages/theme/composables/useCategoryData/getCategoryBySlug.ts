@@ -8,7 +8,7 @@ import { flattenCategoryTree } from './flattenCategoryTree';
  */
 export function getCategoryBySlug(
   slug: string,
-  categories: CategoryTree[]
+  categories: Readonly<CategoryTree[]>
 ): CategoryTree {
   const flattenedCategoryTree = flattenCategoryTree(categories);
   return flattenedCategoryTree.find((c) => c.url === slug);
