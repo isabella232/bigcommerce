@@ -1,5 +1,6 @@
 import { Context, UseUserRegisterParams } from '../../types';
 import type { User } from '@vue-storefront/bigcommerce-api';
+import { logIn } from './login';
 
 /**
  * `register` method in `useUser` composable.
@@ -28,6 +29,7 @@ export const register = async (
     channel_ids: channelIds,
     custom_fields: customFields
   });
+  await logIn(context, { username: email, password });
 
   return result;
 };
