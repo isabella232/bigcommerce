@@ -13,24 +13,23 @@
         >
           <SfMegaMenuColumn
             :title="$t('Categories')"
-            class="sf-mega-menu-column--pined-content-on-mobile search__categories"
+            class="
+              sf-mega-menu-column--pined-content-on-mobile
+              search__categories
+            "
           >
-            <template #title="{title}">
+            <template #title="{ title }">
               <SfMenuItem :label="title" @click="megaMenu.changeActive(title)">
-                <template #mobile-nav-icon>
-                  &#8203;
-                </template>
+                <template #mobile-nav-icon> &#8203; </template>
               </SfMenuItem>
             </template>
             <SfList>
               <SfListItem v-for="(category, key) in categories" :key="key">
                 <SfMenuItem
                   :label="category.label"
-                  :link="localePath(`/c/${category.slug}`)"
+                  :link="localePath(`/c${category.slug}`)"
                 >
-                  <template #mobile-nav-icon>
-                    &#8203;
-                  </template>
+                  <template #mobile-nav-icon> &#8203; </template>
                 </SfMenuItem>
               </SfListItem>
             </SfList>
@@ -39,14 +38,12 @@
             :title="$t('Product suggestions')"
             class="sf-mega-menu-column--pined-content-on-mobile search__results"
           >
-            <template #title="{title}">
+            <template #title="{ title }">
               <SfMenuItem
                 :label="title"
                 class="sf-mega-menu-column__header search__header"
               >
-                <template #mobile-nav-icon>
-                  &#8203;
-                </template>
+                <template #mobile-nav-icon> &#8203; </template>
               </SfMenuItem>
             </template>
             <SfScrollable
@@ -78,16 +75,16 @@
                   :isAddedToCart="isInCart({ product })"
                   @click:wishlist="
                     isInWishlist({
-                      product
+                      product,
                     })
                       ? removeItemFromWishlist({
                           product: wishlistHelpers.getItem(wishlist, {
                             productId: product.id,
-                            variantId: getDefaultVariant(product).id
-                          })
+                            variantId: getDefaultVariant(product).id,
+                          }),
                         })
                       : addItemToWishlist({
-                          product
+                          product,
                         })
                   "
                   @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
@@ -118,16 +115,16 @@
                 :isAddedToCart="isInCart({ product })"
                 @click:wishlist="
                   isInWishlist({
-                    product
+                    product,
                   })
                     ? removeItemFromWishlist({
                         product: wishlistHelpers.getItem(wishlist, {
                           productId: product.id,
-                          variantId: getDefaultVariant(product).id
-                        })
+                          variantId: getDefaultVariant(product).id,
+                        }),
                       })
                     : addItemToWishlist({
-                        product
+                        product,
                       })
                 "
                 @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
@@ -179,7 +176,13 @@ import {
 import { ref, watch, computed } from '@vue/composition-api';
 import { useProductData } from '../composables/useProductData';
 import { useWishlistData } from '../composables/useWishlistData';
-import { getDefaultVariant, useUser, useCart, useWishlist, useGuestWishlist } from '@vue-storefront/bigcommerce';
+import {
+  getDefaultVariant,
+  useUser,
+  useCart,
+  useWishlist,
+  useGuestWishlist
+} from '@vue-storefront/bigcommerce';
 
 export default {
   name: 'SearchResults',
