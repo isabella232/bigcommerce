@@ -89,7 +89,7 @@ export default defineComponent({
     };
 
     const validText = (text) => {
-      return text.length > 3;
+      return text.length >= 3;
     };
 
     // eslint-disable-next-line no-undef
