@@ -76,9 +76,9 @@ export const mockedProduct = {
         'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/266/foglinenbeigestripetowel1b.1633499289.1280.1280.jpg?c=1'
     }
   ],
-  inventory_level: 0,
+  inventory_level: 5,
   inventory_tracking: 'none',
-  inventory_warning_level: 0,
+  inventory_warning_level: 3,
   is_condition_shown: false,
   is_featured: false,
   is_free_shipping: false,
@@ -313,8 +313,8 @@ export const mockedProduct = {
       height: null,
       id: 2,
       image_url: '',
-      inventory_level: 0,
-      inventory_warning_level: 0,
+      inventory_level: 6,
+      inventory_warning_level: 3,
       is_free_shipping: false,
       map_price: null,
       mpn: '',

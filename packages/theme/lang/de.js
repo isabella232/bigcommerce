@@ -191,5 +191,9 @@ export default {
   'House/Apartment number': 'Haus-/Wohnungsnummer',
   'Please type your house/apartment number.':
     'Bitte geben Sie Ihre Haus-/Wohnungsnummer ein.',
-  'Clear wishlist': 'Wunschliste löschen'
+  'Clear wishlist': 'Wunschliste löschen',
+  'Out of stock': 'Nicht vorrätig',
+  'The selected quantity exceeds available stock.':
+    'Die ausgewählte Menge übersteigt den verfügbaren Vorrat.',
+  'Add to cart': 'In den Einkaufswagen'
 };

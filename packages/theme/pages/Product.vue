@@ -37,10 +37,10 @@
             "
             :special="
               productData.getPrice(product, activeVariant).special &&
-              $n(
-                productData.getPrice(product, activeVariant).special,
-                'currency'
-              )
+                $n(
+                  productData.getPrice(product, activeVariant).special,
+                  'currency'
+                )
             "
           />
           <div>
@@ -111,28 +111,51 @@
           <SfAddToCart
             v-if="!activeVariant || !activeVariant.purchasing_disabled"
             v-e2e="'product_add-to-cart'"
-            :stock="stock"
             v-model="qty"
-            :disabled="loading"
-            :canAddToCart="stock > 0"
+            :disabled="loading || (stock.enabled && stock.current <= 0)"
             class="product__add-to-cart"
-            @click="
-              addItem({
-                product,
-                quantity: parseInt(qty),
-                customQuery: {
-                  variant_id: activeVariant && activeVariant.id,
-                },
-              })
-            "
-          />
+          >
+            <template #add-to-cart-btn>
+              <SfButton
+                class="sf-add-to-cart__button"
+                :disabled="
+                  loading ||
+                    (stock.enabled &&
+                      (stock.current <= 0 || stock.current < qty))
+                "
+                @click="
+                  addItem({
+                    product,
+                    quantity: parseInt(qty),
+                    customQuery: {
+                      variant_id: activeVariant && activeVariant.id
+                    }
+                  })
+                "
+              >
+                {{ $t('Add to cart') }}
+              </SfButton>
+            </template>
+          </SfAddToCart>
 
           <SfAlert
             v-else
             :message="
               activeVariant.purchasing_disabled_message ||
-              $t('Currently unavailable')
+                $t('Currently unavailable')
             "
+            type="warning"
+          />
+
+          <SfAlert
+            v-if="stock.enabled && stock.current <= 0"
+            :message="$t('Out of stock')"
+            type="danger"
+          />
+
+          <SfAlert
+            v-if="stock.enabled && qty > 1 && stock.current < qty"
+            :message="$t('The selected quantity exceeds available stock.')"
             type="warning"
           />
         </div>
@@ -270,8 +293,9 @@ export default defineComponent({
     } = useProduct('relatedProducts');
     const { addItem, loading } = useCart();
     const productData = useProductData();
-    const { reviews: productReviews, search: searchReviews } =
-      useReview('productReviews');
+    const { reviews: productReviews, search: searchReviews } = useReview(
+      'productReviews'
+    );
     const product = computed(() => products.value?.data?.[0]);
     const options = computed(() => productData.getOptions(product.value));
     const activeVariant = ref();
@@ -282,6 +306,9 @@ export default defineComponent({
         ) || []
     );
     const reviewHelpers = useReviewData();
+    const stock = computed(() =>
+      productData.getInventory(product.value, activeVariant.value)
+    );
     const productGallery = computed(() =>
       productData
         .getGallery(product.value, activeVariant.value)
@@ -397,6 +424,7 @@ export default defineComponent({
       productData,
       productGetters,
       productGallery,
+      stock,
       uiHelpers,
       useReviewData,
       reviewHelpers,
@@ -529,7 +557,7 @@ export default defineComponent({
     margin: 0 var(--spacer-2xs);
   }
   &__add-to-cart {
-    margin: var(--spacer-base) var(--spacer-sm) 0;
+    margin: var(--spacer-base) var(--spacer-sm) var(--spacer-xs);
     @include for-desktop {
       margin-top: var(--spacer-2xl);
     }

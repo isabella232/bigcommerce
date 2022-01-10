@@ -2,6 +2,12 @@ import { Image } from './image';
 import { ProductOption } from './option';
 import { ProductVariant } from './variant';
 
+export enum InventoryType {
+  none = 'none',
+  product = 'product',
+  variant = 'variant'
+}
+
 /**
  * Definition of a product
  */
@@ -100,7 +106,7 @@ export type Product = {
   /**
    * The type of inventory tracking for the product. Values are: `none` - inventory levels will not be tracked; `product` - inventory levels will be tracked using the `inventory_level` and `inventory_warning_level` fields; `variant` - inventory levels will be tracked based on variants, which maintain their own warning levels and inventory levels.
    */
-  inventory_tracking?: 'none' | 'product' | 'variant';
+  inventory_tracking?: InventoryType;
   /**
    * Inventory warning level for the product. When the product's inventory level drops below the warning level, the store owner will be informed. Simple inventory tracking must be enabled (see the `inventory_tracking` field) for this to take any effect.
    */

@@ -186,5 +186,9 @@ export default {
   'House/Apartment number': 'House/Apartment number',
   'Please type your house/apartment number.':
     'Please type your house/apartment number.',
-  'Clear wishlist': 'Clear wishlist'
+  'Clear wishlist': 'Clear wishlist',
+  'Add to cart': 'Add to cart',
+  'Out of stock': 'Out of stock',
+  'The selected quantity exceeds available stock.':
+    'The selected quantity exceeds available stock.'
 };

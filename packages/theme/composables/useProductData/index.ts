@@ -1,5 +1,9 @@
 import { AgnosticMediaGalleryItem, AgnosticPrice } from '@vue-storefront/core';
-import { Product, ProductVariant } from '@vue-storefront/bigcommerce-api';
+import {
+  InventoryType,
+  Product,
+  ProductVariant
+} from '@vue-storefront/bigcommerce-api';
 import { AgnosticPagination } from '@vue-storefront/core';
 import themeConfig from '@vue-storefront/bigcommerce-theme/themeConfig';
 
@@ -146,6 +150,31 @@ export const useProductData = () => {
     };
   };
 
+  const getInventory = (product: Product, activeVariant?: ProductVariant) => {
+    switch (product?.inventory_tracking) {
+      case InventoryType.none:
+        return {
+          enabled: false
+        };
+      case InventoryType.product:
+        return {
+          enabled: true,
+          current: product.inventory_level,
+          warningLevel: product.inventory_warning_level
+        };
+      case InventoryType.variant:
+        return {
+          enabled: true,
+          current: activeVariant?.inventory_level,
+          warningLevel: activeVariant?.inventory_warning_level
+        };
+      default:
+        return {
+          enabled: false
+        };
+    }
+  };
+
   return {
     getName,
     getSlug,
@@ -161,6 +190,7 @@ export const useProductData = () => {
     getOptions,
     getActiveVariant,
     getPagination,
-    getVariant
+    getVariant,
+    getInventory
   };
 };

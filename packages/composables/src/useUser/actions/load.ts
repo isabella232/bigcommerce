@@ -16,8 +16,9 @@ export const load = async (context: Context): Promise<User> => {
     include: CustomersIncludeEnum.Formfields
   });
 
-  const formFields = await loadCustomerCart(context, customer);
   if (customer) {
+    const formFields = await loadCustomerCart(context, customer);
+
     if (formFields) {
       customer.form_fields = formFields;
     }

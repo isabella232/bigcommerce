@@ -182,4 +182,45 @@ describe('[bigcommerce-theme] useProductData', () => {
   it('getActiveVariant should return undefined when one of the input parameters are not defined', async () => {
     expect(productData.getActiveVariant(undefined, {})).toEqual(undefined);
   });
+
+  it('getInventory should return enabled: false if the inventory_tracking is none', () => {
+    expect(productData.getInventory(mockedProduct as Product)).toEqual({
+      enabled: false
+    });
+  });
+
+  it('getInventory should return the stock data based on the product stock values if the inventory_tracking is product', () => {
+    expect(
+      productData.getInventory({
+        ...mockedProduct,
+        inventory_tracking: 'product'
+      } as Product)
+    ).toEqual({
+      enabled: true,
+      current: mockedProduct.inventory_level,
+      warningLevel: mockedProduct.inventory_warning_level
+    });
+  });
+
+  it('getInventory should return the stock data based on the active variant if the inventory_tracking is variant', () => {
+    expect(
+      productData.getInventory(
+        {
+          ...mockedProduct,
+          inventory_tracking: 'variant'
+        } as Product,
+        mockedProduct.variants[2]
+      )
+    ).toEqual({
+      enabled: true,
+      current: mockedProduct.variants[2].inventory_level,
+      warningLevel: mockedProduct.variants[2].inventory_warning_level
+    });
+  });
+
+  it('getInventory should return enabled false if no product parameter provided', () => {
+    expect(productData.getInventory(undefined)).toEqual({
+      enabled: false
+    });
+  });
 });
