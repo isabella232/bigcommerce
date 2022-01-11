@@ -157,7 +157,7 @@
                 $n(productData.getPrice(product).special, 'currency')
               "
               :max-rating="5"
-              :score-rating="3"
+              :score-rating="productData.getAverageRating(product)"
               :isInWishlist="isInWishlist({ product })"
               :qty="1"
               @input="productsQuantity[product.id] = $event"
