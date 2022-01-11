@@ -16,7 +16,8 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon',
+      {
+        rel: 'icon',
         type: 'image/x-icon',
         href: '/favicon.ico'
       },
@@ -141,8 +142,7 @@ export default {
     ]
   },
   router: {
-    middleware: ['checkout'],
-    scrollBehavior (_to, _from, savedPosition) {
+    scrollBehavior(_to, _from, savedPosition) {
       if (savedPosition) {
         return savedPosition;
       } else {
