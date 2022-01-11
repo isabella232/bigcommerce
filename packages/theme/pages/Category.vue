@@ -104,16 +104,14 @@
               "
               :special-price="
                 productData.getPrice(product).special &&
-                  $n(productData.getPrice(product).special, 'currency')
+                $n(productData.getPrice(product).special, 'currency')
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
               :show-add-to-cart-button="true"
               wishlistIcon="heart"
               isInWishlistIcon="heart_fill"
-              :isInWishlist="
-                isInWishlist({ product })
-              "
+              :isInWishlist="isInWishlist({ product })"
               :isAddedToCart="isInCart({ product })"
               :link="
                 localePath(
@@ -128,8 +126,8 @@
                   ? removeItemFromWishlist({
                       product: wishlistHelpers.getItem(wishlist, {
                         productId: product.id,
-                        variantId: getDefaultVariant(product).id
-                      })
+                        variantId: getDefaultVariant(product).id,
+                      }),
                     })
                   : addItemToWishlist({ product })
               "
@@ -156,7 +154,7 @@
               "
               :special-price="
                 productData.getPrice(product).special &&
-                  $n(productData.getPrice(product).special, 'currency')
+                $n(productData.getPrice(product).special, 'currency')
               "
               :max-rating="5"
               :score-rating="3"
@@ -169,15 +167,17 @@
                   ? removeItemFromWishlist({
                       product: wishlistHelpers.getItem(wishlist, {
                         productId: product.id,
-                        variantId: getDefaultVariant(product).id
-                      })
+                        variantId: getDefaultVariant(product).id,
+                      }),
                     })
                   : addItemToWishlist({ product })
               "
               @click:add-to-cart="
                 addItemToCart({
                   product,
-                  quantity: Number(productsQuantity[productData.getId(product)])
+                  quantity: Number(
+                    productsQuantity[productData.getId(product)] || 1
+                  ),
                 })
               "
               :link="
@@ -275,11 +275,7 @@ import {
   SfColor,
   SfProperty
 } from '@storefront-ui/vue';
-import {
-  computed,
-  ref,
-  defineComponent
-} from '@vue/composition-api';
+import { computed, ref, defineComponent } from '@vue/composition-api';
 import {
   useCart,
   useWishlist,
@@ -318,9 +314,12 @@ export default defineComponent({
       removeItem: removeItemFromWishlist
     } = useWishlist();
     const wishlistHelpers = useWishlistData();
-    const { products: productsResult, search, loading, error } = useProduct(
-      'category-products'
-    );
+    const {
+      products: productsResult,
+      search,
+      loading,
+      error
+    } = useProduct('category-products');
     const { categories, search: categorySearch } = useCategory('category-tree');
     const productData = useProductData();
     const { categorySlug } = th.getFacetsFromURL();
@@ -372,13 +371,8 @@ export default defineComponent({
 
     onSSR(async () => {
       await categorySearch({});
-      const {
-        categorySlug,
-        page,
-        itemsPerPage,
-        sort,
-        direction
-      } = th.getFacetsFromURL();
+      const { categorySlug, page, itemsPerPage, sort, direction } =
+        th.getFacetsFromURL();
       const category = getCategoryBySlug(categorySlug, categories.value);
       const isSortValid =
         [
