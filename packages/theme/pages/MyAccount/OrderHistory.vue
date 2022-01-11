@@ -48,31 +48,35 @@
         </p>
         <div v-if="orders.length === 0" class="no-orders">
           <p class="no-orders__title">{{ $t('You currently have no orders') }}</p>
-          <SfButton class="no-orders__button">{{ $t('Start shopping') }}</SfButton>
+          <nuxt-link :to="localePath({ name: 'home' })">
+            <SfButton class="no-orders__button">{{ $t('Start shopping') }}</SfButton>
+          </nuxt-link>
         </div>
-        <SfTable v-else class="orders">
-          <SfTableHeading>
-            <SfTableHeader
-              v-for="tableHeader in tableHeaders"
-              :key="tableHeader"
-              >{{ tableHeader }}</SfTableHeader>
-            <SfTableHeader class="orders__element--right" />
-          </SfTableHeading>
-          <SfTableRow v-for="order in orders" :key="orderHelpers.getId(order)">
-            <SfTableData v-e2e="'order-number'">{{ orderHelpers.getId(order) }}</SfTableData>
-            <SfTableData>{{ orderHelpers.getDate(order) }}</SfTableData>
-            <SfTableData>{{ $n(orderHelpers.getPrice(order), 'currency') }}</SfTableData>
-            <SfTableData>
-              <span :class="getStatusTextClass(order)">{{ orderHelpers.getStatus(order) }}</span>
-            </SfTableData>
-            <SfTableData class="orders__view orders__element--right">
-              <SfButton class="sf-button--text desktop-only" @click="currentOrder = order">
-                {{ $t('View details') }}
-              </SfButton>
-            </SfTableData>
-          </SfTableRow>
-        </SfTable>
-        <p>Total orders - {{ totalOrders }}</p>
+        <div v-else >
+          <SfTable class="orders">
+            <SfTableHeading>
+              <SfTableHeader
+                v-for="tableHeader in tableHeaders"
+                :key="tableHeader"
+                >{{ tableHeader }}</SfTableHeader>
+              <SfTableHeader class="orders__element--right" />
+            </SfTableHeading>
+            <SfTableRow v-for="order in orders" :key="orderHelpers.getId(order)">
+              <SfTableData v-e2e="'order-number'">{{ orderHelpers.getId(order) }}</SfTableData>
+              <SfTableData>{{ orderHelpers.getDate(order) }}</SfTableData>
+              <SfTableData>{{ $n(orderHelpers.getPrice(order), 'currency') }}</SfTableData>
+              <SfTableData>
+                <span :class="getStatusTextClass(order)">{{ orderHelpers.getStatus(order) }}</span>
+              </SfTableData>
+              <SfTableData class="orders__view orders__element--right">
+                <SfButton class="sf-button--text desktop-only" @click="currentOrder = order">
+                  {{ $t('View details') }}
+                </SfButton>
+              </SfTableData>
+            </SfTableRow>
+          </SfTable>
+          <p>Total orders - {{ totalOrders }}</p>
+        </div>
       </div>
     </SfTab>
     <SfTab title="Returns">
@@ -245,5 +249,4 @@ export default {
     --property-value-font-weight: var(--font-weight--semibold);
   }
 }
-
 </style>
