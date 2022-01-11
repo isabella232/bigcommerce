@@ -80,7 +80,7 @@
       </div>
       <SfLoader :class="{ loading }" :loading="loading">
         <div class="products" v-if="!loading">
-          <div v-if="!products || !products.length" class="no-products-message">
+          <div v-if="Array.isArray(products) && !products.length" class="no-products-message">
             {{
               $t('We have no available products matching your search criteria.')
             }}
