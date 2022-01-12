@@ -206,6 +206,7 @@ export default defineComponent({
     }
     &-inline {
       display: inline-block;
+      margin-bottom: 1rem;
     }
   }
   &__horizontal {

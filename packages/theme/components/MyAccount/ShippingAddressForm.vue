@@ -116,8 +116,7 @@
       }}</SfButton>
       <SfButton
         @click="cancel()"
-        type="button"
-        class="form__button form__button-inline form__button-cancel form__button-width-auto"
+        class="action-button"
       >
         {{ $t('Cancel') }}
       </SfButton>
@@ -356,8 +355,12 @@ export default {
 }
 .action-button {
   --button-width: 100%;
+  display: inline-block;
+  margin-bottom: 1rem;
+
   @include for-desktop {
     --button-width: auto;
+    margin-right: 1rem;
   }
 }
 </style>

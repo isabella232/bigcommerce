@@ -134,4 +134,16 @@ h4 {
   line-height: 1.6;
   margin: 0;
 }
+.sf-content-pages__section.is-active .sf-component-select__dropdown,
+.sf-content-pages__section.is-active .sf-overlay,
+.sf-content-pages__section.is-active .sf-modal__container {
+  @include for-mobile {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+.sf-component-select__cancel {
+  @include for-mobile {
+    display: none;
+  }
+}
 </style>
