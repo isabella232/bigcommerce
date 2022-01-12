@@ -16,6 +16,14 @@
       class="nav-item"
       v-e2e="`app-header-url_${category.slug}`"
     >
+      <template #desktop-navigation-item>
+        <SfMenuItem
+          :label="category.label"
+          class="sf-header-navigation-item__menu-item"
+          @click="navigate(`/c${category.slug}`)"
+        />
+      </template>
+
       <template #mobile-navigation-item>
         <SfMenuItem
           :label="category.label"
