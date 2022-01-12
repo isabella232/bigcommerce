@@ -14,6 +14,6 @@ AddressItem
   const { data } = await context.$bigcommerce.api.updateCustomerAddress(address);
   return [
     ...(shipping?.filter(a => a.id !== address.id) ?? []),
-    ...(data ?? [])
+    ...(data ?? [address])
   ];
 };
