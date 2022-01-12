@@ -90,7 +90,7 @@
             <div
               :key="`swatch_${option.id}`"
               v-else-if="option.type === 'swatch'"
-              class="product__colors desktop-only"
+              class="product__colors"
             >
               <p class="product__color-label">{{ option.display_name }}:</p>
               <SfColor
@@ -548,7 +548,10 @@ export default defineComponent({
     );
     display: flex;
     align-items: center;
-    margin-top: var(--spacer-xl);
+    margin: var(--spacer-sm);
+    @include for-desktop {
+      margin: var(--spacer-xl) 0 var(--spacer-sm);
+    }
   }
   &__color-label {
     margin: 0 var(--spacer-lg) 0 0;
