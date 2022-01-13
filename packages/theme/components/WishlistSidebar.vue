@@ -39,6 +39,15 @@
                   </div>
                 </template>
                 <template #input="{}">&nbsp;</template>
+                <template #actions>
+                  <SfButton
+                    @click="moveToCart(wishlistItem)"
+                    :disabled="cartLoading"
+                    class="sf-button--text"
+                  >
+                    {{ $t('Add to cart') }}
+                  </SfButton>
+                </template>
               </SfCollectedProduct>
             </transition-group>
           </div>
@@ -67,7 +76,10 @@
         </div>
       </transition>
       <template #content-bottom>
-        <SfLink @click.prevent="clear" class="my-wishlist__clear">
+        <SfLink
+          @click.prevent="clear"
+          class="my-wishlist__clear"
+        >
           {{ $t('Clear wishlist') }}
         </SfLink>
         <SfButton @click="toggleWishlistSidebar" class="sf-button--full-width color-secondary">
@@ -90,7 +102,7 @@ import {
   SfLink
 } from '@storefront-ui/vue';
 import { computed, defineComponent} from '@vue/composition-api';
-import { useWishlist } from '@vue-storefront/bigcommerce';
+import { useWishlist, useCart } from '@vue-storefront/bigcommerce';
 import { useUiState } from '~/composables';
 import { useWishlistData } from '../composables/useWishlistData';
 
@@ -109,6 +121,7 @@ export default defineComponent({
   },
   setup() {
     const wishlistHelpers = useWishlistData();
+    const { addItem: addToCart, loading: cartLoading } = useCart();
     const { isWishlistSidebarOpen, toggleWishlistSidebar } = useUiState();
     const {
       wishlist,
@@ -119,6 +132,16 @@ export default defineComponent({
     const totals = computed(() => wishlistHelpers.getTotals(wishlist.value));
     const totalItems = computed(() => wishlistHelpers.getTotalItems(wishlist.value));
 
+    const moveToCart = async (wishlistItem) => {
+      await addToCart({
+        product: wishlistHelpers.getProduct(wishlist.value, wishlistItem),
+        quantity: 1,
+        customQuery: {
+          variant_id: wishlistItem.variant_id
+        }
+      });
+    };
+
     return {
       wishlist,
       wishlistItems,
@@ -128,7 +151,9 @@ export default defineComponent({
       toggleWishlistSidebar,
       totals,
       totalItems,
-      wishlistHelpers
+      wishlistHelpers,
+      cartLoading,
+      moveToCart
     };
   }
 });

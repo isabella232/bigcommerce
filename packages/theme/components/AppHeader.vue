@@ -35,7 +35,18 @@
             aria-label="Toggle wishlist sidebar"
             @click="toggleWishlistSidebar"
           >
-            <SfIcon class="sf-header__icon" icon="heart" size="1.25rem" />
+            <SfIcon
+              class="sf-header__icon"
+              :icon="wishlistTotalItems ? 'heart_fill' : 'heart'"
+              size="1.25rem"
+            />
+            <SfBadge
+              v-if="wishlistTotalItems"
+              class="sf-badge--number badge"
+            >
+              {{ wishlistTotalItems }}
+            </SfBadge
+            >
           </SfButton>
           <SfButton
             class="sf-button--pure sf-header__action"
@@ -45,7 +56,7 @@
             <SfIcon class="sf-header__icon" icon="empty_cart" size="1.25rem" />
             <SfBadge
               v-if="cartTotalItems"
-              class="sf-badge--number cart-badge"
+              class="sf-badge--number badge"
               >{{ cartTotalItems }}</SfBadge
             >
           </SfButton>
@@ -111,7 +122,7 @@ import {
   SfOverlay
 } from '@storefront-ui/vue';
 import { useUiState } from '~/composables';
-import { useCart, useUser } from '@vue-storefront/bigcommerce';
+import { useCart, useUser, useWishlist } from '@vue-storefront/bigcommerce';
 import { useProduct } from '@vue-storefront/bigcommerce';
 import {
   computed,
@@ -135,6 +146,7 @@ import { buildCategoryNavigation } from '../composables/useCategoryData/buildCat
 import { buildSearchCategories } from '../composables/useCategoryData/buildSearchCategories';
 import debounce from 'lodash.debounce';
 import { useCartData } from '../composables/useCartData';
+import { useWishlistData } from '../composables/useWishlistData';
 
 export default defineComponent({
   components: {
@@ -161,6 +173,8 @@ export default defineComponent({
     const { setTermForUrl, getFacetsFromURL } = useUiHelpers();
     const { isAuthenticated, load: loadUser } = useUser();
     const { cart, load: loadCart } = useCart();
+    const { wishlist } = useWishlist();
+    const wishlistHelpers = useWishlistData();
     const { getTotalItems } = useCartData();
     const term = ref(getFacetsFromURL().phrase);
     const isSearchOpen = ref(false);
@@ -172,6 +186,10 @@ export default defineComponent({
     );
     const navigation = computed(() =>
       buildCategoryNavigation(categoryResults.value)
+    );
+
+    const wishlistTotalItems = computed(() =>
+      wishlistHelpers.getTotalItems(wishlist.value)
     );
 
     onSSR(async () => {
@@ -265,7 +283,8 @@ export default defineComponent({
       isMobile,
       isMobileMenuOpen,
       products,
-      navigation
+      navigation,
+      wishlistTotalItems
     };
   }
 });
@@ -291,7 +310,7 @@ export default defineComponent({
   }
 }
 
-.cart-badge {
+.badge {
   position: absolute;
   bottom: 40%;
   left: 40%;

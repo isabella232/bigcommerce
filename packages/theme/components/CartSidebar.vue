@@ -60,6 +60,9 @@
                     />
                   </div>
                 </template>
+                <template #actions>
+                  <div></div>
+                </template>
               </SfCollectedProduct>
             </transition-group>
           </div>

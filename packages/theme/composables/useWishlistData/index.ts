@@ -120,6 +120,7 @@ export const useWishlistData = () => {
     getShippingPrice,
     getTotalItems,
     getItemQty,
-    getItem
+    getItem,
+    getProduct
   };
 };
