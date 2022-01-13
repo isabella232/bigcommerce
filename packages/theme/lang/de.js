@@ -195,5 +195,7 @@ export default {
   'Out of stock': 'Nicht vorrätig',
   'The selected quantity exceeds available stock.':
     'Die ausgewählte Menge übersteigt den verfügbaren Vorrat.',
-  'Add to cart': 'In den Einkaufswagen'
+  'Add to cart': 'In den Einkaufswagen',
+  'Home': 'Startseite',
+  'My Account': 'Mein Konto'
 };

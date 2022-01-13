@@ -37,7 +37,7 @@
 </template>
 <script>
 import { SfBreadcrumbs, SfContentPages } from '@storefront-ui/vue';
-import { computed, onBeforeUnmount } from '@vue/composition-api';
+import { computed, onBeforeUnmount, ref } from '@vue/composition-api';
 import { useUser } from '@vue-storefront/bigcommerce';
 import MyProfile from './MyAccount/MyProfile';
 import ShippingDetails from './MyAccount/ShippingDetails';
@@ -60,7 +60,7 @@ export default {
   },
   middleware: ['is-authenticated'],
   setup(props, context) {
-    const { $router, $route } = context.root;
+    const { $router, $route, $i18n } = context.root;
     const { logout } = useUser();
     const isMobile = computed(() => mapMobileObserver().isMobile.get());
     const activePage = computed(() => {
@@ -77,6 +77,17 @@ export default {
         return '';
       }
     });
+    const breadcrumbs = ref([
+      {
+        text: $i18n.t('Home'),
+        link: '/'
+      },
+      {
+        text: $i18n.t('My Account'),
+        link: '/my-account'
+      },
+      { text: activePage.value, link: '#' }
+    ]);
 
     const changeActivePage = async (title) => {
       if (title === 'Log out') {
@@ -96,22 +107,7 @@ export default {
       unMapMobileObserver();
     });
 
-    return { changeActivePage, activePage };
-  },
-
-  data() {
-    return {
-      breadcrumbs: [
-        {
-          text: 'Home',
-          route: { link: '#' }
-        },
-        {
-          text: 'My Account',
-          route: { link: '#' }
-        }
-      ]
-    };
+    return { changeActivePage, activePage, breadcrumbs };
   }
 };
 </script>
