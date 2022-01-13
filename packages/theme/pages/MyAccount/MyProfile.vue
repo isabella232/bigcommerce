@@ -107,6 +107,7 @@ export default defineComponent({
       try {
         const data = await fn();
         await onComplete(data);
+        closeEditProfileForm();
       } catch (error) {
         onError(error);
       }
