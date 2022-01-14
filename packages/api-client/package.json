@@ -1,6 +1,6 @@
 {
   "name": "@vue-storefront/bigcommerce-api",
-  "version": "0.0.1",
+  "version": "1.0.0-beta.0",
   "sideEffects": false,
   "server": "server/index.js",
   "main": "lib/index.cjs.js",
