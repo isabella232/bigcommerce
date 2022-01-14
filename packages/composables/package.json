@@ -1,6 +1,6 @@
 {
   "name": "@vue-storefront/bigcommerce",
-  "version": "0.0.1",
+  "version": "1.0.0-beta.0",
   "sideEffects": false,
   "main": "lib/index.cjs.js",
   "module": "lib/index.es.js",
@@ -16,7 +16,7 @@
     "update:update": "ncu -u"
   },
   "dependencies": {
-    "@vue-storefront/bigcommerce-api": "~0.0.1",
+    "@vue-storefront/bigcommerce-api": "^1.0.0-beta.0",
     "@vue-storefront/core": "~2.4.3",
     "jsonwebtoken": "^8.5.1"
   },
