@@ -1,7 +1,6 @@
 {
   "name": "@vue-storefront/bigcommerce",
   "version": "0.0.1",
-  "private": true,
   "sideEffects": false,
   "main": "lib/index.cjs.js",
   "module": "lib/index.es.js",
@@ -29,9 +28,11 @@
     "@vue/composition-api": "1.0.0-beta.21"
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "nuxt/**/*"
   ],
   "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
     "access": "public"
   }
 }

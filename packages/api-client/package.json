@@ -1,7 +1,6 @@
 {
   "name": "@vue-storefront/bigcommerce-api",
   "version": "0.0.1",
-  "private": true,
   "sideEffects": false,
   "server": "server/index.js",
   "main": "lib/index.cjs.js",
@@ -32,9 +31,11 @@
     "rollup-plugin-typescript2": "^0.30.0"
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "server/**/*"
   ],
   "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
     "access": "public"
   }
 }
