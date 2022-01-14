@@ -1,0 +1,4 @@
+# generated files during build
+dist
+api-client
+composables

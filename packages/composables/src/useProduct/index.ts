@@ -1,20 +1,7 @@
 import {
-  Context,
-  useProductFactory,
-  UseProductFactoryParams
+  useProductFactory
 } from '@vue-storefront/core';
-import type { Product } from '@vue-storefront/bigcommerce-api';
-import type {
-  UseProductSearchParams as SearchParams
-} from '../types';
+import type { ProductsResponse, GetProductsParameters as SearchParams } from '@vue-storefront/bigcommerce-api';
+import { params } from './params';
 
-const params: UseProductFactoryParams<Product, SearchParams> = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  productsSearch: async (context: Context, params) => {
-    console.log('Mocked: useProduct.productsSearch');
-
-    return {};
-  }
-};
-
-export const useProduct = useProductFactory<Product, SearchParams>(params);
+export const useProduct = useProductFactory<ProductsResponse, SearchParams>(params);

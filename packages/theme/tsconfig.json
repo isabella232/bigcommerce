@@ -26,7 +26,8 @@
     "types": [
       "@types/node",
       "@nuxt/types",
-      "nuxt-i18n"
+      "nuxt-i18n",
+      "jest"
     ],
     "resolveJsonModule": true,
     "rootDir": "./",
@@ -38,6 +39,7 @@
     "node_modules",
     ".nuxt",
     "dist",
-    "_theme"
+    "_theme",
+    "jest.config.js"
   ]
 }

@@ -1,7 +1,6 @@
 {
   "name": "@vue-storefront/bigcommerce",
-  "version": "0.0.1",
-  "private": true,
+  "version": "1.0.0-beta.0",
   "sideEffects": false,
   "main": "lib/index.cjs.js",
   "module": "lib/index.es.js",
@@ -12,24 +11,28 @@
     "precommit": "lint-staged",
     "prepublish": "yarn build",
     "test": "jest",
+    "test:watch": "jest --watchAll",
     "update:check": "ncu",
     "update:update": "ncu -u"
   },
   "dependencies": {
-    "@vue-storefront/bigcommerce-api": "~0.0.1",
-    "@vue-storefront/core": "~2.4.3"
+    "@vue-storefront/bigcommerce-api": "^1.0.0-beta.0",
+    "@vue-storefront/core": "~2.4.3",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
-    "rollup-plugin-typescript2": "^0.30.0",
-    "@rollup/plugin-node-resolve": "^13.0.0"
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "rollup-plugin-typescript2": "^0.30.0"
   },
   "peerDependencies": {
     "@vue/composition-api": "1.0.0-beta.21"
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "nuxt/**/*"
   ],
   "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
     "access": "public"
   }
 }

@@ -6,61 +6,48 @@ import {
 } from '@vue-storefront/core';
 import type { Product, ProductFilter } from '@vue-storefront/bigcommerce-api';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getName(product: Product): string {
-  return 'Name';
+  return product?.name || '';
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getSlug(product: Product): string {
-  return 'slug';
+  return product?.custom_url?.url.replace(/^\/|\/$/g, '') ?? '';
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getPrice(product: Product): AgnosticPrice {
+  if (product?.is_price_hidden) {
+    return {
+      regular: 0,
+      special: 0
+    };
+  }
+
   return {
-    regular: 0,
-    special: 0
+    regular: product?.price ?? 0,
+    special: product?.sale_price ?? 0
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getGallery(product: Product): AgnosticMediaGalleryItem[] {
-  return [
-    {
-      small: 'https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg',
-      normal: 'https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg',
-      big: 'https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg'
-    }
-  ];
+  return product?.images.sort((first, second) => first.sort_order - second.sort_order).map((image) => ({
+    small: image.url_thumbnail,
+    normal: image.url_standard,
+    big: image.url_standard
+  })) ?? [];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getCoverImage(product: Product): string {
-  return 'https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg';
+  if (product?.images?.length) {
+    return product.images.find(image => image.is_thumbnail)?.url_standard ?? product.images[0].url_standard;
+  }
+
+  return '';
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getFiltered(products: Product[], filters: ProductFilter): Product[] {
-  return [
-    {
-      _id: 1,
-      _description: 'Some description',
-      _categoriesRef: [
-        '1',
-        '2'
-      ],
-      name: 'Black jacket',
-      sku: 'black-jacket',
-      images: [
-        'https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg'
-      ],
-      price: {
-        original: 12.34,
-        current: 10.00
-      }
-    }
-  ];
+  // TODO: implement this function during the development of product variations
+  return products ?? [];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -68,19 +55,16 @@ function getAttributes(products: Product[] | Product, filterByAttributeName?: st
   return {};
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getDescription(product: Product): string {
-  return '';
+  return product?.description ?? '';
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getCategoryIds(product: Product): string[] {
-  return [];
+  return product?.categories.map(categoryId => categoryId.toString()) ?? [];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getId(product: Product): string {
-  return '1';
+  return product?.id?.toString() ?? '';
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -88,14 +72,12 @@ function getFormattedPrice(price: number): string {
   return '';
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getTotalReviews(product: Product): number {
-  return 0;
+  return product?.reviews_count ?? 0;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getAverageRating(product: Product): number {
-  return 0;
+  return product?.reviews_rating_sum && product?.reviews_count ? product.reviews_rating_sum / product.reviews_count : 0;
 }
 
 export const productGetters: ProductGetters<Product, ProductFilter> = {

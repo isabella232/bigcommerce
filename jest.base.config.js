@@ -6,8 +6,10 @@ module.exports = {
     '^.+\\.(ts)$': 'ts-jest'
   },
   coverageDirectory: './coverage/',
-  collectCoverageFrom: [
-    'src/**/*.ts'
-  ],
-  testMatch: ['<rootDir>/**/__tests__/**/*spec.[jt]s?(x)']
+  collectCoverageFrom: ['src/**/*.ts'],
+  testMatch: ['<rootDir>/**/__tests__/**/*spec.[jt]s?(x)'],
+  watchPlugins: [
+    'jest-watch-typeahead/filename',
+    'jest-watch-typeahead/testname'
+  ]
 };

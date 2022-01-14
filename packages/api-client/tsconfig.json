@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
+  "include": ["src"],
   "compilerOptions": {
-    "target": "ES2017"
+    "rootDir": "./src"
   }
 }
