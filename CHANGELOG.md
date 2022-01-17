@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+
 # 1.0.0-beta.1 (2022-01-17)
 
 
@@ -142,9 +143,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * vbc-74--search-results ([#78](https://github.com/vuestorefront/bigcommerce/issues/78)) ([309764f](https://github.com/vuestorefront/bigcommerce/commit/309764f3c4a2311a90b664d146f5c4fb2955a695))
 * vbc-84 - login error messages ([#64](https://github.com/vuestorefront/bigcommerce/issues/64)) ([374d2b9](https://github.com/vuestorefront/bigcommerce/commit/374d2b9679ed3dfecd28febdc77e84b37aa8cbf6))
 * vbc-84--removing-get-cookie - updating unit tests ([#67](https://github.com/vuestorefront/bigcommerce/issues/67)) ([f619c73](https://github.com/vuestorefront/bigcommerce/commit/f619c73d9e21c131ce76d408525d7b91a7f92d3e))
-
-
-
 
 
 # 1.0.0-beta.0 (2022-01-14)

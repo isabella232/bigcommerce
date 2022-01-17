@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+
 # 1.0.0-beta.1 (2022-01-17)
 
 
@@ -82,9 +83,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * vbc-36--my-account-removing-reviews ([#100](https://github.com/vuestorefront/bigcommerce/issues/100)) ([caa4fd5](https://github.com/vuestorefront/bigcommerce/commit/caa4fd5ac41c8ba1e4ed8cc1f55a649feaac538a))
 * **VBC-44:** add review form ([#52](https://github.com/vuestorefront/bigcommerce/issues/52)) ([f49ca98](https://github.com/vuestorefront/bigcommerce/commit/f49ca98c4541555bf1888c7375ce36510a5782ad))
 * vbc-74--search-results ([#78](https://github.com/vuestorefront/bigcommerce/issues/78)) ([309764f](https://github.com/vuestorefront/bigcommerce/commit/309764f3c4a2311a90b664d146f5c4fb2955a695))
-
-
-
 
 
 # 1.0.0-beta.0 (2022-01-14)
