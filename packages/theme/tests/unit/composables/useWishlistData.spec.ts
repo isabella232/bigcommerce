@@ -3,6 +3,18 @@ import { Wishlist } from '@vue-storefront/bigcommerce';
 import { wishlistMock } from '../../__mocks__/wishlist.mock';
 import { mockedProduct } from '../../__mocks__/product.mock';
 import { useWishlistData } from '../../../composables/useWishlistData';
+import { themeConfigMock } from '../../__mocks__/themeConfig.mock';
+
+jest.mock('../../../composables/useUiHelpers', () => ({
+  _esModule: true,
+  getInstance: jest.fn(() => ({
+    context: {
+      $config: {
+        theme: themeConfigMock
+      }
+    }
+  }))
+}));
 
 describe('[bigcommerce-theme] useProductData', () => {
   const wishlistData = useWishlistData();
