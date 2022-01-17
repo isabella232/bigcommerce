@@ -6,6 +6,7 @@ on:
       - qa
 jobs:
   build:
+    environment: production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

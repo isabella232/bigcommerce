@@ -3,6 +3,88 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+
+# 1.0.0-beta.1 (2022-01-17)
+
+
+### Bug Fixes
+
+* add rating selector and validation ([#87](https://github.com/vuestorefront/bigcommerce/issues/87)) ([2b9eaba](https://github.com/vuestorefront/bigcommerce/commit/2b9eaba00047f8aea11c9727541990216a084d49))
+* add review validation update ([#135](https://github.com/vuestorefront/bigcommerce/issues/135)) ([995ff86](https://github.com/vuestorefront/bigcommerce/commit/995ff86408f624ac04b06f1c6e67fb385404acb9))
+* add variant image to product images ([#122](https://github.com/vuestorefront/bigcommerce/issues/122)) ([9c43973](https://github.com/vuestorefront/bigcommerce/commit/9c43973758cbf7338061c7872805e6233ba04dfe))
+* authentication issues ([#124](https://github.com/vuestorefront/bigcommerce/issues/124)) ([796205a](https://github.com/vuestorefront/bigcommerce/commit/796205aec0cfd3ab468e9734f7977aadc5ccc9ad))
+* cart sidebar SSR error and product page error ([#94](https://github.com/vuestorefront/bigcommerce/issues/94)) ([6792760](https://github.com/vuestorefront/bigcommerce/commit/67927605792110902fc4b4976f06f7e1801c9598))
+* **category.vue:** show 'no products' message only after the API call returned ([#137](https://github.com/vuestorefront/bigcommerce/issues/137)) ([a9b3cf0](https://github.com/vuestorefront/bigcommerce/commit/a9b3cf0c7b6a5188637c27b5c1db99f9dc57d623))
+* check if window object is available for using the session storage object ([#128](https://github.com/vuestorefront/bigcommerce/issues/128)) ([397cb64](https://github.com/vuestorefront/bigcommerce/commit/397cb648cd4caafbb7ff7317ee3d1c5a70c01b77))
+* **createcustomer endpoint:** set customer data cookie on registration as well ([#107](https://github.com/vuestorefront/bigcommerce/issues/107)) ([592939b](https://github.com/vuestorefront/bigcommerce/commit/592939b509764ea4dbeeaa051d6bc4fca2604a97))
+* display product description as html. Allow only 10 items on itemsPerPage dropdown ([#126](https://github.com/vuestorefront/bigcommerce/issues/126)) ([57eb2c7](https://github.com/vuestorefront/bigcommerce/commit/57eb2c790091ffcc3d941ae2ab6913dd9552b2f3))
+* fix Storefront UI bugs on mobile view ([#148](https://github.com/vuestorefront/bigcommerce/issues/148)) ([4ffb089](https://github.com/vuestorefront/bigcommerce/commit/4ffb089da0751cbd2f27a8e357cad53b1f51561a))
+* fixing list view qty for add to cart ([#144](https://github.com/vuestorefront/bigcommerce/issues/144)) ([3873717](https://github.com/vuestorefront/bigcommerce/commit/38737174dbc462c90a0deb523a108e12acd463b0))
+* fixing the path for search result categories ([#136](https://github.com/vuestorefront/bigcommerce/issues/136)) ([f79f09c](https://github.com/vuestorefront/bigcommerce/commit/f79f09cf56c058860131275ec0731b40d222357b))
+* header navigation on mobile ([#127](https://github.com/vuestorefront/bigcommerce/issues/127)) ([4fcfb66](https://github.com/vuestorefront/bigcommerce/commit/4fcfb66bdd112f5e89746a9fe8fe3b26cae6ad8a))
+* navigation menu on mobile ([#139](https://github.com/vuestorefront/bigcommerce/issues/139)) ([0c3e0ce](https://github.com/vuestorefront/bigcommerce/commit/0c3e0cea82f062f4010f4d6f360bc41fbc1eec34))
+* product page errors ([#106](https://github.com/vuestorefront/bigcommerce/issues/106)) ([3c503ac](https://github.com/vuestorefront/bigcommerce/commit/3c503acc6409e35f1d02f1b04b5cf839d451ec80))
+* read all reviews navigates to reviews tab ([#120](https://github.com/vuestorefront/bigcommerce/issues/120)) ([efd5e5e](https://github.com/vuestorefront/bigcommerce/commit/efd5e5e0328abfc89cb4b3a0e6ab5b143edc506c))
+* related products: actions for add to cart/wishlist ([#121](https://github.com/vuestorefront/bigcommerce/issues/121)) ([211b61b](https://github.com/vuestorefront/bigcommerce/commit/211b61ba82cc3d8dc2643b4d5b66690b19e5c77d))
+* remove cart id from cart sidebar ([#119](https://github.com/vuestorefront/bigcommerce/issues/119)) ([411fa7f](https://github.com/vuestorefront/bigcommerce/commit/411fa7fae9db5871f3a633525f692a01a7fcb636))
+* removing checkout middleware as embedded checkout is 1 step ([#142](https://github.com/vuestorefront/bigcommerce/issues/142)) ([44c4d89](https://github.com/vuestorefront/bigcommerce/commit/44c4d89b2fe30c960113e59a78953c1b974ec0d1))
+* save for later button update in the sidebars ([#149](https://github.com/vuestorefront/bigcommerce/issues/149)) ([0c2b6fa](https://github.com/vuestorefront/bigcommerce/commit/0c2b6fa265e0d9354eabb5b77c138f8b6b72ad81))
+* scrollTo tabs element ([#132](https://github.com/vuestorefront/bigcommerce/issues/132)) ([5a0eb34](https://github.com/vuestorefront/bigcommerce/commit/5a0eb3419cdb0767543e9163a6bce509eeb2c984))
+* show current rating for product on list view ([#145](https://github.com/vuestorefront/bigcommerce/issues/145)) ([1573975](https://github.com/vuestorefront/bigcommerce/commit/1573975a3f05fd02bcf187d88e0c6af42dfe3830))
+* show product colors on mobile ([#140](https://github.com/vuestorefront/bigcommerce/issues/140)) ([3abfba2](https://github.com/vuestorefront/bigcommerce/commit/3abfba2d6a600ae5a8f2655903207c022c557a46))
+* sortby when no direction given ([#118](https://github.com/vuestorefront/bigcommerce/issues/118)) ([9d3acc1](https://github.com/vuestorefront/bigcommerce/commit/9d3acc1bf99103c83fae82134768a6406d51203a))
+* **VBC-340, VBC-360:** make wishlist working correctly ([#123](https://github.com/vuestorefront/bigcommerce/issues/123)) ([011bdc9](https://github.com/vuestorefront/bigcommerce/commit/011bdc9325fa36b718b1a34cbb2a1a0bc1dca7cd))
+* vbc-356-SfGallery-AddingMissingKey ([#125](https://github.com/vuestorefront/bigcommerce/issues/125)) ([0005b8a](https://github.com/vuestorefront/bigcommerce/commit/0005b8a30f8fdee7f4253110e3819b63e1d74a82))
+* **VBC-361:** clear wishlist button ([#129](https://github.com/vuestorefront/bigcommerce/issues/129)) ([a4d430c](https://github.com/vuestorefront/bigcommerce/commit/a4d430c65fecbe7c9fc4655d31c1d18c2ceec36c))
+
+
+### Features
+
+* add addToCart and addToWishlist methods to search results ([#131](https://github.com/vuestorefront/bigcommerce/issues/131)) ([c0ea1d7](https://github.com/vuestorefront/bigcommerce/commit/c0ea1d7562871a6221d2d87be8a1d4b259831d8e))
+* add API endpoint to generate JWT token for customers ([#58](https://github.com/vuestorefront/bigcommerce/issues/58)) ([c1c43e2](https://github.com/vuestorefront/bigcommerce/commit/c1c43e20ba06d685b3327b44a32fd6a8a113e338))
+* add link to redirect to homepage ([#134](https://github.com/vuestorefront/bigcommerce/issues/134)) ([3aca4e4](https://github.com/vuestorefront/bigcommerce/commit/3aca4e498f66a1d84079824f37b2b2aefc77b96e))
+* add message when there are no products in a category ([#53](https://github.com/vuestorefront/bigcommerce/issues/53)) ([9f3cb3c](https://github.com/vuestorefront/bigcommerce/commit/9f3cb3c9144d070a1f438abee06de2f6bf8facb3))
+* add pagination to plp ([#69](https://github.com/vuestorefront/bigcommerce/issues/69)) ([90c908d](https://github.com/vuestorefront/bigcommerce/commit/90c908d873c9aad25c3f2ab3e838f57e1ce0f6ab))
+* add types for BigCommerce SDK ([#13](https://github.com/vuestorefront/bigcommerce/issues/13)) ([895ae3e](https://github.com/vuestorefront/bigcommerce/commit/895ae3e621f1b16efa9496a8196eda1175bac9e3))
+* add wishlist sidebar component ([#77](https://github.com/vuestorefront/bigcommerce/issues/77)) ([a9ed138](https://github.com/vuestorefront/bigcommerce/commit/a9ed13858a04d1fc8b890273603427925b3124ac))
+* added useCategory composable ([#21](https://github.com/vuestorefront/bigcommerce/issues/21)) ([69f0763](https://github.com/vuestorefront/bigcommerce/commit/69f0763f3475b104e420b2a170cb63ecbe6172b5))
+* adding breadcrumbs on My Account page ([#150](https://github.com/vuestorefront/bigcommerce/issues/150)) ([f9207a4](https://github.com/vuestorefront/bigcommerce/commit/f9207a436694c4ae586b7380b0ac465ca2279529))
+* api client setup ([#7](https://github.com/vuestorefront/bigcommerce/issues/7)) ([366482a](https://github.com/vuestorefront/bigcommerce/commit/366482ac95c29db59af852f16c90ae4259479daf))
+* assign the cart to the logged-in user ([#91](https://github.com/vuestorefront/bigcommerce/issues/91)) ([f5d4518](https://github.com/vuestorefront/bigcommerce/commit/f5d4518695b2f39de2842696d3b626905b05972b))
+* clear cart ([#83](https://github.com/vuestorefront/bigcommerce/issues/83)) ([0aafe62](https://github.com/vuestorefront/bigcommerce/commit/0aafe628de4c5a564043893e767974f6d686afeb))
+* closing the profile update form on successful update ([#153](https://github.com/vuestorefront/bigcommerce/issues/153)) ([9743eea](https://github.com/vuestorefront/bigcommerce/commit/9743eea384a1fecdadf9cbca60dc6e91d9ca9ff3))
+* display products by category on PLP ([#51](https://github.com/vuestorefront/bigcommerce/issues/51)) ([14a8cb2](https://github.com/vuestorefront/bigcommerce/commit/14a8cb24c38241354af066c7ed6dc78f4a1e6470))
+* get product review composable ([#31](https://github.com/vuestorefront/bigcommerce/issues/31)) ([e37f64a](https://github.com/vuestorefront/bigcommerce/commit/e37f64a970817708bc2e20fb35b4b0dbb9e5307b)), closes [#15](https://github.com/vuestorefront/bigcommerce/issues/15) [#18](https://github.com/vuestorefront/bigcommerce/issues/18) [#20](https://github.com/vuestorefront/bigcommerce/issues/20)
+* handle product options and variants ([#47](https://github.com/vuestorefront/bigcommerce/issues/47)) ([2db4bad](https://github.com/vuestorefront/bigcommerce/commit/2db4bad6329d9041f240c6804766ff1b297a1817))
+* handle stock data on PDP ([#133](https://github.com/vuestorefront/bigcommerce/issues/133)) ([353db3f](https://github.com/vuestorefront/bigcommerce/commit/353db3fbe39c6d23965f1027bc7cd8720726a4be))
+* implement logIn method in useUser composable ([#59](https://github.com/vuestorefront/bigcommerce/issues/59)) ([1be551d](https://github.com/vuestorefront/bigcommerce/commit/1be551d40a3f92ec0c9ac8fc38165299aeaf2253))
+* inject BigCommerce checkout form into the checkout page ([#92](https://github.com/vuestorefront/bigcommerce/issues/92)) ([0dc4ec9](https://github.com/vuestorefront/bigcommerce/commit/0dc4ec9c1930907b814df5712d397e55e4d13e25))
+* load cart and add item to it ([#71](https://github.com/vuestorefront/bigcommerce/issues/71)) ([5b78e22](https://github.com/vuestorefront/bigcommerce/commit/5b78e22a4b0175cb814d200c9a5b76207aeca205))
+* my account customer shipping addresses ([#110](https://github.com/vuestorefront/bigcommerce/issues/110)) ([2f9f007](https://github.com/vuestorefront/bigcommerce/commit/2f9f00721ed25f99e70c198ebbb50ad7d281301e))
+* my account my profile page ([#82](https://github.com/vuestorefront/bigcommerce/issues/82)) ([7c3229d](https://github.com/vuestorefront/bigcommerce/commit/7c3229def224cd77b806f88ead0d40674a4e1ec5))
+* my account update user api composable theme integration ([#95](https://github.com/vuestorefront/bigcommerce/issues/95)) ([142c1f7](https://github.com/vuestorefront/bigcommerce/commit/142c1f78c1b34de649f2f9b3c5a8eea5881373c3))
+* **my account:** copied default boilerplate files for my account from _theme ([#89](https://github.com/vuestorefront/bigcommerce/issues/89)) ([17ee916](https://github.com/vuestorefront/bigcommerce/commit/17ee9168f562081fd2bfea3df24e7a04c1cfd3f9))
+* pdp-breadcrumbs fallback value ([#88](https://github.com/vuestorefront/bigcommerce/issues/88)) ([2232e7a](https://github.com/vuestorefront/bigcommerce/commit/2232e7a2dcdcedce3777e4a116e2754e9f9fadca))
+* render product reviews ([#42](https://github.com/vuestorefront/bigcommerce/issues/42)) ([5149dd8](https://github.com/vuestorefront/bigcommerce/commit/5149dd8362ad75b7294754e7e5a2dac1163f5938))
+* show customer as logged-in in embedded checkout form ([#101](https://github.com/vuestorefront/bigcommerce/issues/101)) ([22ddfe1](https://github.com/vuestorefront/bigcommerce/commit/22ddfe1759422b7f1d888e387c6c00ca62ec1e9d))
+* show related products on PDP ([#30](https://github.com/vuestorefront/bigcommerce/issues/30)) ([663f8f4](https://github.com/vuestorefront/bigcommerce/commit/663f8f451a1f12284e7cda5bc3daa8f199711154))
+* sort on category page ([#112](https://github.com/vuestorefront/bigcommerce/issues/112)) ([8effdd0](https://github.com/vuestorefront/bigcommerce/commit/8effdd0cb7431c5fd0ebdb6deb2bae4ff762d82a))
+* substitute useUserShipping getters with helper functions in the 'theme' folder ([#109](https://github.com/vuestorefront/bigcommerce/issues/109)) ([f8d31c8](https://github.com/vuestorefront/bigcommerce/commit/f8d31c8e60de27c7402fdef76142fd476ccb4d3b))
+* update category tree when user navigates to a child category ([#61](https://github.com/vuestorefront/bigcommerce/issues/61)) ([fc4babb](https://github.com/vuestorefront/bigcommerce/commit/fc4babbc1fb7122f73a1ce3eab3c883506109f61))
+* useProduct composable and PDP ([#29](https://github.com/vuestorefront/bigcommerce/issues/29)) ([fd0a34b](https://github.com/vuestorefront/bigcommerce/commit/fd0a34b3186e97123bf6c8bed49ae69af2722c09))
+* vbc-116 guest wishlist add item action ([#63](https://github.com/vuestorefront/bigcommerce/issues/63)) ([eaaca06](https://github.com/vuestorefront/bigcommerce/commit/eaaca06db667e28b01ed9f220158ce5f98428778))
+* **vbc-121:** guest wishlist in theme ([#85](https://github.com/vuestorefront/bigcommerce/issues/85)) ([7dc8c58](https://github.com/vuestorefront/bigcommerce/commit/7dc8c5881135cfa9026e06c1eaebae4fe8920a15))
+* **VBC-122:** use guest wishlist helpers ([#80](https://github.com/vuestorefront/bigcommerce/issues/80)) ([13104e6](https://github.com/vuestorefront/bigcommerce/commit/13104e68f58a0d3764e53cc6ddcc029ec4657454))
+* vbc-132--header-menu-items ([#68](https://github.com/vuestorefront/bigcommerce/issues/68)) ([08715be](https://github.com/vuestorefront/bigcommerce/commit/08715be632e4724395082cd59b6e97a2f1dcbd92))
+* vbc-203-PDP-Breadcrumbs ([#86](https://github.com/vuestorefront/bigcommerce/issues/86)) ([bc93f2c](https://github.com/vuestorefront/bigcommerce/commit/bc93f2c1feec67eb8af557c62a3b70730543a043))
+* vbc-215 marketing emails ([#104](https://github.com/vuestorefront/bigcommerce/issues/104)) ([3412c80](https://github.com/vuestorefront/bigcommerce/commit/3412c80475ce7cc1945604256bac3898f346e5bf))
+* vbc-222-channel-ids-for-registration ([#81](https://github.com/vuestorefront/bigcommerce/issues/81)) ([c8bd59a](https://github.com/vuestorefront/bigcommerce/commit/c8bd59ab3171e751fb09991faf419fef04a30705))
+* **VBC-326:** common interfaces for wishlists ([#117](https://github.com/vuestorefront/bigcommerce/issues/117)) ([a69cc8a](https://github.com/vuestorefront/bigcommerce/commit/a69cc8a098d117a3815487e79689ecba5462dc2a))
+* vbc-36--my-account-removing-reviews ([#100](https://github.com/vuestorefront/bigcommerce/issues/100)) ([caa4fd5](https://github.com/vuestorefront/bigcommerce/commit/caa4fd5ac41c8ba1e4ed8cc1f55a649feaac538a))
+* **VBC-44:** add review form ([#52](https://github.com/vuestorefront/bigcommerce/issues/52)) ([f49ca98](https://github.com/vuestorefront/bigcommerce/commit/f49ca98c4541555bf1888c7375ce36510a5782ad))
+* vbc-74--search-results ([#78](https://github.com/vuestorefront/bigcommerce/issues/78)) ([309764f](https://github.com/vuestorefront/bigcommerce/commit/309764f3c4a2311a90b664d146f5c4fb2955a695))
+
+
 # 1.0.0-beta.0 (2022-01-14)
 
 

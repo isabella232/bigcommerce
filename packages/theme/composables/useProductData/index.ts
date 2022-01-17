@@ -5,10 +5,12 @@ import {
   ProductVariant
 } from '@vue-storefront/bigcommerce-api';
 import { AgnosticPagination } from '@vue-storefront/core';
-import themeConfig from '@vue-storefront/bigcommerce-theme/themeConfig';
+import { getInstance } from '../useUiHelpers';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useProductData = () => {
+  const instance = getInstance();
+
   const getName = (product: Product): string => {
     return product?.name || '';
   };
@@ -136,8 +138,8 @@ export const useProductData = () => {
         currentPage: 1,
         totalPages: 1,
         totalItems: 1,
-        itemsPerPage: themeConfig?.itemsPerPage?.[0],
-        pageOptions: themeConfig?.itemsPerPage
+        itemsPerPage: instance.context.$config.theme?.itemsPerPage?.[0],
+        pageOptions: instance.context.$config.theme?.itemsPerPage
       };
     }
 
@@ -146,7 +148,7 @@ export const useProductData = () => {
       totalPages: meta?.pagination?.total_pages,
       totalItems: meta?.pagination?.total,
       itemsPerPage: meta?.pagination?.per_page,
-      pageOptions: themeConfig?.itemsPerPage
+      pageOptions: instance.context.$config.theme?.itemsPerPage
     };
   };
 

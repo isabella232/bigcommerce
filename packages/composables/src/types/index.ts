@@ -7,6 +7,7 @@ export * from './useWishlist';
 export * from './useGuestWishlist';
 export * from './useReview';
 export * from './useUser';
+export * from './useCategory';
 
 /**
  * Contains configuration for [axios client](https://github.com/axios/axios).
@@ -70,8 +71,6 @@ export interface Context {
 export type TODO = any;
 
 export type UseBillingAddParams = TODO;
-
-export type UseCategorySearchParams = TODO;
 
 export type UseSearchParams = TODO;
 

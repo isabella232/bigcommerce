@@ -1,13 +1,13 @@
-import themeConfig from '@vue-storefront/bigcommerce-theme/themeConfig';
-import { useFacetData } from '../../../composables/useFacetData';
 import { expect } from '@jest/globals';
+import { themeConfigMock } from '../../__mocks__/themeConfig.mock';
+import { useFacetData } from '../../../composables/useFacetData';
 
 jest.mock('../../../composables/useUiHelpers', () => ({
   _esModule: true,
   getInstance: jest.fn(() => ({
     context: {
       $config: {
-        theme: themeConfig
+        theme: themeConfigMock
       }
     },
     $router: {

@@ -31,6 +31,7 @@ export { userGetters } from './getters/userGetters';
 
 // Helpers
 export { getDefaultVariant } from './helpers/product';
+export { getCategoryById } from './helpers/category';
 
 // Types
 export * from './types';

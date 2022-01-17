@@ -1,8 +1,8 @@
 import {
   CategoryTree,
-  SearchResultNavigationItem
-} from '@vue-storefront/bigcommerce/src/types/useCategory';
-import { getCategoryById } from '@vue-storefront/bigcommerce/src/helpers/category/getCategoryById';
+  SearchResultNavigationItem,
+  getCategoryById
+} from '@vue-storefront/bigcommerce';
 import { buildCategoryNavigation } from './buildCategoryNavigation';
 import { Product } from '@vue-storefront/bigcommerce-api';
 

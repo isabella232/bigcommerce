@@ -1,7 +1,19 @@
+import { expect } from '@jest/globals';
 import { Product } from '@vue-storefront/bigcommerce-api';
 import { useProductData } from '../../../composables/useProductData';
 import { mockedProduct } from '../../__mocks__/product.mock';
-import { expect } from '@jest/globals';
+import { themeConfigMock } from '../../__mocks__/themeConfig.mock';
+
+jest.mock('../../../composables/useUiHelpers', () => ({
+  _esModule: true,
+  getInstance: jest.fn(() => ({
+    context: {
+      $config: {
+        theme: themeConfigMock
+      }
+    }
+  }))
+}));
 
 describe('[bigcommerce-theme] useProductData', () => {
   const productData = useProductData();
