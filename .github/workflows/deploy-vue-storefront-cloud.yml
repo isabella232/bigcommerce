@@ -6,6 +6,7 @@ on:
       - qa
 jobs:
   build:
+    environment: production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,7 +19,6 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: demo-bigcommerce-storefrontcloud-io/vue-storefront:${{ github.sha }}
-          environment: production
           registry: registry.vuestorefront.cloud
           username: ${{ secrets.CLOUD_USERNAME }}
           password: ${{ secrets.CLOUD_PASSWORD }}
