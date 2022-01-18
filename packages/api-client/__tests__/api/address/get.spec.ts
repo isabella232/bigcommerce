@@ -11,7 +11,7 @@ describe('[bigcommerce-api-client] get an address', () => {
 
   const expectedResponse = [mockedAddress];
 
-  contextMock.client.get = (url: string) => {
+  contextMock.client.v3.get = (url: string) => {
     expect(url).toEqual(`${BigCommerceEndpoints.addresses}?id%3Ain=1`);
     return expectedResponse;
   };

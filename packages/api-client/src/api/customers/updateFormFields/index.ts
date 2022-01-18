@@ -7,7 +7,7 @@ export const updateCustomerFormFields: Endpoints['updateCustomerFormFields'] = a
 ) => {
   const { data } = params;
 
-  return await context.client.put(BigCommerceEndpoints.formFieldValues, data);
+  return await context.client.v3.put(BigCommerceEndpoints.formFieldValues, data);
 };
 
 export default updateCustomerFormFields;

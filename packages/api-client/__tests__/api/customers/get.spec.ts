@@ -46,15 +46,15 @@ describe('[bigcommerce-api-client] getCustomer', () => {
         }
       }
     };
-    contextMock.client.get = jest.fn(() => Promise.resolve(expectedResponse));
+    contextMock.client.v3.get = jest.fn(() => Promise.resolve(expectedResponse));
 
     const response: GetCustomersResponse = await getCustomers(
       contextMock,
       params
     );
 
-    expect(contextMock.client.get).toHaveBeenCalledTimes(1);
-    expect(contextMock.client.get).toHaveBeenCalledWith(
+    expect(contextMock.client.v3.get).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
       `/customers?id%3Ain=${customerId}`
     );
     expect(jwtVerifyMock).toHaveBeenCalledTimes(1);
@@ -90,15 +90,15 @@ describe('[bigcommerce-api-client] getCustomer', () => {
         }
       }
     };
-    contextMock.client.get = jest.fn(() => Promise.resolve(expectedResponse));
+    contextMock.client.v3.get = jest.fn(() => Promise.resolve(expectedResponse));
 
     const response: GetCustomersResponse = await getCustomers(
       contextMock,
       params
     );
 
-    expect(contextMock.client.get).toHaveBeenCalledTimes(1);
-    expect(contextMock.client.get).toHaveBeenCalledWith(
+    expect(contextMock.client.v3.get).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
       `/customers?id%3Ain=${customerId}`
     );
     expect(jwtVerifyMock).toHaveBeenCalledTimes(0);
@@ -124,7 +124,7 @@ describe('[bigcommerce-api-client] getCustomer', () => {
     };
     const params = {};
 
-    expect(contextMock.client.get).toHaveBeenCalledTimes(0);
+    expect(contextMock.client.v3.get).toHaveBeenCalledTimes(0);
     expect(jwtVerifyMock).toHaveBeenCalledTimes(0);
     await expect(
       getCustomers(contextMock, params)
@@ -136,9 +136,9 @@ describe('[bigcommerce-api-client] getCustomer', () => {
       cookies: {}
     };
     const params = {};
-    contextMock.client.get = jest.fn();
+    contextMock.client.v3.get = jest.fn();
 
-    expect(contextMock.client.get).toHaveBeenCalledTimes(0);
+    expect(contextMock.client.v3.get).toHaveBeenCalledTimes(0);
     expect(jwtVerifyMock).toHaveBeenCalledTimes(0);
     await expect(
       getCustomers(contextMock, params)

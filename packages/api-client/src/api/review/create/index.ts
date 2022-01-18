@@ -21,7 +21,7 @@ export const createProductReview: Endpoints['createProductReview'] = async (
   // Product id is not required in the CREATE product review props, just to get correct endpoint.
   delete props.productId;
 
-  return context.client.post<
+  return context.client.v3.post<
   ProductReviewResponse,
   FullCreateProductReviewProps
   >(BigCommerceEndpoints.reviews(productId), {

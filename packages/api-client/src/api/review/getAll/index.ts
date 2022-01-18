@@ -15,7 +15,7 @@ export const getProductReviewCollection: Endpoints['getProductReviewCollection']
   if (!productId || typeof productId !== 'number')
     throw Error(`ProductId with value: ${productId} is not valid. Use number value.`);
 
-  return context.client.get<ProductReviewCollectionResponse>(
+  return context.client.v3.get<ProductReviewCollectionResponse>(
     stringifyUrl({
       url: BigCommerceEndpoints.reviews(productId),
       query: query

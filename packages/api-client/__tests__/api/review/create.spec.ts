@@ -6,11 +6,7 @@ import { reviewResponseMock } from '../../../__mocks__/review/response.mock';
 describe('[BigCommerce-api-client] get product reviews', () => {
   it('should validate the executed props for post client function', async () => {
     // Given
-    const postMock = jest.fn();
-    contextMock.client = {
-      post: postMock
-    };
-    contextMock.client.post.mockImplementationOnce(() => Promise.resolve());
+    contextMock.client.v3.post = jest.fn(() => Promise.resolve());
     const expectedProductId = 1;
     const props: CreateProductReviewProps = {
       title: 'New review',
@@ -21,7 +17,7 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     await createProductReview(contextMock, props);
 
     // Then
-    const mockCallArgs = postMock.mock.calls[0];
+    const mockCallArgs = contextMock.client.v3.post.mock.calls[0];
     expect(mockCallArgs[0]).toBe(`/catalog/products/${expectedProductId}/reviews`);
     expect('date_reviewed' in mockCallArgs[1]).toBe(true);
     expect('title' in mockCallArgs[1]).toBe(true);
@@ -29,11 +25,7 @@ describe('[BigCommerce-api-client] get product reviews', () => {
   });
 
   it('should thorw an error when any of productId was not provided', async () => {
-    const postMock = jest.fn();
-    contextMock.client = {
-      post: postMock
-    };
-    contextMock.client.post.mockImplementationOnce(() => Promise.resolve());
+    contextMock.client.v3.post = jest.fn(() => Promise.resolve());
     const props: CreateProductReviewProps = {
       title: 'New review',
       productId: undefined
@@ -45,16 +37,12 @@ describe('[BigCommerce-api-client] get product reviews', () => {
       const expectedErrorMessage = `ProductId with value: ${props.productId} is not valid. Use number value.`;
       expect(error.message).toBe(expectedErrorMessage);
     } finally {
-      expect(postMock).toHaveBeenCalledTimes(0);
+      expect(contextMock.client.v3.post).toHaveBeenCalledTimes(0);
     }
   });
 
   it('should thorw an error when title was not provided', async () => {
-    const postMock = jest.fn();
-    contextMock.client = {
-      post: postMock
-    };
-    contextMock.client.post.mockImplementationOnce(() => Promise.resolve());
+    contextMock.client.v3.post = jest.fn(() => Promise.resolve());
     const props: CreateProductReviewProps = {
       title: undefined,
       productId: 1
@@ -66,16 +54,12 @@ describe('[BigCommerce-api-client] get product reviews', () => {
       const expectedErrorMessage = `Title with value: ${props.title} is not valid. Use string value.`;
       expect(error.message).toBe(expectedErrorMessage);
     } finally {
-      expect(postMock).toHaveBeenCalledTimes(0);
+      expect(contextMock.client.v3.post).toHaveBeenCalledTimes(0);
     }
   });
 
   it('should pass with all props', async () => {
-    const postMock = jest.fn();
-    contextMock.client = {
-      post: postMock
-    };
-    contextMock.client.post.mockImplementationOnce(() => Promise.resolve(reviewResponseMock));
+    contextMock.client.v3.post = jest.fn(() => Promise.resolve(reviewResponseMock));
     const expectedProductId = 1;
     const props: CreateProductReviewProps = {
       title: 'New review',
@@ -89,6 +73,6 @@ describe('[BigCommerce-api-client] get product reviews', () => {
 
     await createProductReview(contextMock, props);
 
-    expect(postMock).toHaveReturned();
+    expect(contextMock.client.v3.post).toHaveReturned();
   });
 });

@@ -18,8 +18,7 @@ export const createCustomer: Endpoints['createCustomer'] = async (
   params.authentication = {
     new_password: params.password
   };
-  const { client } = context;
-  const { data } = await client.post<
+  const { data } = await context.client.v3.post<
     CreateCustomerResponse,
     Array<CreateCustomerParameters>
   >(endpointPaths.customers, [params]);

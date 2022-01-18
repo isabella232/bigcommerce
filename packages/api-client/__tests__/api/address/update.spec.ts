@@ -11,7 +11,7 @@ describe('[bigcommerce-api-client] update address', () => {
 
   const expectedResponse = [mockedAddress];
 
-  contextMock.client.put = (url: string, params: UpdateAddressParameters) => {
+  contextMock.client.v3.put = (url: string, params: UpdateAddressParameters) => {
     expect(url).toEqual(BigCommerceEndpoints.addresses);
 
     expect([address]).toEqual(params);
@@ -30,7 +30,7 @@ describe('[bigcommerce-api-client] update address', () => {
     };
 
     const expectedError = '[Error: Required parameters missing.]';
-    contextMock.client.put = jest.fn(() => Promise.reject(expectedError));
+    contextMock.client.v3.put = jest.fn(() => Promise.reject(expectedError));
 
     await expect(
       updateCustomerAddress(

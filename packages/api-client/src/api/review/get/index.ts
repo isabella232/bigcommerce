@@ -17,7 +17,7 @@ export const getProductReview: Endpoints['getProductReview'] = async (
       `ReviewId with value: ${reviewId} is not valid. Use number value.`
     );
 
-  return context.client.get<ProductReviewResponse>(
+  return context.client.v3.get<ProductReviewResponse>(
     BigCommerceEndpoints.review(productId, reviewId)
   );
 };

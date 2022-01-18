@@ -6,7 +6,7 @@ export const updateCustomer: Endpoints['updateCustomer'] = async (
   context,
   params
 ) => {
-  return await context.client.put(
+  return await context.client.v3.put(
     queryString.stringifyUrl({
       url: BigCommerceEndpoints.customers
     }),

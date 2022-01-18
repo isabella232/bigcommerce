@@ -23,7 +23,7 @@ export const addWishlistItems: Endpoints['addWishlistItems'] = async (
 
   const addWishlistItemParams = { items: params.items };
 
-  return context.client.post<WishlistResponse, AddWishlistItemsParamType>(
+  return context.client.v3.post<WishlistResponse, AddWishlistItemsParamType>(
     BigCommerceEndpoints.wishlistItems(wishlistId),
     addWishlistItemParams
   );

@@ -9,7 +9,7 @@ export const addCartItems: Endpoints['addCartItems'] = async (
 ) => {
   const { cartId, data, include } = params;
 
-  const response: AddLineItemsResponse = await context.client.post(
+  const response: AddLineItemsResponse = await context.client.v3.post(
     queryString.stringifyUrl({
       url: BigCommerceEndpoints.cartItems(cartId),
       query: include ? { include } : undefined

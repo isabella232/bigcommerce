@@ -10,7 +10,7 @@ export const getCategoryTree: Endpoints['getCategoryTree'] = async (
   context
 ) => {
   const { categoryTree } = BigCommerceEndpoints;
-  const response = await context.client.get<CategoryTreeResponse>(
+  const response = await context.client.v3.get<CategoryTreeResponse>(
     categoryTree()
   );
   return response;

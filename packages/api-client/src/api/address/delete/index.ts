@@ -6,7 +6,7 @@ export const deleteCustomerAddress: Endpoints['deleteCustomerAddress'] = async (
   context,
   params
 ) => {
-  return await context.client.delete(
+  return await context.client.v3.delete(
     queryString.stringifyUrl(
       {
         url: BigCommerceEndpoints.addresses,

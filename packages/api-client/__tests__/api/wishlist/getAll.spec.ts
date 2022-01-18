@@ -5,19 +5,19 @@ import { contextMock } from '../../../__mocks__/context.mock';
 describe('[BigCommerce-api-client] get product reviews', () => {
   it('should call the right endpoint', async () => {
     // Given
-    contextMock.client.get = jest.fn();
+    contextMock.client.v3.get = jest.fn();
     const expectedEndpoint = '/wishlists';
 
     // When
     await getAllWishlists(contextMock);
 
     // Then
-    expect(contextMock.client.get).toHaveBeenCalledWith(expectedEndpoint);
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(expectedEndpoint);
   });
 
   it('should use query params (if setted) for get client function', async () => {
     // Given
-    contextMock.client.get = jest.fn();
+    contextMock.client.v3.get = jest.fn();
 
     const query: GetAllWishlistQuery = {
       customer_id: 1,
@@ -29,7 +29,7 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     await getAllWishlists(contextMock, query);
 
     // Then
-    expect(contextMock.client.get)
+    expect(contextMock.client.v3.get)
       .toHaveBeenCalledWith(`/wishlists?customer_id=${query.customer_id}&limit=${query.limit}&page=${query.page}`);
   });
 });

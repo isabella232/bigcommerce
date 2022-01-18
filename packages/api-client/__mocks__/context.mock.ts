@@ -15,7 +15,10 @@ export const sdkSettings = {
 };
 
 export const contextMock = {
-  client: {} as any,
+  client: {
+    v2: {} as any,
+    v3: {} as any
+  },
   api: {} as any,
   config: {
     sdkSettings,

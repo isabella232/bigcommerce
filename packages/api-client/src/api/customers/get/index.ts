@@ -8,7 +8,7 @@ export const getCustomers: Endpoints['getCustomers'] = async (
   context,
   params
 ) => {
-  return await context.client.get(
+  return await context.client.v3.get(
     queryString.stringifyUrl(
       {
         url: BigCommerceEndpoints.customers,

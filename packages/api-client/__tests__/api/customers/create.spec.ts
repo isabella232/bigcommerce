@@ -55,7 +55,7 @@ describe('[bigcommerce-api-client] createCustomer', () => {
         }
       ]
     };
-    contextMock.client.post = jest.fn(() => Promise.resolve(expectedResponse));
+    contextMock.client.v3.post = jest.fn(() => Promise.resolve(expectedResponse));
     const jwtTokenExpirationDays = 4;
     const secureCookies = false;
     contextMock.config = {
@@ -81,8 +81,8 @@ describe('[bigcommerce-api-client] createCustomer', () => {
 
     const response = await createCustomer(contextMock, parameters);
 
-    expect(contextMock.client.post).toHaveBeenCalledTimes(1);
-    expect(contextMock.client.post).toHaveBeenCalledWith('/customers', [
+    expect(contextMock.client.v3.post).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.post).toHaveBeenCalledWith('/customers', [
       parameters
     ]);
     expect(jwtSignMock).toBeCalledTimes(1);
@@ -144,13 +144,13 @@ describe('[bigcommerce-api-client] createCustomer', () => {
       channel_ids: [1]
     };
     const expectedError = 'API error';
-    contextMock.client.post = jest.fn(() => Promise.reject(expectedError));
+    contextMock.client.v3.post = jest.fn(() => Promise.reject(expectedError));
 
     await expect(
       createCustomer(contextMock, parameters)
     ).rejects.toMatchInlineSnapshot('"API error"');
-    expect(contextMock.client.post).toHaveBeenCalledTimes(1);
-    expect(contextMock.client.post).toHaveBeenCalledWith('/customers', [
+    expect(contextMock.client.v3.post).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.post).toHaveBeenCalledWith('/customers', [
       parameters
     ]);
   });
@@ -166,6 +166,6 @@ describe('[bigcommerce-api-client] createCustomer', () => {
         (parameters as unknown) as CreateCustomerParameters
       )
     ).rejects.toMatchInlineSnapshot('[Error: Required parameters missing.]');
-    expect(contextMock.client.post).not.toHaveBeenCalled();
+    expect(contextMock.client.v3.post).not.toHaveBeenCalled();
   });
 });

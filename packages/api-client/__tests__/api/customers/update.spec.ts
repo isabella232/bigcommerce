@@ -44,12 +44,12 @@ describe('[bigcommerce-api-client] updateCustomer', () => {
         }
       ]
     };
-    contextMock.client.put = jest.fn(() => Promise.resolve(expectedResponse));
+    contextMock.client.v3.put = jest.fn(() => Promise.resolve(expectedResponse));
 
     const response = await updateCustomer(contextMock, parameters);
 
-    expect(contextMock.client.put).toHaveBeenCalledTimes(1);
-    expect(contextMock.client.put).toHaveBeenCalledWith('/customers', [
+    expect(contextMock.client.v3.put).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.put).toHaveBeenCalledWith('/customers', [
       parameters
     ]);
 
@@ -100,13 +100,13 @@ describe('[bigcommerce-api-client] updateCustomer', () => {
       channel_ids: [1]
     };
     const expectedError = 'API error';
-    contextMock.client.put = jest.fn(() => Promise.reject(expectedError));
+    contextMock.client.v3.put = jest.fn(() => Promise.reject(expectedError));
 
     await expect(
       updateCustomer(contextMock, parameters)
     ).rejects.toMatchInlineSnapshot('"API error"');
-    expect(contextMock.client.put).toHaveBeenCalledTimes(1);
-    expect(contextMock.client.put).toHaveBeenCalledWith('/customers', [
+    expect(contextMock.client.v3.put).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.put).toHaveBeenCalledWith('/customers', [
       parameters
     ]);
   });
@@ -125,6 +125,6 @@ describe('[bigcommerce-api-client] updateCustomer', () => {
     await expect(
       updateCustomer(contextMock, parameters as UpdateCustomerParameters)
     ).rejects.toMatchInlineSnapshot('"API error"');
-    expect(contextMock.client.put).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.put).toHaveBeenCalledTimes(1);
   });
 });

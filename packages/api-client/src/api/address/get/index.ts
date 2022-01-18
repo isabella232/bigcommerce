@@ -6,7 +6,7 @@ export const getCustomerAddress: Endpoints['getCustomerAddress'] = async (
   context,
   params
 ) => {
-  return await context.client.get(
+  return await context.client.v3.get(
     queryString.stringifyUrl(
       {
         url: BigCommerceEndpoints.addresses,
