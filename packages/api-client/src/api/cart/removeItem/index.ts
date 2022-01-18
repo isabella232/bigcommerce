@@ -16,7 +16,7 @@ export const removeCartItem: Endpoints['removeCartItem'] = async (
     })
   );
 
-  prepareEmbeddedCheckoutUrlOnResponse(context, response);
+  await prepareEmbeddedCheckoutUrlOnResponse(context, response);
 
   return response;
 };

@@ -17,7 +17,7 @@ export const addCartItems: Endpoints['addCartItems'] = async (
     data
   );
 
-  prepareEmbeddedCheckoutUrlOnResponse(context, response);
+  await prepareEmbeddedCheckoutUrlOnResponse(context, response);
 
   return response;
 };

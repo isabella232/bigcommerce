@@ -14,7 +14,7 @@ export const updateCart: Endpoints['updateCart'] = async (context, params) => {
     data
   );
 
-  prepareEmbeddedCheckoutUrlOnResponse(context, response);
+  await prepareEmbeddedCheckoutUrlOnResponse(context, response);
 
   return response;
 };
