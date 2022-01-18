@@ -80,7 +80,10 @@
       </div>
       <SfLoader :class="{ loading }" :loading="loading">
         <div class="products" v-if="!loading">
-          <div v-if="Array.isArray(products) && !products.length" class="no-products-message">
+          <div
+            v-if="Array.isArray(products) && !products.length"
+            class="no-products-message"
+          >
             {{
               $t('We have no available products matching your search criteria.')
             }}
@@ -204,9 +207,22 @@
                 <SfButton
                   class="sf-button--text desktop-only"
                   style="margin: 0 0 1rem auto; display: block"
-                  @click="() => {}"
+                  @click="
+                    isInWishlist({ product })
+                      ? removeItemFromWishlist({
+                          product: wishlistHelpers.getItem(wishlist, {
+                            productId: product.id,
+                            variantId: getDefaultVariant(product).id,
+                          }),
+                        })
+                      : addItemToWishlist({ product })
+                  "
                 >
-                  {{ $t('Save for later') }}
+                  {{
+                    !isInWishlist({ product })
+                      ? $t('Add to Wishlist')
+                      : $t('Remove from Wishlist')
+                  }}
                 </SfButton>
               </template>
             </SfProductCardHorizontal>
