@@ -16,7 +16,7 @@ const mergeCarts = async (
 ) => {
   const { data } = await context.$bigcommerce.api.addCartItems({
     cartId: userCart.id,
-    include: `line_items.physical_items.options,line_items.digital_items.options,${CartIncludeEnum.RedirectUrls}` as CartIncludeEnum,
+    include: Object.values(CartIncludeEnum).join(',') as CartIncludeEnum,
     data: {
       line_items: [
         ...guestCart.line_items.digital_items,
@@ -47,7 +47,7 @@ export const loadCustomerCart = async (
     try {
       const { data: userCart } = await context.$bigcommerce.api.getCart({
         id: customerCartField.value as string,
-        include: `line_items.physical_items.options,line_items.digital_items.options,${CartIncludeEnum.RedirectUrls}` as CartIncludeEnum
+        include: Object.values(CartIncludeEnum).join(',') as CartIncludeEnum
       });
 
       if (

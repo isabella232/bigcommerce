@@ -29,8 +29,8 @@ export default {
     SfButton
   },
   setup(props, context) {
-    const { clear: clearCart, cart, load: loadCart } = useCart();
-    const { logout, load: loadUser } = useUser();
+    const { cart, load: loadCart, setCart } = useCart();
+    const { logout, load: loadUser, user } = useUser();
     const isSuccess = ref(false);
     const isError = ref(false);
     const onError = () => {
@@ -41,16 +41,23 @@ export default {
     onMounted(async () => {
       if (process.client) {
         await loadUser();
-        await loadCart();
+
         const embeddedCheckoutUrl =
           cart.value?.redirect_urls?.embedded_checkout_url;
         embedCheckout({
           containerId: 'checkout',
           url: embeddedCheckoutUrl,
           onComplete: async () => {
-            await clearCart();
             document.querySelector('#checkout').innerHTML = '';
             isSuccess.value = true;
+
+            setCart(undefined);
+            await loadCart({
+              customQuery: {
+                customerId: user?.id,
+                forceNew: true
+              }
+            });
           },
           onError,
           onFrameError: onError,

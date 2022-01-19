@@ -26,7 +26,7 @@ export const assignCart = async (
 
   const { data: cart } = await context.$bigcommerce.api.updateCart({
     id: cartId,
-    include: `line_items.physical_items.options,line_items.digital_items.options,${CartIncludeEnum.RedirectUrls}` as CartIncludeEnum,
+    include: Object.values(CartIncludeEnum).join(',') as CartIncludeEnum,
     data: {
       customer_id: currentUser.id
     }
