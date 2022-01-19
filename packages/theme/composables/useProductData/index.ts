@@ -128,6 +128,14 @@ export const useProductData = () => {
     });
   };
 
+  const getDefaultVariant = (product: Product) => {
+    if (!product) {
+      return undefined;
+    }
+
+    return product.variants.find((variant) => !variant.purchasing_disabled);
+  };
+
   const getVariant = (product: Product, variantId: number): ProductVariant => {
     return product?.variants?.find((variant) => variant.id === variantId);
   };
@@ -193,6 +201,7 @@ export const useProductData = () => {
     getActiveVariant,
     getPagination,
     getVariant,
-    getInventory
+    getInventory,
+    getDefaultVariant
   };
 };

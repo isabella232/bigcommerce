@@ -103,11 +103,11 @@
               :title="productData.getName(product)"
               :image="productData.getCoverImage(product)"
               :regular-price="
-                $n(productData.getPrice(product).regular, 'currency')
+                $n(productData.getPrice(product, productData.getDefaultVariant(product)).regular, 'currency')
               "
               :special-price="
-                productData.getPrice(product).special &&
-                $n(productData.getPrice(product).special, 'currency')
+                productData.getPrice(product, productData.getDefaultVariant(product)).special &&
+                $n(productData.getPrice(product, productData.getDefaultVariant(product)).special, 'currency')
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
