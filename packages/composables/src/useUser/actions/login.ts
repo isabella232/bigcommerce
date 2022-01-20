@@ -13,8 +13,8 @@ export const logIn = async (
   params: UseUserLoginParams
 ): Promise<User> => {
   const { username, password } = params;
-  const channelId =
-    context?.$bigcommerce?.config?.app?.$config?.theme?.channelIds[0] || 1;
+  const channelIdsConfig = context?.$bigcommerce?.config?.app?.$config?.theme?.channelIds;
+  const channelId = Array.isArray(channelIdsConfig) && channelIdsConfig.length ? channelIdsConfig[0] : 1;
   const loginResponse = await context.$bigcommerce.api.loginCustomer({
     email: username,
     password,
