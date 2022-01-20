@@ -1,22 +1,11 @@
-import {
-  Context,
-  useUserOrderFactory,
-  UseUserOrderFactoryParams
-} from '@vue-storefront/core';
-import type { Order } from '@vue-storefront/bigcommerce-api';
+import { useUserOrderFactory } from '@vue-storefront/core';
 import type {
-  useUserOrderSearchParams as SearchParams
-} from '../types';
+  GetOrdersParameters as SearchParams
+} from '@vue-storefront/bigcommerce-api';
+import { params } from './params';
+import { OrderResults } from '..';
 
-const params: UseUserOrderFactoryParams<Order, SearchParams> = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  searchOrders: async (context: Context, params) => {
-    console.log('Mocked: searchOrders');
-
-    return {
-      results: []
-    };
-  }
-};
-
-export const useUserOrder = useUserOrderFactory<Order, SearchParams>(params);
+export const useUserOrder = useUserOrderFactory<
+  OrderResults,
+  SearchParams
+>(params);

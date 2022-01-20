@@ -190,5 +190,9 @@ export default {
   'Add to cart': 'Add to cart',
   'Out of stock': 'Out of stock',
   'The selected quantity exceeds available stock.':
-    'The selected quantity exceeds available stock.'
+    'The selected quantity exceeds available stock.',
+  'Order ID': 'Order ID',
+  'Payment date': 'Payment date',
+  Amount: 'Amount',
+  Status: 'Status'
 };

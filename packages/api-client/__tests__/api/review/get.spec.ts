@@ -17,10 +17,12 @@ describe('[BigCommerce-api-client] get product review', () => {
     await getProductReview(contextMock, props);
 
     // Then
-    expect(contextMock.client.v3.get).toHaveBeenCalledWith(`/catalog/products/${expectedProductId}/reviews/${expectedReviewId}`);
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
+      `/catalog/products/${expectedProductId}/reviews/${expectedReviewId}`
+    );
   });
 
-  it('should thorw an error when productId were not provided', async () => {
+  it('should throw an error when productId were not provided', async () => {
     contextMock.client.v3.get = jest.fn();
     const props = {
       productId: undefined,
@@ -30,7 +32,7 @@ describe('[BigCommerce-api-client] get product review', () => {
     expect(getProductReview(contextMock, props)).rejects.toMatch('error');
   });
 
-  it('should thorw an error when reviewId were not provided', () => {
+  it('should throw an error when reviewId were not provided', () => {
     contextMock.client.v3.get = jest.fn();
     const props = {
       productId: 1,

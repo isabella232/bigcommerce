@@ -1,5 +1,8 @@
 import { stringifyUrl } from 'query-string';
-import { GetProductReviewCollectionProps, GetProductReviewCollectionQuery } from '../../../src/types';
+import {
+  GetProductReviewCollectionProps,
+  GetProductReviewCollectionQuery
+} from '../../../src/types';
 import { getProductReviewCollection } from '../../../src/api/review';
 import { contextMock } from '../../../__mocks__/context.mock';
 
@@ -16,7 +19,9 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     await getProductReviewCollection(contextMock, props);
 
     // Then
-    expect(contextMock.client.v3.get).toHaveBeenCalledWith(`/catalog/products/${expectedProductId}/reviews`);
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
+      `/catalog/products/${expectedProductId}/reviews`
+    );
   });
 
   it('should use query params (if setted) for get client function', async () => {
@@ -39,10 +44,15 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     await getProductReviewCollection(contextMock, props, query);
 
     // Then
-    expect(contextMock.client.v3.get).toHaveBeenCalledWith(stringifyUrl({ url: `/catalog/products/${expectedProductId}/reviews`, query }));
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
+      stringifyUrl({
+        url: `/catalog/products/${expectedProductId}/reviews`,
+        query
+      })
+    );
   });
 
-  it('should thorw an error when productId were not provided', async () => {
+  it('should throw an error when productId were not provided', async () => {
     contextMock.client.v3.get = jest.fn();
     const props = {
       productId: undefined
@@ -51,7 +61,9 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     try {
       await getProductReviewCollection(contextMock, props);
     } catch (error) {
-      expect(error.message).toBe(`ProductId with value: ${props.productId} is not valid. Use number value.`);
+      expect(error.message).toBe(
+        `ProductId with value: ${props.productId} is not valid. Use number value.`
+      );
     } finally {
       expect(contextMock.client.v3.get).toHaveBeenCalledTimes(0);
     }

@@ -18,13 +18,15 @@ describe('[BigCommerce-api-client] get product reviews', () => {
 
     // Then
     const mockCallArgs = contextMock.client.v3.post.mock.calls[0];
-    expect(mockCallArgs[0]).toBe(`/catalog/products/${expectedProductId}/reviews`);
+    expect(mockCallArgs[0]).toBe(
+      `/catalog/products/${expectedProductId}/reviews`
+    );
     expect('date_reviewed' in mockCallArgs[1]).toBe(true);
     expect('title' in mockCallArgs[1]).toBe(true);
     expect('productId' in mockCallArgs[1]).toBe(false);
   });
 
-  it('should thorw an error when any of productId was not provided', async () => {
+  it('should throw an error when any of productId was not provided', async () => {
     contextMock.client.v3.post = jest.fn(() => Promise.resolve());
     const props: CreateProductReviewProps = {
       title: 'New review',
@@ -41,7 +43,7 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     }
   });
 
-  it('should thorw an error when title was not provided', async () => {
+  it('should throw an error when title was not provided', async () => {
     contextMock.client.v3.post = jest.fn(() => Promise.resolve());
     const props: CreateProductReviewProps = {
       title: undefined,
@@ -59,7 +61,9 @@ describe('[BigCommerce-api-client] get product reviews', () => {
   });
 
   it('should pass with all props', async () => {
-    contextMock.client.v3.post = jest.fn(() => Promise.resolve(reviewResponseMock));
+    contextMock.client.v3.post = jest.fn(() =>
+      Promise.resolve(reviewResponseMock)
+    );
     const expectedProductId = 1;
     const props: CreateProductReviewProps = {
       title: 'New review',
