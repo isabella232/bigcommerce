@@ -41,7 +41,6 @@ export default {
     onMounted(async () => {
       if (process.client) {
         await loadUser();
-
         const embeddedCheckoutUrl =
           cart.value?.redirect_urls?.embedded_checkout_url;
         embedCheckout({
