@@ -10,10 +10,6 @@ export type Facet = TODO;
 
 export type FacetSearchCriteria = TODO;
 
-export type Order = TODO;
-
-export type OrderItem = TODO;
-
 export type PasswordResetResult = TODO;
 
 export type ProductFilter = TODO;

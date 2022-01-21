@@ -6,7 +6,7 @@ import { prepareEmbeddedCheckoutUrlOnResponse } from '../../../helpers/cartRespo
 export const createCart: Endpoints['createCart'] = async (context, params) => {
   const { data, include } = params;
 
-  const response: CreateCartResponse = await context.client.post(
+  const response: CreateCartResponse = await context.client.v3.post(
     queryString.stringifyUrl({
       url: BigCommerceEndpoints.cart(),
       query: include ? { include } : undefined
@@ -14,7 +14,7 @@ export const createCart: Endpoints['createCart'] = async (context, params) => {
     data
   );
 
-  prepareEmbeddedCheckoutUrlOnResponse(context, response);
+  await prepareEmbeddedCheckoutUrlOnResponse(context, response);
 
   return response;
 };

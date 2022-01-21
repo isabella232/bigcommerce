@@ -11,8 +11,7 @@ export async function validateCredentials(
 ): Promise<ValidateCredentialsResponse> {
   checkParameters(params);
 
-  const { client } = context;
-  return await client.post<
+  return await context.client.v3.post<
     ValidateCredentialsResponse,
     ValidateCredentialsParameter
   >(endpointPaths.validateCredentials, params);

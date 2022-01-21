@@ -18,7 +18,7 @@ describe('[bigcommerce-api-client] getProducts', () => {
       ]
     };
 
-    contextMock.client.get = (url: string) => {
+    contextMock.client.v3.get = (url: string) => {
       const [path, query] = url.split('?');
 
       expect(path).toEqual(BigCommerceEndpoints.products);
@@ -33,7 +33,7 @@ describe('[bigcommerce-api-client] getProducts', () => {
   });
 
   it('images should always be requested', async () => {
-    contextMock.client.get = (url: string) => {
+    contextMock.client.v3.get = (url: string) => {
       const [, query] = url.split('?');
       const params = queryString.parse(query);
 
@@ -46,7 +46,7 @@ describe('[bigcommerce-api-client] getProducts', () => {
   it('should apply additional include params', async () => {
     const expectedParam = 'videos,images';
 
-    contextMock.client.get = (url: string) => {
+    contextMock.client.v3.get = (url: string) => {
       const [, query] = url.split('?');
       const params = queryString.parse(query);
 
@@ -59,7 +59,7 @@ describe('[bigcommerce-api-client] getProducts', () => {
   it('images should not be duplicated in the include param', async () => {
     const expectedParam = 'images,videos';
 
-    contextMock.client.get = (url: string) => {
+    contextMock.client.v3.get = (url: string) => {
       const [, query] = url.split('?');
       const params = queryString.parse(query);
 

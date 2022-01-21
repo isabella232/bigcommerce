@@ -161,7 +161,7 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
   it('generates SSO login link', async () => {
     const customerId = 2;
     const dateCreated = 123456;
-
+    const channelId = '1';
     const uniqueId = 123;
     const uuidv4 = jest.fn().mockReturnValue(uniqueId);
     jest.doMock('uuid', () => ({ v4: uuidv4 }));
@@ -216,6 +216,7 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
         iss: clientId,
         jti: uniqueId,
         operation: 'customer_login',
+        channel_id: channelId,
         store_hash: storeHash,
         redirectUrl
       },

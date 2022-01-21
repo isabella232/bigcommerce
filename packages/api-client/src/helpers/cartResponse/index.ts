@@ -1,10 +1,11 @@
 import queryString from 'query-string';
+import { getEmbeddedCheckoutUrl } from '../../api/cart/getEmbeddedCheckoutUrl';
 import { BigcommerceIntegrationContext, CartResponse } from '../../types';
 
-export function prepareEmbeddedCheckoutUrlOnResponse(
+export async function prepareEmbeddedCheckoutUrlOnResponse(
   context: BigcommerceIntegrationContext,
   response: CartResponse
-): void {
+): Promise<void> {
   const {
     config: {
       sdkSettings: { guestToken }
@@ -21,6 +22,8 @@ export function prepareEmbeddedCheckoutUrlOnResponse(
       }
     });
 
-    response.data.redirect_urls.embedded_checkout_url = embeddedCheckoutUrl;
+    response.data.redirect_urls.embedded_checkout_url = await getEmbeddedCheckoutUrl(context, {
+      defaultEmbeddedCheckoutUrl: embeddedCheckoutUrl
+    });
   }
 }

@@ -17,7 +17,7 @@ export const removeItem: UseCartFactoryParams<
   const { data } = await context.$bigcommerce.api.removeCartItem({
     cartId: currentCart.id,
     itemId: product.id,
-    include: `line_items.physical_items.options,line_items.digital_items.options,${CartIncludeEnum.RedirectUrls}` as CartIncludeEnum
+    include: Object.values(CartIncludeEnum).join(',') as CartIncludeEnum
   });
 
   if (!data) {

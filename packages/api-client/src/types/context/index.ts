@@ -43,10 +43,18 @@ export type ContextualizedEndpoints = {
 };
 
 /**
+ * All available API clients.
+ */
+export type BigCommerceClients = {
+  v2: NodeBigcommerceSDK,
+  v3: NodeBigcommerceSDK
+}
+
+/**
  * Runtime integration context, which includes API client instance, settings, and endpoints that will be passed via middleware server.
  **/
 export type BigcommerceIntegrationContext = IntegrationContext<
-  NodeBigcommerceSDK,
+  BigCommerceClients,
   MiddlewareSettingsConfig,
   ContextualizedEndpoints
 >;

@@ -11,7 +11,7 @@ describe('[bigcommerce-api-client] create address', () => {
 
   const expectedResponse = [mockedAddress];
 
-  contextMock.client.post = (url: string, params: CreateAddressParameters) => {
+  contextMock.client.v3.post = (url: string, params: CreateAddressParameters) => {
     expect(url).toEqual(BigCommerceEndpoints.addresses);
 
     expect([newAddress]).toEqual(params);
@@ -30,7 +30,7 @@ describe('[bigcommerce-api-client] create address', () => {
     });
 
     const expectedError = '[Error: Required parameters missing.]';
-    contextMock.client.post = jest.fn(() => Promise.reject(expectedError));
+    contextMock.client.v3.post = jest.fn(() => Promise.reject(expectedError));
 
     await expect(
       createCustomerAddress(

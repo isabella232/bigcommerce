@@ -1,14 +1,15 @@
-const jwt = require('jsonwebtoken');
-import { COOKIE_KEY_CUSTOMER_DATA } from '../../../helpers/consts';
 import queryString from 'query-string';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
-import { Endpoints } from '../../../types';
+import { getCustomerIdParameter } from '../../../helpers/auth';
+import { COOKIE_KEY_CUSTOMER_DATA } from '../../../helpers/consts';
+import { BigcommerceIntegrationContext, Endpoints } from '../../../types';
+const jwt = require('jsonwebtoken');
 
 export const getCustomers: Endpoints['getCustomers'] = async (
   context,
   params
 ) => {
-  return await context.client.get(
+  return await context.client.v3.get(
     queryString.stringifyUrl(
       {
         url: BigCommerceEndpoints.customers,
@@ -24,7 +25,12 @@ export const getCustomers: Endpoints['getCustomers'] = async (
   );
 };
 
-function getCustomerIdParameter(context, params) {
+export function getCustomerId(
+  context: BigcommerceIntegrationContext,
+  params?: {
+    'id:in'?: Array<number>;
+  }
+): number {
   const {
     config: {
       sdkSettings: { devtoolsAppSecret }
@@ -34,14 +40,21 @@ function getCustomerIdParameter(context, params) {
 
   try {
     if (req.cookies[COOKIE_KEY_CUSTOMER_DATA]) {
-      const decodedToken = jwt.verify(req.cookies[COOKIE_KEY_CUSTOMER_DATA], devtoolsAppSecret);
+      const decodedToken = jwt.verify(
+        req.cookies[COOKIE_KEY_CUSTOMER_DATA],
+        devtoolsAppSecret
+      );
       if (decodedToken?.customer?.id) {
-        return [decodedToken.customer.id];
+        return decodedToken.customer.id;
       }
     }
 
-    if ('id:in' in params) {
-      return params['id:in'];
+    if (
+      'id:in' in params &&
+      Array.isArray(params['id:in']) &&
+      params['id:in'].length
+    ) {
+      return params['id:in'][0];
     }
   } catch (error) {
     throw new Error(error);

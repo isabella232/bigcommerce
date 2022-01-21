@@ -8,7 +8,7 @@ describe('[bigcommerce-api-client] get an address', () => {
     'id:in': [123]
   };
 
-  contextMock.client.delete = (url: string) => {
+  contextMock.client.v3.delete = (url: string) => {
     expect(url).toEqual(`${BigCommerceEndpoints.addresses}?id%3Ain=123`);
     return null;
   };

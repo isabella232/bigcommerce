@@ -4,7 +4,7 @@ import { contextMock } from '../../../__mocks__/context.mock';
 
 describe('[BigCommerce-api-client] create wishlist', () => {
   beforeEach(() => {
-    contextMock.client.post = jest.fn(() => Promise.resolve());
+    contextMock.client.v3.post = jest.fn(() => Promise.resolve());
   });
 
   it('should call api with expected props', async () => {
@@ -21,7 +21,7 @@ describe('[BigCommerce-api-client] create wishlist', () => {
     await createWishlist(contextMock, props);
 
     // Then
-    expect(contextMock.client.post).toHaveBeenLastCalledWith(expectedEndpoint, props);
+    expect(contextMock.client.v3.post).toHaveBeenLastCalledWith(expectedEndpoint, props);
   });
 
   it('should throw an error when name was not provided', async () => {
@@ -38,7 +38,7 @@ describe('[BigCommerce-api-client] create wishlist', () => {
       const expectedErrorMessage = `Name with value: ${props.name} is not valid. Use string value.`;
       expect(error.message).toBe(expectedErrorMessage);
     } finally {
-      expect(contextMock.client.post).toHaveBeenCalledTimes(0);
+      expect(contextMock.client.v3.post).toHaveBeenCalledTimes(0);
     }
   });
 
@@ -56,7 +56,7 @@ describe('[BigCommerce-api-client] create wishlist', () => {
       const expectedErrorMessage = `Customer ID with value: ${props.customer_id} is not valid. Use number value.`;
       expect(error.message).toBe(expectedErrorMessage);
     } finally {
-      expect(contextMock.client.post).toHaveBeenCalledTimes(0);
+      expect(contextMock.client.v3.post).toHaveBeenCalledTimes(0);
     }
   });
 });

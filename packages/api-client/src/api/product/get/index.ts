@@ -14,7 +14,7 @@ export const getProducts: Endpoints['getProducts'] = async (
 
   params.is_visible = params.is_visible ?? true;
 
-  return await context.client.get(
+  return await context.client.v3.get(
     queryString.stringifyUrl(
       {
         url: BigCommerceEndpoints.products,

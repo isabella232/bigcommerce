@@ -196,6 +196,10 @@ export default {
   'The selected quantity exceeds available stock.':
     'Die ausgewählte Menge übersteigt den verfügbaren Vorrat.',
   'Add to cart': 'In den Einkaufswagen',
-  'Home': 'Startseite',
-  'My Account': 'Mein Konto'
+  Home: 'Startseite',
+  'My Account': 'Mein Konto',
+  'Order ID': 'Auftragsnummer',
+  'Payment date': 'Zahlungsdatum',
+  Amount: 'Menge',
+  Status: 'Status'
 };

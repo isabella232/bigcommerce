@@ -7,6 +7,8 @@ export * from './useWishlist';
 export * from './useGuestWishlist';
 export * from './useReview';
 export * from './useUser';
+export * from './useUserOrder';
+export * from './useUserOrderProducts';
 export * from './useCategory';
 
 /**
@@ -75,5 +77,3 @@ export type UseBillingAddParams = TODO;
 export type UseSearchParams = TODO;
 
 export type UseShippingAddParams = TODO;
-
-export type useUserOrderSearchParams = TODO;

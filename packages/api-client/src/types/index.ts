@@ -6,6 +6,7 @@ export * from './customers';
 export * from './endpoints';
 export * from './meta';
 export * from './nodeBigcommerceSDK';
+export * from './order';
 export * from './product';
 export * from './review';
 export * from './shared';

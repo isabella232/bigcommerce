@@ -1,8 +1,7 @@
 export default {
   itemsPerPage: [10],
   userCartKey: 'Cart ID',
-  channelIds: [871856],
-  storePreviewToken: 'tnbAR8COKx',
+  channelIds: [921432],
   home: {
     bannerA: {
       link: '/',

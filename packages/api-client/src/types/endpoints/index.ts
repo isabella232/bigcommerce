@@ -59,6 +59,12 @@ import {
   UpdateAddressParameters,
   UpdateAddressResponse
 } from '../address';
+import {
+  GetOrderProductsParameters,
+  GetOrdersParameters,
+  OrderProductResponse,
+  OrdersResponse
+} from '../order';
 
 /**
  * Definition of all API-client methods available in context.
@@ -119,9 +125,7 @@ export interface Endpoints {
    * Logs out the currently logged-in customer by deleting the authentication related cookies.
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
    */
-  logoutCustomer(
-    context: BigcommerceIntegrationContext,
-  ): void;
+  logoutCustomer(context: BigcommerceIntegrationContext): void;
 
   /**
    * Updates form field values on the Customer or Customer Address objects.
@@ -288,7 +292,7 @@ export interface Endpoints {
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
    * @param {RemoveWishlistItemParams} params An object which contains necessary properties for delete a wishlist item.
    */
-   removeWishlistItem(
+  removeWishlistItem(
     context: BigcommerceIntegrationContext,
     params: RemoveWishlistItemParams
   ): Promise<null>;
@@ -298,7 +302,7 @@ export interface Endpoints {
    * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
    * @param {number} wishlistId A wishlist id.
    */
-   deleteWishlist(
+  deleteWishlist(
     context: BigcommerceIntegrationContext,
     wishlistId: number
   ): Promise<null>;
@@ -352,4 +356,24 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     params: UpdateAddressParameters
   ): Promise<UpdateAddressResponse>;
+
+  /**
+   * Returns a list of orders. Optional filter parameters can be passed in.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {GetOrdersParameters} params (Optional) An object which contains optional properties for retrieving a list of orders.
+   */
+  getOrders(
+    context: BigcommerceIntegrationContext,
+    params?: GetOrdersParameters
+  ): Promise<OrdersResponse>;
+
+  /**
+   * Returns the products of the given order. Optional filter parameters can be passed in.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {OrderProductResponse} params (Optional) An object which contains optional properties for retrieving the products of an order.
+   */
+  getOrderProducts(
+    context: BigcommerceIntegrationContext,
+    params?: GetOrderProductsParameters
+  ): Promise<OrderProductResponse>;
 }

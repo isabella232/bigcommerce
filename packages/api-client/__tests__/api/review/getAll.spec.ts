@@ -1,16 +1,15 @@
 import { stringifyUrl } from 'query-string';
-import { GetProductReviewCollectionProps, GetProductReviewCollectionQuery } from '../../../src/types';
+import {
+  GetProductReviewCollectionProps,
+  GetProductReviewCollectionQuery
+} from '../../../src/types';
 import { getProductReviewCollection } from '../../../src/api/review';
 import { contextMock } from '../../../__mocks__/context.mock';
 
 describe('[BigCommerce-api-client] get product reviews', () => {
   it('should validate the executed props for get client function', async () => {
     // Given
-    const getMock = jest.fn();
-    contextMock.client = {
-      get: getMock
-    };
-    contextMock.client.get.mockImplementationOnce(() => Promise.resolve());
+    contextMock.client.v3.get = jest.fn();
     const expectedProductId = 1;
     const props: GetProductReviewCollectionProps = {
       productId: expectedProductId
@@ -20,16 +19,14 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     await getProductReviewCollection(contextMock, props);
 
     // Then
-    expect(getMock).toHaveBeenCalledWith(`/catalog/products/${expectedProductId}/reviews`);
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
+      `/catalog/products/${expectedProductId}/reviews`
+    );
   });
 
   it('should use query params (if setted) for get client function', async () => {
     // Given
-    const getMock = jest.fn();
-    contextMock.client = {
-      get: getMock
-    };
-    contextMock.client.get.mockImplementationOnce(() => Promise.resolve());
+    contextMock.client.v3.get = jest.fn();
     const expectedProductId = 1;
     const props: GetProductReviewCollectionProps = {
       productId: expectedProductId
@@ -47,15 +44,16 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     await getProductReviewCollection(contextMock, props, query);
 
     // Then
-    expect(getMock).toHaveBeenCalledWith(stringifyUrl({ url: `/catalog/products/${expectedProductId}/reviews`, query }));
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
+      stringifyUrl({
+        url: `/catalog/products/${expectedProductId}/reviews`,
+        query
+      })
+    );
   });
 
-  it('should thorw an error when productId were not provided', async () => {
-    const getMock = jest.fn();
-    contextMock.client = {
-      get: getMock
-    };
-
+  it('should throw an error when productId were not provided', async () => {
+    contextMock.client.v3.get = jest.fn();
     const props = {
       productId: undefined
     };
@@ -63,19 +61,17 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     try {
       await getProductReviewCollection(contextMock, props);
     } catch (error) {
-      expect(error.message).toBe(`ProductId with value: ${props.productId} is not valid. Use number value.`);
+      expect(error.message).toBe(
+        `ProductId with value: ${props.productId} is not valid. Use number value.`
+      );
     } finally {
-      expect(getMock).toHaveBeenCalledTimes(0);
+      expect(contextMock.client.v3.get).toHaveBeenCalledTimes(0);
     }
   });
 
   it('should pass with valid props', async () => {
     // Given
-    const getMock = jest.fn();
-    contextMock.client = {
-      get: getMock
-    };
-    contextMock.client.get.mockImplementationOnce(() => Promise.resolve());
+    contextMock.client.v3.get = jest.fn();
     const expectedProductId = 1;
     const props: GetProductReviewCollectionProps = {
       productId: expectedProductId
@@ -85,7 +81,7 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     await getProductReviewCollection(contextMock, props);
 
     // Then
-    expect(contextMock.client.get).toHaveBeenCalledTimes(1);
-    expect(getMock).toHaveReturned();
+    expect(contextMock.client.v3.get).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.get).toHaveReturned();
   });
 });

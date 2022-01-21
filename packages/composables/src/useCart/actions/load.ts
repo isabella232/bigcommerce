@@ -23,15 +23,21 @@ export const load: UseCartFactoryParams<
   const channelId =
     Array.isArray(channelIds) && channelIds.length ? channelIds[0] : null;
 
-  if (!cartId) {
+  const createCart = async () => {
     const { data } = await context.$bigcommerce.api.createCart({
       data: {
         customer_id: customQuery?.customerId,
         line_items: [],
         ...(channelId ? { channel_id: channelId } : {})
       },
-      include: CartIncludeEnum.RedirectUrls
+      include: Object.values(CartIncludeEnum).join(',')
     });
+
+    return data;
+  };
+
+  if (!cartId || customQuery?.forceNew) {
+    const data = await createCart();
 
     // after the cart is cleared by a logged-in user the new cart should be assigned to the user
     if (customQuery?.customerId) {
@@ -56,10 +62,21 @@ export const load: UseCartFactoryParams<
     return data;
   }
 
-  const { data } = await context.$bigcommerce.api.getCart({
-    id: cartId,
-    include: `line_items.physical_items.options,line_items.digital_items.options,${CartIncludeEnum.RedirectUrls}`
-  });
+  try {
+    const { data } = await context.$bigcommerce.api.getCart({
+      id: cartId,
+      include: `${CartIncludeEnum.LineItemsDigitalItemsOptions},${CartIncludeEnum.LineItemsPhysicalItemsOptions},${CartIncludeEnum.RedirectUrls}`
+    });
 
-  return data;
+    return data;
+  } catch (_) {
+    const data = await createCart();
+
+    cookies.set(COOKIE_KEY_CART_ID, data.id, {
+      path: '/',
+      maxAge: BIGCOMMERCE_COOKIE_MAXAGE
+    });
+
+    return data;
+  }
 };

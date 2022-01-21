@@ -15,8 +15,7 @@ module.exports = {
           accessToken: process.env.BIGCOMMERCE_API_ACCESS_TOKEN,
           guestToken: process.env.BIGCOMMERCE_STORE_GUEST_TOKEN,
           responseType: 'json',
-          headers: { 'Accept-Encoding': '*' },
-          apiVersion: 'v3'
+          headers: { 'Accept-Encoding': '*' }
         },
         jwtTokenExpirationDays: 2,
         secureCookies: process.env.NODE_ENV === 'production'

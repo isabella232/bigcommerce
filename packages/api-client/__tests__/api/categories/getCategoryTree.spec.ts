@@ -8,12 +8,12 @@ describe('[bigcommerce-api-client] getCategoryTree', () => {
   });
 
   it('get category tree', async () => {
-    contextMock.client.get = jest.fn(() =>
+    contextMock.client.v3.get = jest.fn(() =>
       Promise.resolve(categoryTreeMockData)
     );
     const response = await getCategoryTree(contextMock);
-    expect(contextMock.client.get).toHaveBeenCalledTimes(1);
-    expect(contextMock.client.get).toHaveBeenCalledWith(
+    expect(contextMock.client.v3.get).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
       '/catalog/categories/tree'
     );
 

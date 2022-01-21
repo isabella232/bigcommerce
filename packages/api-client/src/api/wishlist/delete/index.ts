@@ -11,7 +11,7 @@ export const deleteWishlist: Endpoints['deleteWishlist'] = async (
     throw Error(`Wishlist id with value: ${wishlistId} is not valid. Use number value.`);
   }
 
-  return await context.client.delete(
+  return await context.client.v3.delete(
     BigCommerceEndpoints.wishlists(wishlistId)
   );
 };

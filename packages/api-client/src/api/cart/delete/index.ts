@@ -5,7 +5,7 @@ import { Endpoints } from '../../../types';
 export const deleteCart: Endpoints['deleteCart'] = async (context, params) => {
   const { id } = params;
 
-  return await context.client.delete(
+  return await context.client.v3.delete(
     queryString.stringifyUrl({
       url: BigCommerceEndpoints.cart(id)
     })

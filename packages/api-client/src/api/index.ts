@@ -6,6 +6,7 @@ import { getProducts } from './product';
 import * as review from './review';
 import * as wishlist from './wishlist';
 import * as address from './address';
+import * as order from './order';
 
 const endpoints = {
   ...cart,
@@ -14,7 +15,8 @@ const endpoints = {
   getProducts,
   ...review,
   ...wishlist,
-  ...address
+  ...address,
+  ...order
 };
 
 export default endpoints as Endpoints;

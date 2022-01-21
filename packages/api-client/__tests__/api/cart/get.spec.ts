@@ -16,7 +16,7 @@ describe('[bigcommerce-api-client] getCart', () => {
       meta: {}
     };
 
-    contextMock.client.get = (url: string) => {
+    contextMock.client.v3.get = (url: string) => {
       expect(url).toEqual(BigCommerceEndpoints.cart(params.id));
 
       return expectedResponse;
@@ -30,7 +30,7 @@ describe('[bigcommerce-api-client] getCart', () => {
   it('should pass include as a query parameter', async () => {
     const include = CartIncludeEnum.LineItemsPhysicalItemsOptions;
 
-    contextMock.client.get = (url: string) => {
+    contextMock.client.v3.get = (url: string) => {
       const [, query] = url.split('?');
 
       const params = queryString.parse(query);

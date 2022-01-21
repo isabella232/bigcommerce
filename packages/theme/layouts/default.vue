@@ -146,4 +146,7 @@ h4 {
     display: none;
   }
 }
+.sf-button .sf-tabs__chevron {
+  display: var(--tabs-chevron-display);
+}
 </style>

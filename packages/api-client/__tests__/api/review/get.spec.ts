@@ -5,11 +5,7 @@ import { contextMock } from '../../../__mocks__/context.mock';
 describe('[BigCommerce-api-client] get product review', () => {
   it('should validate the executed props for get client function', async () => {
     // Given
-    const getMock = jest.fn();
-    contextMock.client = {
-      get: getMock
-    };
-    contextMock.client.get.mockImplementationOnce(() => Promise.resolve());
+    contextMock.client.v3.get = jest.fn();
     const expectedProductId = 1;
     const expectedReviewId = 2;
     const props: GetProductReviewProps = {
@@ -21,15 +17,13 @@ describe('[BigCommerce-api-client] get product review', () => {
     await getProductReview(contextMock, props);
 
     // Then
-    expect(getMock).toHaveBeenCalledWith(`/catalog/products/${expectedProductId}/reviews/${expectedReviewId}`);
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
+      `/catalog/products/${expectedProductId}/reviews/${expectedReviewId}`
+    );
   });
 
-  it('should thorw an error when productId were not provided', async () => {
-    const getMock = jest.fn();
-    contextMock.client = {
-      get: getMock
-    };
-
+  it('should throw an error when productId were not provided', async () => {
+    contextMock.client.v3.get = jest.fn();
     const props = {
       productId: undefined,
       reviewId: 1
@@ -38,12 +32,8 @@ describe('[BigCommerce-api-client] get product review', () => {
     expect(getProductReview(contextMock, props)).rejects.toMatch('error');
   });
 
-  it('should thorw an error when reviewId were not provided', () => {
-    const getMock = jest.fn();
-    contextMock.client = {
-      get: getMock
-    };
-
+  it('should throw an error when reviewId were not provided', () => {
+    contextMock.client.v3.get = jest.fn();
     const props = {
       productId: 1,
       reviewId: undefined
@@ -54,11 +44,7 @@ describe('[BigCommerce-api-client] get product review', () => {
 
   it('should pass with valid props', async () => {
     // Given
-    const getMock = jest.fn();
-    contextMock.client = {
-      get: getMock
-    };
-    contextMock.client.get.mockImplementationOnce(() => Promise.resolve());
+    contextMock.client.v3.get = jest.fn();
     const expectedProductId = 1;
     const expectedReviewId = 2;
     const props: GetProductReviewProps = {
@@ -70,7 +56,7 @@ describe('[BigCommerce-api-client] get product review', () => {
     await getProductReview(contextMock, props);
 
     // Then
-    expect(contextMock.client.get).toHaveBeenCalledTimes(1);
-    expect(getMock).toHaveReturned();
+    expect(contextMock.client.v3.get).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.get).toHaveReturned();
   });
 });

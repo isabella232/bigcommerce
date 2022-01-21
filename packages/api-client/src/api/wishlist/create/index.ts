@@ -19,7 +19,7 @@ export const createWishlist: Endpoints['createWishlist'] = async (
     throw Error(`Customer ID with value: ${customerId} is not valid. Use number value.`);
   }
 
-  return context.client.post<WishlistResponse, CreateWishlistProps>(
+  return context.client.v3.post<WishlistResponse, CreateWishlistProps>(
     BigCommerceEndpoints.wishlists(),
     props
   );

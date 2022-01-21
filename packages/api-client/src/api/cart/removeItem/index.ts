@@ -9,14 +9,14 @@ export const removeCartItem: Endpoints['removeCartItem'] = async (
 ) => {
   const { cartId, itemId, include } = params;
 
-  const response: AddLineItemsResponse = await context.client.delete(
+  const response: AddLineItemsResponse = await context.client.v3.delete(
     queryString.stringifyUrl({
       url: BigCommerceEndpoints.cartItems(cartId, itemId),
       query: include ? { include } : undefined
     })
   );
 
-  prepareEmbeddedCheckoutUrlOnResponse(context, response);
+  await prepareEmbeddedCheckoutUrlOnResponse(context, response);
 
   return response;
 };

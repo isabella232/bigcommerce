@@ -8,7 +8,7 @@ describe('[BigCommerce-api-client] add wishlist items', () => {
   const itemId = 1;
 
   beforeEach(() => {
-    contextMock.client.delete = jest.fn(() => Promise.resolve());
+    contextMock.client.v3.delete = jest.fn(() => Promise.resolve());
   });
 
   it('should call api with expected props', async () => {
@@ -19,7 +19,7 @@ describe('[BigCommerce-api-client] add wishlist items', () => {
     await removeWishlistItem(contextMock, params);
 
     // Then
-    expect(contextMock.client.delete)
+    expect(contextMock.client.v3.delete)
       .toHaveBeenLastCalledWith(BigCommerceEndpoints.wishlistItems(wishlistId, itemId));
   });
 
@@ -32,7 +32,7 @@ describe('[BigCommerce-api-client] add wishlist items', () => {
       const expectedErrorMessage = `Wishlist id with value: ${params.wishlistId} is not valid. Use number value.`;
       expect(error.message).toBe(expectedErrorMessage);
     } finally {
-      expect(contextMock.client.delete).toHaveBeenCalledTimes(0);
+      expect(contextMock.client.v3.delete).toHaveBeenCalledTimes(0);
     }
   });
 
@@ -45,7 +45,7 @@ describe('[BigCommerce-api-client] add wishlist items', () => {
       const expectedErrorMessage = `Item id with value: ${params.itemId} is not valid. Use number value.`;
       expect(error.message).toBe(expectedErrorMessage);
     } finally {
-      expect(contextMock.client.delete).toHaveBeenCalledTimes(0);
+      expect(contextMock.client.v3.delete).toHaveBeenCalledTimes(0);
     }
   });
 });

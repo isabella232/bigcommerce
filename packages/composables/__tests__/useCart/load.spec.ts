@@ -40,7 +40,7 @@ describe('[BigCommerce - composables] useCart load', () => {
     expect(createCartMock).toHaveBeenCalledTimes(1);
     expect(createCartMock).toHaveBeenCalledWith({
       data: { customer_id: customerId, line_items: [] },
-      include: CartIncludeEnum.RedirectUrls
+      include: Object.values(CartIncludeEnum).join(',')
     });
     expect(updateCustomerFormFieldsMock).toHaveBeenCalledTimes(1);
   });

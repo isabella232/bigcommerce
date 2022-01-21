@@ -13,7 +13,7 @@ export const getCategory: Endpoints['getCategory'] = async (
 ) => {
   const { category } = BigCommerceEndpoints;
   const categoryId = params?.categoryId;
-  const response = await context.client.get<CategoryResponse>(
+  const response = await context.client.v3.get<CategoryResponse>(
     category(categoryId)
   );
   return response;

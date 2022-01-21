@@ -25,7 +25,7 @@ describe('[bigcommerce-api-client] update a cart item', () => {
       meta: {}
     };
 
-    contextMock.client.put = jest.fn(
+    contextMock.client.v3.put = jest.fn(
       (url: string, data: Record<string, unknown>) => {
         expect(url).toEqual(
           BigCommerceEndpoints.cartItems(mockedCart.id, product.id)
@@ -39,14 +39,14 @@ describe('[bigcommerce-api-client] update a cart item', () => {
 
     const response = await updateCartItem(contextMock, params);
 
-    expect(contextMock.client.put).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.put).toHaveBeenCalledTimes(1);
     expect(response).toBe(expectedResponse);
   });
 
   it('should pass include as a query parameter', async () => {
     const include = CartIncludeEnum.LineItemsPhysicalItemsOptions;
 
-    contextMock.client.put = jest.fn((url: string) => {
+    contextMock.client.v3.put = jest.fn((url: string) => {
       const [, query] = url.split('?');
 
       const params = queryString.parse(query);
@@ -56,6 +56,6 @@ describe('[bigcommerce-api-client] update a cart item', () => {
 
     await updateCartItem(contextMock, { ...params, include });
 
-    expect(contextMock.client.put).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.put).toHaveBeenCalledTimes(1);
   });
 });

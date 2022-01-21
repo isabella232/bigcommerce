@@ -21,8 +21,8 @@
       <div class="sidebar desktop-only">
         <LazyHydrate when-idle>
           <SfLoader
-            :class="{ 'loading--categories': loading }"
-            :loading="loading"
+            :class="{ 'loading--categories': isProductsLoading }"
+            :loading="isProductsLoading"
           >
             <SfAccordion
               v-e2e="'categories-accordion'"
@@ -78,9 +78,12 @@
           </SfLoader>
         </LazyHydrate>
       </div>
-      <SfLoader :class="{ loading }" :loading="loading">
-        <div class="products" v-if="!loading">
-          <div v-if="Array.isArray(products) && !products.length" class="no-products-message">
+      <SfLoader :class="{ loading: isProductsLoading }" :loading="isProductsLoading">
+        <div class="products" v-if="!isProductsLoading">
+          <div
+            v-if="Array.isArray(products) && !products.length"
+            class="no-products-message"
+          >
             {{
               $t('We have no available products matching your search criteria.')
             }}
@@ -100,11 +103,26 @@
               :title="productData.getName(product)"
               :image="productData.getCoverImage(product)"
               :regular-price="
-                $n(productData.getPrice(product).regular, 'currency')
+                $n(
+                  productData.getPrice(
+                    product,
+                    productData.getDefaultVariant(product)
+                  ).regular,
+                  'currency'
+                )
               "
               :special-price="
-                productData.getPrice(product).special &&
-                $n(productData.getPrice(product).special, 'currency')
+                productData.getPrice(
+                  product,
+                  productData.getDefaultVariant(product)
+                ).special &&
+                  $n(
+                    productData.getPrice(
+                      product,
+                      productData.getDefaultVariant(product)
+                    ).special,
+                    'currency'
+                  )
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
@@ -126,8 +144,8 @@
                   ? removeItemFromWishlist({
                       product: wishlistHelpers.getItem(wishlist, {
                         productId: product.id,
-                        variantId: getDefaultVariant(product).id,
-                      }),
+                        variantId: getDefaultVariant(product).id
+                      })
                     })
                   : addItemToWishlist({ product })
               "
@@ -154,7 +172,7 @@
               "
               :special-price="
                 productData.getPrice(product).special &&
-                $n(productData.getPrice(product).special, 'currency')
+                  $n(productData.getPrice(product).special, 'currency')
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
@@ -167,8 +185,8 @@
                   ? removeItemFromWishlist({
                       product: wishlistHelpers.getItem(wishlist, {
                         productId: product.id,
-                        variantId: getDefaultVariant(product).id,
-                      }),
+                        variantId: getDefaultVariant(product).id
+                      })
                     })
                   : addItemToWishlist({ product })
               "
@@ -177,7 +195,7 @@
                   product,
                   quantity: Number(
                     productsQuantity[productData.getId(product)] || 1
-                  ),
+                  )
                 })
               "
               :link="
@@ -204,9 +222,22 @@
                 <SfButton
                   class="sf-button--text desktop-only"
                   style="margin: 0 0 1rem auto; display: block"
-                  @click="() => {}"
+                  @click="
+                    isInWishlist({ product })
+                      ? removeItemFromWishlist({
+                          product: wishlistHelpers.getItem(wishlist, {
+                            productId: product.id,
+                            variantId: getDefaultVariant(product).id
+                          })
+                        })
+                      : addItemToWishlist({ product })
+                  "
                 >
-                  {{ $t('Save for later') }}
+                  {{
+                    !isInWishlist({ product })
+                      ? $t('Add to Wishlist')
+                      : $t('Remove from Wishlist')
+                  }}
                 </SfButton>
               </template>
             </SfProductCardHorizontal>
@@ -214,8 +245,8 @@
 
           <LazyHydrate on-interaction>
             <SfPagination
-              v-if="!loading"
-              class="products__pagination desktop-only"
+              v-if="!isProductsLoading"
+              class="products__pagination"
               v-show="pagination.totalPages > 1"
               :current="pagination.currentPage"
               :total="pagination.totalPages"
@@ -317,7 +348,6 @@ export default defineComponent({
     const {
       products: productsResult,
       search,
-      loading,
       error
     } = useProduct('category-products');
     const { categories, search: categorySearch } = useCategory('category-tree');
@@ -369,10 +399,18 @@ export default defineComponent({
       return breadcrumbs;
     });
 
+    const isProductsLoading = ref(false);
+
     onSSR(async () => {
+      isProductsLoading.value = true;
       await categorySearch({});
-      const { categorySlug, page, itemsPerPage, sort, direction } =
-        th.getFacetsFromURL();
+      const {
+        categorySlug,
+        page,
+        itemsPerPage,
+        sort,
+        direction
+      } = th.getFacetsFromURL();
       const category = getCategoryBySlug(categorySlug, categories.value);
       const isSortValid =
         [
@@ -398,6 +436,7 @@ export default defineComponent({
 
       await search(productSearchParams);
       if (error?.value?.search) context.root.$nuxt.error({ statusCode: 404 });
+      isProductsLoading.value = false;
     });
 
     return {
@@ -405,7 +444,7 @@ export default defineComponent({
       th,
       products,
       categoryTree,
-      loading,
+      isProductsLoading,
       pagination,
       activeCategory,
       breadcrumbs,
@@ -550,6 +589,11 @@ export default defineComponent({
     transition: all 0.2s ease;
     transition-delay: calc(0.1s * var(--index));
   }
+  &__pagination {
+    margin: var(--spacer-lg) 0 0 0;
+    justify-content: center;
+  }
+
   @include for-desktop {
     &__grid {
       margin: var(--spacer-sm) 0 0 var(--spacer-sm);

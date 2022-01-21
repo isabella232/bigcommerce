@@ -1,65 +1,45 @@
 import type { Order, OrderItem } from '@vue-storefront/bigcommerce-api';
+import { OrderResults } from '~/../composables/lib';
 import useUiHelpers from '../useUiHelpers';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const useOrderData = () => {
+export const useOrderData = () => {
   const { formatDateString } = useUiHelpers();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function getDate(order: Order): string {
-    // todo: will handle on another ticket
-    // order && order.date_created ? formatDateString(order.date_created, 'DD.MM.YYYY HH:ss') : '';
-    return formatDateString('10/12/2021 10:45', 'DD.MM.YYYY HH:ss');
+    return order?.date_created ? formatDateString(order.date_created, 'DD.MM.YYYY HH:ss') : '';
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function getId(order: Order): string {
-    return '1';
+    return order?.id?.toString() ?? '';
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function getStatus(order: Order): string {
-    return '';
+    return order?.status ?? '';
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function getPrice(order: Order): number | null {
-    return 0;
+    return order?.total_inc_tax ? parseFloat(order?.total_inc_tax) : null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function getItems(order: Order): OrderItem[] {
-    return [];
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function getItemSku(item: OrderItem): string {
-    return '';
+    return item?.sku ?? '';
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function getItemName(item: OrderItem): string {
-    return '';
+    return item?.name ?? '';
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function getItemQty(item: OrderItem): number {
-    return 0;
+    return item?.quantity ?? 0;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function getItemPrice(item: OrderItem): number {
-    return 0;
+    return item?.price_inc_tax ? parseFloat(item.price_inc_tax) : 0;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function getFormattedPrice(price: number): string {
-    return '';
-  }
-
-  // eslint-disable-next-line
-  function getOrdersTotal(orders: any): number {
-    return 1;
+  function getOrdersTotal(orders: OrderResults): number {
+    return orders?.total ?? 0;
   }
 
   return {
@@ -67,12 +47,10 @@ const useOrderData = () => {
     getId,
     getStatus,
     getPrice,
-    getItems,
     getItemSku,
     getItemName,
     getItemQty,
     getItemPrice,
-    getFormattedPrice,
     getOrdersTotal
   };
 };
