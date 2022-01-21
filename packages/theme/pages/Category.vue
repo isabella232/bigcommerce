@@ -21,8 +21,8 @@
       <div class="sidebar desktop-only">
         <LazyHydrate when-idle>
           <SfLoader
-            :class="{ 'loading--categories': loading }"
-            :loading="loading"
+            :class="{ 'loading--categories': isProductsLoading }"
+            :loading="isProductsLoading"
           >
             <SfAccordion
               v-e2e="'categories-accordion'"
@@ -78,8 +78,8 @@
           </SfLoader>
         </LazyHydrate>
       </div>
-      <SfLoader :class="{ loading }" :loading="loading">
-        <div class="products" v-if="!loading">
+      <SfLoader :class="{ loading: isProductsLoading }" :loading="isProductsLoading">
+        <div class="products" v-if="!isProductsLoading">
           <div
             v-if="Array.isArray(products) && !products.length"
             class="no-products-message"
@@ -245,7 +245,7 @@
 
           <LazyHydrate on-interaction>
             <SfPagination
-              v-if="!loading"
+              v-if="!isProductsLoading"
               class="products__pagination"
               v-show="pagination.totalPages > 1"
               :current="pagination.currentPage"
@@ -345,9 +345,11 @@ export default defineComponent({
       removeItem: removeItemFromWishlist
     } = useWishlist();
     const wishlistHelpers = useWishlistData();
-    const { products: productsResult, search, loading, error } = useProduct(
-      'category-products'
-    );
+    const {
+      products: productsResult,
+      search,
+      error
+    } = useProduct('category-products');
     const { categories, search: categorySearch } = useCategory('category-tree');
     const productData = useProductData();
     const { categorySlug } = th.getFacetsFromURL();
@@ -397,7 +399,10 @@ export default defineComponent({
       return breadcrumbs;
     });
 
+    const isProductsLoading = ref(false);
+
     onSSR(async () => {
+      isProductsLoading.value = true;
       await categorySearch({});
       const {
         categorySlug,
@@ -431,6 +436,7 @@ export default defineComponent({
 
       await search(productSearchParams);
       if (error?.value?.search) context.root.$nuxt.error({ statusCode: 404 });
+      isProductsLoading.value = false;
     });
 
     return {
@@ -438,7 +444,7 @@ export default defineComponent({
       th,
       products,
       categoryTree,
-      loading,
+      isProductsLoading,
       pagination,
       activeCategory,
       breadcrumbs,
