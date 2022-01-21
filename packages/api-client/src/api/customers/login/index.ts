@@ -157,6 +157,7 @@ export function generateSsoLoginLink(
     jti: uuidv4(),
     operation: 'customer_login',
     store_hash: storeHash,
+    channel_id: process.env.BIGCOMMERCE_CHANNEL_ID || '1',
     customer_id: `${customerId}`,
     ...(redirectUrl ? { redirectUrl } : {})
   };
