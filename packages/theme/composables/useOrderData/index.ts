@@ -1,5 +1,5 @@
 import type { Order, OrderItem } from '@vue-storefront/bigcommerce-api';
-import { OrderResults } from '~/../composables/lib';
+import { OrderResults } from '@vue-storefront/bigcommerce';
 import useUiHelpers from '../useUiHelpers';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
