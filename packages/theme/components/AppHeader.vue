@@ -40,13 +40,9 @@
               :icon="wishlistTotalItems ? 'heart_fill' : 'heart'"
               size="1.25rem"
             />
-            <SfBadge
-              v-if="wishlistTotalItems"
-              class="sf-badge--number badge"
-            >
+            <SfBadge v-if="wishlistTotalItems" class="sf-badge--number badge">
               {{ wishlistTotalItems }}
-            </SfBadge
-            >
+            </SfBadge>
           </SfButton>
           <SfButton
             class="sf-button--pure sf-header__action"
@@ -54,11 +50,9 @@
             @click="toggleCartSidebar"
           >
             <SfIcon class="sf-header__icon" icon="empty_cart" size="1.25rem" />
-            <SfBadge
-              v-if="cartTotalItems"
-              class="sf-badge--number badge"
-              >{{ cartTotalItems }}</SfBadge
-            >
+            <SfBadge v-if="cartTotalItems" class="sf-badge--number badge">{{
+              cartTotalItems
+            }}</SfBadge>
           </SfButton>
         </div>
       </template>
@@ -231,7 +225,10 @@ export default defineComponent({
         term.value = paramValue.target.value;
       }
 
-      await search({ 'keyword:like:': term.value });
+      await search({
+        'keyword:like:': term.value,
+        include: 'options,variants'
+      });
       const categories = buildSearchCategories(
         products.value.data,
         categoryResults.value

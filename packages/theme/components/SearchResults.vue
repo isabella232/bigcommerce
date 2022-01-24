@@ -73,20 +73,7 @@
                   "
                   :isInWishlist="isInWishlist({ product })"
                   :isAddedToCart="isInCart({ product })"
-                  @click:wishlist="
-                    isInWishlist({
-                      product,
-                    })
-                      ? removeItemFromWishlist({
-                          product: wishlistHelpers.getItem(wishlist, {
-                            productId: product.id,
-                            variantId: getDefaultVariant(product).id,
-                          }),
-                        })
-                      : addItemToWishlist({
-                          product,
-                        })
-                  "
+                  @click:wishlist="handleWishlistClick(product)"
                   @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
                 />
               </div>
@@ -113,20 +100,7 @@
                 "
                 :isInWishlist="isInWishlist({ product })"
                 :isAddedToCart="isInCart({ product })"
-                @click:wishlist="
-                  isInWishlist({
-                    product,
-                  })
-                    ? removeItemFromWishlist({
-                        product: wishlistHelpers.getItem(wishlist, {
-                          productId: product.id,
-                          variantId: getDefaultVariant(product).id,
-                        }),
-                      })
-                    : addItemToWishlist({
-                        product,
-                      })
-                "
+                @click:wishlist="handleWishlistClick(product)"
                 @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
               />
             </div>
@@ -213,11 +187,27 @@ export default {
     const { isAuthenticated } = useUser();
     const { addItem: addItemToCart, isInCart } = useCart();
     const {
+      wishlist,
       addItem: addItemToWishlist,
       isInWishlist,
       removeItem: removeItemFromWishlist
     } = isAuthenticated.value ? useWishlist() : useGuestWishlist();
     const wishlistHelpers = useWishlistData();
+
+    const handleWishlistClick = (product) => {
+      isInWishlist({
+        product
+      })
+        ? removeItemFromWishlist({
+          product: wishlistHelpers.getItem(wishlist.value, {
+            productId: product.id,
+            variantId: getDefaultVariant(product)?.id
+          })
+        })
+        : addItemToWishlist({
+          product
+        });
+    };
 
     watch(
       () => props.visible,
@@ -234,16 +224,13 @@ export default {
 
     return {
       addItemToCart,
-      addItemToWishlist,
       categories,
-      getDefaultVariant,
       isInCart,
       isInWishlist,
       isSearchOpen,
       productData,
       products,
-      removeItemFromWishlist,
-      wishlistHelpers
+      handleWishlistClick
     };
   }
 };
