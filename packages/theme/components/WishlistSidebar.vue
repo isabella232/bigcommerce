@@ -72,10 +72,13 @@
                   <SfButton
                     @click="moveToCart(wishlistItem)"
                     :disabled="cartLoading"
-                    class="sf-button--text"
+                    class="sf-button--text desktop-only"
                   >
                     {{ $t('Add to cart') }}
                   </SfButton>
+                </template>
+                <template #more-actions>
+                  <div></div>
                 </template>
               </SfCollectedProduct>
             </transition-group>
