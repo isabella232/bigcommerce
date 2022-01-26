@@ -15,7 +15,6 @@ export async function prepareEmbeddedCheckoutUrlOnResponse(
     response?.data?.redirect_urls?.embedded_checkout_url;
 
   if (embeddedCheckoutUrl) {
-    embeddedCheckoutUrl = `/${embeddedCheckoutUrl.split('/').pop()}`;
     embeddedCheckoutUrl = queryString.stringifyUrl({
       url: embeddedCheckoutUrl,
       query: {
