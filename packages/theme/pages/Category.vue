@@ -78,7 +78,10 @@
           </SfLoader>
         </LazyHydrate>
       </div>
-      <SfLoader :class="{ loading: isProductsLoading }" :loading="isProductsLoading">
+      <SfLoader
+        :class="{ loading: isProductsLoading }"
+        :loading="isProductsLoading"
+      >
         <div class="products" v-if="!isProductsLoading">
           <div
             v-if="Array.isArray(products) && !products.length"
@@ -104,25 +107,19 @@
               :image="productData.getCoverImage(product)"
               :regular-price="
                 $n(
-                  productData.getPrice(
-                    product,
-                    productData.getDefaultVariant(product)
-                  ).regular,
+                  productData.getPrice(product, getDefaultVariant(product))
+                    .regular,
                   'currency'
                 )
               "
               :special-price="
-                productData.getPrice(
-                  product,
-                  productData.getDefaultVariant(product)
-                ).special &&
-                  $n(
-                    productData.getPrice(
-                      product,
-                      productData.getDefaultVariant(product)
-                    ).special,
-                    'currency'
-                  )
+                productData.getPrice(product, getDefaultVariant(product))
+                  .special &&
+                $n(
+                  productData.getPrice(product, getDefaultVariant(product))
+                    .special,
+                  'currency'
+                )
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
@@ -144,8 +141,8 @@
                   ? removeItemFromWishlist({
                       product: wishlistHelpers.getItem(wishlist, {
                         productId: product.id,
-                        variantId: getDefaultVariant(product).id
-                      })
+                        variantId: getDefaultVariant(product).id,
+                      }),
                     })
                   : addItemToWishlist({ product })
               "
@@ -172,7 +169,7 @@
               "
               :special-price="
                 productData.getPrice(product).special &&
-                  $n(productData.getPrice(product).special, 'currency')
+                $n(productData.getPrice(product).special, 'currency')
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
@@ -185,8 +182,8 @@
                   ? removeItemFromWishlist({
                       product: wishlistHelpers.getItem(wishlist, {
                         productId: product.id,
-                        variantId: getDefaultVariant(product).id
-                      })
+                        variantId: getDefaultVariant(product).id,
+                      }),
                     })
                   : addItemToWishlist({ product })
               "
@@ -195,7 +192,7 @@
                   product,
                   quantity: Number(
                     productsQuantity[productData.getId(product)] || 1
-                  )
+                  ),
                 })
               "
               :link="
@@ -227,8 +224,8 @@
                       ? removeItemFromWishlist({
                           product: wishlistHelpers.getItem(wishlist, {
                             productId: product.id,
-                            variantId: getDefaultVariant(product).id
-                          })
+                            variantId: getDefaultVariant(product).id,
+                          }),
                         })
                       : addItemToWishlist({ product })
                   "
@@ -404,13 +401,8 @@ export default defineComponent({
     onSSR(async () => {
       isProductsLoading.value = true;
       await categorySearch({});
-      const {
-        categorySlug,
-        page,
-        itemsPerPage,
-        sort,
-        direction
-      } = th.getFacetsFromURL();
+      const { categorySlug, page, itemsPerPage, sort, direction } =
+        th.getFacetsFromURL();
       const category = getCategoryBySlug(categorySlug, categories.value);
       const isSortValid =
         [
