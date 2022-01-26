@@ -218,7 +218,7 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
         operation: 'customer_login',
         channel_id: channelId,
         store_hash: storeHash,
-        redirectUrl
+        redirect_to: redirectUrl
       },
       secret,
       {
