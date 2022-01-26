@@ -18,10 +18,11 @@ describe('[bigcommerce-composables] useUser logOut', () => {
 
   it('deletes customer data and creates a new cart', async () => {
     contextMock.cart.setCart = jest.fn();
+
     const expectedNewCart = {};
     (loadCart as jest.Mock).mockReturnValue(expectedNewCart);
     contextMock.$bigcommerce.api.logoutCustomer = jest.fn();
-
+    contextMock.$bigcommerce.config.app.$cookies.remove = jest.fn();
     await logOut(contextMock);
 
     expect(contextMock.$bigcommerce.api.logoutCustomer).toBeCalledTimes(1);
