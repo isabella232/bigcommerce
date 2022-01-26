@@ -1,10 +1,9 @@
 import { BigcommerceIntegrationContext, COOKIE_KEY_CUSTOMER_DATA } from '../..';
 const jwt = require('jsonwebtoken');
 
-export const getCustomerIdParameter = (
-  context: BigcommerceIntegrationContext,
-  params: Record<string, any>
-): number[] => {
+export const getCustomerIdFromCookie = (
+  context: BigcommerceIntegrationContext
+): number => {
   const {
     config: {
       sdkSettings: { devtoolsAppSecret }
@@ -19,12 +18,8 @@ export const getCustomerIdParameter = (
         devtoolsAppSecret
       );
       if (decodedToken?.customer?.id) {
-        return [decodedToken.customer.id];
+        return decodedToken.customer.id;
       }
-    }
-
-    if (params && 'id:in' in params) {
-      return params['id:in'];
     }
   } catch (error) {
     throw new Error(error);

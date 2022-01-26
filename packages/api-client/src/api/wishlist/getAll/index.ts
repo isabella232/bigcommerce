@@ -1,5 +1,5 @@
 import { stringifyUrl } from 'query-string';
-import { getCustomerIdParameter } from '../../../helpers/auth';
+import { getCustomerIdFromCookie } from '../../../helpers/auth';
 import {
   WishlistCollectionResponse,
   Endpoints
@@ -10,7 +10,7 @@ export const getAllWishlists: Endpoints['getAllWishlists'] = async (
   context,
   query?
 ) => {
-  const customerId = getCustomerIdParameter(context, query)[0];
+  const customerId = getCustomerIdFromCookie(context);
 
   if (!customerId || typeof customerId !== 'number') {
     throw Error(`Customer ID with value: ${customerId} is not valid.`);

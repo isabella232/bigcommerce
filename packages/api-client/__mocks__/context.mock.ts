@@ -26,7 +26,8 @@ export const contextMock = {
     currency: '',
     lang: '',
     mediaHost: '',
-    jwtTokenExpirationDays: 2
+    jwtTokenExpirationDays: 2,
+    devtoolsAppSecret: 'secret123'
   },
   res: {} as any,
   req: {} as any

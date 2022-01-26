@@ -1,5 +1,6 @@
 import queryString from 'query-string';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
+import { getCustomerIdFromCookie } from '../../../helpers/auth';
 import { Endpoints } from '../../../types';
 
 export const getCustomerAddress: Endpoints['getCustomerAddress'] = async (
@@ -10,7 +11,10 @@ export const getCustomerAddress: Endpoints['getCustomerAddress'] = async (
     queryString.stringifyUrl(
       {
         url: BigCommerceEndpoints.addresses,
-        query: params
+        query: {
+          ...params,
+          'customer_id:in': [getCustomerIdFromCookie(context)]
+        }
       },
       {
         arrayFormat: 'comma'

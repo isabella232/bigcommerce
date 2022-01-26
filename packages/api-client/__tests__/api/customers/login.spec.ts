@@ -252,19 +252,12 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
       getLoggedInCustomerToken
     }));
     const module = await import('../../../src/api/customers/login');
-
-    const devtoolsAppSecret = 'secret123';
-    contextMock.config.sdkSettings = {
-      ...contextMock.config.sdkSettings,
-      devtoolsAppSecret
-    };
-
     const customerToken = await module.verifyLogin(contextMock);
 
     expect(getLoggedInCustomerToken).toBeCalledTimes(1);
     expect(getLoggedInCustomerToken).toBeCalledWith(contextMock);
     expect(jwtVerify).toBeCalledTimes(1);
-    expect(jwtVerify).toBeCalledWith(loggedInCustomerToken, devtoolsAppSecret);
+    expect(jwtVerify).toBeCalledWith(loggedInCustomerToken, contextMock.config.sdkSettings.devtoolsAppSecret);
     expect(customerToken).toBe(loggedInCustomerToken);
   });
 
@@ -281,12 +274,6 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
       getLoggedInCustomerToken
     }));
     const module = await import('../../../src/api/customers/login');
-
-    const devtoolsAppSecret = 'secret123';
-    contextMock.config.sdkSettings = {
-      ...contextMock.config.sdkSettings,
-      devtoolsAppSecret
-    };
 
     await expect(module.verifyLogin(contextMock)).rejects.toMatchInlineSnapshot(
       `[Error: ${MESSAGE_INVALID_TOKEN_RESPONSE}]`

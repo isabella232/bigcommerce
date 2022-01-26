@@ -16,11 +16,6 @@ describe('[bigcommerce-api-client] getCustomer', () => {
     const customerId = 3;
     const decodedToken = { customer: { id: customerId } };
     jwtVerifyMock.mockReturnValue(decodedToken);
-    const devtoolsAppSecret = 'secret123';
-    contextMock.config.sdkSettings = {
-      ...contextMock.config.sdkSettings,
-      devtoolsAppSecret
-    };
     contextMock.req = {
       cookies: {
         [COOKIE_KEY_CUSTOMER_DATA]: token
@@ -46,7 +41,9 @@ describe('[bigcommerce-api-client] getCustomer', () => {
         }
       }
     };
-    contextMock.client.v3.get = jest.fn(() => Promise.resolve(expectedResponse));
+    contextMock.client.v3.get = jest.fn(() =>
+      Promise.resolve(expectedResponse)
+    );
 
     const response: GetCustomersResponse = await getCustomers(
       contextMock,
@@ -58,12 +55,12 @@ describe('[bigcommerce-api-client] getCustomer', () => {
       `/customers?id%3Ain=${customerId}`
     );
     expect(jwtVerifyMock).toHaveBeenCalledTimes(1);
-    expect(jwtVerifyMock).toHaveBeenCalledWith(token, devtoolsAppSecret);
+    expect(jwtVerifyMock).toHaveBeenCalledWith(token, contextMock.config.sdkSettings.devtoolsAppSecret);
     expect(response).toBe(expectedResponse);
     expect(response.data[0].id).toBe(customerId);
   });
 
-  it('gets customer by providing customer ID in parameter', async () => {
+  it('should throw an error if customer data cookie is not sent', async () => {
     const customerId = 3;
     contextMock.req = {
       cookies: {}
@@ -90,20 +87,16 @@ describe('[bigcommerce-api-client] getCustomer', () => {
         }
       }
     };
-    contextMock.client.v3.get = jest.fn(() => Promise.resolve(expectedResponse));
-
-    const response: GetCustomersResponse = await getCustomers(
-      contextMock,
-      params
+    contextMock.client.v3.get = jest.fn(() =>
+      Promise.resolve(expectedResponse)
     );
 
-    expect(contextMock.client.v3.get).toHaveBeenCalledTimes(1);
-    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
-      `/customers?id%3Ain=${customerId}`
-    );
+    await expect(
+      getCustomers(contextMock, params)
+    ).rejects.toMatchInlineSnapshot('[Error: No customer ID]');
+
+    expect(contextMock.client.v3.get).toHaveBeenCalledTimes(0);
     expect(jwtVerifyMock).toHaveBeenCalledTimes(0);
-    expect(response).toBe(expectedResponse);
-    expect(response.data[0].id).toBe(customerId);
   });
 
   it('throws error if the JWT token of customer data in cookie is invalid', async () => {
@@ -112,11 +105,6 @@ describe('[bigcommerce-api-client] getCustomer', () => {
     jwtVerifyMock.mockImplementation(() => {
       throw new Error(jwtError);
     });
-    const devtoolsAppSecret = 'secret123';
-    contextMock.config.sdkSettings = {
-      ...contextMock.config.sdkSettings,
-      devtoolsAppSecret
-    };
     contextMock.req = {
       cookies: {
         [COOKIE_KEY_CUSTOMER_DATA]: token

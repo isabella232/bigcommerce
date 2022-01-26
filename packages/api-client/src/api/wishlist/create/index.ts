@@ -3,7 +3,7 @@ import {
   CreateWishlistParams,
   Endpoints
 } from '../../../types';
-import { getCustomerIdParameter } from '../../../helpers/auth';
+import { getCustomerIdFromCookie } from '../../../helpers/auth';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
 
 export const createWishlist: Endpoints['createWishlist'] = async (
@@ -11,7 +11,7 @@ export const createWishlist: Endpoints['createWishlist'] = async (
   props
 ) => {
   const { name } = props;
-  const customerId = getCustomerIdParameter(context, props)[0];
+  const customerId = getCustomerIdFromCookie(context);
 
   if (!name || typeof name !== 'string') {
     throw Error(`Name with value: ${name} is not valid. Use string value.`);

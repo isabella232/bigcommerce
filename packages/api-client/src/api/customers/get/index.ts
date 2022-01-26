@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
-import { getCustomerIdParameter } from '../../../helpers/auth';
+import { getCustomerIdFromCookie } from '../../../helpers/auth';
 import { COOKIE_KEY_CUSTOMER_DATA } from '../../../helpers/consts';
 import { BigcommerceIntegrationContext, Endpoints } from '../../../types';
 const jwt = require('jsonwebtoken');
@@ -15,7 +15,7 @@ export const getCustomers: Endpoints['getCustomers'] = async (
         url: BigCommerceEndpoints.customers,
         query: {
           ...params,
-          'id:in': getCustomerIdParameter(context, params)
+          'id:in': [getCustomerIdFromCookie(context)]
         }
       },
       {

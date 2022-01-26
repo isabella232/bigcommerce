@@ -7,10 +7,6 @@ import jwt from 'jsonwebtoken';
 const customerId = 1;
 const jwtVerifyMock = jest.spyOn(jwt, 'verify');
 jwtVerifyMock.mockReturnValue({ customer: { id: customerId } });
-contextMock.config.sdkSettings = {
-  ...contextMock.config.sdkSettings,
-  devtoolsAppSecret: 'secret'
-};
 contextMock.req = {
   cookies: {
     [COOKIE_KEY_CUSTOMER_DATA]: 'token'
