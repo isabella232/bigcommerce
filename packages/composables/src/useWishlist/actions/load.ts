@@ -18,8 +18,9 @@ export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['lo
     return guestLoad(context, {});
   }
 
-  const { data: customerWishlists } = await context.$bigcommerce.api
-    .getAllWishlists({ customer_id: customerId });
+  const {
+    data: customerWishlists
+  } = await context.$bigcommerce.api.getAllWishlists();
 
   let wishlist: Wishlist;
 
@@ -31,7 +32,6 @@ export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['lo
   } else {
     const { data: newWishlist } = await context.$bigcommerce.api
       .createWishlist({
-        customer_id: customerId,
         name: context.$bigcommerce.config.app
           .$config.theme.wishlist.name,
         is_public: context.$bigcommerce.config.app

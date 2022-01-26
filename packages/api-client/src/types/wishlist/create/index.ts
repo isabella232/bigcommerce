@@ -7,12 +7,6 @@ type CreateWishlistItem = Omit<WishlistItem, 'id'>;
  */
 export interface CreateWishlistProps {
   /**
-   * The customer id.
-   * @type {number}
-   * @memberof CreateWishlistProps
-   */
-  customer_id: number;
-  /**
    * Whether the wishlist is available to the public.
    * @type {boolean}
    * @memberof CreateWishlistProps
@@ -30,5 +24,17 @@ export interface CreateWishlistProps {
    * @memberof CreateWishlistProps
    */
   items?: CreateWishlistItem[];
+}
+
+/**
+ * Necessary props for calling the create wishlist API.
+ */
+export interface CreateWishlistParams extends CreateWishlistProps {
+  /**
+   * The customer id.
+   * @type {number}
+   * @memberof CreateWishlistProps
+   */
+  customer_id: number;
 }
 

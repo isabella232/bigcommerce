@@ -3,11 +3,6 @@
  */
 export type GetAllWishlistQuery = {
   /**
-   * All wishlists relating to the customer.
-   */
-  customer_id?: number,
-
-  /**
    * The page number of results per page. 1 is the default and starts from record 0.
    */
   page?: number,

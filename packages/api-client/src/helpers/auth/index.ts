@@ -23,7 +23,7 @@ export const getCustomerIdParameter = (
       }
     }
 
-    if ('id:in' in params) {
+    if (params && 'id:in' in params) {
       return params['id:in'];
     }
   } catch (error) {

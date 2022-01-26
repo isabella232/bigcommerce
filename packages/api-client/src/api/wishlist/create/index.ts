@@ -1,26 +1,31 @@
 import {
   WishlistResponse,
-  CreateWishlistProps,
+  CreateWishlistParams,
   Endpoints
 } from '../../../types';
+import { getCustomerIdParameter } from '../../../helpers/auth';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
 
 export const createWishlist: Endpoints['createWishlist'] = async (
   context,
   props
 ) => {
-  const { name, customer_id: customerId } = props;
+  const { name } = props;
+  const customerId = getCustomerIdParameter(context, props)[0];
 
   if (!name || typeof name !== 'string') {
     throw Error(`Name with value: ${name} is not valid. Use string value.`);
   }
 
   if (!customerId || typeof customerId !== 'number') {
-    throw Error(`Customer ID with value: ${customerId} is not valid. Use number value.`);
+    throw Error(`Customer ID with value: ${customerId} is not valid.`);
   }
 
-  return context.client.v3.post<WishlistResponse, CreateWishlistProps>(
+  return context.client.v3.post<WishlistResponse, CreateWishlistParams>(
     BigCommerceEndpoints.wishlists(),
-    props
+    {
+      ...props,
+      customer_id: customerId
+    }
   );
 };

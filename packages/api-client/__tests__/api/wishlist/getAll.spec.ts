@@ -1,12 +1,27 @@
 import { GetAllWishlistQuery } from '../../../src/types';
 import { getAllWishlists } from '../../../src/api/wishlist';
 import { contextMock } from '../../../__mocks__/context.mock';
+import { COOKIE_KEY_CUSTOMER_DATA } from '../../../src/helpers/consts';
+import jwt from 'jsonwebtoken';
 
-describe('[BigCommerce-api-client] get product reviews', () => {
+const customerId = 1;
+const jwtVerifyMock = jest.spyOn(jwt, 'verify');
+jwtVerifyMock.mockReturnValue({ customer: { id: customerId } });
+contextMock.config.sdkSettings = {
+  ...contextMock.config.sdkSettings,
+  devtoolsAppSecret: 'secret'
+};
+contextMock.req = {
+  cookies: {
+    [COOKIE_KEY_CUSTOMER_DATA]: 'token'
+  }
+};
+
+describe('[BigCommerce-api-client] get all wishlists reviews', () => {
   it('should call the right endpoint', async () => {
     // Given
     contextMock.client.v3.get = jest.fn();
-    const expectedEndpoint = '/wishlists';
+    const expectedEndpoint = `/wishlists?customer_id=${customerId}`;
 
     // When
     await getAllWishlists(contextMock);
@@ -20,7 +35,6 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     contextMock.client.v3.get = jest.fn();
 
     const query: GetAllWishlistQuery = {
-      customer_id: 1,
       limit: 50,
       page: 1
     };
@@ -30,6 +44,21 @@ describe('[BigCommerce-api-client] get product reviews', () => {
 
     // Then
     expect(contextMock.client.v3.get)
-      .toHaveBeenCalledWith(`/wishlists?customer_id=${query.customer_id}&limit=${query.limit}&page=${query.page}`);
+      .toHaveBeenCalledWith(`/wishlists?customer_id=${customerId}&limit=${query.limit}&page=${query.page}`);
+  });
+
+  it('should throw an error when customer id was not provided', async () => {
+    contextMock.client.v3.get = jest.fn();
+
+    jwtVerifyMock.mockReturnValue({ customer: { id: undefined } });
+
+    try {
+      await getAllWishlists(contextMock);
+    } catch (error) {
+      const expectedErrorMessage = 'No customer ID';
+      expect(error.message).toBe(expectedErrorMessage);
+    } finally {
+      expect(contextMock.client.v3.get).toHaveBeenCalledTimes(0);
+    }
   });
 });

@@ -23,7 +23,6 @@ export const clear: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['c
   }
 
   const res = await context.$bigcommerce.api.createWishlist({
-    customer_id: customerId,
     name: context.$bigcommerce.config.app
       .$config.theme.wishlist.name,
     is_public: context.$bigcommerce.config.app
