@@ -7,7 +7,7 @@ export const useOrderData = () => {
   const { formatDateString } = useUiHelpers();
 
   function getDate(order: Order): string {
-    return order?.date_created ? formatDateString(order.date_created, 'DD.MM.YYYY HH:ss') : '';
+    return order?.date_created ? formatDateString(order.date_created, 'DD.MM.YYYY HH:mm') : '';
   }
 
   function getId(order: Order): string {
