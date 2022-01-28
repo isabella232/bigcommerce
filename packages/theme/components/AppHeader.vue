@@ -50,7 +50,7 @@
             @click="toggleCartSidebar"
           >
             <SfIcon class="sf-header__icon" icon="empty_cart" size="1.25rem" />
-            <SfBadge v-if="cartTotalItems" class="sf-badge--number badge">{{
+            <SfBadge :style="{ display: cartTotalItems ? 'block' : 'none' }" class="sf-badge--number badge">{{
               cartTotalItems
             }}</SfBadge>
           </SfButton>
