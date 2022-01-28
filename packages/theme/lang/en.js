@@ -194,5 +194,10 @@ export default {
   'Order ID': 'Order ID',
   'Payment date': 'Payment date',
   Amount: 'Amount',
-  Status: 'Status'
+  Status: 'Status',
+  SKU: 'SKU',
+  'Item Description': 'Item Description',
+  'Thank you for your order!': 'Thank you for your order!',
+  'Continue shopping': 'Continue shopping',
+  'Order No.': 'Order No.'
 };

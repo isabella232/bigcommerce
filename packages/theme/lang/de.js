@@ -201,5 +201,10 @@ export default {
   'Order ID': 'Auftragsnummer',
   'Payment date': 'Zahlungsdatum',
   Amount: 'Menge',
-  Status: 'Status'
+  Status: 'Status',
+  SKU: 'SKU',
+  'Item Description': 'Produktbeschreibung',
+  'Thank you for your order!': 'Vielen Dank für Ihren Auftrag!',
+  'Continue shopping': 'Weiter einkaufen',
+  'Order No.': 'Bestellnummer'
 };

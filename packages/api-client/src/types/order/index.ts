@@ -1,6 +1,7 @@
 export * from './parameters';
 export * from './responses';
 export * from './item';
+export * from './shippingAddress';
 
 export enum OrderPaymentStatus {
   Authorized = 'authorized',
@@ -129,7 +130,7 @@ export interface Order {
     url: string;
     resource: string;
   };
-  shippingAddresses?: {
+  shipping_addresses?: {
     url: string;
     resource: string;
   };
@@ -153,7 +154,7 @@ export interface Order {
    * The value of the base wrapping cost. (Float, Float-As-String, Integer)
    */
   base_wrapping_cost?: string | number;
-  billingAddress?: Record<string, any>;
+  billing_address?: Record<string, any>;
   /**
    * Shows where the order originated. The channel_id will default to 1.
    */

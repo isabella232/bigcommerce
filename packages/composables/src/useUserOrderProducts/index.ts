@@ -27,7 +27,7 @@ export const useUserOrderProducts = (
   );
   const error: Ref<UseUserOrderProductsErrors> = sharedRef(
     {
-      search: null
+      load: null
     },
     `useUserOrderProducts-error-${id}`
   );

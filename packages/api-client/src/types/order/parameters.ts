@@ -101,3 +101,15 @@ export type GetOrderProductsParameters = {
    */
   limit?: number;
 };
+
+/**
+ * Definition of get order shipping addresses request parameters
+ */
+export type GetOrderShippingAddressesParameters = GetOrderProductsParameters;
+
+/**
+ * Definition of get order by cart request parameters
+ */
+export type GetOrderByCartParameters = {
+  cartId: string;
+};

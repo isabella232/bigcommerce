@@ -26,8 +26,6 @@ export type UserShippingAddressItem = UserAddress;
 
 export type UserShippingAddressSearchCriteria = TODO;
 
-export type ShippingAddress = TODO;
-
 export type ShippingMethod = TODO;
 
 export type ShippingProvider = TODO;
