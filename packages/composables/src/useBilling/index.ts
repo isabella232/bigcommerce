@@ -3,7 +3,6 @@ import {
   useBillingFactory,
   UseBillingParams
 } from '@vue-storefront/core';
-import type { BillingAddress } from '@vue-storefront/bigcommerce-api';
 import type {
   UseBillingAddParams as AddParams
 } from '../types';
@@ -22,4 +21,4 @@ const params: UseBillingParams<any, AddParams> = {
   }
 };
 
-export const useBilling = useBillingFactory<BillingAddress, AddParams>(params);
+export const useBilling = useBillingFactory<any, AddParams>(params);

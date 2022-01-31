@@ -3,6 +3,29 @@ export * from './getAll';
 export * from './create';
 
 /**
+ * Possible values of review statuses.
+ */
+export enum ReviewStatus {
+  /**
+   * Approved status.
+   */
+  approved = 'approved',
+  /**
+   * Disapproved status.
+   */
+  disapproved = 'disapproved',
+  /**
+   * Pending status.
+   */
+  pending = 'pending'
+}
+
+/**
+ * The rating of the product review. Must be one of 0, 1, 2, 3, 4, 5.
+ */
+export type ReviewRating = 0 | 1 | 2 | 3 | 4 | 5;
+
+/**
  * Product review model.
  */
 export interface ProductReview {
@@ -17,11 +40,11 @@ export interface ProductReview {
   /**
    * The status of the product review. Must be one of `approved`, `disapproved` or `pending`.
    */
-  status: 'approved' | 'disapproved' | 'pending';
+  status: ReviewStatus;
   /**
    * The rating of the product review. Must be one of 0, 1, 2, 3, 4, 5.
    */
-  rating: 0 | 1 | 2 | 3 | 4 | 5;
+  rating: ReviewRating;
   /**
    * The email of the reviewer. Must be a valid email, or an empty string.
    */

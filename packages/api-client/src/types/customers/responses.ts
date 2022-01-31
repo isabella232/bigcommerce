@@ -87,11 +87,11 @@ export interface User {
    */
   addresses?: UserAddress[];
   /**
-   * Total number of customer addresses
+   * Total number of customer addresses.
    */
   address_count?: number;
   /**
-   * Total number of customer attributes
+   * Total number of customer attributes.
    */
   attribute_count?: number;
 }
@@ -119,13 +119,13 @@ export interface ValidateCredentialsResponse {
    */
   customer_id?: number | null;
   /**
-   * Indicates if the provided credentials are valid
+   * Indicates if the provided credentials are valid.
    */
   is_valid?: boolean;
 }
 
 /**
- * Response of login customer
+ * Response of login customer.
  */
 export interface LoginCustomerResponse {
   /**
@@ -133,7 +133,7 @@ export interface LoginCustomerResponse {
    */
   customer_id?: number | null;
   /**
-   * Indicates if the provided credentials are valid
+   * Indicates if the provided credentials are valid.
    */
   is_valid?: boolean;
   /**
@@ -161,7 +161,7 @@ export interface GetCustomersResponse {
  */
 export interface UpdateCustomerFormFieldsResponse {
   /**
-   * Array of customer form fields
+   * Array of customer form fields.
    */
   data: FormField[];
   /**

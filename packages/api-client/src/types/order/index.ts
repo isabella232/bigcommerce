@@ -1,5 +1,3 @@
-import { BaseFormField } from '..';
-
 export * from './parameters';
 export * from './responses';
 export * from './item';
@@ -93,64 +91,6 @@ export enum OrderTaxProviderId {
    * Empty.
    */
   Empty = ''
-}
-
-/**
- * Billing address model.
- */
-export interface BillingAddress {
-  /**
-   * The first name of the billing address.
-   */
-  firstName?: string;
-  /**
-   * The last name of the billing address.
-   */
-  lastName?: string;
-  /**
-   * The company of the billing address.
-   */
-  company?: string;
-  /**
-   * The street 1 line.
-   */
-  street1?: string;
-  /**
-   * The street 2 line.
-   */
-  street2?: string;
-  /**
-   * The city of the billing address.
-   */
-  city?: string;
-  /**
-   * The state of the billing address.
-   */
-  state?: string;
-  /**
-   * The billing address must include the zip code. The zip code must be two or more characters.
-   */
-  zip: string;
-  /**
-   * The country name of the billing address.
-   */
-  country?: string;
-  /**
-   * The country iso of the billing address.
-   */
-  countryIso2?: string;
-  /**
-   * The phone number of the billing address.
-   */
-  phone?: string;
-  /**
-   * The email of the billing address.
-   */
-  email?: string;
-  /**
-   * Billing address form fields.
-   */
-  formFields?: Array<BaseFormField>;
 }
 
 /**

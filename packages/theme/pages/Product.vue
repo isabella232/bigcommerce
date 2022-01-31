@@ -260,6 +260,9 @@ import {
   productGetters,
   useReview
 } from '@vue-storefront/bigcommerce';
+import {
+  ReviewStatus
+} from '@vue-storefront/bigcommerce-api';
 import { onSSR } from '@vue-storefront/core';
 import LazyHydrate from 'vue-lazy-hydration';
 import { useProductData } from '../composables/useProductData';
@@ -302,7 +305,7 @@ export default defineComponent({
     const reviews = computed(
       () =>
         productReviews.value?.data?.filter(
-          (review) => review.status === 'approved'
+          (review) => review.status === ReviewStatus.approved
         ) || []
     );
     const reviewHelpers = useReviewData();

@@ -21,7 +21,7 @@ export interface ProductVariantOptionValue {
 }
 
 /**
- * roduct variant model.
+ * Product variant model.
  */
 export interface ProductVariant {
   /**

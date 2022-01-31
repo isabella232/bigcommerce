@@ -5,7 +5,7 @@ import { GiftCertificate } from './giftCertificate';
 /**
  * Schema of the gift certificate for adding it to the cart.
  */
-type GiftCertificateRequest = Omit<GiftCertificate, 'id' | 'isTaxable'> & {
+interface GiftCertificateRequest extends Omit<GiftCertificate, 'id' | 'isTaxable'> {
   /**
    * Gift name.
    */
@@ -14,12 +14,12 @@ type GiftCertificateRequest = Omit<GiftCertificate, 'id' | 'isTaxable'> & {
    * Gift quantity.
    */
   quantity: number;
-};
+}
 
 /**
  * Definition of product option to identify the proper product variant.
  */
-type ProductOptionSelection = {
+interface ProductOptionSelection {
   /**
    * ID of the option.
    */
@@ -28,12 +28,12 @@ type ProductOptionSelection = {
    * Option value.
    */
   option_value: string;
-};
+}
 
 /**
  * Base properties of the line item.
  */
-type LineItemBase = {
+interface LineItemBase {
   /**
    * Quantity of items added to cart.
    */
@@ -50,7 +50,7 @@ type LineItemBase = {
    * Optionally, provide a value to override the product name.
    */
   name?: string;
-};
+}
 
 /**
  * Type alias for line item for adding it to the cart.
@@ -80,7 +80,7 @@ export enum CartIncludeEnum {
 }
 
 /**
- * Necessary parameters of create cart request.
+ * Parameters of create cart request.
  */
 export interface CreateCartParameters {
   /**

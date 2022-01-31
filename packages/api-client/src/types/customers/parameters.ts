@@ -6,15 +6,15 @@ import {
 } from '..';
 
 /**
- * Necessary and optional parameters to get customer.
+ * Parameters to get customer.
  */
 export interface GetCustomersParameters {
   /**
-   * Page number
+   * Page number.
    */
   page?: number;
   /**
-   * Items count per page. limit=50
+   * Items count per page. limit=50.
    */
   limit?: number;
   /**
@@ -30,27 +30,27 @@ export interface GetCustomersParameters {
    */
   'customer_group_id:in'?: string[];
   /**
-   * Filter items by date_created. date_created=2018-09-05T13:43:54
+   * Filter items by date_created. date_created=2018-09-05T13:43:54.
    */
   date_created?: string;
   /**
-   * Filter items by maximum date_created. date_created:max=2018-09-10
+   * Filter items by maximum date_created. date_created:max=2018-09-10.
    */
   'date_created:max'?: string;
   /**
-   * Filter items by date_created. date_created:min=2018-09-05
+   * Filter items by date_created. date_created:min=2018-09-05.
    */
   'date_created:min'?: string;
   /**
-   * Filter items by date_modified. date_modified=2018-09-05T13:45:03
+   * Filter items by date_modified. date_modified=2018-09-05T13:45:03.
    */
   date_modified?: string;
   /**
-   * Filter items by mininum date_modified. date_modified:min=2019-09-04T:00:00:00 or date_modified:min=2019-09-04
+   * Filter items by mininum date_modified. date_modified:min=2019-09-04T:00:00:00 or date_modified:min=2019-09-04.
    */
   'date_modified:min'?: string;
   /**
-   * Filter items by maximum date_modified date_modified:max=2018-09-05T13:45:03 or date_modified:max=2019-09-04
+   * Filter items by maximum date_modified date_modified:max=2018-09-05T13:45:03 or date_modified:max=2019-09-04.
    */
   'date_modified:max'?: string;
   /**
@@ -66,7 +66,7 @@ export interface GetCustomersParameters {
    */
   'name:like'?: string[];
   /**
-   * Filter items by registration_ip_address. If the customer was created using the API, then registration address is blank. registration_ip_address:in=12.345.6.789
+   * Filter items by registration_ip_address. If the customer was created using the API, then registration address is blank. registration_ip_address:in=12.345.6.789.
    */
   'registration_ip_address:in'?: number[];
   /**
@@ -94,7 +94,7 @@ interface CustomerFormField {
 }
 
 /**
- * Necessary and optional parameters to create customer.
+ * Parameters to create customer.
  */
 export interface CreateCustomerParameters {
   /**
@@ -132,7 +132,7 @@ export interface CreateCustomerParameters {
 }
 
 /**
- * Necessary and optional parameters to validate credentials.
+ * Parameters to validate credentials.
  */
 export interface ValidateCredentialsParameter {
   /**
@@ -151,7 +151,7 @@ export interface ValidateCredentialsParameter {
 }
 
 /**
- * Necessary and optional parameters to login customer.
+ * Parameters to login customer.
  */
 export interface LoginCustomerParameters {
   /**
@@ -164,13 +164,13 @@ export interface LoginCustomerParameters {
   password: string;
   /**
    * ChannelId to check the customer credentials against.
-   * If this field is empty BigCommerce will use channel 1
+   * If this field is empty BigCommerce will use channel 1.
    */
   channel_id?: number;
 }
 
 /**
- * Necessary and optional parameters to update customer form fields.
+ * Parameters to update customer form fields.
  */
 export interface UpdateCustomerFormFieldsParameters {
   /**
@@ -180,7 +180,17 @@ export interface UpdateCustomerFormFieldsParameters {
 }
 
 /**
- * Necessary and optional parameters to update customer.
+ * Type alias for store credit amount array.
+ */
+type StoreCreditAmounts = Array<{
+  /**
+   * Store credit amount.
+   */
+  amount: number;
+}>
+
+/**
+ * Parameters to update customer.
  */
 export interface UpdateCustomerParameters {
   /**
@@ -234,12 +244,7 @@ export interface UpdateCustomerParameters {
   /**
    * Store credit.
    */
-  store_credit_amounts?: Array<{
-    /**
-     * Store credit amount.
-     */
-    amount: number;
-  }>;
+  store_credit_amounts?: StoreCreditAmounts;
   /**
    * Arrays of channels the customer can access.
    */

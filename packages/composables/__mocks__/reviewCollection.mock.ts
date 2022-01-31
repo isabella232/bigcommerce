@@ -1,11 +1,11 @@
-import { ProductReviewCollectionResponse } from '@vue-storefront/bigcommerce-api';
+import { ProductReviewCollectionResponse, ReviewStatus } from '@vue-storefront/bigcommerce-api';
 
 export const reviewCollectionMock: ProductReviewCollectionResponse = {
   data: [
     {
       title: 'Review title',
       text: 'Text of the review',
-      status: 'approved',
+      status: ReviewStatus.approved,
       rating: 0,
       email: 'reviewcreator@email.com',
       name: 'Review creator',
@@ -18,7 +18,7 @@ export const reviewCollectionMock: ProductReviewCollectionResponse = {
     {
       title: 'Review title 2',
       text: 'Text of the review 2',
-      status: 'pending',
+      status: ReviewStatus.pending,
       rating: 0,
       email: 'reviewcreator@email.com',
       name: 'Review creator',

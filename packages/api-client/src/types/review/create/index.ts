@@ -1,5 +1,6 @@
+import { ReviewRating, ReviewStatus } from '..';
 /**
- * Necessary properties to add review.
+ * Properties to add review.
  */
 export interface CreateProductReviewProps {
   /**
@@ -17,11 +18,11 @@ export interface CreateProductReviewProps {
   /**
    * The status of the product review. Must be one of `approved`, `disapproved` or `pending`.
    */
-  status?: string;
+  status?: ReviewStatus;
   /**
    * The rating of the product review. Must be one of 0, 1, 2, 3, 4, 5.
    */
-  rating?: number;
+  rating?: ReviewRating;
   /**
    * The email of the reviewer. Must be a valid email, or an empty string.
    */
@@ -33,8 +34,8 @@ export interface CreateProductReviewProps {
 }
 
 /**
- * Necessary properties for creating a product review.
- * Extended with date_reviewed.
+ * Properties for creating a product review.
+ * Extended with date_reviewed param.
  */
 export interface ExtendedCreateProductReviewProps extends CreateProductReviewProps {
   /**
