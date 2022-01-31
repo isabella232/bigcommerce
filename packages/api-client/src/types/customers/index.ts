@@ -2,44 +2,67 @@ export * from './parameters';
 export * from './responses';
 
 /**
- * Possible values of include parameter for Customer
+ * Possible values of include parameter for customer endpoints.
  */
 export enum CustomersIncludeEnum {
+  /**
+   * Include addresses.
+   */
   Addresses = 'addresses',
+  /**
+   * Include store credit.
+   */
   Storecredit = 'storecredit',
+  /**
+   * Include attributes.
+   */
   Attributes = 'attributes',
+  /**
+   * Include form fields.
+   */
   Formfields = 'formfields'
 }
 
 /**
- * Possible values of sort parameter for Customer
+ * Possible values of sort parameter for customer endpoints.
  */
 export enum CustomersSortEnum {
+  /**
+   * Include dete created sorted asc.
+   */
   DateCreatedasc = 'date_created:asc',
+  /**
+   * Include dete created sorted desc.
+   */
   DateCreateddesc = 'date_created:desc',
+  /**
+   * Include last name sorted asc.
+   */
   LastNameasc = 'last_name:asc',
+  /**
+   * Include last name sorted asc.
+   */
   LastNamedesc = 'last_name:desc',
+  /**
+   * Include dete modified sorted asc.
+   */
   DateModifiedasc = 'date_modified:asc',
+  /**
+   * Include dete modified sorted asc.
+   */
   DateModifieddesc = 'date_modified:desc'
 }
 
 /**
- * Base type for possible variants of form field value
+ * Customer authentication.
  */
-type FormFieldBase = {
+export interface Authentication {
   /**
-   * The form field name.
+   * If true, this customer will be forced to change password on next login.
    */
-  name: string;
+  force_password_reset?: boolean;
   /**
-   * The value of the form field
+   * New password for customer.
    */
-  value: string | number | string[];
-};
-
-/**
- * Definition of a form field value
- */
-export type FormField =
-  | (FormFieldBase & { customer_id?: number })
-  | (FormFieldBase & { address_id: number });
+  new_password?: string;
+}

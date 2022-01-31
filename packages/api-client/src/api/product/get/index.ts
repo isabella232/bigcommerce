@@ -18,7 +18,7 @@ export const getProducts: Endpoints['getProducts'] = async (
     queryString.stringifyUrl(
       {
         url: BigCommerceEndpoints.products,
-        query: params
+        query: { ...params }
       },
       {
         arrayFormat: 'comma'

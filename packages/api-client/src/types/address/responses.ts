@@ -1,24 +1,31 @@
 import { MetaCollection, UserAddress } from '..';
 
 /**
- * Format of parameters that can be passed to `getCustomerAddress` endpoint method.
+ * Customer address collection response.
  */
-export type GetAddressResponse = {
+export interface GetAddressResponse {
+  /**
+   * Collection of customer addresses.
+   */
   data: Array<UserAddress>;
+
+  /**
+   * Data about the response, including pagination and collection totals.
+   */
   meta: MetaCollection;
-};
+}
 
 /**
- * Format of parameters that can be passed to `updateCustomerAddress` endpoint method.
+ * Response of update customer address request.
  */
 export type UpdateAddressResponse = GetAddressResponse;
 
 /**
- * Format of parameters that can be passed to `createCustomerAddress` endpoint method.
+ * Response of create customer address request.
  */
 export type CreateAddressResponse = GetAddressResponse;
 
 /**
- * Format of parameters that can be passed to `deleteCustomerAddress` endpoint method.
+ * Response of delete customer address requests.
  */
 export type DeleteAddressResponse = GetAddressResponse;

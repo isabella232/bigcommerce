@@ -1,9 +1,15 @@
-import { MetaCollection, Product } from '../../';
+import { MetaCollection, Product } from '../..';
 
 /**
- * Definition of the response to the products request.
+ * Product collection response.
  */
-export type ProductsResponse = {
+export interface ProductsResponse {
+  /**
+   * Collection of products.
+   */
   data: Product[];
+  /**
+   * Data about the response, including pagination and collection totals.
+   */
   meta: MetaCollection;
-};
+}

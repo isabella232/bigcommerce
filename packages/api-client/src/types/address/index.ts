@@ -1,35 +1,85 @@
+import { FormField } from '..';
+
 export * from './parameters';
 export * from './responses';
 
 /**
- * Format of address in the BigCommerce API responses.
- * See at {@link UpdateCustomerResponse}
+ * Customer address model.
  */
-export type UserAddress = {
+export interface UserAddress {
+  /**
+   * The first name of the customer address.
+   */
   first_name: string;
+
+  /**
+   * The last name of the customer address.
+   */
   last_name: string;
+
+  /**
+   * The company of the customer address.
+   */
   company: string;
+
+  /**
+   * The address 1 line.
+   */
   address1: string;
+
+  /**
+   * The address 2 line.
+   */
   address2?: string;
+
+  /**
+   * The city of the customer address.
+   */
   city: string;
+
+  /**
+   * The state or province name.
+   */
   state_or_province: string;
+
+  /**
+   * The postal code of the customer address.
+   */
   postal_code: string;
+
+  /**
+   * The country code of the customer address.
+   */
   country_code: string;
+
+  /**
+   * The phone number of the customer address.
+   */
   phone: string;
+
+  /**
+   * The address type.
+   */
   address_type?: string;
+
+  /**
+   * The customer ID.
+   */
   customer_id: number;
+
+  /**
+   * The unique numeric ID of the address.
+   */
   id: number;
+
+  /**
+   * The country name of the customer address.
+   */
   country: string;
-  form_fields?: Array<
-    | {
-        name: string;
-        value: number | string | string[];
-        customer_id: number;
-      }
-    | {
-        name: string;
-        value: number | string | string[];
-        address_id: number;
-      }
-  >;
-};
+
+  /**
+   * Array of form fields.
+   */
+  form_fields?: Array<FormField>;
+}
+

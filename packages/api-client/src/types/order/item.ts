@@ -1,4 +1,7 @@
-type OrderProductAppliedDiscounts = {
+/**
+ * Discounts applied to the product.
+ */
+interface OrderProductAppliedDiscounts {
   /**
    * Name of the coupon applied to order.
    */
@@ -18,23 +21,53 @@ type OrderProductAppliedDiscounts = {
    */
   code?: any | null;
   /**
-   * Determines if the discount if discount was applied at the Order or Product level. Read Only.
+   * Determines if the discount if discount was applied at the Order or Product level.
    */
   target?: 'order' | 'product';
-};
+}
 
+/**
+ * Possible values of order product option types.
+ */
 enum OrderProductOptionsTypeEnum {
+  /**
+   * Checkbox type.
+   */
   Checkbox = 'Checkbox',
+  /**
+   * Date field type.
+   */
   DateField = 'Date field',
+  /**
+   * File upload type.
+   */
   FileUpload = 'File Upload',
+  /**
+   * Multiline text field type.
+   */
   MultiLineTextField = 'Multi-line text field',
+  /**
+   * Multiple choice type.
+   */
   MultipleChoice = 'Multiple choice',
+  /**
+   * Product pick list type.
+   */
   ProductPickList = 'Product Pick List',
+  /**
+   * Swatch type.
+   */
   Swatch = 'Swatch',
+  /**
+   * Text field type.
+   */
   TextField = 'Text field'
 }
 
-type OrderProductOptions = {
+/**
+ * Order product options model.
+ */
+interface OrderProductOptions {
   /**
    * The unique numerical ID of the option; increments sequentially.
    */
@@ -43,7 +76,13 @@ type OrderProductOptions = {
    * Numeric ID of the associated option.
    */
   option_id?: number;
+  /**
+   * Order product ID.
+   */
   order_product_id?: number;
+  /**
+   * Product option ID.
+   */
   product_option_id?: number;
   /**
    * Alias for display_name_customer. The product option name that is shown to customer in the storefront.
@@ -58,7 +97,7 @@ type OrderProductOptions = {
    */
   value?: string;
   /**
-   * Option Type
+   * Product option type.
    */
   type?: OrderProductOptionsTypeEnum;
   /**
@@ -85,9 +124,12 @@ type OrderProductOptions = {
    * The product option value that is shown to merchant in Control Panel.
    */
   display_value_merchant?: string;
-};
+}
 
-export type OrderItem = {
+/**
+ * Order item model.
+ */
+export interface OrderItem {
   /**
    * Numeric ID of this product within this order.
    */
@@ -266,11 +308,16 @@ export type OrderItem = {
    */
   applied_discounts?: Array<OrderProductAppliedDiscounts>;
   /**
-   * Array of product option objects.
+   * Array of product options.
    */
   product_options?: Array<OrderProductOptions>;
   /**
-   * ID of the order in another system. For example, the Amazon Order ID if this is an Amazon order.This field can be updated in a /POST, but using a /PUT to update the order will return a 400 error. The field 'external_id' cannot be written to. Please remove it from your request before trying again. It can not be overwritten once set.
+   * ID of the order in another system.
+   * For example, the Amazon Order ID if this is an Amazon order.
+   * This field can be updated in a /POST, but using a /PUT to update the order will return a 400 error.
+   * The field 'external_id' cannot be written to.
+   * Please remove it from your request before trying again.
+   * It can not be overwritten once set.
    */
   external_id?: any | null;
   /**
@@ -289,4 +336,4 @@ export type OrderItem = {
    * The product name that is shown to merchant in Control Panel.
    */
   name_merchant?: string;
-};
+}

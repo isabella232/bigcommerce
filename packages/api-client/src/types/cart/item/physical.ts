@@ -3,7 +3,7 @@ import { CartItemBase } from './base';
 /**
  * Purchesed items can be gift wrapped.
  */
-type GiftWrapping = {
+interface GiftWrapping {
   /**
    * Name of the wrapping
    */
@@ -16,9 +16,12 @@ type GiftWrapping = {
    * Amount of wrapping
    */
   amount?: number;
-};
+}
 
-export type PhysicalCartItem = CartItemBase & {
+/**
+ * Physical cart item model.
+ */
+export interface PhysicalCartItem extends CartItemBase {
   /**
    * Is shipping required for this item
    */
@@ -27,4 +30,4 @@ export type PhysicalCartItem = CartItemBase & {
    * Gift wrapping can be enabled for items.
    */
   gift_wrapping?: GiftWrapping;
-};
+}

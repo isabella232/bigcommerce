@@ -8,7 +8,7 @@ import type {
   UseBillingAddParams as AddParams
 } from '../types';
 
-const params: UseBillingParams<BillingAddress, AddParams> = {
+const params: UseBillingParams<any, AddParams> = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   load: async (context: Context, { customQuery }) => {
     console.log('Mocked: useBilling.load');

@@ -1,7 +1,7 @@
 /**
  * Contact entity description
  */
-export type ContactEntity = {
+export interface ContactEntity {
   /**
    * The name of the contact.
    */
@@ -10,4 +10,4 @@ export type ContactEntity = {
    * The email of the contact.
    */
   email?: string;
-};
+}

@@ -1,9 +1,12 @@
 import { MiddlewareSDKSettingsConfig } from '..';
 
+/**
+ * Type alias for REST API request types.
+ */
 type REQUEST_TYPE = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 /**
- * The definition of types for SDK provided by BigCommerce team
+ * The definition of types for BigCommerce SDK.
  */
 export interface NodeBigcommerceSDK {
   /**

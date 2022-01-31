@@ -1,33 +1,156 @@
+import { BaseFormField } from '..';
+
 export * from './parameters';
 export * from './responses';
 export * from './item';
 export * from './shippingAddress';
 
+/**
+ * Possible values of order payment statuses.
+ */
 export enum OrderPaymentStatus {
+  /**
+   * Authorized status.
+   */
   Authorized = 'authorized',
+  /**
+   * Captured status.
+   */
   Captured = 'captured',
+  /**
+   * Capture pending status.
+   */
   CapturePending = 'capture pending',
+  /**
+   * Declined status.
+   */
   Declined = 'declined',
+  /**
+   * Held for review status.
+   */
   HeldForReview = 'held for review',
+  /**
+   * Paid status.
+   */
   Paid = 'paid',
+  /**
+   * Partially refunded status.
+   */
   PartiallyRefunded = 'partially refunded',
+  /**
+   * Pending status.
+   */
   Pending = 'pending',
+  /**
+   * Refunded status.
+   */
   Refunded = 'refunded',
+  /**
+   * Void status.
+   */
   Void = 'void',
+  /**
+   * Void pending status.
+   */
   VoidPending = 'void pending'
 }
 
+/**
+ * Possible values of order payment methods.
+ */
 export enum OrderPaymentMethod {
+  /**
+   * Credit card method.
+   */
   CreditCard = 'Credit Card',
+  /**
+   * Cash method.
+   */
   Cash = 'Cash',
+  /**
+   * Test payment gateway method.
+   */
   TestPaymentGateway = 'Test Payment Gateway',
+  /**
+   * Manual method.
+   */
   Manual = 'Manual'
 }
 
+/**
+ * Possible values of order tax provider ids.
+ */
 export enum OrderTaxProviderId {
+  /**
+   * Basic tax provider.
+   */
   BasicTaxProvider = 'BasicTaxProvider',
+  /**
+   * Ava tax provider.
+   */
   AvaTaxProvider = 'AvaTaxProvider',
+  /**
+   * Empty.
+   */
   Empty = ''
+}
+
+/**
+ * Billing address model.
+ */
+export interface BillingAddress {
+  /**
+   * The first name of the billing address.
+   */
+  firstName?: string;
+  /**
+   * The last name of the billing address.
+   */
+  lastName?: string;
+  /**
+   * The company of the billing address.
+   */
+  company?: string;
+  /**
+   * The street 1 line.
+   */
+  street1?: string;
+  /**
+   * The street 2 line.
+   */
+  street2?: string;
+  /**
+   * The city of the billing address.
+   */
+  city?: string;
+  /**
+   * The state of the billing address.
+   */
+  state?: string;
+  /**
+   * The billing address must include the zip code. The zip code must be two or more characters.
+   */
+  zip: string;
+  /**
+   * The country name of the billing address.
+   */
+  country?: string;
+  /**
+   * The country iso of the billing address.
+   */
+  countryIso2?: string;
+  /**
+   * The phone number of the billing address.
+   */
+  phone?: string;
+  /**
+   * The email of the billing address.
+   */
+  email?: string;
+  /**
+   * Billing address form fields.
+   */
+  formFields?: Array<BaseFormField>;
 }
 
 /**
@@ -126,16 +249,43 @@ export interface Order {
    * Orders submitted via the store's website will include a `www` value. Orders submitted via the API will be set to `external`. A read-only value. Do not pass in a POST or PUT.
    */
   order_source?: string;
+  /**
+   * Order products.
+   */
   products?: {
+    /**
+     * URL of the products for api requests
+     */
     url: string;
+    /**
+     * Resource of the products.
+     */
     resource: string;
   };
+  /**
+   * Order shipping addresses.
+   */
   shipping_addresses?: {
+    /**
+     * URL of the shipping address for api requests.
+     */
     url: string;
+    /**
+     * Resource of the shipping addresses.
+     */
     resource: string;
   };
+  /**
+   * Order coupons.
+   */
   coupons?: {
+    /**
+     * URL of the coupons for api requests.
+     */
     url: string;
+    /**
+     * Resource of the coupons.
+     */
     resource: string;
   };
   /**
@@ -154,11 +304,17 @@ export interface Order {
    * The value of the base wrapping cost. (Float, Float-As-String, Integer)
    */
   base_wrapping_cost?: string | number;
+  /**
+   * Order billing address.
+   */
   billing_address?: Record<string, any>;
   /**
    * Shows where the order originated. The channel_id will default to 1.
    */
   channel_id?: number;
+  /**
+   * Order customer ID.
+   */
   customer_id?: number;
   /**
    * Message that the customer entered (number, optional) -o the `Order Comments` box during checkout.

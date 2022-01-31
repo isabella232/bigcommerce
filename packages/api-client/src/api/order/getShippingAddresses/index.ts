@@ -1,5 +1,5 @@
 import { stringifyUrl } from 'query-string';
-import { Endpoints, GetOrderShippingAddressesParameters } from '../../../types';
+import { Endpoints } from '../../../types';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
 
 export const getOrderShippingAddresses: Endpoints['getOrderShippingAddresses'] = async (
@@ -17,7 +17,7 @@ export const getOrderShippingAddresses: Endpoints['getOrderShippingAddresses'] =
   return await context.client.v2.get(
     stringifyUrl({
       url: BigCommerceEndpoints.orderShipping(orderId),
-      query: queryParams as GetOrderShippingAddressesParameters
+      query: { ...queryParams }
     })
   );
 };

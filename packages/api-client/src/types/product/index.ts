@@ -2,16 +2,28 @@ import { Image } from './image';
 import { ProductOption } from './option';
 import { ProductVariant } from './variant';
 
+/**
+ * Possible values of product invetory types.
+ */
 export enum InventoryType {
+  /**
+   * None inventory type.
+   */
   none = 'none',
+  /**
+   * Product inventory type.
+   */
   product = 'product',
+  /**
+   * Variant inventory type.
+   */
   variant = 'variant'
 }
 
 /**
- * Definition of a product
+ * Product model.
  */
-export type Product = {
+export interface Product {
   /**
    * Availability of the product. (Corresponds to the product's [Purchasability](https://support.bigcommerce.com/s/article/Adding-Products-v3?language=en_US#sections) section in the control panel.) Supported values: `available` - the product is available for purchase; `disabled` - the product is listed on the storefront, but cannot be purchased; `preorder` - the product is listed for pre-orders.
    */
@@ -48,6 +60,9 @@ export type Product = {
    * The cost price of the product.
    */
   cost_price?: number;
+  /**
+   * Product custom URL.
+   */
   custom_url: {
     /**
      * Returns `true` if the URL has been changed from its default state (the auto-assigned URL that BigCommerce provides).
@@ -98,6 +113,9 @@ export type Product = {
    * ID of the product. Read Only.
    */
   id?: number;
+  /**
+   * Product images.
+   */
   images?: Image[];
   /**
    * Current inventory level of the product. Simple inventory tracking must be enabled (See the `inventory_tracking` field) for this to take any effect.
@@ -210,6 +228,9 @@ export type Product = {
    * The minimum quantity an order must contain, to be eligible to purchase this product.
    */
   order_quantity_minimum?: number;
+  /**
+   * Product options.
+   */
   options?: ProductOption[];
   /**
    * Custom title for the product page. If not defined, the product name will be used as the meta title.
@@ -283,6 +304,9 @@ export type Product = {
    * The product UPC code, which is used in feeds for shopping comparison sites and external channel integrations.
    */
   upc?: string;
+  /**
+   * Product variants.
+   */
   variants?: ProductVariant[];
   /**
    * The number of times the product has been viewed.
@@ -300,7 +324,7 @@ export type Product = {
    * Width of the product, which can be used when calculating shipping costs.
    */
   width?: number;
-};
+}
 
 export * from './parameters';
 export * from './responses';

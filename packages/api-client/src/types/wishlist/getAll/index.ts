@@ -1,7 +1,7 @@
 /**
  * Optional filter parameters to retrieve.
  */
-export type GetAllWishlistQuery = {
+export interface GetAllWishlistQuery {
   /**
    * The page number of results per page. 1 is the default and starts from record 0.
    */

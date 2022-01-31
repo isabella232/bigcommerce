@@ -1,7 +1,7 @@
 /**
- * Definition of option value for product variant
+ * Product variant option value model.
  */
-type ProductVariantOptionValue = {
+export interface ProductVariantOptionValue {
   /**
    * The name of the option.
    */
@@ -18,12 +18,12 @@ type ProductVariantOptionValue = {
    * `option` ID.
    */
   option_id?: number;
-};
+}
 
 /**
- * Definition of Product variant
+ * roduct variant model.
  */
-export type ProductVariant = {
+export interface ProductVariant {
   /**
    * The cost price of the variant. Not affected by Price List prices.
    */
@@ -120,5 +120,8 @@ export type ProductVariant = {
    * The price of the variant as seen on the storefront. This price takes into account `sale_price` and any price adjustment rules that are applicable to this variant.
    */
   calculated_price?: number;
+  /**
+   * Product variant calculated weight.
+   */
   calculated_weight?: number;
-};
+}

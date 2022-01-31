@@ -7,7 +7,10 @@ export * from './parameters';
 export * from './responses';
 export * from './item';
 
-export type AppliedDiscount = {
+/**
+ * Discount model.
+ */
+export interface AppliedDiscount {
   /**
    * ID of the applied discount.
    */
@@ -16,30 +19,81 @@ export type AppliedDiscount = {
    * The discounted amount.
    */
   discounted_amount?: number;
-};
+}
 
-export type AppliedCoupon = {
+/**
+ * Coupon applied in cart.
+ */
+export interface AppliedCoupon {
   coupons?: {
     coupon_code: CouponCode;
   };
-};
+}
 
 /**
- * Definition of currency of the cart
+ * Currency of the cart.
  */
-export type CartCurrency = {
+export interface CartCurrency {
   /**
    * The [transactional currency](https://developer.bigcommerce.com/api-docs/multi-currency/guide/introduction#multi-currency-definitions) code for the cart as a [ISO-4217](https://www.iso.org/iso-4217-currency-codes.html) formatted string.
    */
   code?: string;
-};
+}
 
 /**
- * A cart contains a collection of items, prices, discounts, etc.. It does not contain customer-related data.
+ * Custom item extended with list price.
  */
-export type Cart = {
+export interface CustomItemExtended extends CustomItem {
   /**
-   * Cart ID, provided after creating a cart with a POST.
+   * Item’s list price multiplied by quantity.
+   */
+  extended_list_price: number;
+}
+
+/**
+ * Cart line items.
+ */
+export interface LineItems {
+  /**
+   * Physical items.
+   */
+  physical_items: PhysicalCartItem[];
+  /**
+   * Digital items.
+   */
+  digital_items: DigitalCartItem[];
+  /**
+   * Gift certificates.
+   */
+  gift_certificates: GiftCertificate[];
+  /**
+   * Custom items.
+   */
+  custom_items: CustomItemExtended[];
+}
+
+export interface RedirectUrls {
+  /**
+   * Cart URL.
+   */
+  cart_url: string;
+  /**
+   * Checkout URL.
+   */
+  checkout_url: string;
+  /**
+   * Embedded checkout URL.
+   */
+  embedded_checkout_url: string;
+}
+
+/**
+ * A cart contains a collection of items, prices, discounts, etc...
+ * It does not contain customer-related data.
+ */
+export interface Cart {
+  /**
+   * Cart ID.
    */
   id?: string;
   /**
@@ -51,13 +105,16 @@ export type Cart = {
    */
   customer_id?: number;
   /**
-   * The cart's email. This is the same email that is used in the billing address
+   * The cart's email. This is the same email that is used in the billing address.
    */
   email?: string;
   /**
    * This will always be the same between cart and checkout.
    */
   currency?: CartCurrency;
+  /**
+   * Information if tax is included.
+   */
   tax_included?: boolean;
   /**
    * Sum of cart line-item amounts before cart-level discounts, coupons, or taxes.
@@ -71,20 +128,18 @@ export type Cart = {
    * Sum of cart line-item amounts minus cart-level discounts and coupons. This amount includes taxes (where applicable).
    */
   cart_amount?: number;
+  /**
+   * Coupon applied in cart.
+   */
   coupons?: Array<AppliedCoupon>;
+  /**
+   * Discounts applied in cart.
+   */
   discounts?: Array<AppliedDiscount>;
-  line_items?: {
-    physical_items: PhysicalCartItem[];
-    digital_items: DigitalCartItem[];
-    gift_certificates: GiftCertificate[];
-    custom_items: CustomItem &
-      {
-        /**
-         * Item’s list price multiplied by quantity.
-         */
-        extended_list_price: number;
-      }[];
-  };
+  /**
+   * Cart line items.
+   */
+  line_items?: LineItems;
   /**
    * Time when the cart was created.
    */
@@ -104,9 +159,5 @@ export type Cart = {
   /**
    * Redirect URLs for checkout.
    */
-  redirect_urls?: {
-    cart_url: string;
-    checkout_url: string;
-    embedded_checkout_url: string;
-  };
-};
+  redirect_urls?: RedirectUrls;
+}

@@ -1,7 +1,7 @@
 /**
  * The coupon code
  */
-export type CouponCode = {
+export interface CouponCode {
   /**
    * Coupon Id
    */
@@ -36,4 +36,4 @@ export type CouponCode = {
    * Total discount amount off cart
    */
   total_discount?: number;
-};
+}

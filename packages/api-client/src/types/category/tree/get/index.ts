@@ -1,9 +1,15 @@
-import { CategoryTree } from '../..';
+import { CategoryTree, MetaCollection } from '../../..';
 
 /**
- * Bigcommerce getCategoryTree response
+ * Category tree collection response.
  */
-export type CategoryTreeResponse = {
+export interface CategoryTreeResponse {
+  /**
+   * Collection of category tree.
+   */
   data: CategoryTree[];
-  meta: unknown;
-};
+  /**
+   * Meta collection.
+   */
+  meta: MetaCollection;
+}

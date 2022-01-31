@@ -1,7 +1,8 @@
 module.exports = {
-  title: 'Vue Storefront 2 for bigcommerce',
+  title: 'Vue Storefront 2 for BigCommerce',
   base: '/',
-  description: 'Documentation for the bigcommerce connector for Vue Storefront 2',
+  description: 'Documentation for the BigCommerce connector for Vue Storefront 2',
+  logo: 'https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png',
   head: [
     ['link', { rel: 'icon', href: '/favicon.png' }]
   ],
@@ -37,12 +38,8 @@ module.exports = {
         ]
       },
       {
-        title: 'Composables',
-        path: '/composables/'
-      },
-      {
-        title: 'API Client',
-        path: '/api-client/'
+        title: 'Reference',
+        path: '/api-reference/'
       },
     ]
   }

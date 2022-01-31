@@ -1,4 +1,7 @@
-export type CustomItem = {
+/**
+ * Custom item model.
+ */
+export interface CustomItem {
   /**
    * Id of the custom item
    */
@@ -19,4 +22,4 @@ export type CustomItem = {
    * Price of the item. With or without tax, depending on your store's setup. Optional price override.
    */
   list_price?: string;
-};
+}

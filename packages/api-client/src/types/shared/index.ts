@@ -2,10 +2,6 @@ import { UserAddress } from '..';
 
 export type TODO = unknown;
 
-export type BillingAddress = TODO;
-
-export type Coupon = TODO;
-
 export type Facet = TODO;
 
 export type FacetSearchCriteria = TODO;

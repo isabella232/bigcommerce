@@ -1,9 +1,14 @@
-import { CustomersIncludeEnum, CustomersSortEnum, FormField } from '.';
+import {
+  CustomersIncludeEnum,
+  CustomersSortEnum,
+  FormField,
+  Authentication
+} from '..';
 
 /**
- * Format of parameters that can be passed to `getCustomers` endpoint method.
+ * Necessary and optional parameters to get customer.
  */
-export type GetCustomersParameters = {
+export interface GetCustomersParameters {
   /**
    * Page number
    */
@@ -64,75 +69,179 @@ export type GetCustomersParameters = {
    * Filter items by registration_ip_address. If the customer was created using the API, then registration address is blank. registration_ip_address:in=12.345.6.789
    */
   'registration_ip_address:in'?: number[];
+  /**
+   * Indicates whether to include customer sub-resources.
+   */
   include?: CustomersIncludeEnum;
+  /**
+   * Sort items by date_created, date_modified, or last_name.
+   */
   sort?: CustomersSortEnum;
-};
+}
 
 /**
- * Format of parameters that can be passed to `createCustomer` endpoint method.
+ * Customer form field.
  */
-export type CreateCustomerParameters = {
+interface CustomerFormField {
+  /**
+   * Form field ID.
+   */
+  fieldId: string;
+  /**
+   * Form field value.
+   */
+  fieldValue: string;
+}
+
+/**
+ * Necessary and optional parameters to create customer.
+ */
+export interface CreateCustomerParameters {
+  /**
+   * The first name of the customer.
+   */
   first_name: string;
+  /**
+   * The last name of the customer.
+   */
   last_name: string;
+  /**
+   * The email of the customer. Must be unique.
+   */
   email: string;
+  /**
+   * Customer password.
+   */
   password: string;
+  /**
+   * It determines if the customer is signed up to receive either product review or abandoned cart emails or recieve both emails.
+   */
   accepts_product_review_abandoned_cart_emails: boolean;
+  /**
+   * Array of channels the customer can access.
+   */
   channel_ids: number[];
-  custom_fields: Array<{
-    fieldId: string;
-    fieldValue: string;
-  }>;
-  authentication?: {
-    new_password?: string;
-  };
-};
+  /**
+   * Customer custom fields.
+   */
+  custom_fields: Array<CustomerFormField>;
+  /**
+   * Authentication information.
+   */
+  authentication?: Authentication;
+}
 
 /**
- * Format of parameters that can be passed to `validateCredentials` endpoint method.
+ * Necessary and optional parameters to validate credentials.
  */
-export type ValidateCredentialsParameter = {
+export interface ValidateCredentialsParameter {
+  /**
+   * Customer email address.
+   */
   email: string;
+  /**
+   * Customer password.
+   */
   password: string;
+  /**
+   * ChannelId to check the customer credentials against.
+   * If this field is empty BigCommerce will use channel 1
+   */
   channel_id?: number;
-};
+}
 
 /**
- * Format of parameters that can be passed to `loginCustomer` endpoint method.
+ * Necessary and optional parameters to login customer.
  */
-export type LoginCustomerParameters = {
+export interface LoginCustomerParameters {
+  /**
+   * Customer email address.
+   */
   email: string;
+  /**
+   * Customer password.
+   */
   password: string;
+  /**
+   * ChannelId to check the customer credentials against.
+   * If this field is empty BigCommerce will use channel 1
+   */
   channel_id?: number;
-};
+}
 
 /**
- * Format of parameters that can be passed to `updateCustomerFormFields` endpoint method.
+ * Necessary and optional parameters to update customer form fields.
  */
-export type UpdateCustomerFormFieldsParameters = {
+export interface UpdateCustomerFormFieldsParameters {
+  /**
+   * Form fields.
+   */
   data: FormField[];
-};
+}
 
 /**
- * Format of parameters that can be passed to `updateCustomer` endpoint method.
+ * Necessary and optional parameters to update customer.
  */
-export type UpdateCustomerParameters = {
+export interface UpdateCustomerParameters {
+  /**
+   * The unique numeric ID of the customer.
+   */
   id: number;
+  /**
+   * The first name of the customer.
+   */
   first_name?: string;
+  /**
+   * The last name of the customer.
+   */
   last_name?: string;
+  /**
+   * The email of the customer. Must be unique.
+   */
   email?: string;
+  /**
+   * The company of the customer.
+   */
   company?: string;
+  /**
+   * The phone number of the customer.
+   */
   phone?: string;
+  /**
+   * The IP address from which this customer was registered.
+   */
   registration_ip_address?: string;
+  /**
+   * The customer notes.
+   */
   notes?: string;
+  /**
+   * ID of the group which this customer belongs to.
+   */
   customer_group_id?: number;
+  /**
+   * The tax exempt category code for the customer.
+   */
   tax_exempt_category?: string;
-  authentication?: {
-    force_password_reset?: boolean;
-    new_password?: string;
-  };
+  /**
+   * Authentication information.
+   */
+  authentication?: Authentication;
+  /**
+   * It determines if the customer is signed up to receive either product review or abandoned cart emails or recieve both emails.
+   */
   accepts_product_review_abandoned_cart_emails?: boolean;
+  /**
+   * Store credit.
+   */
   store_credit_amounts?: Array<{
+    /**
+     * Store credit amount.
+     */
     amount: number;
   }>;
+  /**
+   * Arrays of channels the customer can access.
+   */
   channel_ids?: number[];
-};
+}

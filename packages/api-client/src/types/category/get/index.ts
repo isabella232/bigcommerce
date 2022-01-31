@@ -1,15 +1,24 @@
-import { Category } from '..';
+import { Category, MetaCollection } from '../..';
 /**
- * Bigcommerce getCategory response
+ * Category collection response.
  */
-export type CategoryResponse = {
+export interface CategoryResponse {
+  /**
+   * Collection of categories.
+   */
   data: Category[];
-  meta: unknown;
-};
+  /**
+   * Meta collection
+   */
+  meta: MetaCollection;
+}
 
 /**
- * Bigcommerce getCategory params
+ * Necessary parameters to get categories.
  */
-export type CategoryParameters = {
+export interface CategoryParameters {
+  /**
+   * Unique ID of the category.
+   */
   categoryId?: number;
-};
+}

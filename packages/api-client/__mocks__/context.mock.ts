@@ -1,4 +1,6 @@
-export const sdkSettings = {
+import { MiddlewareSDKSettingsConfig } from '../src/types';
+
+export const sdkSettings: MiddlewareSDKSettingsConfig = {
   logLevel: '',
   clientId: '',
   secret: '',
@@ -7,7 +9,7 @@ export const sdkSettings = {
   storeHash: '',
   accessToken: '',
   headers: { 'Accept-Encoding': '' },
-  apiVersion: '',
+  apiVersion: 'v3',
   devtoolsAppClientId: '',
   devtoolsAppSecret: '',
   storeUrl: '',
@@ -23,11 +25,7 @@ export const contextMock = {
   config: {
     sdkSettings,
     secureCookies: true,
-    currency: '',
-    lang: '',
-    mediaHost: '',
-    jwtTokenExpirationDays: 2,
-    devtoolsAppSecret: 'secret123'
+    jwtTokenExpirationDays: 2
   },
   res: {} as any,
   req: {} as any

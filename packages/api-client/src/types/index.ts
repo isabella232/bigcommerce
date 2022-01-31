@@ -1,3 +1,4 @@
+export * from './formFields';
 export * from './address';
 export * from './cart';
 export * from './category';

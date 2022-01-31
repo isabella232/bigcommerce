@@ -16,7 +16,7 @@ export const deleteCustomerAddress: Endpoints['deleteCustomerAddress'] = async (
     queryString.stringifyUrl(
       {
         url: BigCommerceEndpoints.addresses,
-        query: params
+        query: { ...params }
       },
       {
         arrayFormat: 'comma'

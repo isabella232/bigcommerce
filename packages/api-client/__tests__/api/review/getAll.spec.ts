@@ -47,7 +47,7 @@ describe('[BigCommerce-api-client] get product reviews', () => {
     expect(contextMock.client.v3.get).toHaveBeenCalledWith(
       stringifyUrl({
         url: `/catalog/products/${expectedProductId}/reviews`,
-        query
+        query: { ...query }
       })
     );
   });
