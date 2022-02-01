@@ -26,7 +26,13 @@
     </div>
 
     <div v-else-if="isError" class="error message">
-      <h1>{{ $t('An error occured during the checkout.') }}</h1>
+      <SfHeading
+        :title="$t('An error occured during the checkout.')"
+        :level="1"
+        :description="errorMessage"
+        class="thank-you__error-heading"
+      />
+
       <SfButton class="form__button" @click="tryAgain">
         {{ $t('Try again') }}
       </SfButton>
@@ -36,8 +42,18 @@
   </div>
 </template>
 <script>
-import { SfButton, SfCallToAction, SfLoader } from '@storefront-ui/vue';
-import { computed, onMounted, ref } from '@vue/composition-api';
+import {
+  SfButton,
+  SfCallToAction,
+  SfHeading,
+  SfLoader
+} from '@storefront-ui/vue';
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref
+} from '@vue/composition-api';
 import { embedCheckout } from '@bigcommerce/checkout-sdk';
 import {
   useCart,
@@ -46,11 +62,12 @@ import {
 } from '@vue-storefront/bigcommerce';
 import OrderSummary from '../components/OrderSummary.vue';
 
-export default {
+export default defineComponent({
   name: 'Checkout',
   components: {
     SfButton,
     SfCallToAction,
+    SfHeading,
     SfLoader,
     OrderSummary
   },
@@ -65,6 +82,8 @@ export default {
 
     const isSuccess = ref(false);
     const isError = ref(false);
+    const errorMessage = ref('');
+
     const onError = () => {
       document.querySelector('#checkout').innerHTML = '';
       isError.value = true;
@@ -76,7 +95,8 @@ export default {
 
         const embeddedCheckoutUrl =
           cart.value?.redirect_urls?.embedded_checkout_url;
-        embedCheckout({
+
+        const service = embedCheckout({
           containerId: 'checkout',
           url: embeddedCheckoutUrl,
           onComplete: async () => {
@@ -104,6 +124,11 @@ export default {
             );
           }
         });
+
+        service.catch((err) => {
+          isError.value = true;
+          errorMessage.value = err.message;
+        });
       }
     });
 
@@ -120,16 +145,21 @@ export default {
       tryAgain,
       isSuccess,
       isError,
+      errorMessage,
       order: computed(() => order.value),
       isOrderLoading
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>
 .thank-you {
   width: 100%;
+
+  &__error-heading {
+    margin: var(--spacer-xl) 0;
+  }
 }
 
 .banner {

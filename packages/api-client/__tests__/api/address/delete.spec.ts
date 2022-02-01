@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 
 const jwtVerifyMock = jest.spyOn(jwt, 'verify');
 
-describe('[bigcommerce-api-client] get an address', () => {
+describe('[bigcommerce-api-client] delete an address', () => {
   const addressId = 123;
   const params: DeleteAddressParameters = {
     'id:in': [addressId]
