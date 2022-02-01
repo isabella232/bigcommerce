@@ -461,7 +461,17 @@ export default defineComponent({
 });
 </script>
 
+<style lang="scss">
+.product {
+  .sf-select__label {
+    padding-left: 0;
+  }
+}
+</style>
 <style lang="scss" scoped>
+.sf-select.is-selected {
+  --select-label-font-size: var(--font-size--lg);
+}
 #product {
   box-sizing: border-box;
   @include for-desktop {
