@@ -1,4 +1,4 @@
-import { CategoryTree } from '../../types/useCategory';
+import { CategoryTree } from '../../types';
 import { flattenCategoryTree } from './flattenCategoryTree';
 
 /**

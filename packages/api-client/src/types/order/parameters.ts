@@ -111,5 +111,8 @@ export type GetOrderShippingAddressesParameters = GetOrderProductsParameters;
  * Definition of get order by cart request parameters
  */
 export interface GetOrderByCartParameters {
+  /**
+   * The cart ID of the order.
+   */
   cartId: string;
 }

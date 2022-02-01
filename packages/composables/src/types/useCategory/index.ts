@@ -1,70 +1,80 @@
+import {
+  Crumb,
+  Category as CategoryAPI,
+  CategoryTree as CategoryTreeAPI
+} from '@vue-storefront/bigcommerce-api';
+
 /**
- * UseCategory search params
+ * Search params for useCategory composable.
  */
-export type UseCategorySearchParams = {
+export interface UseCategorySearchParams {
+  /**
+   * ID of the category.
+   */
   categoryId?: number;
+
+  /**
+   * Slug of the category.
+   */
   categorySlug?: string;
-};
+}
 
 /**
- * Breadcrumbs for Category
+ * Category model used in useCategory composable.
  */
-export type Crumb = {
-  text: string;
-  link: string;
-};
-
-/**
- * CustomUrl for Category
- */
-export type CustomUrl = {
-  url: string;
-  is_customized?: string;
-};
-
-/**
- * Category for useCategory
- */
-export type Category = {
-  id: number;
-  parent_id: number;
-  name: string;
-  description?: string;
-  views?: number;
-  sort_order?: number;
-  page_title?: string;
-  meta_keywords?: string[];
-  meta_description?: string;
-  layout_file?: string;
-  image_url?: string;
-  is_visible?: boolean;
-  search_keywords?: string;
-  default_product_sort?: string;
-  custom_url?: CustomUrl;
+export interface Category extends CategoryAPI {
+  /**
+   * Category breadcrumbs.
+   */
   breadcrumbs?: Crumb[];
+
+  /**
+   * Nested categories.
+   */
   items: Category[];
+
+  /**
+   * Flag if category is current.
+   */
   isCurrent?: boolean;
-};
+}
 
 /**
- * CategoryTree for useCategory
+ * Category tree model used in useCategory composable.
  */
-export type CategoryTree = {
-  id: number;
-  parent_id: number;
-  name: string;
-  is_visible?: boolean;
-  url?: string;
+export interface CategoryTree extends CategoryTreeAPI {
+  /**
+   * Category tree breadcrumbs.
+   */
   breadcrumbs?: Crumb[];
+
+  /**
+   * Flag if category tree is current.
+   */
   isCurrent?: boolean;
+
+  /**
+   * Nested category trees.
+   */
   children?: CategoryTree[];
-};
+}
 
 /**
- * SearchResultNavigationItem for categories from the search results
+ * Search result navigation item model.
  */
-export type SearchResultNavigationItem = {
+export interface SearchResultNavigationItem {
+  /**
+   * Search result item slug.
+   */
   slug: string;
+
+  /**
+   * Search result item label.
+   */
   label: string;
+
+  /**
+   * Search result item key.
+   */
   key: string;
-};
+}

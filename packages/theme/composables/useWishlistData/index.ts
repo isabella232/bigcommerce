@@ -2,7 +2,7 @@ import { AgnosticPrice, AgnosticTotals } from '@vue-storefront/core';
 import {
   Wishlist,
   WishlistItem,
-  WishlistParams
+  WishlistItemParams
 } from '@vue-storefront/bigcommerce';
 import { Product } from '@vue-storefront/bigcommerce-api';
 import { useProductData } from '../useProductData';
@@ -28,7 +28,7 @@ export const useWishlistData = () => {
 
   const getItem = (
     wishlist: Wishlist,
-    params: WishlistParams
+    params: WishlistItemParams
   ): WishlistItem | undefined => {
     return wishlist?.items.find(
       (item) =>

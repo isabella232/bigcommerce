@@ -62,7 +62,7 @@ export interface User {
    */
   date_modified?: string;
   /**
-   * It determines if the customer is signed up to receive either product review or abandoned cart emails or recieve both emails.
+   * It determines if the customer is signed up to receive product review or abandoned cart emails or recieve both emails.
    */
   accepts_product_review_abandoned_cart_emails?: boolean;
   /**

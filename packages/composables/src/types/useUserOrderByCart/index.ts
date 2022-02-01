@@ -4,12 +4,18 @@ import {
   OrderByCartResponse
 } from '@vue-storefront/bigcommerce-api';
 
+/**
+ * `useUserOrderByCart` composable errors.
+ */
 export interface UseUserOrderByCartErrors {
+  /**
+   * Errors occurred during `load` action.
+   */
   load: Error;
 }
 
 /**
- * Return value of useUserOrderByCart composable.
+ * Return value of `useUserOrderByCart` composable.
  */
 export interface UseUserOrderByCartResponse {
   /**

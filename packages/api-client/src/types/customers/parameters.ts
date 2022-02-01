@@ -82,7 +82,7 @@ export interface GetCustomersParameters {
 /**
  * Customer form field.
  */
-interface CustomerFormField {
+export interface CustomerFormField {
   /**
    * Form field ID.
    */
@@ -114,7 +114,7 @@ export interface CreateCustomerParameters {
    */
   password: string;
   /**
-   * It determines if the customer is signed up to receive either product review or abandoned cart emails or recieve both emails.
+   * It determines if the customer is signed up to receive product review or abandoned cart emails or recieve both emails.
    */
   accepts_product_review_abandoned_cart_emails: boolean;
   /**
@@ -132,9 +132,9 @@ export interface CreateCustomerParameters {
 }
 
 /**
- * Parameters to validate credentials.
+ * Parameters to authenticate customer.
  */
-export interface ValidateCredentialsParameter {
+export interface AuthCustomerParams {
   /**
    * Customer email address.
    */
@@ -149,25 +149,17 @@ export interface ValidateCredentialsParameter {
    */
   channel_id?: number;
 }
+/**
+ * Parameters to validate credentials.
+ * Type alias for `AuthCustomerParams`.
+ */
+export type ValidateCredentialsParameter = AuthCustomerParams;
 
 /**
  * Parameters to login customer.
+ * Type alias for `AuthCustomerParams`.
  */
-export interface LoginCustomerParameters {
-  /**
-   * Customer email address.
-   */
-  email: string;
-  /**
-   * Customer password.
-   */
-  password: string;
-  /**
-   * ChannelId to check the customer credentials against.
-   * If this field is empty BigCommerce will use channel 1.
-   */
-  channel_id?: number;
-}
+export type LoginCustomerParameters = AuthCustomerParams
 
 /**
  * Parameters to update customer form fields.
@@ -238,7 +230,7 @@ export interface UpdateCustomerParameters {
    */
   authentication?: Authentication;
   /**
-   * It determines if the customer is signed up to receive either product review or abandoned cart emails or recieve both emails.
+   * It determines if the customer is signed up to receive product review or abandoned cart emails or recieve both emails.
    */
   accepts_product_review_abandoned_cart_emails?: boolean;
   /**

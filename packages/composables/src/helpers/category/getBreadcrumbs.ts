@@ -1,4 +1,5 @@
-import { CategoryTree, Crumb } from '../../types/useCategory';
+import { Crumb } from '@vue-storefront/bigcommerce-api';
+import { CategoryTree } from '../../types/useCategory';
 import { buildBreadcrumbs } from './buildBreadcrumbs';
 import { flattenCategoryTree } from './flattenCategoryTree';
 

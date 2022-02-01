@@ -4,7 +4,13 @@ import {
   OrderProductResponse
 } from '@vue-storefront/bigcommerce-api';
 
+/**
+ * `useUserOrderProducts` composable errors.
+ */
 export interface UseUserOrderProductsErrors {
+  /**
+   * Errors occurred during `load` action.
+   */
   load: Error;
 }
 
