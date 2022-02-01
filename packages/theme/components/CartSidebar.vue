@@ -105,7 +105,14 @@
             <SfLink @click.prevent="clearCart" class="my-cart__clear">
               {{ $t('Clear cart') }}
             </SfLink>
-            <nuxt-link :to="localePath({ name: 'shipping' })">
+            <nuxt-link
+              :to="
+                localePath({
+                  name: 'shipping',
+                  query: { t: new Date().getTime() }
+                })
+              "
+            >
               <SfButton
                 class="sf-button--full-width color-secondary"
                 @click="toggleCartSidebar"

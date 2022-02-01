@@ -13,7 +13,7 @@
         @click="continueShopping"
       >
         <template #description>
-          <div v-if="order" class="banner__order-number">
+          <div v-if="order && !isOrderLoading" class="banner__order-number">
             <span>{{ $t('Order No.') }}</span>
             <strong>&nbsp;{{ order.id }}</strong>
           </div>
