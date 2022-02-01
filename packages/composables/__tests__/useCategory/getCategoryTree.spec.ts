@@ -4,7 +4,7 @@ import {
   getBreadcrumbs,
   getCategoryById,
   getCategoryBySlug
-} from '../../src/helpers/category';
+} from '../../../theme/composables/useCategoryData';
 import { CategoryTree } from '../../src/types/useCategory';
 
 const contextMock = {
@@ -21,7 +21,10 @@ describe('[bigcommerce-composables] getCategoryTree', () => {
   });
 
   it('it should return a category tree from api', async () => {
-
+    const i18n = {
+      t: jest.fn((str)=>str)
+    };
+    const localePath = jest.fn((str)=>str);
     const categories: CategoryTree[] = await contextMock.$bigcommerce.api.getCategoryTree();
     expect(contextMock.$bigcommerce.api.getCategoryTree).toHaveBeenCalledTimes(1);
 
@@ -59,7 +62,7 @@ describe('[bigcommerce-composables] getCategoryTree', () => {
       `
     );
 
-    const breadcrumbs = getBreadcrumbs(39, categories);
+    const breadcrumbs = getBreadcrumbs(39, categories, localePath, i18n);
     expect(breadcrumbs).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -77,7 +80,7 @@ describe('[bigcommerce-composables] getCategoryTree', () => {
       ]
     `);
 
-    const breadcrumbs2 = buildBreadcrumbs(39, [], categories);
+    const breadcrumbs2 = buildBreadcrumbs(39, [], categories, localePath, i18n);
     expect(breadcrumbs2).toMatchInlineSnapshot(`
       Array [
         Object {

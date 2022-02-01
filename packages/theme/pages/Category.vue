@@ -323,6 +323,7 @@ import CategoryPageHeader from '~/components/CategoryPageHeader';
 import { useProductData } from '../composables/useProductData';
 import { useWishlistData } from '../composables/useWishlistData';
 import { ProductsSortEnum } from '@vue-storefront/bigcommerce-api';
+import { useContext } from '@nuxtjs/composition-api';
 
 // TODO(addToCart qty, horizontal): https://github.com/vuestorefront/storefront-ui/issues/1606
 export default defineComponent({
@@ -350,13 +351,18 @@ export default defineComponent({
     const { categories, search: categorySearch } = useCategory('category-tree');
     const productData = useProductData();
     const { categorySlug } = th.getFacetsFromURL();
-
+    const { localePath, i18n } = useContext();
     const productsQuantity = ref({});
     const products = computed(() => productsResult.value?.data);
     const categoryTree = computed(() => {
       let categoriesData = categories.value;
       const category = getCategoryBySlug(categorySlug, categories.value);
-      const breadcrumbs = getBreadcrumbs(category?.id, categories.value);
+      const breadcrumbs = getBreadcrumbs(
+        category?.id,
+        categories.value,
+        localePath,
+        i18n
+      );
       const rootSlug =
         breadcrumbs && breadcrumbs[1] ? breadcrumbs[1]?.link?.substring(2) : '';
       const rootCategory = getCategoryBySlug(rootSlug, categoriesData);
@@ -385,17 +391,20 @@ export default defineComponent({
       );
       return category?.name;
     });
-
     const breadcrumbs = computed(() => {
       if (!categories.value || !categories.value?.length) {
         return '';
       }
 
       const category = getCategoryBySlug(categorySlug, categories.value);
-      const breadcrumbs = getBreadcrumbs(category?.id, categories.value);
+      const breadcrumbs = getBreadcrumbs(
+        category?.id,
+        categories.value,
+        localePath,
+        i18n
+      );
       return breadcrumbs;
     });
-
     const isProductsLoading = ref(false);
 
     onSSR(async () => {

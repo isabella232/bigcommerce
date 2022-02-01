@@ -5,20 +5,26 @@ import { getCategoryById } from './getCategoryById';
  * Build the breadcrumbs
  * @param categoryId
  * @param breadcrumbs
+ * @param localePath
+ * @param i18n
  * @returns Crumb[]
  */
 export function buildBreadcrumbs(
   categoryId: number,
   breadcrumbs: Crumb[] = [],
-  categories: CategoryTree[]
+  categories: CategoryTree[],
+  localePath: (fn: string) => string,
+  i18n: {
+    t: (fn: string) => string
+  }
 ): Crumb[] {
   if (categoryId) {
     const category: CategoryTree = getCategoryById(categoryId, categories);
     if (category) {
-      const crumb: Crumb = { text: category.name, link: `/c${category.url}` };
+      const crumb: Crumb = { text: i18n.t(category.name), link: localePath(`/c${category.url}`) };
       breadcrumbs.push(crumb);
       if (category.parent_id) {
-        return buildBreadcrumbs(category.parent_id, breadcrumbs, categories);
+        return buildBreadcrumbs(category.parent_id, breadcrumbs, categories, localePath, i18n);
       }
     }
   }

@@ -33,9 +33,7 @@ const useUiHelpers = () => {
 
   const getFacetsFromURL = () => {
     const { query, path } = instance.$router.history.current;
-    const categorySlug = (/\/$/.test(path) ? path : `${path}/`)
-      .replace(/\/\//g, '/')
-      .replace(/^\/c/, '');
+    const categorySlug = `/${path.split('/c/').pop()}${/\/$/.test(path) ? '' : '/'}`;
     return {
       categorySlug,
       page: parseInt(query.page, 10) || 1,

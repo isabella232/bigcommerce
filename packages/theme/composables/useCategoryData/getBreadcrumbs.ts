@@ -6,17 +6,25 @@ import { flattenCategoryTree } from './flattenCategoryTree';
  * Build the breadcrumbs
  * @param categoryId
  * @param breadcrumbs
+ * @param localePath
+ * @param i18n
  * @returns Crumb[]
  */
 export function getBreadcrumbs(
   categoryId: number,
-  categories: Readonly<CategoryTree[]> = []
+  categories: Readonly<CategoryTree[]> = [],
+  localePath: (fn: string) => string,
+  i18n: {
+    t: (fn: string) => string
+  }
 ): Crumb[] {
   const flattenedCategories = flattenCategoryTree(categories);
   const breadcrumbs: Crumb[] = buildBreadcrumbs(
     categoryId,
     [],
-    flattenedCategories
+    flattenedCategories,
+    localePath,
+    i18n
   );
-  return [{ text: 'Home', link: '/' }, ...breadcrumbs.reverse()];
+  return [{ text: i18n.t('Home'), link: localePath('/') }, ...breadcrumbs.reverse()];
 }

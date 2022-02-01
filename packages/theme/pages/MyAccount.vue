@@ -38,6 +38,7 @@
 <script>
 import { SfBreadcrumbs, SfContentPages } from '@storefront-ui/vue';
 import { computed, onBeforeUnmount, ref } from '@vue/composition-api';
+import { useContext } from '@nuxtjs/composition-api';
 import { useUser } from '@vue-storefront/bigcommerce';
 import MyProfile from './MyAccount/MyProfile';
 import ShippingDetails from './MyAccount/ShippingDetails';
@@ -63,6 +64,7 @@ export default {
     const { $router, $route, $i18n } = context.root;
     const { logout } = useUser();
     const isMobile = computed(() => mapMobileObserver().isMobile.get());
+    const { localePath } = useContext();
     const activePage = computed(() => {
       const { pageName } = $route.params;
 
@@ -80,13 +82,13 @@ export default {
     const breadcrumbs = ref([
       {
         text: $i18n.t('Home'),
-        link: '/'
+        link: localePath({ name: 'home' })
       },
       {
         text: $i18n.t('My Account'),
-        link: '/my-account'
+        link: localePath({ name: 'my-account' })
       },
-      { text: activePage.value, link: '#' }
+      { text: $i18n.t(activePage.value), link: '#' }
     ]);
 
     const changeActivePage = async (title) => {

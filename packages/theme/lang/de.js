@@ -206,5 +206,7 @@ export default {
   'Item Description': 'Produktbeschreibung',
   'Thank you for your order!': 'Vielen Dank für Ihren Auftrag!',
   'Continue shopping': 'Weiter einkaufen',
-  'Order No.': 'Bestellnummer'
+  'Order No.': 'Bestellnummer',
+  'Household Items': 'Haushaltswaren',
+  'Utility': 'Dienstprogramme'
 };

@@ -37,10 +37,10 @@
             "
             :special="
               productData.getPrice(product, activeVariant).special &&
-                $n(
-                  productData.getPrice(product, activeVariant).special,
-                  'currency'
-                )
+              $n(
+                productData.getPrice(product, activeVariant).special,
+                'currency'
+              )
             "
           />
           <div>
@@ -120,16 +120,15 @@
                 class="sf-add-to-cart__button"
                 :disabled="
                   loading ||
-                    (stock.enabled &&
-                      (stock.current <= 0 || stock.current < qty))
+                  (stock.enabled && (stock.current <= 0 || stock.current < qty))
                 "
                 @click="
                   addItem({
                     product,
                     quantity: parseInt(qty),
                     customQuery: {
-                      variant_id: activeVariant && activeVariant.id
-                    }
+                      variant_id: activeVariant && activeVariant.id,
+                    },
                   })
                 "
               >
@@ -142,7 +141,7 @@
             v-else
             :message="
               activeVariant.purchasing_disabled_message ||
-                $t('Currently unavailable')
+              $t('Currently unavailable')
             "
             type="warning"
           />
@@ -260,9 +259,7 @@ import {
   productGetters,
   useReview
 } from '@vue-storefront/bigcommerce';
-import {
-  ReviewStatus
-} from '@vue-storefront/bigcommerce-api';
+import { ReviewStatus } from '@vue-storefront/bigcommerce-api';
 import { onSSR } from '@vue-storefront/core';
 import LazyHydrate from 'vue-lazy-hydration';
 import { useProductData } from '../composables/useProductData';
@@ -271,6 +268,7 @@ import useUiHelpers from '~/composables/useUiHelpers';
 import useReviewData from '~/composables/useReviewData';
 import { getBreadcrumbs } from '~/composables/useCategoryData';
 import { useCategory } from '@vue-storefront/bigcommerce';
+import { useContext } from '@nuxtjs/composition-api';
 
 export default defineComponent({
   name: 'Product',
@@ -289,6 +287,7 @@ export default defineComponent({
     const openTab = ref(1);
     const tabsRef = ref(null);
     const { products, search } = useProduct('products');
+    const { localePath, i18n } = useContext();
     const {
       products: relatedProducts,
       search: searchRelatedProducts,
@@ -296,9 +295,8 @@ export default defineComponent({
     } = useProduct('relatedProducts');
     const { addItem, loading } = useCart();
     const productData = useProductData();
-    const { reviews: productReviews, search: searchReviews } = useReview(
-      'productReviews'
-    );
+    const { reviews: productReviews, search: searchReviews } =
+      useReview('productReviews');
     const product = computed(() => products.value?.data?.[0]);
     const options = computed(() => productData.getOptions(product.value));
     const activeVariant = ref();
@@ -333,7 +331,12 @@ export default defineComponent({
       }
 
       const categoryId = product.value.categories[0];
-      const breadcrumbs = getBreadcrumbs(categoryId, categories.value);
+      const breadcrumbs = getBreadcrumbs(
+        categoryId,
+        categories.value,
+        localePath,
+        i18n
+      );
       breadcrumbs.push({ text: product.value.name, link: '#' });
       return breadcrumbs;
     });
