@@ -30,7 +30,7 @@
                 "
                 :special-price="
                   cartData.getItemPrice(product).special &&
-                    $n(cartData.getItemPrice(product).special, 'currency')
+                  $n(cartData.getItemPrice(product).special, 'currency')
                 "
                 :stock="99999"
                 @click:remove="removeItem({ product })"
@@ -89,7 +89,10 @@
           <div v-if="totalItems">
             <SfProperty
               name="Subtotal price"
-              class="sf-property--full-width sf-property--large my-cart__total-price"
+              class="
+                sf-property--full-width sf-property--large
+                my-cart__total-price
+              "
             >
               <template #value>
                 <SfPrice
@@ -108,8 +111,8 @@
             <nuxt-link
               :to="
                 localePath({
-                  name: 'shipping',
-                  query: { t: new Date().getTime() }
+                  name: 'checkout',
+                  query: { t: new Date().getTime() },
                 })
               "
             >

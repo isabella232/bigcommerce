@@ -31,6 +31,7 @@
             <SfIcon :icon="accountIcon" size="1.25rem" />
           </SfButton>
           <SfButton
+            v-if="!isCheckoutPage"
             class="sf-button--pure sf-header__action"
             aria-label="Toggle wishlist sidebar"
             @click="toggleWishlistSidebar"
@@ -45,14 +46,17 @@
             </SfBadge>
           </SfButton>
           <SfButton
+            v-if="!isCheckoutPage"
             class="sf-button--pure sf-header__action"
             aria-label="Toggle cart sidebar"
             @click="toggleCartSidebar"
           >
             <SfIcon class="sf-header__icon" icon="empty_cart" size="1.25rem" />
-            <SfBadge :style="{ display: cartTotalItems ? 'block' : 'none' }" class="sf-badge--number badge">{{
-              cartTotalItems
-            }}</SfBadge>
+            <SfBadge
+              :style="{ display: cartTotalItems ? 'block' : 'none' }"
+              class="sf-badge--number badge"
+              >{{ cartTotalItems }}</SfBadge
+            >
           </SfButton>
         </div>
       </template>
@@ -62,6 +66,7 @@
           :placeholder="$t('Search for items')"
           aria-label="Search"
           class="sf-header__search"
+          :class="{ 'search-hidden': isCheckoutPage }"
           :value="term"
           @input="handleSearch"
           @keydown.enter="handleSearch($event)"
@@ -97,6 +102,7 @@
       </template>
     </SfHeader>
     <SearchResults
+      v-if="!isCheckoutPage"
       :visible="isSearchOpen"
       :result="result"
       @close="closeSearch"
@@ -175,13 +181,14 @@ export default defineComponent({
     const searchBarRef = ref(null);
     const result = ref({});
     const isMobile = ref(mapMobileObserver().isMobile.get());
-    const { categories: categoryResults, search: categorySearch } = useCategory(
-      'category-tree'
-    );
+    const { categories: categoryResults, search: categorySearch } =
+      useCategory('category-tree');
     const navigation = computed(() =>
       buildCategoryNavigation(categoryResults.value)
     );
-
+    const isCheckoutPage = computed(() => {
+      return Boolean(root.$route.name.includes('checkout'));
+    });
     const wishlistTotalItems = computed(() =>
       wishlistHelpers.getTotalItems(wishlist.value)
     );
@@ -272,6 +279,7 @@ export default defineComponent({
       setTermForUrl,
       term,
       isSearchOpen,
+      isCheckoutPage,
       closeSearch,
       handleSearch,
       result,
@@ -311,5 +319,9 @@ export default defineComponent({
   position: absolute;
   bottom: 40%;
   left: 40%;
+}
+
+.search-hidden {
+  display: none;
 }
 </style>
