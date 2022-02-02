@@ -33,10 +33,19 @@ export default {
     ]
   },
   loading: { color: '#fff' },
+  // PWA support
+  pwa: {
+    meta: {
+      // eslint-disable-next-line camelcase
+      theme_color: '#5ECE7B',
+      name: 'Vue Storefront with BigCommerce'
+    }
+  },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/pwa',
     // to core
     '@nuxt/typescript-build',
     '@nuxtjs/style-resources',
