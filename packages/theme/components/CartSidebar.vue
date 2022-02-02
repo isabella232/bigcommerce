@@ -28,6 +28,7 @@
                 :regular-price="
                   $n(cartData.getItemPrice(product).regular, 'currency')
                 "
+                :has-more-actions="false"
                 :special-price="
                   cartData.getItemPrice(product).special &&
                   $n(cartData.getItemPrice(product).special, 'currency')
@@ -61,6 +62,9 @@
                   </div>
                 </template>
                 <template #actions>
+                  <div></div>
+                </template>
+                <template #more-actions>
                   <div></div>
                 </template>
               </SfCollectedProduct>
