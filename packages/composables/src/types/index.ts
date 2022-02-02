@@ -35,6 +35,9 @@ interface AppConfig {
    * Cookie interface.
    */
   $cookies: NuxtCookies;
+  /**
+   * Config.
+   */
   $config: any;
 }
 
@@ -66,15 +69,12 @@ export type BigcommerceIntegrationContext = IntegrationContext<
  * $vsf Context.
  */
 export interface Context {
+  /**
+   * BigCommerce integration context.
+   */
   $bigcommerce: BigcommerceIntegrationContext;
+  /**
+   * Other context properties.
+   */
   [key: string]: any;
 }
-
-// TODO types
-export type TODO = any;
-
-export type UseBillingAddParams = TODO;
-
-export type UseSearchParams = TODO;
-
-export type UseShippingAddParams = TODO;

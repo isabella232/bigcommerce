@@ -5,4 +5,8 @@ import type {
 import { Wishlist, WishlistItem } from '../types';
 import { params } from './params';
 
+/**
+ * Managing wishlist for authenticated users.
+ * Loading the wishlist, adding/removing products.
+ */
 export const useWishlist = useWishlistFactory<Wishlist, WishlistItem, Product>(params);

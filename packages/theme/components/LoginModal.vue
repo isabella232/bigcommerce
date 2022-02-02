@@ -62,14 +62,6 @@
             </SfButton>
           </form>
         </ValidationObserver>
-        <div class="action">
-          <SfButton
-            class="sf-button--text"
-            @click="setCurrentScreen(SCREEN_FORGOTTEN)"
-          >
-            {{ $t('Forgotten password?') }}
-          </SfButton>
-        </div>
         <div class="bottom">
           <p class="bottom__paragraph">{{ $t('No account') }}</p>
           <SfButton
@@ -79,50 +71,6 @@
             {{ $t('Register today') }}
           </SfButton>
         </div>
-      </div>
-      <div v-else-if="currentScreen === SCREEN_FORGOTTEN">
-        <p>{{ $t('Forgot Password') }}</p>
-        <ValidationObserver v-slot="{ handleSubmit }" key="log-in">
-          <form class="form" @submit.prevent="handleSubmit(handleForgotten)">
-            <ValidationProvider rules="required|email" v-slot="{ errors }">
-              <SfInput
-                v-e2e="'forgot-modal-email'"
-                v-model="form.username"
-                :valid="!errors[0]"
-                :errorMessage="errors[0]"
-                name="email"
-                :label="$t('Forgot Password Modal Email')"
-                class="form__element"
-              />
-            </ValidationProvider>
-            <div v-if="forgotPasswordError.request">
-              {{ forgotPasswordError.request.message }}
-            </div>
-            <SfButton
-              v-e2e="'forgot-modal-submit'"
-              type="submit"
-              class="sf-button--full-width form__button"
-              :disabled="forgotPasswordLoading"
-            >
-              <SfLoader
-                :class="{ loader: forgotPasswordLoading }"
-                :loading="forgotPasswordLoading"
-              >
-                <div>{{ $t('Reset Password') }}</div>
-              </SfLoader>
-            </SfButton>
-          </form>
-        </ValidationObserver>
-      </div>
-      <div v-else-if="currentScreen === SCREEN_THANK_YOU" class="thank-you">
-        <i18n
-          tag="p"
-          class="thank-you__paragraph"
-          path="forgotPasswordConfirmation"
-        >
-          <span class="thank-you__paragraph--bold">{{ userEmail }}</span>
-        </i18n>
-        <p class="thank-you__paragraph">{{ $t('Thank You Inbox') }}</p>
       </div>
       <div v-else class="form">
         <ValidationObserver v-slot="{ handleSubmit }" key="sign-up">
@@ -237,7 +185,7 @@ import {
 } from '@storefront-ui/vue';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { required, email } from 'vee-validate/dist/rules';
-import { useUser, useForgotPassword } from '@vue-storefront/bigcommerce';
+import { useUser } from '@vue-storefront/bigcommerce';
 import { useUiState } from '~/composables';
 
 extend('email', {
@@ -266,8 +214,6 @@ export default {
   setup(_props, { root }) {
     const SCREEN_LOGIN = 'login';
     const SCREEN_REGISTER = 'register';
-    const SCREEN_THANK_YOU = 'thankYouAfterForgotten';
-    const SCREEN_FORGOTTEN = 'forgottenPassword';
 
     const { isLoginModalOpen, toggleLoginModal } = useUiState();
     const form = ref({});
@@ -282,11 +228,6 @@ export default {
       error: userError,
       isAuthenticated
     } = useUser();
-    const {
-      request,
-      error: forgotPasswordError,
-      loading: forgotPasswordLoading
-    } = useForgotPassword();
     const currentScreen = ref(SCREEN_REGISTER);
 
     const error = reactive({
@@ -353,15 +294,6 @@ export default {
 
     const handleLogin = async () => handleForm(login)();
 
-    const handleForgotten = async () => {
-      userEmail.value = form.value.username;
-      await request({ email: userEmail.value });
-
-      if (!forgotPasswordError.value.request) {
-        setCurrentScreen(SCREEN_THANK_YOU);
-      }
-    };
-
     return {
       form,
       error,
@@ -373,9 +305,6 @@ export default {
       toggleLoginModal,
       handleLogin,
       handleRegister,
-      forgotPasswordError,
-      forgotPasswordLoading,
-      handleForgotten,
       closeModal,
       userEmail,
       barTitle,
@@ -383,8 +312,6 @@ export default {
       setCurrentScreen,
       SCREEN_LOGIN,
       SCREEN_REGISTER,
-      SCREEN_THANK_YOU,
-      SCREEN_FORGOTTEN,
       acceptsMarketingEmails
     };
   }
@@ -421,7 +348,7 @@ export default {
 }
 .bottom {
   text-align: center;
-  margin-bottom: var(--spacer-lg);
+  margin: var(--spacer-lg) 0;
   font-size: var(--h3-font-size);
   font-weight: var(--font-weight--semibold);
   font-family: var(--font-family--secondary);
@@ -430,13 +357,6 @@ export default {
     margin: 0 0 var(--spacer-base) 0;
     @include for-desktop {
       margin: 0;
-    }
-  }
-}
-.thank-you {
-  &__paragraph {
-    &--bold {
-      font-weight: var(--font-weight--semibold);
     }
   }
 }

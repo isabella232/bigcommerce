@@ -83,3 +83,17 @@ export interface UserAddress {
   form_fields?: Array<FormField>;
 }
 
+/**
+ * Type alias for an array of customer addresses.
+ */
+export type UserShippingAddress = UserAddress[];
+
+/**
+ * Type alias a customer addresses.
+ */
+export type UserShippingAddressItem = UserAddress;
+
+/**
+ * User address search criteria.
+ */
+export type UserShippingAddressSearchCriteria = UserAddress;

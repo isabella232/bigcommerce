@@ -12,7 +12,7 @@ import {
 } from '..';
 
 /**
- *  Handles the product data for orders
+ * Managing product data for fulfilled and active user orders.
  */
 export const useUserOrderProducts = (
   id: string

@@ -12,7 +12,7 @@ import {
 } from '..';
 
 /**
- *  Handles the shipping data for orders
+ * Managing shipping data for fulfilled and active user orders.
  */
 export const useUserOrderByCart = (id: string): UseUserOrderByCartResponse => {
   const order: Ref<OrderByCartResponse> = sharedRef(

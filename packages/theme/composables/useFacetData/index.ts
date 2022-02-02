@@ -5,7 +5,7 @@ import { getInstance } from '../useUiHelpers';
 export const useFacetData = () => {
   const instance = getInstance();
 
-  const getSortOptions = (/* params: FacetSearchResult<Facet> */): AgnosticSort => {
+  const getSortOptions = (): AgnosticSort => {
     const { query } = instance.$router.history.current;
     const sortParams = {
       sort: query.sort,

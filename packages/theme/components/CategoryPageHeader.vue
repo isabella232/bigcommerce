@@ -1,21 +1,5 @@
 <template>
   <div class="navbar__main">
-    <LazyHydrate on-interaction>
-      <SfButton
-        class="sf-button--text navbar__filters-button"
-        :aria-label="$t('Filters')"
-        @click="toggleFilterSidebar"
-      >
-        <SfIcon
-          size="24px"
-          color="dark-secondary"
-          icon="filter2"
-          class="navbar__filters-icon"
-        />
-        {{ $t('Filters') }}
-      </SfButton>
-    </LazyHydrate>
-
     <div class="navbar__sort desktop-only">
       <span class="navbar__label">{{ $t('Sort by') }}:</span>
 
@@ -71,30 +55,21 @@
         @click="changeToCategoryListView"
       />
     </div>
-    <LazyHydrate when-idle>
-      <FiltersSidebar @close="toggleFilterSidebar" />
-    </LazyHydrate>
   </div>
 </template>
 
 <script>
 import { computed } from '@vue/composition-api';
 import { useUiHelpers, useUiState } from '~/composables';
-import { useSearch, facetGetters } from '@vue-storefront/bigcommerce';
 import { useFacetData } from '../composables/useFacetData';
-import FiltersSidebar from '~/components/FiltersSidebar';
 import { SfButton, SfIcon, SfSelect } from '@storefront-ui/vue';
-import { onSSR } from '@vue-storefront/core';
-import LazyHydrate from 'vue-lazy-hydration';
 
 export default {
   name: 'CategoryPageHeader',
   components: {
     SfButton,
     SfIcon,
-    SfSelect,
-    LazyHydrate,
-    FiltersSidebar
+    SfSelect
   },
   props: {
     pagination: {
@@ -109,22 +84,13 @@ export default {
       changeToCategoryGridView,
       changeToCategoryListView
     } = useUiState();
-    const { result, search } = useSearch();
     const { getSortOptions } = useFacetData();
 
-    const sortBy = computed(() => getSortOptions(result.value));
-    const facets = computed(() =>
-      facetGetters.getGrouped(result.value, ['color', 'size'])
-    );
-
-    onSSR(async () => {
-      await search(th.getFacetsFromURL());
-    });
+    const sortBy = computed(() => getSortOptions());
 
     return {
       th,
       sortBy,
-      facets,
       toggleFilterSidebar,
       isCategoryGridView,
       changeToCategoryGridView,
@@ -159,35 +125,6 @@ export default {
       padding: var(--spacer-xs) var(--spacer-xl);
     }
   }
-  &__filters-icon {
-    margin: 0 0 0 var(--spacer-xs);
-    order: 1;
-    @include for-desktop {
-      margin: 0 var(--spacer-xs) 0 0;
-      order: 0;
-    }
-  }
-  &__filters-button {
-    display: flex;
-    align-items: center;
-    --button-font-size: var(--font-size--base);
-    --button-text-decoration: none;
-    --button-color: var(--c-link);
-    --button-font-weight: var(--font-weight--normal);
-    @include for-mobile {
-      --button-font-weight: var(--font-weight--medium);
-      order: 2;
-    }
-    svg {
-      fill: var(--c-text-muted);
-      transition: fill 150ms ease;
-    }
-    &:hover {
-      svg {
-        fill: var(--c-primary);
-      }
-    }
-  }
   &__label {
     font-family: var(--font-family--secondary);
     font-weight: var(--font-weight--normal);
@@ -218,7 +155,7 @@ export default {
   &__sort {
     display: flex;
     align-items: center;
-    margin: 0 auto 0 var(--spacer-2xl);
+    margin: 0 auto 0 0;
   }
   &__counter {
     font-family: var(--font-family--secondary);

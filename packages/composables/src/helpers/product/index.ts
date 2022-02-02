@@ -3,6 +3,11 @@ import {
   ProductVariant
 } from '@vue-storefront/bigcommerce-api';
 
+/**
+ * Return default variant for the product or undefined in case it's not found.
+ * @param {Product} product Configurable product.
+ * @returns {ProductVariant | undefined} Product variant or undefined.
+ */
 export const getDefaultVariant = (product: Product): ProductVariant | undefined=> {
   const configuration = product.options?.reduce((acc, option) => {
     const newValue =

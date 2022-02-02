@@ -256,7 +256,6 @@ import {
 import {
   useProduct,
   useCart,
-  productGetters,
   useReview
 } from '@vue-storefront/bigcommerce';
 import { ReviewStatus } from '@vue-storefront/bigcommerce-api';
@@ -428,7 +427,6 @@ export default defineComponent({
       addItem,
       loading,
       productData,
-      productGetters,
       productGallery,
       stock,
       uiHelpers,

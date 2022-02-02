@@ -6,10 +6,14 @@ import type {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useUserShippingData = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getAddresses = (addresses: Address, criteria?: UserShippingAddressSearchCriteria): Address => {
-    // todo: filter addresses by form_fields type==='Shipping'
-    return addresses || [];
+    if (!criteria || !Object.keys(criteria).length) {
+      return addresses;
+    }
+
+    const entries = Object.entries(criteria);
+
+    return addresses.filter(address => entries.every(([key, value]) => address[key] === value));
   };
 
   const getDefault = (shipping: Address): AddressItem => {

@@ -9,36 +9,10 @@ import { UseReviewSearchParams, UseReviewAddParams, Context, UseReviewResponse }
  *
  *  @remarks
  *  The `useReview` composable has build in actions for searching and adding product reviews:
+ *
  *  - `{ search }` - Function for searching for product reviews. Result is stored in `reviews` property.
+ *
  *  - `{ add }` - Function for adding review. Review is being created with `pending` status.
- *
- *  @example
- *  Example of usage:
- *  ```vue
- *  <script>
- *  import { useReview } from '@vue-storefront/bigcommerce';
- *
- *  setup (props) {
- *    const {
- *      reviews,
- *      loading,
- *      error,
- *      search,
- *      add: addReview
- *    } = useReview('productReviews');
- *
- *    onBeforeMount(() => {
- *      search({ productId: props.productId })
- *    });
- *
- *    return {
- *      reviews,
- *      loading,
- *      addReview
- *    }
- *  }
- *  </script>
- *  ```
  */
 export const useReview = (id: string): UseReviewResponse => {
   const reviews: Ref<ProductReviewCollectionResponse> = sharedRef(null, `useReviews-reviews-${id}`);
