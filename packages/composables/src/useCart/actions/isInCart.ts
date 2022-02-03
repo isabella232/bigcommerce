@@ -9,6 +9,8 @@ export const isInCart: UseCartFactoryParams<
 >['isInCart'] = (_context, { currentCart, product }) => {
   let variantId = 0;
 
+  if (!currentCart) return false;
+
   if (product.variants?.length) {
     variantId = getDefaultVariant(product)?.id ?? 0;
   }

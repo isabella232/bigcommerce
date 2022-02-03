@@ -40,24 +40,28 @@ import WishlistSidebar from '~/components/WishlistSidebar.vue';
 import LoginModal from '~/components/LoginModal.vue';
 import LazyHydrate from 'vue-lazy-hydration';
 import Notification from '~/components/Notification';
-import { useUser, useWishlist } from '@vue-storefront/bigcommerce';
+import { useUser, useWishlist, useCart } from '@vue-storefront/bigcommerce';
 
 export default defineComponent({
   name: 'DefaultLayout',
 
   setup() {
     const route = useRoute();
-    const { isAuthenticated } = useUser();
-
+    const { isAuthenticated, load: loadUser } = useUser();
+    const { load: loadCart } = useCart();
     const { load: loadWishlist, setWishlist } = useWishlist();
 
-    onMounted(() => {
-      loadWishlist();
+    onMounted(async () => {
+      await loadUser();
+      await loadCart();
+      await loadWishlist();
     });
 
     watch(isAuthenticated, () => {
-      setWishlist(null);
-      loadWishlist();
+      if (!isAuthenticated.value) {
+        setWishlist(null);
+        loadWishlist();
+      }
     });
 
     return {
@@ -80,7 +84,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '~@storefront-ui/vue/styles';
+@import "~@storefront-ui/vue/styles";
 
 #layout {
   box-sizing: border-box;

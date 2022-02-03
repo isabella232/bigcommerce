@@ -178,8 +178,8 @@ export default defineComponent({
       isMobileMenuOpen
     } = useUiState();
     const { getFacetsFromURL } = useUiHelpers();
-    const { isAuthenticated, load: loadUser } = useUser();
-    const { cart, load: loadCart } = useCart();
+    const { isAuthenticated } = useUser();
+    const { cart } = useCart();
     const { wishlist } = useWishlist();
     const wishlistHelpers = useWishlistData();
     const { getTotalItems } = useCartData();
@@ -202,7 +202,6 @@ export default defineComponent({
 
     onSSR(async () => {
       await categorySearch();
-      await loadCart();
     });
 
     const cartTotalItems = computed(() => {
@@ -213,8 +212,6 @@ export default defineComponent({
     const accountIcon = computed(() =>
       isAuthenticated.value ? 'profile_fill' : 'profile'
     );
-
-    loadUser();
 
     // TODO: https://github.com/vuestorefront/vue-storefront/issues/4927
     const handleAccountClick = async () => {

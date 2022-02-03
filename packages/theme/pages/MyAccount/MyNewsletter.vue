@@ -56,7 +56,7 @@ export default {
     SfLink
   },
   setup() {
-    const { updateUser, user, load, loading } = useUser();
+    const { updateUser, user, loading } = useUser();
     const userData = useUserData();
     const newsletter = ref(false);
 
@@ -73,7 +73,6 @@ export default {
     };
 
     onMounted(async () => {
-      await load();
       if (user.value) {
         newsletter.value =
           user.value.accepts_product_review_abandoned_cart_emails;

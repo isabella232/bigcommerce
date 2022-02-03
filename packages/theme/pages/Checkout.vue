@@ -33,9 +33,7 @@
         class="thank-you__error-heading"
       />
 
-      <SfButton class="form__button" @click="tryAgain">
-        {{ $t('Try again') }}
-      </SfButton>
+      <SfButton class="form__button" @click="tryAgain">{{ $t('Try again') }}</SfButton>
     </div>
 
     <div id="checkout" v-if="!isSuccess"></div>
@@ -77,7 +75,7 @@ export default defineComponent({
     const router = useRouter();
     const { localePath } = useContext();
     const { cart, load: loadCart, setCart } = useCart();
-    const { logout, load: loadUser, user } = useUser();
+    const { logout, user } = useUser();
     const {
       order,
       load: loadUserOrder,
@@ -94,46 +92,42 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      if (process.client) {
-        await loadUser();
+      const embeddedCheckoutUrl =
+        cart.value?.redirect_urls?.embedded_checkout_url;
 
-        const embeddedCheckoutUrl =
-          cart.value?.redirect_urls?.embedded_checkout_url;
+      const service = embedCheckout({
+        containerId: 'checkout',
+        url: embeddedCheckoutUrl,
+        onComplete: async () => {
+          document.querySelector('#checkout').innerHTML = '';
+          isSuccess.value = true;
 
-        const service = embedCheckout({
-          containerId: 'checkout',
-          url: embeddedCheckoutUrl,
-          onComplete: async () => {
-            document.querySelector('#checkout').innerHTML = '';
-            isSuccess.value = true;
-
-            if (cart.value) {
-              await loadUserOrder({ cartId: cart.value.id });
-            }
-
-            setCart(undefined);
-            await loadCart({
-              customQuery: {
-                customerId: user?.id,
-                forceNew: true
-              }
-            });
-          },
-          onError,
-          onFrameError: onError,
-          onSignOut: async () => {
-            await logout();
-            router.replace(
-              localePath({ name: 'home' })
-            );
+          if (cart.value) {
+            await loadUserOrder({ cartId: cart.value.id });
           }
-        });
 
-        service.catch((err) => {
-          isError.value = true;
-          errorMessage.value = err.message;
-        });
-      }
+          setCart(undefined);
+          await loadCart({
+            customQuery: {
+              customerId: user?.id,
+              forceNew: true
+            }
+          });
+        },
+        onError,
+        onFrameError: onError,
+        onSignOut: async () => {
+          await logout();
+          router.replace(
+            localePath({ name: 'home' })
+          );
+        }
+      });
+
+      service.catch((err) => {
+        isError.value = true;
+        errorMessage.value = err.message;
+      });
     });
 
     const continueShopping = async () => {
