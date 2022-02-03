@@ -2,26 +2,51 @@
   <SfBottomNavigation class="navigation-bottom smartphone-only">
     <SfBottomNavigationItem
       :class="route.path == '/' ? 'sf-bottom-navigation__item--active' : ''"
-      icon="home" size="20px" label="Home"
+      icon="home"
+      size="20px"
+      label="Home"
       @click="handleHomeClick"
     />
-    <SfBottomNavigationItem icon="menu" size="20px" label="Menu" @click="toggleMobileMenu"/>
-    <SfBottomNavigationItem icon="heart" size="20px" label="Wishlist" @click="toggleWishlistSidebar"/>
-    <SfBottomNavigationItem icon="profile" size="20px" label="Account" @click="handleAccountClick"/>
+    <SfBottomNavigationItem
+      icon="menu"
+      size="20px"
+      label="Menu"
+      @click="toggleMobileMenu"
+    />
+    <SfBottomNavigationItem
+      icon="heart"
+      size="20px"
+      label="Wishlist"
+      @click="toggleWishlistSidebar"
+      v-if="!isCheckoutPage"
+    />
+    <SfBottomNavigationItem
+      icon="profile"
+      size="20px"
+      label="Account"
+      @click="handleAccountClick"
+    />
     <SfBottomNavigationItem
       label="Basket"
       icon="add_to_cart"
       @click="toggleCartSidebar"
+      v-if="!isCheckoutPage"
     >
       <template #icon>
-        <SfCircleIcon class="cart-button" aria-label="Add to cart">
+        <SfCircleIcon
+          class="cart-button"
+          aria-label="Add to cart"
+          v-if="!isCheckoutPage"
+        >
           <SfIcon
             icon="add_to_cart"
             color="white"
             size="25px"
-            :style="{margin: '0 0 0 -2px'}"
+            :style="{ margin: '0 0 0 -2px' }"
           />
-          <SfBadge v-if="cartTotalItems" class="sf-badge--number cart-badge">{{cartTotalItems}}</SfBadge>
+          <SfBadge v-if="cartTotalItems" class="sf-badge--number cart-badge">{{
+            cartTotalItems
+          }}</SfBadge>
         </SfCircleIcon>
       </template>
     </SfBottomNavigationItem>
@@ -29,7 +54,12 @@
 </template>
 
 <script>
-import { SfBottomNavigation, SfIcon, SfCircleIcon, SfBadge } from '@storefront-ui/vue';
+import {
+  SfBottomNavigation,
+  SfIcon,
+  SfCircleIcon,
+  SfBadge
+} from '@storefront-ui/vue';
 import useUiState from '../composables/useUiState';
 import { useCartData } from '../composables/useCartData';
 import { useUser, useCart } from '@vue-storefront/bigcommerce';
@@ -45,11 +75,20 @@ export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const { toggleCartSidebar, toggleWishlistSidebar, toggleLoginModal, toggleMobileMenu, isMobileMenuOpen } = useUiState();
+    const routeName = computed(() => route.value.name);
+    const {
+      toggleCartSidebar,
+      toggleWishlistSidebar,
+      toggleLoginModal,
+      toggleMobileMenu,
+      isMobileMenuOpen
+    } = useUiState();
     const { isAuthenticated } = useUser();
     const { cart } = useCart();
     const cartData = useCartData();
-
+    const isCheckoutPage = computed(() => {
+      return Boolean(routeName.value) && routeName.value.includes('checkout');
+    });
     const handleAccountClick = async () => {
       if (isAuthenticated.value) {
         return router.push('/my-account');
@@ -77,7 +116,8 @@ export default {
       toggleMobileMenu,
       cartTotalItems,
       handleAccountClick,
-      handleHomeClick
+      handleHomeClick,
+      isCheckoutPage
     };
   }
 };

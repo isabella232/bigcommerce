@@ -61,7 +61,7 @@ export default {
     const { isMobileMenuOpen, toggleMobileMenu } = useUiState();
 
     const navigate = (path) => {
-      this.toggleMobileMenu();
+      toggleMobileMenu();
       router.push(path);
     };
 
