@@ -8,7 +8,7 @@
     </LazyHydrate>
 
     <div id="layout">
-      <nuxt :key="$route.fullPath" />
+      <nuxt :key="route.fullPath" />
 
       <LazyHydrate when-visible>
         <BottomNavigation />
@@ -25,7 +25,12 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, watch } from '@vue/composition-api';
+import {
+  defineComponent,
+  onMounted,
+  useRoute,
+  watch
+} from '@nuxtjs/composition-api';
 import AppHeader from '~/components/AppHeader.vue';
 import BottomNavigation from '~/components/BottomNavigation.vue';
 import AppFooter from '~/components/AppFooter.vue';
@@ -41,6 +46,7 @@ export default defineComponent({
   name: 'DefaultLayout',
 
   setup() {
+    const route = useRoute();
     const { isAuthenticated } = useUser();
 
     const { load: loadWishlist, setWishlist } = useWishlist();
@@ -53,6 +59,10 @@ export default defineComponent({
       setWishlist(null);
       loadWishlist();
     });
+
+    return {
+      route
+    };
   },
 
   components: {

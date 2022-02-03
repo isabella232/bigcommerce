@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
-import { getCustomerAddress } from '..';
+import { getCustomerAddress } from '../get';
 import { Endpoints } from '../../../types';
 
 export const deleteCustomerAddress: Endpoints['deleteCustomerAddress'] = async (

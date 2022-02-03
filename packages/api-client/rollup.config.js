@@ -24,14 +24,20 @@ const server = {
       extensions
     }),
     typescript({
-      // eslint-disable-next-line global-require
-      typescript: require('typescript')
+      rollupCommonJSResolveHack: false,
+      useTsconfigDeclarationDir: true,
+      tslib: require.resolve('typescript')
     }),
-    commonjs()
+    commonjs({
+      extensions
+    }),
+    nodeResolve({
+      extensions
+    })
   ]
 };
 
 export default [
-  generateBaseConfig(pkg),
+  generateBaseConfig(pkg, true),
   server
 ];

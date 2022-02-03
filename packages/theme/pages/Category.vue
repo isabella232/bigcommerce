@@ -1,17 +1,10 @@
 <template>
   <div id="category">
-    <SfBreadcrumbs
-      class="breadcrumbs desktop-only"
-      :breadcrumbs="breadcrumbs"
-    />
+    <SfBreadcrumbs class="breadcrumbs desktop-only" :breadcrumbs="breadcrumbs" />
     <div class="navbar section">
       <div class="navbar__aside desktop-only">
         <LazyHydrate never>
-          <SfHeading
-            :level="3"
-            :title="$t('Categories')"
-            class="navbar__title"
-          />
+          <SfHeading :level="3" :title="$t('Categories')" class="navbar__title" />
         </LazyHydrate>
       </div>
       <CategoryPageHeader :pagination="pagination" />
@@ -24,11 +17,7 @@
             :class="{ 'loading--categories': isProductsLoading }"
             :loading="isProductsLoading"
           >
-            <SfAccordion
-              v-e2e="'categories-accordion'"
-              :open="activeCategory"
-              :show-chevron="true"
-            >
+            <SfAccordion v-e2e="'categories-accordion'" :open="activeCategory" :show-chevron="true">
               <SfAccordionItem
                 v-for="(cat, i) in categoryTree && categoryTree.items"
                 :key="i"
@@ -44,30 +33,19 @@
                             :class="
                               cat.isCurrent ? 'sidebar--cat-selected' : ''
                             "
-                          >
-                            All
-                          </nuxt-link>
+                          >All</nuxt-link>
                         </template>
                       </SfMenuItem>
                     </SfListItem>
-                    <SfListItem
-                      class="list__item"
-                      v-for="(subCat, j) in cat.children"
-                      :key="j"
-                    >
-                      <SfMenuItem
-                        :count="subCat.count || ''"
-                        :label="subCat.name"
-                      >
+                    <SfListItem class="list__item" v-for="(subCat, j) in cat.children" :key="j">
+                      <SfMenuItem :count="subCat.count || ''" :label="subCat.name">
                         <template #label="{ label }">
                           <nuxt-link
                             :to="localePath(th.getCatLink(subCat))"
                             :class="
                               subCat.isCurrent ? 'sidebar--cat-selected' : ''
                             "
-                          >
-                            {{ label }}
-                          </nuxt-link>
+                          >{{ label }}</nuxt-link>
                         </template>
                       </SfMenuItem>
                     </SfListItem>
@@ -78,15 +56,9 @@
           </SfLoader>
         </LazyHydrate>
       </div>
-      <SfLoader
-        :class="{ loading: isProductsLoading }"
-        :loading="isProductsLoading"
-      >
+      <SfLoader :class="{ loading: isProductsLoading }" :loading="isProductsLoading">
         <div class="products" v-if="!isProductsLoading">
-          <div
-            v-if="Array.isArray(products) && !products.length"
-            class="no-products-message"
-          >
+          <div v-if="Array.isArray(products) && !products.length" class="no-products-message">
             {{
               $t('We have no available products matching your search criteria.')
             }}
@@ -139,23 +111,17 @@
               @click:wishlist="
                 isInWishlist({ product })
                   ? removeItemFromWishlist({
-                      product: wishlistHelpers.getItem(wishlist, {
-                        productId: product.id,
-                        variantId: getDefaultVariant(product).id,
-                      }),
-                    })
+                    product: wishlistHelpers.getItem(wishlist, {
+                      productId: product.id,
+                      variantId: getDefaultVariant(product).id,
+                    }),
+                  })
                   : addItemToWishlist({ product })
               "
               @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
             />
           </transition-group>
-          <transition-group
-            v-else
-            appear
-            name="products__slide"
-            tag="div"
-            class="products__list"
-          >
+          <transition-group v-else appear name="products__slide" tag="div" class="products__list">
             <SfProductCardHorizontal
               v-e2e="'category-product-card'"
               v-for="(product, i) in products"
@@ -180,11 +146,11 @@
               @click:wishlist="
                 isInWishlist({ product })
                   ? removeItemFromWishlist({
-                      product: wishlistHelpers.getItem(wishlist, {
-                        productId: product.id,
-                        variantId: getDefaultVariant(product).id,
-                      }),
-                    })
+                    product: wishlistHelpers.getItem(wishlist, {
+                      productId: product.id,
+                      variantId: getDefaultVariant(product).id,
+                    }),
+                  })
                   : addItemToWishlist({ product })
               "
               @click:add-to-cart="
@@ -213,11 +179,11 @@
                   @click="
                     isInWishlist({ product })
                       ? removeItemFromWishlist({
-                          product: wishlistHelpers.getItem(wishlist, {
-                            productId: product.id,
-                            variantId: getDefaultVariant(product).id,
-                          }),
-                        })
+                        product: wishlistHelpers.getItem(wishlist, {
+                          productId: product.id,
+                          variantId: getDefaultVariant(product).id,
+                        }),
+                      })
                       : addItemToWishlist({ product })
                   "
                 >
@@ -241,13 +207,12 @@
               :visible="5"
             />
           </LazyHydrate>
-          <div
-            v-show="pagination.totalPages > 1"
-            class="products__show-on-page"
-          >
-            <span class="products__show-on-page__label">{{
-              $t('Show on page')
-            }}</span>
+          <div v-show="pagination.totalPages > 1" class="products__show-on-page">
+            <span class="products__show-on-page__label">
+              {{
+                $t('Show on page')
+              }}
+            </span>
             <LazyHydrate on-interaction>
               <SfSelect
                 :value="
@@ -263,9 +228,7 @@
                   :key="option"
                   :value="option"
                   class="products__items-per-page__option"
-                >
-                  {{ option }}
-                </SfSelectOption>
+                >{{ option }}</SfSelectOption>
               </SfSelect>
             </LazyHydrate>
           </div>
@@ -294,7 +257,12 @@ import {
   SfColor,
   SfProperty
 } from '@storefront-ui/vue';
-import { computed, ref, defineComponent } from '@vue/composition-api';
+import {
+  computed,
+  ref,
+  defineComponent,
+  useContext
+} from '@nuxtjs/composition-api';
 import {
   useCart,
   useWishlist,
@@ -314,7 +282,6 @@ import CategoryPageHeader from '~/components/CategoryPageHeader';
 import { useProductData } from '../composables/useProductData';
 import { useWishlistData } from '../composables/useWishlistData';
 import { ProductsSortEnum } from '@vue-storefront/bigcommerce-api';
-import { useContext } from '@nuxtjs/composition-api';
 
 // TODO(addToCart qty, horizontal): https://github.com/vuestorefront/storefront-ui/issues/1606
 export default defineComponent({
@@ -323,7 +290,7 @@ export default defineComponent({
     'max-age': 60,
     'stale-when-revalidate': 5
   }),
-  setup(props, context) {
+  setup() {
     const th = useUiHelpers();
     const uiState = useUiState();
     const { addItem: addItemToCart, isInCart } = useCart();
@@ -342,7 +309,7 @@ export default defineComponent({
     const { categories, search: categorySearch } = useCategory('category-tree');
     const productData = useProductData();
     const { categorySlug } = th.getFacetsFromURL();
-    const { localePath, i18n } = useContext();
+    const { localePath, i18n, error: nuxtError } = useContext();
     const productsQuantity = ref({});
     const products = computed(() => productsResult.value?.data);
     const categoryTree = computed(() => {
@@ -427,7 +394,7 @@ export default defineComponent({
       }
 
       await search(productSearchParams);
-      if (error?.value?.search) context.root.$nuxt.error({ statusCode: 404 });
+      if (error?.value?.search) nuxtError({ statusCode: 404 });
       isProductsLoading.value = false;
     });
 

@@ -153,7 +153,7 @@ import {
   SfImage,
   SfQuantitySelector
 } from '@storefront-ui/vue';
-import { computed, defineComponent } from '@vue/composition-api';
+import { computed, defineComponent } from '@nuxtjs/composition-api';
 import { useCart, useUser } from '@vue-storefront/bigcommerce';
 import { useUiState } from '~/composables';
 import { useCartData } from '../composables/useCartData';

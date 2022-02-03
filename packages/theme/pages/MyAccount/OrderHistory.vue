@@ -135,7 +135,7 @@ import {
   SfLink,
   SfLoader
 } from '@storefront-ui/vue';
-import { computed, defineComponent, ref } from '@vue/composition-api';
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api';
 import {
   useUserOrder,
   useUserOrderProducts

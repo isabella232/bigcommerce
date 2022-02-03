@@ -1,9 +1,6 @@
 <template>
   <div id="my-account">
-    <SfBreadcrumbs
-      class="breadcrumbs desktop-only"
-      :breadcrumbs="breadcrumbs"
-    />
+    <SfBreadcrumbs class="breadcrumbs desktop-only" :breadcrumbs="breadcrumbs" />
     <SfContentPages
       v-e2e="'my-account-content-pages'"
       title="My Account"
@@ -37,8 +34,14 @@
 </template>
 <script>
 import { SfBreadcrumbs, SfContentPages } from '@storefront-ui/vue';
-import { computed, onBeforeUnmount, ref } from '@vue/composition-api';
-import { useContext } from '@nuxtjs/composition-api';
+import {
+  computed,
+  onBeforeUnmount,
+  ref,
+  useContext,
+  useRoute,
+  useRouter
+} from '@nuxtjs/composition-api';
 import { useUser } from '@vue-storefront/bigcommerce';
 import MyProfile from './MyAccount/MyProfile';
 import ShippingDetails from './MyAccount/ShippingDetails';
@@ -60,16 +63,17 @@ export default {
     OrderHistory
   },
   middleware: ['is-authenticated'],
-  setup(props, context) {
-    const { $router, $route, $i18n } = context.root;
+  setup() {
+    const { i18n, localePath } = useContext();
+    const route = useRoute();
+    const router = useRouter();
     const { logout } = useUser();
     const isMobile = computed(() => mapMobileObserver().isMobile.get());
-    const { localePath } = useContext();
     const activePage = computed(() => {
-      const { pageName } = $route.params;
+      const pageName = computed(() => route.value.params.pageName);
 
-      if (pageName) {
-        return (pageName.charAt(0).toUpperCase() + pageName.slice(1)).replace(
+      if (pageName.value) {
+        return (pageName.value.charAt(0).toUpperCase() + pageName.value.slice(1)).replace(
           '-',
           ' '
         );
@@ -81,28 +85,28 @@ export default {
     });
     const breadcrumbs = ref([
       {
-        text: $i18n.t('Home'),
+        text: i18n.t('Home'),
         link: localePath({ name: 'home' })
       },
       {
-        text: $i18n.t('My Account'),
+        text: i18n.t('My Account'),
         link: localePath({ name: 'my-account' })
       },
-      { text: $i18n.t(activePage.value), link: '#' }
+      { text: i18n.t(activePage.value), link: '#' }
     ]);
 
     const changeActivePage = async (title) => {
       if (title === 'Log out') {
         await logout();
-        $router.push(context.root.localePath({ name: 'home' }));
+        router.push(localePath({ name: 'home' }));
         return;
       }
 
       const slugifiedTitle = (title || '').toLowerCase().replace(' ', '-');
       const transformedPath = `/my-account/${slugifiedTitle}`;
-      const localeTransformedPath = context.root.localePath(transformedPath);
+      const localeTransformedPath = localePath(transformedPath);
 
-      $router.push(localeTransformedPath);
+      router.push(localeTransformedPath);
     };
 
     onBeforeUnmount(() => {

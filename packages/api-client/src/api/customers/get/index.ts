@@ -1,9 +1,9 @@
+import jwt from 'jsonwebtoken';
 import queryString from 'query-string';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
 import { getCustomerIdFromCookie } from '../../../helpers/auth';
 import { COOKIE_KEY_CUSTOMER_DATA } from '../../../helpers/consts';
 import { BigcommerceIntegrationContext, Endpoints } from '../../../types';
-const jwt = require('jsonwebtoken');
 
 export const getCustomers: Endpoints['getCustomers'] = async (
   context,

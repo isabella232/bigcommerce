@@ -25,33 +25,26 @@ export default {
         rel: 'preconnect',
         href: 'https://fonts.gstatic.com',
         crossorigin: 'crossorigin'
-      },
-      {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Raleway:300,400,400i,500,600,700|Roboto:300,300i,400,400i,500,700&display=swap'
       }
     ]
   },
   loading: { color: '#fff' },
-  // PWA support
-  pwa: {
-    meta: {
-      // eslint-disable-next-line camelcase
-      theme_color: '#5ECE7B',
-      name: 'Vue Storefront with BigCommerce'
-    }
-  },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    '@nuxtjs/pwa',
     // to core
+    '@nuxtjs/composition-api/module',
     '@nuxt/typescript-build',
+    '@nuxtjs/google-fonts',
+    '@nuxtjs/pwa',
     '@nuxtjs/style-resources',
     ['@vue-storefront/nuxt', {
       // @core-development-only-start
       coreDevelopment: true,
+      logger: {
+        verbosity: 'debug'
+      },
       // @core-development-only-end
       useRawSource: {
         dev: [
@@ -126,14 +119,35 @@ export default {
       cookieKey: VSF_LOCALE_COOKIE
     }
   },
+  pwa: {
+    meta: {
+      theme_color: '#5ECE7B',
+      name: 'Vue Storefront with BigCommerce'
+    }
+  },
+  googleFonts: {
+    families: {
+      Raleway: {
+        wght: [300, 400, 500, 600, 700],
+        ital: [400]
+      },
+      Roboto: {
+        wght: [300, 400, 500, 700],
+        ital: [300, 400]
+      }
+    },
+    display: 'swap'
+  },
   styleResources: {
     scss: [require.resolve('@storefront-ui/shared/styles/_helpers.scss', { paths: [process.cwd()] })]
+  },
+  publicRuntimeConfig: {
+    theme
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     babel: {
       plugins: [
-        ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
         ['@babel/plugin-proposal-private-methods', { loose: true }]
       ]
     },
@@ -149,17 +163,5 @@ export default {
         })
       })
     ]
-  },
-  router: {
-    scrollBehavior(_to, _from, savedPosition) {
-      if (savedPosition) {
-        return savedPosition;
-      } else {
-        return { x: 0, y: 0 };
-      }
-    }
-  },
-  publicRuntimeConfig: {
-    theme
   }
 };

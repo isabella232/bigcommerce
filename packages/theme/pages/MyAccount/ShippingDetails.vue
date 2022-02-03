@@ -71,7 +71,7 @@ import UserShippingAddress from '~/components/UserShippingAddress';
 import ShippingAddressForm from '~/components/MyAccount/ShippingAddressForm';
 import { useUserShippingData } from '~/composables/useUserShippingData';
 import { useUserShipping } from '@vue-storefront/bigcommerce';
-import { ref, computed } from '@vue/composition-api';
+import { ref, computed } from '@nuxtjs/composition-api';
 import { onSSR } from '@vue-storefront/core';
 export default {
   name: 'ShippingDetails',

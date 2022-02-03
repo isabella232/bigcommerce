@@ -251,8 +251,11 @@ import {
   ref,
   computed,
   defineComponent,
-  onMounted
-} from '@vue/composition-api';
+  onMounted,
+  useContext,
+  useRouter,
+  useRoute
+} from '@nuxtjs/composition-api';
 import {
   useProduct,
   useCart,
@@ -267,7 +270,6 @@ import useUiHelpers from '~/composables/useUiHelpers';
 import useReviewData from '~/composables/useReviewData';
 import { getBreadcrumbs } from '~/composables/useCategoryData';
 import { useCategory } from '@vue-storefront/bigcommerce';
-import { useContext } from '@nuxtjs/composition-api';
 
 export default defineComponent({
   name: 'Product',
@@ -276,12 +278,16 @@ export default defineComponent({
     'max-age': 60,
     'stale-when-revalidate': 5
   }),
-  setup(props, context) {
+  setup() {
+    const { error } = useContext();
+    const router = useRouter();
+    const route = useRoute();
     const { categories, search: categorySearch } = useCategory('category-tree');
     const qty = ref(1);
-    const { id } = context.root.$route.params;
+    const id = computed(() => route.value.params.id);
+    const { query } = route.value;
     const uiHelpers = useUiHelpers();
-    const configuration = ref(context.root.$router.query);
+    const configuration = ref(query);
     const reviewsTab = 2;
     const openTab = ref(1);
     const tabsRef = ref(null);
@@ -340,11 +346,9 @@ export default defineComponent({
       return breadcrumbs;
     });
     const calculateOptions = () => {
-      const queryParams = context.root.$route.query;
-
       configuration.value = product.value.options.reduce((acc, option) => {
         const newValue =
-          queryParams[option.display_name] ??
+          query[option.display_name] ??
           option.option_values.find((optionValue) => optionValue.is_default)
             ?.label ??
           option.option_values[0].label;
@@ -367,11 +371,11 @@ export default defineComponent({
     });
 
     onSSR(async () => {
-      await search({ id, include: 'options,variants' });
+      await search({ id: id.value, include: 'options,variants' });
       await categorySearch();
 
       if (!products.value?.data?.length) {
-        context.root.$nuxt.error({ statusCode: 404 });
+        error({ statusCode: 404 });
       }
 
       if (product.value) {
@@ -388,11 +392,11 @@ export default defineComponent({
       }
     });
 
-    searchReviews({ productId: Number(id) });
+    searchReviews({ productId: Number(id.value) });
 
     const updateFilter = (filter) => {
-      context.root.$router.push({
-        path: context.root.$route.path,
+      router.push({
+        path: route.path,
         query: {
           ...configuration.value,
           ...filter

@@ -104,7 +104,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from '@vue/composition-api';
+import { defineComponent, ref, reactive } from '@nuxtjs/composition-api';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import { useUser } from '@vue-storefront/bigcommerce';
 import { useUserData } from '../../composables/useUserData';

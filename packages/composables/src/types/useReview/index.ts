@@ -1,4 +1,4 @@
-import { ComputedRef } from '@nuxtjs/composition-api';
+import { ComputedRef } from '@vue/composition-api';
 import { ProductReviewCollectionResponse } from '@vue-storefront/bigcommerce-api';
 import { UseReviewErrors } from '@vue-storefront/core';
 import { UseReviewSearchParams, UseReviewAddParams } from '../../types';

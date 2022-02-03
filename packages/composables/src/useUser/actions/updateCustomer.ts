@@ -14,7 +14,7 @@ export const updateCustomer = async (
   }
 ): Promise<User> => {
 
-  const { firstName = undefined, lastName = undefined, email = undefined, acceptsMarketingEmails = undefined } = params?.updatedUserData;
+  const { firstName = undefined, lastName = undefined, email = undefined, acceptsMarketingEmails = undefined } = params.updatedUserData;
   const id = params?.currentUser?.id;
   const updatedCustomerData = await context.$bigcommerce.api.updateCustomer({
     ...(id && {id}),

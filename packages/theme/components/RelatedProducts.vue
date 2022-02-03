@@ -70,7 +70,7 @@ import {
   useWishlist
 } from '@vue-storefront/bigcommerce';
 import { Product } from '@vue-storefront/bigcommerce-api';
-import { defineComponent, PropType } from '@vue/composition-api';
+import { defineComponent, PropType } from '@nuxtjs/composition-api';
 import { useProductData } from '../composables/useProductData';
 import { useWishlistData } from '../composables/useWishlistData';
 

@@ -129,8 +129,11 @@ import {
   defineComponent,
   ref,
   onBeforeUnmount,
-  watch
-} from '@vue/composition-api';
+  watch,
+  useRoute,
+  useRouter,
+  useContext
+} from '@nuxtjs/composition-api';
 import { useUiHelpers } from '~/composables';
 import LocaleSelector from './LocaleSelector';
 import SearchResults from '~/components/SearchResults';
@@ -162,15 +165,19 @@ export default defineComponent({
     HeaderNavigation
   },
   directives: { clickOutside },
-  setup(props, { root }) {
+  setup() {
+    const { localePath } = useContext();
     const { products, search } = useProduct('search-products');
+    const router = useRouter();
+    const route = useRoute();
+    const routeName = computed(() => route.value.name);
     const {
       toggleCartSidebar,
       toggleWishlistSidebar,
       toggleLoginModal,
       isMobileMenuOpen
     } = useUiState();
-    const { setTermForUrl, getFacetsFromURL } = useUiHelpers();
+    const { getFacetsFromURL } = useUiHelpers();
     const { isAuthenticated, load: loadUser } = useUser();
     const { cart, load: loadCart } = useCart();
     const { wishlist } = useWishlist();
@@ -187,10 +194,7 @@ export default defineComponent({
       buildCategoryNavigation(categoryResults.value)
     );
     const isCheckoutPage = computed(() => {
-      return (
-        Boolean(root?.$route?.name) &&
-        Boolean(root?.$route?.name?.includes('checkout'))
-      );
+      return Boolean(routeName.value) && routeName.value.includes('checkout');
     });
     const wishlistTotalItems = computed(() =>
       wishlistHelpers.getTotalItems(wishlist.value)
@@ -215,8 +219,8 @@ export default defineComponent({
     // TODO: https://github.com/vuestorefront/vue-storefront/issues/4927
     const handleAccountClick = async () => {
       if (isAuthenticated.value) {
-        const localeAccountPath = root.localePath({ name: 'my-account' });
-        return root.$router.push(localeAccountPath);
+        const localeAccountPath = localePath({ name: 'my-account' });
+        return router.push(localeAccountPath);
       }
 
       toggleLoginModal();
@@ -279,7 +283,6 @@ export default defineComponent({
       handleAccountClick,
       toggleCartSidebar,
       toggleWishlistSidebar,
-      setTermForUrl,
       term,
       isSearchOpen,
       isCheckoutPage,

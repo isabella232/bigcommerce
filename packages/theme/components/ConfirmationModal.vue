@@ -24,7 +24,7 @@
   </SfModal>
 </template>
 <script>
-import { ref, watch, reactive } from '@vue/composition-api';
+import { ref, watch, reactive } from '@nuxtjs/composition-api';
 import {
   SfModal,
   SfButton,

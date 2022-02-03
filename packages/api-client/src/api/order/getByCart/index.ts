@@ -1,5 +1,5 @@
 import { Endpoints, Order } from '../../../types';
-import { getOrderProducts } from '..';
+import { getOrderProducts } from '../getProducts';
 import { getOrderShippingAddresses } from '../getShippingAddresses';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
 import { stringifyUrl } from 'query-string';

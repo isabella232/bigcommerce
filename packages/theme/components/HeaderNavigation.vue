@@ -38,6 +38,7 @@
 <script>
 import { SfMenuItem, SfModal } from '@storefront-ui/vue';
 import { useUiState } from '~/composables';
+import { useRouter } from '@nuxtjs/composition-api';
 
 export default {
   name: 'HeaderNavigation',
@@ -56,17 +57,19 @@ export default {
     }
   },
   setup() {
+    const router = useRouter();
     const { isMobileMenuOpen, toggleMobileMenu } = useUiState();
+
+    const navigate = (path) => {
+      this.toggleMobileMenu();
+      router.push(path);
+    };
+
     return {
       isMobileMenuOpen,
-      toggleMobileMenu
+      toggleMobileMenu,
+      navigate
     };
-  },
-  methods: {
-    navigate(path) {
-      this.toggleMobileMenu();
-      this.$nuxt.$router.push(path);
-    }
   }
 };
 </script>

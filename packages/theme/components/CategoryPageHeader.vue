@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { computed } from '@vue/composition-api';
+import { computed } from '@nuxtjs/composition-api';
 import { useUiHelpers, useUiState } from '~/composables';
 import { useFacetData } from '../composables/useFacetData';
 import { SfButton, SfIcon, SfSelect } from '@storefront-ui/vue';

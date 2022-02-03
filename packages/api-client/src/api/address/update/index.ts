@@ -2,7 +2,7 @@ import queryString from 'query-string';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
 import { getCustomerIdFromCookie } from '../../../helpers/auth';
 import { Endpoints } from '../../../types';
-import { getCustomerAddress } from '..';
+import { getCustomerAddress } from '../get';
 
 export const updateCustomerAddress: Endpoints['updateCustomerAddress'] = async (
   context,

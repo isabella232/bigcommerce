@@ -52,8 +52,10 @@ import {
   computed,
   defineComponent,
   onMounted,
-  ref
-} from '@vue/composition-api';
+  ref,
+  useContext,
+  useRouter
+} from '@nuxtjs/composition-api';
 import { embedCheckout } from '@bigcommerce/checkout-sdk';
 import {
   useCart,
@@ -71,7 +73,9 @@ export default defineComponent({
     SfLoader,
     OrderSummary
   },
-  setup(props, context) {
+  setup() {
+    const router = useRouter();
+    const { localePath } = useContext();
     const { cart, load: loadCart, setCart } = useCart();
     const { logout, load: loadUser, user } = useUser();
     const {
@@ -119,8 +123,8 @@ export default defineComponent({
           onFrameError: onError,
           onSignOut: async () => {
             await logout();
-            context.root.$router.replace(
-              context.root.localePath({ name: 'home' })
+            router.replace(
+              localePath({ name: 'home' })
             );
           }
         });
@@ -133,7 +137,7 @@ export default defineComponent({
     });
 
     const continueShopping = async () => {
-      context.root.$router.replace(context.root.localePath({ name: 'home' }));
+      router.replace(localePath({ name: 'home' }));
     };
 
     const tryAgain = async () => {

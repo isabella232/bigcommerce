@@ -1,5 +1,5 @@
+import jwt from 'jsonwebtoken';
 import { BigcommerceIntegrationContext, COOKIE_KEY_CUSTOMER_DATA } from '../..';
-const jwt = require('jsonwebtoken');
 
 export const getCustomerIdFromCookie = (
   context: BigcommerceIntegrationContext

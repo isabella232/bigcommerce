@@ -77,7 +77,7 @@
 
 <script lang="ts">
 import { OrderByCartResponse } from '@vue-storefront/bigcommerce-api';
-import { defineComponent, onBeforeUnmount } from '@vue/composition-api';
+import { defineComponent, onBeforeUnmount } from '@nuxtjs/composition-api';
 import {
   SfHeading,
   SfTable,
@@ -91,7 +91,7 @@ import {
   mapMobileObserver,
   unMapMobileObserver
 } from '@storefront-ui/vue/src/utilities/mobile-observer.js';
-import useOrderData from '~/composables/useOrderData';
+import useOrderData from '../composables/useOrderData';
 
 export default defineComponent({
   name: 'OrderProducts',

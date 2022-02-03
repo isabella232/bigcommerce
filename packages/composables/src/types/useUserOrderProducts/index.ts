@@ -1,4 +1,4 @@
-import { ComputedRef } from '@nuxtjs/composition-api';
+import { ComputedRef } from '@vue/composition-api';
 import {
   GetOrderProductsParameters,
   OrderProductResponse

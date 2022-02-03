@@ -142,7 +142,7 @@ import {
   SfImage,
   SfLink
 } from '@storefront-ui/vue';
-import { computed, defineComponent } from '@vue/composition-api';
+import { computed, defineComponent } from '@nuxtjs/composition-api';
 import { useWishlist, useCart } from '@vue-storefront/bigcommerce';
 import { useUiState } from '~/composables';
 import { useWishlistData } from '../composables/useWishlistData';

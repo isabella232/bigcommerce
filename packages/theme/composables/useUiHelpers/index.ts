@@ -1,12 +1,11 @@
 import dayjs from 'dayjs';
-import { getCurrentInstance } from '@vue/composition-api';
+import {
+  useContext,
+  useRoute,
+  useRouter
+} from '@nuxtjs/composition-api';
 
 const nonFilters = ['page', 'sort', 'direction', 'term', 'itemsPerPage'];
-
-export const getInstance = (): any => {
-  const vm = getCurrentInstance();
-  return vm.$root;
-};
 
 const reduceFilters = (query) => (prev, curr) => {
   const makeArray = Array.isArray(query[curr]) || nonFilters.includes(curr);
@@ -17,30 +16,32 @@ const reduceFilters = (query) => (prev, curr) => {
   };
 };
 
-const getFiltersDataFromUrl = (context, onlyFilters) => {
-  const { query } = context.$router.history.current;
-
-  return Object.keys(query)
-    .filter((f) =>
-      onlyFilters ? !nonFilters.includes(f) : nonFilters.includes(f)
-    )
-    .reduce(reduceFilters(query), {});
-};
-
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useUiHelpers = () => {
-  const instance = getInstance();
+  const { $config } = useContext();
+  const route = useRoute();
+  const router = useRouter();
+
+  const getFiltersDataFromUrl = (onlyFilters) => {
+    const { query } = route.value;
+
+    return Object.keys(query)
+      .filter((f) =>
+        onlyFilters ? !nonFilters.includes(f) : nonFilters.includes(f)
+      )
+      .reduce(reduceFilters(query), {});
+  };
 
   const getFacetsFromURL = () => {
-    const { query, path } = instance.$router.history.current;
+    const { query, path } = route.value;
     const categorySlug = `/${path.split('/c/').pop()}${/\/$/.test(path) ? '' : '/'}`;
     return {
       categorySlug,
-      page: parseInt(query.page, 10) || 1,
+      page: parseInt(query.page as string, 10) || 1,
       sort: query.sort,
       direction: query.direction,
-      filters: getFiltersDataFromUrl(instance, true),
-      itemsPerPage: parseInt(query.itemsperpage, 10) || 20,
+      filters: getFiltersDataFromUrl(true),
+      itemsPerPage: parseInt(query.itemsperpage as string, 10) || 20,
       term: query.term
     };
   };
@@ -51,13 +52,13 @@ const useUiHelpers = () => {
 
   const changeSorting = (sort: string) => {
     const sortOptions =
-      instance.context.$config.theme?.productsSortOptions ?? [];
+      $config.theme?.productsSortOptions ?? [];
     const selectedOption = sortOptions.find(
       (option) => option.id === Number.parseInt(sort)
     );
 
-    const { query } = instance.$router.history.current;
-    instance.$router.push({
+    const { query } = route.value;
+    router.push({
       query: {
         ...query,
         sort: selectedOption?.value.sort,
@@ -66,42 +67,14 @@ const useUiHelpers = () => {
     });
   };
 
-  // eslint-disable-next-line
-  const changeFilters = (filters) => {
-    console.warn('[VSF] please implement useUiHelpers.changeFilters.');
-  };
-
   const changeItemsPerPage = (itemsperpage) => {
-    instance.$router.push({
+    router.push({
       query: {
-        ...getFiltersDataFromUrl(instance, false),
+        ...getFiltersDataFromUrl(false),
         itemsperpage,
         page: 1
       }
     });
-  };
-
-  // eslint-disable-next-line
-  const setTermForUrl = (term: string) => {
-    console.warn('[VSF] please implement useUiHelpers.changeSearchTerm.');
-  };
-
-  // eslint-disable-next-line
-  const isFacetColor = (facet): boolean => {
-    console.warn('[VSF] please implement useUiHelpers.isFacetColor.');
-
-    return false;
-  };
-
-  // eslint-disable-next-line
-  const isFacetCheckbox = (facet): boolean => {
-    console.warn('[VSF] please implement useUiHelpers.isFacetCheckbox.');
-
-    return false;
-  };
-
-  const getSearchTermFromUrl = () => {
-    console.warn('[VSF] please implement useUiHelpers.getSearchTermFromUrl.');
   };
 
   const formatDateString = (date: string, format = 'DD.MM.YYYY'): string => {
@@ -112,12 +85,7 @@ const useUiHelpers = () => {
     getFacetsFromURL,
     getCatLink,
     changeSorting,
-    changeFilters,
     changeItemsPerPage,
-    setTermForUrl,
-    isFacetColor,
-    isFacetCheckbox,
-    getSearchTermFromUrl,
     formatDateString
   };
 };

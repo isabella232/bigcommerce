@@ -11,15 +11,13 @@
 
     <OrderProducts
       :order="order"
-      :products="products"
-      :shippingAddress="shippingAddress"
     />
   </div>
 </template>
 
 <script lang="ts">
 import { OrderByCartResponse } from '@vue-storefront/bigcommerce-api';
-import { defineComponent } from '@vue/composition-api';
+import { defineComponent } from '@nuxtjs/composition-api';
 import { SfConfirmOrder, SfOrderReview } from '@storefront-ui/vue';
 import OrderProducts from './OrderProducts.vue';
 import { useOrderData } from '../composables/useOrderData';
