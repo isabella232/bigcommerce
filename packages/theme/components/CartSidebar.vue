@@ -31,7 +31,7 @@
                 :has-more-actions="false"
                 :special-price="
                   cartData.getItemPrice(product).special &&
-                  $n(cartData.getItemPrice(product).special, 'currency')
+                    $n(cartData.getItemPrice(product).special, 'currency')
                 "
                 :stock="99999"
                 @click:remove="removeItem({ product })"
@@ -77,6 +77,8 @@
               alt="Empty bag"
               class="empty-cart__image"
               src="/icons/empty-cart.svg"
+              :width="256"
+              :height="173"
             />
             <SfHeading
               title="Your cart is empty"
@@ -109,14 +111,14 @@
                 />
               </template>
             </SfProperty>
-            <SfLink @click.prevent="clearCart" class="my-cart__clear">
+            <SfLink link="" @click.prevent="clearCart" class="my-cart__clear">
               {{ $t('Clear cart') }}
             </SfLink>
             <nuxt-link
               :to="
                 localePath({
                   name: 'checkout',
-                  query: { t: new Date().getTime() },
+                  query: { t: new Date().getTime() }
                 })
               "
             >

@@ -75,6 +75,9 @@
                   :isAddedToCart="isInCart({ product })"
                   @click:wishlist="handleWishlistClick(product)"
                   @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
+                  imageTag="img"
+                  :imageWidth="216"
+                  :imageHeight="216"
                 />
               </div>
             </SfScrollable>
@@ -102,6 +105,9 @@
                 :isAddedToCart="isInCart({ product })"
                 @click:wishlist="handleWishlistClick(product)"
                 @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
+                imageTag="img"
+                :imageWidth="128"
+                :imageHeight="128"
               />
             </div>
           </SfMegaMenuColumn>
@@ -119,6 +125,8 @@
             class="before-results__picture"
             alt="error"
             loading="lazy"
+            :width="300"
+            :height="300"
           />
           <p class="before-results__paragraph">
             {{ $t('You haven’t searched for items yet') }}

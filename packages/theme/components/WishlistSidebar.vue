@@ -41,22 +41,23 @@
                 :special-price="
                   wishlistHelpers.getItemPrice(wishlist, wishlistItem)
                     .special &&
-                  $n(
-                    wishlistHelpers.getItemPrice(wishlist, wishlistItem)
-                      .special,
-                    'currency'
-                  )
+                    $n(
+                      wishlistHelpers.getItemPrice(wishlist, wishlistItem)
+                        .special,
+                      'currency'
+                    )
                 "
                 :stock="wishlistHelpers.getItemQty(wishlist, wishlistItem)"
-                image-width="180"
-                image-height="200"
+                :image-width="180"
+                :image-height="200"
                 @click:remove="removeItem({ product: wishlistItem })"
                 class="collected-product"
               >
                 <template #configuration>
                   <div class="collected-product__properties">
                     <SfProperty
-                      v-for="(attribute, key) in wishlistHelpers.getItemOptions(
+                      v-for="(attribute,
+                      key) in wishlistHelpers.getItemOptions(
                         wishlist,
                         wishlistItem,
                         ['color', 'size']
@@ -102,6 +103,8 @@
               src="/icons/empty-cart.svg"
               alt="Empty bag"
               class="empty-wishlist__icon"
+              :width="256"
+              :height="173"
             />
             <SfHeading
               title="Your bag is empty"
@@ -114,6 +117,7 @@
       </transition>
       <template #content-bottom>
         <SfLink
+          link=""
           @click.prevent="clear"
           class="my-wishlist__clear"
           v-if="totalItems"

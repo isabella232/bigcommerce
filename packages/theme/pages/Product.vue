@@ -10,6 +10,10 @@
           :key="productGallery.length"
           :images="productGallery"
           class="product__gallery"
+          :imageWidth="422"
+          :imageHeight="644"
+          :thumbWidth="160"
+          :thumbHeight="160"
         />
       </LazyHydrate>
 
@@ -37,10 +41,10 @@
             "
             :special="
               productData.getPrice(product, activeVariant).special &&
-              $n(
-                productData.getPrice(product, activeVariant).special,
-                'currency'
-              )
+                $n(
+                  productData.getPrice(product, activeVariant).special,
+                  'currency'
+                )
             "
           />
           <div>
@@ -120,15 +124,16 @@
                 class="sf-add-to-cart__button"
                 :disabled="
                   loading ||
-                  (stock.enabled && (stock.current <= 0 || stock.current < qty))
+                    (stock.enabled &&
+                      (stock.current <= 0 || stock.current < qty))
                 "
                 @click="
                   addItem({
                     product,
                     quantity: parseInt(qty),
                     customQuery: {
-                      variant_id: activeVariant && activeVariant.id,
-                    },
+                      variant_id: activeVariant && activeVariant.id
+                    }
                   })
                 "
               >
@@ -141,7 +146,7 @@
             v-else
             :message="
               activeVariant.purchasing_disabled_message ||
-              $t('Currently unavailable')
+                $t('Currently unavailable')
             "
             type="warning"
           />
@@ -256,11 +261,7 @@ import {
   useRouter,
   useRoute
 } from '@nuxtjs/composition-api';
-import {
-  useProduct,
-  useCart,
-  useReview
-} from '@vue-storefront/bigcommerce';
+import { useProduct, useCart, useReview } from '@vue-storefront/bigcommerce';
 import { ReviewStatus } from '@vue-storefront/bigcommerce-api';
 import { onSSR } from '@vue-storefront/core';
 import LazyHydrate from 'vue-lazy-hydration';
@@ -300,8 +301,9 @@ export default defineComponent({
     } = useProduct('relatedProducts');
     const { addItem, loading } = useCart();
     const productData = useProductData();
-    const { reviews: productReviews, search: searchReviews } =
-      useReview('productReviews');
+    const { reviews: productReviews, search: searchReviews } = useReview(
+      'productReviews'
+    );
     const product = computed(() => products.value?.data?.[0]);
     const options = computed(() => productData.getOptions(product.value));
     const activeVariant = ref();

@@ -24,8 +24,8 @@
       </form>
       <p class="notice">
         {{ $t('Read and understand') }}
-        <SfLink class="notice__link" href="#">{{ $t('Privacy') }}</SfLink> and
-        <SfLink class="notice__link" href="#">{{
+        <SfLink class="notice__link" link="#">{{ $t('Privacy') }}</SfLink> and
+        <SfLink class="notice__link" link="#">{{
           $t('Cookies Policy')
         }}</SfLink>
         {{ $t('Commercial information') }}
@@ -90,7 +90,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .tab-orphan {
   @include for-mobile {
     --tabs-title-display: none;

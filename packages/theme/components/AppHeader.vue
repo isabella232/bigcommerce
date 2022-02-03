@@ -12,6 +12,8 @@
             src="/icons/logo.svg"
             alt="Vue Storefront Next"
             class="sf-header__logo-image"
+            :width="34"
+            :height="34"
           />
         </nuxt-link>
       </template>
@@ -28,7 +30,11 @@
             aria-label="Open account button"
             @click="handleAccountClick"
           >
-            <SfIcon :icon="accountIcon" size="1.25rem" />
+            <SfIcon
+              class="sf-header__icon"
+              :icon="accountIcon"
+              size="1.25rem"
+            />
           </SfButton>
           <SfButton
             v-if="!isCheckoutPage"
@@ -188,8 +194,9 @@ export default defineComponent({
     const searchBarRef = ref(null);
     const result = ref({});
     const isMobile = ref(mapMobileObserver().isMobile.get());
-    const { categories: categoryResults, search: categorySearch } =
-      useCategory('category-tree');
+    const { categories: categoryResults, search: categorySearch } = useCategory(
+      'category-tree'
+    );
     const navigation = computed(() =>
       buildCategoryNavigation(categoryResults.value)
     );
