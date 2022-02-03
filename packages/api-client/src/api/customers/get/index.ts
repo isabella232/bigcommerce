@@ -9,20 +9,22 @@ export const getCustomers: Endpoints['getCustomers'] = async (
   context,
   params
 ) => {
-  return await context.client.v3.get(
-    queryString.stringifyUrl(
-      {
-        url: BigCommerceEndpoints.customers,
-        query: {
-          ...params,
-          'id:in': [getCustomerIdFromCookie(context)]
+  if (getCustomerIdFromCookie(context)) {
+    return await context.client.v3.get(
+      queryString.stringifyUrl(
+        {
+          url: BigCommerceEndpoints.customers,
+          query: {
+            ...params,
+            'id:in': [getCustomerIdFromCookie(context)]
+          }
+        },
+        {
+          arrayFormat: 'comma'
         }
-      },
-      {
-        arrayFormat: 'comma'
-      }
-    )
-  );
+      )
+    );
+  }
 };
 
 export function getCustomerId(
