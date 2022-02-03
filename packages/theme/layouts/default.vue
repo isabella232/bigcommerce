@@ -54,14 +54,11 @@ export default defineComponent({
     onMounted(async () => {
       await loadUser();
       await loadCart();
-      await loadWishlist();
     });
 
     watch(isAuthenticated, () => {
-      if (!isAuthenticated.value) {
-        setWishlist(null);
-        loadWishlist();
-      }
+      setWishlist(null);
+      loadWishlist();
     });
 
     return {

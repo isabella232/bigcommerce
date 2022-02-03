@@ -42,6 +42,8 @@ export const mergeWishlists = async (
   guestWishlist: Wishlist,
   wishlist: Wishlist
 ): Promise<Wishlist> => {
+  if (!guestWishlist.items.length) return wishlist;
+
   const guestWishlistItems: WishlistItem[] = guestWishlist.items
     .map(item => ({
       product_id: item.product_id,
