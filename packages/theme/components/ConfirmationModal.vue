@@ -23,8 +23,9 @@
     </transition>
   </SfModal>
 </template>
+
 <script>
-import { ref, watch, reactive } from '@nuxtjs/composition-api';
+import { defineComponent, reactive, ref, watch } from '@nuxtjs/composition-api';
 import {
   SfModal,
   SfButton,
@@ -35,7 +36,7 @@ import {
 import { useUser } from '@vue-storefront/bigcommerce';
 import { useUiState } from '~/composables';
 
-export default {
+export default defineComponent({
   name: 'ConfirmationModal',
   props: {
     onConfirm: {
@@ -138,7 +139,7 @@ export default {
       this.close();
     }
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

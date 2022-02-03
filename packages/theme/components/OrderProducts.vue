@@ -48,7 +48,7 @@
     <div class="sf-confirm-order__totals">
       <SfProperty
         :name="$t(propertiesNames[0])"
-        :value="$n(orderInfo.subtotal, 'currency')"
+        :value="$n(parseFloat(orderInfo.subtotal), 'currency')"
         class="
             sf-property--full-width
             sf-confirm-order__property sf-confirm-order__property-subtotal
@@ -57,14 +57,14 @@
       </SfProperty>
       <SfProperty
         :name="$t(propertiesNames[1])"
-        :value="$n(orderInfo.shipping.cost, 'currency')"
+        :value="$n(parseFloat(orderInfo.shipping.cost), 'currency')"
         class="sf-property--full-width sf-confirm-order__property"
       >
       </SfProperty>
       <SfDivider class="sf-confirm-order__divider" />
       <SfProperty
         :name="$t(propertiesNames[2])"
-        :value="$n(orderInfo.total, 'currency')"
+        :value="$n(parseFloat(orderInfo.total), 'currency')"
         class="
             sf-property--full-width sf-property--large
             sf-confirm-order__property-total
@@ -77,7 +77,7 @@
 
 <script lang="ts">
 import { OrderByCartResponse } from '@vue-storefront/bigcommerce-api';
-import { defineComponent, onBeforeUnmount } from '@nuxtjs/composition-api';
+import { defineComponent } from '@nuxtjs/composition-api';
 import {
   SfHeading,
   SfTable,
@@ -87,10 +87,6 @@ import {
   SfProperty,
   SfLink
 } from '@storefront-ui/vue';
-import {
-  mapMobileObserver,
-  unMapMobileObserver
-} from '@storefront-ui/vue/src/utilities/mobile-observer.js';
 import useOrderData from '../composables/useOrderData';
 
 export default defineComponent({
@@ -108,16 +104,11 @@ export default defineComponent({
 
     const order = orderData.mapOrderSummary(props.order);
 
-    onBeforeUnmount(() => {
-      unMapMobileObserver();
-    });
-
     return {
       orderInfo: order,
       orderData,
       tableHeaders: ['Item Description', 'Quantity', 'Amount'],
-      propertiesNames: ['Subtotal', 'Shipping', 'Total price'],
-      ...mapMobileObserver()
+      propertiesNames: ['Subtotal', 'Shipping', 'Total price']
     };
   },
 

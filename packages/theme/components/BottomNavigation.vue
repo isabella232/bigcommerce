@@ -63,9 +63,14 @@ import {
 import useUiState from '../composables/useUiState';
 import { useCartData } from '../composables/useCartData';
 import { useUser, useCart } from '@vue-storefront/bigcommerce';
-import { computed, useRoute, useRouter } from '@nuxtjs/composition-api';
+import {
+  computed,
+  defineComponent,
+  useRoute,
+  useRouter
+} from '@nuxtjs/composition-api';
 
-export default {
+export default defineComponent({
   components: {
     SfBottomNavigation,
     SfIcon,
@@ -120,8 +125,9 @@ export default {
       isCheckoutPage
     };
   }
-};
+});
 </script>
+
 <style lang="scss" scoped>
 .navigation-bottom {
   --bottom-navigation-z-index: 3;

@@ -1,5 +1,10 @@
 <template>
-  <SfModal v-e2e="'login-modal'" :visible="isLoginModalOpen" class="modal" @close="closeModal">
+  <SfModal
+    v-e2e="'login-modal'"
+    :visible="isLoginModalOpen"
+    class="modal"
+    @close="closeModal"
+  >
     <template #modal-bar>
       <SfBar
         class="sf-modal__bar smartphone-only"
@@ -60,12 +65,17 @@
           <SfButton
             class="sf-button--text"
             @click="setCurrentScreen(SCREEN_REGISTER)"
-          >{{ $t('Register today') }}</SfButton>
+            >{{ $t('Register today') }}</SfButton
+          >
         </div>
       </div>
       <div v-else class="form">
         <ValidationObserver v-slot="{ handleSubmit }" key="sign-up">
-          <form class="form" @submit.prevent="handleSubmit(handleRegister)" autocomplete="off">
+          <form
+            class="form"
+            @submit.prevent="handleSubmit(handleRegister)"
+            autocomplete="off"
+          >
             <ValidationProvider rules="required|email" v-slot="{ errors }">
               <SfInput
                 v-e2e="'login-modal-email'"
@@ -111,7 +121,10 @@
                 class="form__element"
               />
             </ValidationProvider>
-            <ValidationProvider :rules="{ required: { allowFalse: false } }" v-slot="{ errors }">
+            <ValidationProvider
+              :rules="{ required: { allowFalse: false } }"
+              v-slot="{ errors }"
+            >
               <SfCheckbox
                 v-e2e="'login-modal-create-account'"
                 v-model="createAccount"
@@ -130,7 +143,11 @@
               class="form__element"
             />
             <div v-if="error.register">{{ error.register }}</div>
-            <SfButton type="submit" class="sf-button--full-width form__button" :disabled="loading">
+            <SfButton
+              type="submit"
+              class="sf-button--full-width form__button"
+              :disabled="loading"
+            >
               <SfLoader :class="{ loader: loading }" :loading="loading">
                 <div>{{ $t('Create an account') }}</div>
               </SfLoader>
@@ -142,20 +159,23 @@
           <SfButton
             class="sf-button--text"
             @click="setCurrentScreen(SCREEN_LOGIN)"
-          >{{ $t('login in to your account') }}</SfButton>
+            >{{ $t('login in to your account') }}</SfButton
+          >
         </div>
       </div>
     </transition>
   </SfModal>
 </template>
-<script>
+
+<script lang="ts">
 import {
-  ref,
-  watch,
-  reactive,
   computed,
+  defineComponent,
+  reactive,
+  ref,
   useRouter,
-  useContext
+  useContext,
+  watch
 } from '@nuxtjs/composition-api';
 import {
   SfModal,
@@ -169,7 +189,7 @@ import {
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { required, email } from 'vee-validate/dist/rules';
 import { useUser } from '@vue-storefront/bigcommerce';
-import { useUiState } from '~/composables';
+import useUiState from '../composables/useUiState';
 
 extend('email', {
   ...email,
@@ -181,7 +201,7 @@ extend('required', {
   message: 'This field is required'
 });
 
-export default {
+export default defineComponent({
   name: 'LoginModal',
   components: {
     SfModal,
@@ -202,7 +222,14 @@ export default {
     const SCREEN_REGISTER = 'register';
 
     const { isLoginModalOpen, toggleLoginModal } = useUiState();
-    const form = ref({});
+    const form = ref<{
+      username?: string;
+      email?: string;
+      firstName?: string;
+      lastName?: string;
+      password?: string;
+      acceptsMarketingEmails?: boolean;
+    }>({});
     const userEmail = ref('');
     const createAccount = ref(false);
     const rememberMe = ref(false);
@@ -301,7 +328,7 @@ export default {
       acceptsMarketingEmails
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

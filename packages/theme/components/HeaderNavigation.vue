@@ -35,12 +35,13 @@
   </SfModal>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType, useRouter } from '@nuxtjs/composition-api';
+import { SearchResultNavigationItem } from '@vue-storefront/bigcommerce';
 import { SfMenuItem, SfModal } from '@storefront-ui/vue';
-import { useUiState } from '~/composables';
-import { useRouter } from '@nuxtjs/composition-api';
+import useUiState from '../composables/useUiState';
 
-export default {
+export default defineComponent({
   name: 'HeaderNavigation',
   components: {
     SfMenuItem,
@@ -52,7 +53,7 @@ export default {
       default: false
     },
     categories: {
-      type: Array,
+      type: Array as PropType<Array<SearchResultNavigationItem>>,
       default: false
     }
   },
@@ -71,7 +72,7 @@ export default {
       navigate
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

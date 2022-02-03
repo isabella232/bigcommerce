@@ -1,6 +1,9 @@
 <template>
   <div id="my-account">
-    <SfBreadcrumbs class="breadcrumbs desktop-only" :breadcrumbs="breadcrumbs" />
+    <SfBreadcrumbs
+      class="breadcrumbs desktop-only"
+      :breadcrumbs="breadcrumbs"
+    />
     <SfContentPages
       v-e2e="'my-account-content-pages'"
       title="My Account"
@@ -32,10 +35,12 @@
     </SfContentPages>
   </div>
 </template>
+
 <script>
 import { SfBreadcrumbs, SfContentPages } from '@storefront-ui/vue';
 import {
   computed,
+  defineComponent,
   onBeforeUnmount,
   ref,
   useContext,
@@ -52,7 +57,7 @@ import {
   unMapMobileObserver
 } from '@storefront-ui/vue/src/utilities/mobile-observer.js';
 
-export default {
+export default defineComponent({
   name: 'MyAccount',
   components: {
     SfBreadcrumbs,
@@ -73,10 +78,9 @@ export default {
       const pageName = computed(() => route.value.params.pageName);
 
       if (pageName.value) {
-        return (pageName.value.charAt(0).toUpperCase() + pageName.value.slice(1)).replace(
-          '-',
-          ' '
-        );
+        return (
+          pageName.value.charAt(0).toUpperCase() + pageName.value.slice(1)
+        ).replace('-', ' ');
       } else if (!isMobile.value) {
         return 'My profile';
       } else {
@@ -115,10 +119,10 @@ export default {
 
     return { changeActivePage, activePage, breadcrumbs };
   }
-};
+});
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 #my-account {
   box-sizing: border-box;
   @include for-desktop {

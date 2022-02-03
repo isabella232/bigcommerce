@@ -59,12 +59,12 @@
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api';
+import { defineComponent, computed } from '@nuxtjs/composition-api';
 import { useUiHelpers, useUiState } from '~/composables';
 import { useFacetData } from '../composables/useFacetData';
 import { SfButton, SfIcon, SfSelect } from '@storefront-ui/vue';
 
-export default {
+export default defineComponent({
   name: 'CategoryPageHeader',
   components: {
     SfButton,
@@ -97,7 +97,7 @@ export default {
       changeToCategoryListView
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

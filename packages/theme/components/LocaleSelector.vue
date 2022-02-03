@@ -1,10 +1,14 @@
 <template>
   <div class="container">
     <SfButton
-        class="container__lang container__lang--selected"
-        @click="isLangModalOpen = !isLangModalOpen"
+      class="container__lang container__lang--selected"
+      @click="isLangModalOpen = !isLangModalOpen"
     >
-      <SfImage :src="addBasePath(`/icons/langs/${locale}.webp`)" width="20" alt="Flag" />
+      <SfImage
+        :src="addBasePath(`/icons/langs/${locale}.webp`)"
+        width="20"
+        alt="Flag"
+      />
     </SfButton>
     <SfBottomModal
       :is-open="isLangModalOpen"
@@ -19,7 +23,12 @@
                 <span>{{ lang.label }}</span>
               </template>
               <template #icon>
-                <SfImage :src="addBasePath(`/icons/langs/${lang.code}.webp`)" width="20" alt="Flag" class="language__flag" />
+                <SfImage
+                  :src="addBasePath(`/icons/langs/${lang.code}.webp`)"
+                  width="20"
+                  alt="Flag"
+                  class="language__flag"
+                />
               </template>
             </SfCharacteristic>
           </a>
@@ -29,7 +38,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {
   SfImage,
   SfSelect,
@@ -38,9 +47,16 @@ import {
   SfBottomModal,
   SfCharacteristic
 } from '@storefront-ui/vue';
-import { ref, computed, useContext } from '@nuxtjs/composition-api';
+import {
+  ref,
+  computed,
+  useContext,
+  defineComponent
+} from '@nuxtjs/composition-api';
 import { addBasePath } from '@vue-storefront/core';
-export default {
+import { LocaleObject } from 'nuxt-i18n';
+
+export default defineComponent({
   components: {
     SfImage,
     SfSelect,
@@ -53,7 +69,9 @@ export default {
     const { i18n } = useContext();
     const { locales, locale } = i18n;
     const isLangModalOpen = ref(false);
-    const availableLocales = computed(() => locales.filter(i => i.code !== locale));
+    const availableLocales = computed(() =>
+      (locales as LocaleObject[]).filter((i) => i.code !== locale)
+    );
     return {
       availableLocales,
       locale,
@@ -61,7 +79,7 @@ export default {
       addBasePath
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

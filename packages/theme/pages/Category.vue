@@ -37,15 +37,11 @@
                 <template>
                   <SfList class="list">
                     <SfListItem class="list__item">
-                      <SfMenuItem :count="cat.count || ''" :label="cat.name">
+                      <SfMenuItem :label="cat.name">
                         <template #label>
-                          <nuxt-link
-                            :to="localePath(th.getCatLink(cat))"
-                            :class="
-                              cat.isCurrent ? 'sidebar--cat-selected' : ''
-                            "
-                            >All</nuxt-link
-                          >
+                          <nuxt-link :to="localePath(th.getCatLink(cat))">
+                            All
+                          </nuxt-link>
                         </template>
                       </SfMenuItem>
                     </SfListItem>
@@ -54,18 +50,11 @@
                       v-for="(subCat, j) in cat.children"
                       :key="j"
                     >
-                      <SfMenuItem
-                        :count="subCat.count || ''"
-                        :label="subCat.name"
-                      >
+                      <SfMenuItem :label="subCat.name">
                         <template #label="{ label }">
-                          <nuxt-link
-                            :to="localePath(th.getCatLink(subCat))"
-                            :class="
-                              subCat.isCurrent ? 'sidebar--cat-selected' : ''
-                            "
-                            >{{ label }}</nuxt-link
-                          >
+                          <nuxt-link :to="localePath(th.getCatLink(subCat))">
+                            {{ label }}
+                          </nuxt-link>
                         </template>
                       </SfMenuItem>
                     </SfListItem>
@@ -338,7 +327,7 @@ export default defineComponent({
   setup() {
     const isMobile = ref(mapMobileObserver().isMobile.get());
     const th = useUiHelpers();
-    const uiState = useUiState();
+    const { isCategoryGridView } = useUiState();
     const { addItem: addItemToCart, isInCart } = useCart();
     const {
       wishlist,
@@ -452,7 +441,7 @@ export default defineComponent({
     });
 
     return {
-      ...uiState,
+      isCategoryGridView,
       th,
       products,
       categoryTree,

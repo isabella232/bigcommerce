@@ -19,9 +19,10 @@
 </template>
 
 <script>
+import { defineComponent } from '@nuxtjs/composition-api';
 import { useUserShippingData } from '~/composables/useUserShippingData';
 
-export default {
+export default defineComponent({
   name: 'UserShippingAddress',
   props: ['address'],
   setup() {
@@ -30,5 +31,5 @@ export default {
       addressData
     };
   }
-};
+});
 </script>

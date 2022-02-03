@@ -1,10 +1,7 @@
-import {
-  CategoryTree,
-  SearchResultNavigationItem
-} from '@vue-storefront/bigcommerce';
+import { SearchResultNavigationItem } from '@vue-storefront/bigcommerce';
+import { CategoryTree, Product } from '@vue-storefront/bigcommerce-api';
 import { buildCategoryNavigation } from './buildCategoryNavigation';
 import { getCategoryById } from './getCategoryById';
-import { Product } from '@vue-storefront/bigcommerce-api';
 
 export function buildSearchCategories(
   products: Product[],

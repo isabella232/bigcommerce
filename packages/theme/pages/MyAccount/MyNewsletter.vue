@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from '@nuxtjs/composition-api';
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api';
 import {
   SfTabs,
   SfCheckbox,
@@ -46,7 +46,7 @@ import {
 import { useUser } from '@vue-storefront/bigcommerce';
 import { useUserData } from '../../composables/useUserData';
 
-export default {
+export default defineComponent({
   name: 'MyNewsletter',
   components: {
     SfTabs,
@@ -87,7 +87,7 @@ export default {
       submitNewsletterPreferences
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

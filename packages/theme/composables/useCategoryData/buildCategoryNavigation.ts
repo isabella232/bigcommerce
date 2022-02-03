@@ -1,7 +1,5 @@
-import {
-  CategoryTree,
-  SearchResultNavigationItem
-} from '@vue-storefront/bigcommerce';
+import { SearchResultNavigationItem } from '@vue-storefront/bigcommerce';
+import { CategoryTree } from '@vue-storefront/bigcommerce-api';
 
 export function buildCategoryNavigation(
   categories: CategoryTree[]

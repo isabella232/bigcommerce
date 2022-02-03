@@ -18,8 +18,8 @@
               search__categories
             "
           >
-            <template #title="{ title }">
-              <SfMenuItem :label="title" @click="megaMenu.changeActive(title)">
+            <template #title="{ title, changeActive }">
+              <SfMenuItem :label="title" @click="changeActive(title)">
                 <template #mobile-nav-icon> &#8203; </template>
               </SfMenuItem>
             </template>
@@ -144,7 +144,8 @@
     </SfMegaMenu>
   </div>
 </template>
-<script>
+
+<script lang="ts">
 import {
   SfMegaMenu,
   SfList,
@@ -155,18 +156,20 @@ import {
   SfButton,
   SfImage
 } from '@storefront-ui/vue';
-import { ref, watch, computed } from '@nuxtjs/composition-api';
+import { computed, defineComponent, ref, watch } from '@nuxtjs/composition-api';
 import { useProductData } from '../composables/useProductData';
 import { useWishlistData } from '../composables/useWishlistData';
+import { Product } from '@vue-storefront/bigcommerce-api';
 import {
   getDefaultVariant,
   useUser,
   useCart,
   useWishlist,
-  useGuestWishlist
+  useGuestWishlist,
+  SearchResultNavigationItem
 } from '@vue-storefront/bigcommerce';
 
-export default {
+export default defineComponent({
   name: 'SearchResults',
   components: {
     SfMegaMenu,
@@ -184,7 +187,10 @@ export default {
       default: false
     },
     result: {
-      type: Object
+      type: Object as () => {
+        categories: SearchResultNavigationItem[];
+        products: Product[];
+      }
     }
   },
   setup(props, { emit }) {
@@ -241,8 +247,9 @@ export default {
       handleWishlistClick
     };
   }
-};
+});
 </script>
+
 <style lang="scss" scoped>
 .search {
   position: absolute;

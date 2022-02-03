@@ -39,6 +39,7 @@
     <div id="checkout" v-if="!isSuccess"></div>
   </div>
 </template>
+
 <script>
 import {
   SfButton,

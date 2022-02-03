@@ -104,7 +104,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from '@nuxtjs/composition-api';
+import {
+  defineComponent,
+  PropType,
+  reactive,
+  ref
+} from '@nuxtjs/composition-api';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import { useUser } from '@vue-storefront/bigcommerce';
 import { useUserData } from '../../composables/useUserData';
@@ -121,7 +126,7 @@ export default defineComponent({
   },
   props: {
     cancel: {
-      type: Function,
+      type: Function as PropType<() => void>,
       required: true
     }
   },
