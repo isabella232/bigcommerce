@@ -89,6 +89,7 @@ export default {
       { name: 'NL', label: 'Netherlands' }
     ],
     currencies: [
+      { name: 'PLN', label: 'Polish Zloty' },
       { name: 'EUR', label: 'Euro' },
       { name: 'USD', label: 'Dollar' }
     ],
@@ -105,12 +106,12 @@ export default {
       numberFormats: {
         en: {
           currency: {
-            style: 'currency', currency: 'USD', currencyDisplay: 'symbol'
+            style: 'currency', currency: 'PLN', currencyDisplay: 'symbol'
           }
         },
         de: {
           currency: {
-            style: 'currency', currency: 'EUR', currencyDisplay: 'symbol'
+            style: 'currency', currency: 'PLN', currencyDisplay: 'symbol'
           }
         }
       }
