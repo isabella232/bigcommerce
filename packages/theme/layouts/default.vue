@@ -8,7 +8,7 @@
     </LazyHydrate>
 
     <div id="layout">
-      <nuxt :key="$route.fullPath"/>
+      <nuxt :key="$route.fullPath" />
 
       <LazyHydrate when-visible>
         <BottomNavigation />
@@ -43,10 +43,7 @@ export default defineComponent({
   setup() {
     const { isAuthenticated } = useUser();
 
-    const {
-      load: loadWishlist,
-      setWishlist
-    } = useWishlist();
+    const { load: loadWishlist, setWishlist } = useWishlist();
 
     onMounted(() => {
       loadWishlist();
@@ -73,10 +70,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "~@storefront-ui/vue/styles";
+@import '~@storefront-ui/vue/styles';
 
 #layout {
   box-sizing: border-box;
+  min-height: 100vh;
   @include for-desktop {
     max-width: 1240px;
     margin: auto;
