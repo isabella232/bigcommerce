@@ -10,7 +10,8 @@ const bigcommerceIntegrationContextMock = {
       $cookies: {} as any,
       $config: {} as any,
       router: {} as any,
-      context: {} as any
+      context: {} as any,
+      localePath: (): any => { }
     }
   }
 };
