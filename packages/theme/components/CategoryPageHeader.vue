@@ -1,6 +1,6 @@
 <template>
   <div class="navbar__main">
-    <div class="navbar__sort desktop-only">
+    <div class="navbar__sort">
       <span class="navbar__label">{{ $t('Sort by') }}:</span>
 
       <SfSelect

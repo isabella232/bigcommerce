@@ -187,7 +187,10 @@ export default defineComponent({
       buildCategoryNavigation(categoryResults.value)
     );
     const isCheckoutPage = computed(() => {
-      return Boolean(root.$route.name.includes('checkout'));
+      return (
+        Boolean(root?.$route?.name) &&
+        Boolean(root?.$route?.name?.includes('checkout'))
+      );
     });
     const wishlistTotalItems = computed(() =>
       wishlistHelpers.getTotalItems(wishlist.value)
