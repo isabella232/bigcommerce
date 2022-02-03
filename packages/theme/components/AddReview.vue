@@ -1,67 +1,78 @@
 <template>
   <div class="add_review">
-      <div v-if="isThanksVisible">
-        Thanks for adding review!
-      </div>
+    <div v-if="isThanksVisible">
+      {{ $t('Thanks for adding review!') }}
+    </div>
 
-      <SfButton
-        v-if="!isFormVisible"
-        class="sf-button--text"
-        @click="showForm"
-      >
-        Add review
-      </SfButton>
+    <SfButton v-if="!isFormVisible" class="sf-button--text" @click="showForm">
+      {{ $t('Add review') }}
+    </SfButton>
 
-      <div v-if="isFormVisible" class="add_review--form">
-          <form class="form" @submit="submit">
-              <SfInput
-                v-model="title"
-                class="form__element"
-                name="title"
-                label="Review title"
-                :required="true"
-                :valid="titleBlur || validText(title)"
-                :error-message="$t('Please type review title. It should have at least three characters.')"
-                @blur="titleBlur = false"
-              />
-              <SfRating :max="5" :score="rating" />
-               <SfSelect
-                class="form__element"
-                label="Review rating"
-                :required="true"
-                v-model="rating"
-              >
-                <SfSelectOption
-                  v-for="star in Array.from(Array(5).keys())"
-                  :key="star"
-                  class="form__element"
-                  :value="star + 1"
-                >{{ star + 1 }}</SfSelectOption>
-              </SfSelect>
-              <SfTextarea
-                  v-model="message"
-                  class="form__element"
-                  label="Review message"
-                  name="message"
-                  placeholder="type review message"
-                  cols="50"
-                  rows="5"
-                  :required="true"
-                  :valid="messageBlur || validText(message)"
-                  :error-message="$t('Please type review message. It should have at least three characters.')"
-                  @blur="messageBlur = false"
-              >
-              </SfTextarea>
-              <SfButton>Submit</SfButton>
-          </form>
-      </div>
+    <div v-if="isFormVisible" class="add_review--form">
+      <form class="form" @submit="submit">
+        <SfInput
+          v-model="title"
+          class="form__element"
+          name="title"
+          :label="$t('Review title')"
+          :required="true"
+          :valid="titleBlur || validText(title)"
+          :error-message="
+            $t(
+              'Please type review title. It should have at least three characters.'
+            )
+          "
+          @blur="titleBlur = false"
+        />
+        <SfRating :max="5" :score="rating" />
+        <SfSelect
+          class="form__element"
+          :label="$t('Review rating')"
+          :required="true"
+          v-model="rating"
+        >
+          <SfSelectOption
+            v-for="star in Array.from(Array(5).keys())"
+            :key="star"
+            class="form__element"
+            :value="star + 1"
+            >{{ star + 1 }}</SfSelectOption
+          >
+        </SfSelect>
+        <SfTextarea
+          v-model="message"
+          class="form__element"
+          :label="$t('Review message')"
+          name="message"
+          :placeholder="$t('type review message')"
+          cols="50"
+          rows="5"
+          :required="true"
+          :valid="messageBlur || validText(message)"
+          :error-message="
+            $t(
+              'Please type review message. It should have at least three characters.'
+            )
+          "
+          @blur="messageBlur = false"
+        >
+        </SfTextarea>
+        <SfButton>{{ $t('Submit') }}</SfButton>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
 import { defineComponent, ref } from '@vue/composition-api';
 import { useReview } from '@vue-storefront/bigcommerce';
-import { SfButton, SfInput, SfTextarea, SfRating, SfSelect } from '@storefront-ui/vue';
+import {
+  SfButton,
+  SfInput,
+  SfTextarea,
+  SfRating,
+  SfSelect
+} from '@storefront-ui/vue';
 
 export default defineComponent({
   name: 'AddReviewForm',
@@ -92,7 +103,6 @@ export default defineComponent({
       return text.length >= 3;
     };
 
-    // eslint-disable-next-line no-undef
     const submit = (e) => {
       e.preventDefault();
 
@@ -142,7 +152,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "~@storefront-ui/vue/styles";
+@import '~@storefront-ui/vue/styles';
 .form {
   .sf-rating {
     padding: 0 0 var(--spacer-sm) 0;

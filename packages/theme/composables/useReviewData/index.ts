@@ -1,5 +1,6 @@
 import { ProductReview } from '@vue-storefront/bigcommerce-api';
 import useUiHelpers from '../useUiHelpers';
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useReviewData = () => {
   const { formatDateString } = useUiHelpers();

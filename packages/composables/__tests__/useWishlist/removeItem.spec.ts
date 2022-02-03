@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 import { Wishlist, WishlistItem } from '../../src/types';
 import { removeItem } from '../../src/useWishlist/actions';
 import { contextMock } from '../../__mocks__/context.mock';
@@ -10,7 +9,9 @@ const decode = jest.spyOn(jwt, 'decode');
 decode.mockImplementation(() => ({ customer: { id: customerId } }));
 
 describe('[BigCommerce - composables] useWishlist removeItem', () => {
-  contextMock.$bigcommerce.config.app.$cookies.get = jest.fn(() => 'mocked_token');
+  contextMock.$bigcommerce.config.app.$cookies.get = jest.fn(
+    () => 'mocked_token'
+  );
 
   const wishlistItem: WishlistItem = { id: 1, product_id: 1, variant_id: 1 };
   (wishlistMock as Wishlist).items.push(wishlistItem);
@@ -37,8 +38,9 @@ describe('[BigCommerce - composables] useWishlist removeItem', () => {
       product: wishlistItem
     });
 
-    expect(contextMock.$bigcommerce.api.removeWishlistItem)
-      .toHaveBeenCalledWith(expectedParams);
+    expect(
+      contextMock.$bigcommerce.api.removeWishlistItem
+    ).toHaveBeenCalledWith(expectedParams);
   });
 
   it('should refresh product list', async () => {
@@ -47,7 +49,6 @@ describe('[BigCommerce - composables] useWishlist removeItem', () => {
       product: wishlistItem
     });
 
-    expect(contextMock.$bigcommerce.api.getProducts)
-      .toHaveBeenCalledTimes(1);
+    expect(contextMock.$bigcommerce.api.getProducts).toHaveBeenCalledTimes(1);
   });
 });

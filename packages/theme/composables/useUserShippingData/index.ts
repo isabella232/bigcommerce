@@ -20,11 +20,6 @@ export const useUserShippingData = () => {
     return shipping?.length ? shipping[0] : null;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getTotal = (shipping: AddressItem): number => {
-    return 0;
-  };
-
   const getPostCode = (address: AddressItem): string => {
     return address?.postal_code;
   };
@@ -68,7 +63,6 @@ export const useUserShippingData = () => {
   return {
     getAddresses,
     getDefault,
-    getTotal,
     getPostCode,
     getAddress1,
     getAddress2,

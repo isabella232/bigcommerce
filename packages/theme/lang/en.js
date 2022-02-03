@@ -199,5 +199,11 @@ export default {
   'Item Description': 'Item Description',
   'Thank you for your order!': 'Thank you for your order!',
   'Continue shopping': 'Continue shopping',
-  'Order No.': 'Order No.'
+  'Thanks for adding review!': 'Thanks for adding review!',
+  'Add review': 'Add review',
+  'Review title': 'Review title',
+  'Review rating': 'Review rating',
+  'Review message': 'Review message',
+  'type review message': 'type review message',
+  Submit: 'Submit'
 };
