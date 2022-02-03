@@ -76,6 +76,8 @@
             class="carousel__item__product"
             @click:wishlist="toggleWishlist(i)"
             imageTag="img"
+            :imageWidth="216"
+            :imageHeight="326"
           />
         </SfCarouselItem>
       </SfCarousel>
