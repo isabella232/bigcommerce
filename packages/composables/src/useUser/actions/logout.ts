@@ -14,5 +14,6 @@ export const logOut = async (context: Context): Promise<void> => {
   const newCart = await loadCart(context, {});
   context.cart.setCart(newCart);
   cookies.remove(BIGCOMMERCE_USER_AUTHENTICATED);
-
+  const { router, localePath } = context.$bigcommerce.config.app;
+  router.push(localePath({ name: 'home' }));
 };

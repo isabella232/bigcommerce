@@ -22,8 +22,8 @@ export const getCustomerIdFromCookie = (
       }
     }
   } catch (error) {
-    throw new Error(error);
+    throw { statusCode: 401, error };
   }
 
-  throw new Error('No customer ID');
+  throw { statusCode: 401, error: 'No customer ID' };
 };

@@ -52,7 +52,7 @@ describe('[BigCommerce-api-client] get all wishlists reviews', () => {
       await getAllWishlists(contextMock);
     } catch (error) {
       const expectedErrorMessage = 'No customer ID';
-      expect(error.message).toBe(expectedErrorMessage);
+      expect(error.error).toBe(expectedErrorMessage);
     } finally {
       expect(contextMock.client.v3.get).toHaveBeenCalledTimes(0);
     }

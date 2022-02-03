@@ -55,7 +55,10 @@ describe('[bigcommerce-api-client] getCustomer', () => {
       `/customers?id%3Ain=${customerId}`
     );
     expect(jwtVerifyMock).toHaveBeenCalledTimes(1);
-    expect(jwtVerifyMock).toHaveBeenCalledWith(token, contextMock.config.sdkSettings.devtoolsAppSecret);
+    expect(jwtVerifyMock).toHaveBeenCalledWith(
+      token,
+      contextMock.config.sdkSettings.devtoolsAppSecret
+    );
     expect(response).toBe(expectedResponse);
     expect(response.data[0].id).toBe(customerId);
   });
@@ -93,7 +96,14 @@ describe('[bigcommerce-api-client] getCustomer', () => {
 
     await expect(
       getCustomers(contextMock, params)
-    ).rejects.toMatchInlineSnapshot('[Error: No customer ID]');
+    ).rejects.toMatchInlineSnapshot(
+      `
+            Object {
+              "error": "No customer ID",
+              "statusCode": 401,
+            }
+          `
+    );
 
     expect(contextMock.client.v3.get).toHaveBeenCalledTimes(0);
     expect(jwtVerifyMock).toHaveBeenCalledTimes(0);
@@ -116,7 +126,14 @@ describe('[bigcommerce-api-client] getCustomer', () => {
     expect(jwtVerifyMock).toHaveBeenCalledTimes(0);
     await expect(
       getCustomers(contextMock, params)
-    ).rejects.toMatchInlineSnapshot('[Error: Error: Malformed JWT token]');
+    ).rejects.toMatchInlineSnapshot(
+      `
+            Object {
+              "error": [Error: Malformed JWT token],
+              "statusCode": 401,
+            }
+          `
+    );
   });
 
   it('throws error if there is not customer data token or ID provided in parameter', async () => {
@@ -130,6 +147,13 @@ describe('[bigcommerce-api-client] getCustomer', () => {
     expect(jwtVerifyMock).toHaveBeenCalledTimes(0);
     await expect(
       getCustomers(contextMock, params)
-    ).rejects.toMatchInlineSnapshot('[Error: No customer ID]');
+    ).rejects.toMatchInlineSnapshot(
+      `
+            Object {
+              "error": "No customer ID",
+              "statusCode": 401,
+            }
+          `
+    );
   });
 });

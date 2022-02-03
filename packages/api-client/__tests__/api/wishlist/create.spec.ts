@@ -67,7 +67,7 @@ describe('[BigCommerce-api-client] create wishlist', () => {
       await createWishlist(contextMock, props);
     } catch (error) {
       const expectedErrorMessage = 'No customer ID';
-      expect(error.message).toBe(expectedErrorMessage);
+      expect(error.error).toBe(expectedErrorMessage);
     } finally {
       expect(contextMock.client.v3.post).toHaveBeenCalledTimes(0);
     }

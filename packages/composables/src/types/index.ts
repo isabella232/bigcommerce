@@ -1,7 +1,7 @@
 import { IntegrationContext } from '@vue-storefront/core';
 import { ContextualizedEndpoints } from '@vue-storefront/bigcommerce-api';
 import { AxiosInstance } from 'axios';
-import { NuxtCookies } from 'cookie-universal-nuxt';
+import { NuxtAppOptions } from '@nuxt/types';
 
 export * from './useWishlist';
 export * from './useGuestWishlist';
@@ -28,20 +28,6 @@ interface AxiosClientConfig {
 }
 
 /**
- * Contains configuration for the app.
- */
-interface AppConfig {
-  /**
-   * Cookie interface.
-   */
-  $cookies: NuxtCookies;
-  /**
-   * Config.
-   */
-  $config: any;
-}
-
-/**
  * Configuration for `$vsf` context.
  */
 interface ContextConfig {
@@ -53,7 +39,7 @@ interface ContextConfig {
   /**
    * App Config.
    */
-  app: AppConfig;
+  app: NuxtAppOptions;
 }
 
 /**
