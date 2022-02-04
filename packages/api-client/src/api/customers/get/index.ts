@@ -9,14 +9,15 @@ export const getCustomers: Endpoints['getCustomers'] = async (
   context,
   params
 ) => {
-  if (getCustomerIdFromCookie(context)) {
+  const idFromCookie = getCustomerIdFromCookie(context);
+  if (idFromCookie) {
     return await context.client.v3.get(
       queryString.stringifyUrl(
         {
           url: BigCommerceEndpoints.customers,
           query: {
             ...params,
-            'id:in': [getCustomerIdFromCookie(context)]
+            'id:in': [idFromCookie]
           }
         },
         {

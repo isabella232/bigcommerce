@@ -100,7 +100,7 @@ describe('[bigcommerce-api-client] getCustomer', () => {
       `
             Object {
               "error": "No customer ID",
-              "statusCode": 401,
+              "statusCode": 404,
             }
           `
     );
@@ -151,7 +151,7 @@ describe('[bigcommerce-api-client] getCustomer', () => {
       `
             Object {
               "error": "No customer ID",
-              "statusCode": 401,
+              "statusCode": 404,
             }
           `
     );

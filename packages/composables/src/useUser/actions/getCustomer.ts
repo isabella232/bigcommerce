@@ -15,7 +15,10 @@ export const getCustomer = async (
     const { data } = await context.$bigcommerce.api.getCustomers(params);
     return data?.length ? data[0] : null;
   } catch (error) {
-    await logOut(context);
+    if (error.statusCode === 401) {
+      await logOut(context);
+    }
+
     return null;
   }
 };

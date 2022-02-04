@@ -76,7 +76,7 @@ export default defineComponent({
     const router = useRouter();
     const { localePath } = useContext();
     const { cart, load: loadCart, setCart } = useCart();
-    const { logout, user } = useUser();
+    const { logout, user, load: loadUser } = useUser();
     const {
       order,
       load: loadUserOrder,
@@ -93,6 +93,14 @@ export default defineComponent({
     };
 
     onMounted(async () => {
+      if (!cart.value) {
+        await loadCart();
+      }
+
+      if (!user.value) {
+        await loadUser();
+      }
+
       const embeddedCheckoutUrl =
         cart.value?.redirect_urls?.embedded_checkout_url;
 
