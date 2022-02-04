@@ -95,9 +95,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      if (!cart.value) {
-        await loadCart();
-      }
+      await loadCart();
 
       if (!user.value) {
         await loadUser();

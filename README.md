@@ -1,6 +1,6 @@
 <div align="center">
 <img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" height="80px"/>
-
+<br/>
 <img src="https://www-cdn.bigcommerce.com/assets/bc-photo-branding-bigcommerce-primary-gray-background.png?mtime=20211210160101" height="80px"/>
 </div>
 
