@@ -48,13 +48,11 @@ describe('[BigCommerce-api-client] get all wishlists reviews', () => {
 
     jwtVerifyMock.mockReturnValue({ customer: { id: undefined } });
 
-    try {
-      await getAllWishlists(contextMock);
-    } catch (error) {
-      const expectedErrorMessage = 'No customer ID';
-      expect(error.error).toBe(expectedErrorMessage);
-    } finally {
-      expect(contextMock.client.v3.get).toHaveBeenCalledTimes(0);
-    }
+    await expect(getAllWishlists(contextMock)
+    ).rejects.toMatchInlineSnapshot(
+      '[Error: Customer ID with value: null is not valid.]'
+    );
+
+    expect(contextMock.client.v3.get).toHaveBeenCalledTimes(0);
   });
 });

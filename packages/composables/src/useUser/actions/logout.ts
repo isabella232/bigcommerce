@@ -8,7 +8,7 @@ import {
  * @param {Context} context An auto-generated value prepended to the method as a first parameter.
  */
 export const logOut = async (context: Context): Promise<void> => {
-  context.$bigcommerce.api.logoutCustomer();
+  await context.$bigcommerce.api.logoutCustomer();
   const cookies = context.$bigcommerce.config.app.$cookies;
 
   const newCart = await loadCart(context, {});

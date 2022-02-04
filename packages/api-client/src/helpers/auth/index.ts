@@ -25,5 +25,5 @@ export const getCustomerIdFromCookie = (
     throw { statusCode: 401, error };
   }
 
-  throw { statusCode: 404, error: 'No customer ID' };
+  return null;
 };

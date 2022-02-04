@@ -13,11 +13,13 @@ import {
   updateAddress,
   setDefaultAddress
 } from './actions';
+import { useCart } from '../useCart';
 
 export const params: UseUserShippingFactoryParams<Address, AddressItem> = {
   provide() {
     return {
-      user: useUser()
+      user: useUser(),
+      cart: useCart()
     };
   },
   addAddress,

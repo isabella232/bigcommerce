@@ -94,18 +94,10 @@ describe('[bigcommerce-api-client] getCustomer', () => {
       Promise.resolve(expectedResponse)
     );
 
-    await expect(
-      getCustomers(contextMock, params)
-    ).rejects.toMatchInlineSnapshot(
-      `
-            Object {
-              "error": "No customer ID",
-              "statusCode": 404,
-            }
-          `
-    );
+    const result = await getCustomers(contextMock, params);
 
     expect(contextMock.client.v3.get).toHaveBeenCalledTimes(0);
+    expect(result).toBe(undefined);
     expect(jwtVerifyMock).toHaveBeenCalledTimes(0);
   });
 
@@ -143,17 +135,10 @@ describe('[bigcommerce-api-client] getCustomer', () => {
     const params = {};
     contextMock.client.v3.get = jest.fn();
 
+    const result = await getCustomers(contextMock, params);
+
+    expect(result).toBe(undefined);
     expect(contextMock.client.v3.get).toHaveBeenCalledTimes(0);
     expect(jwtVerifyMock).toHaveBeenCalledTimes(0);
-    await expect(
-      getCustomers(contextMock, params)
-    ).rejects.toMatchInlineSnapshot(
-      `
-            Object {
-              "error": "No customer ID",
-              "statusCode": 404,
-            }
-          `
-    );
   });
 });

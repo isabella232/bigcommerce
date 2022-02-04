@@ -63,13 +63,12 @@ describe('[BigCommerce-api-client] create wishlist', () => {
       items: []
     };
 
-    try {
-      await createWishlist(contextMock, props);
-    } catch (error) {
-      const expectedErrorMessage = 'No customer ID';
-      expect(error.error).toBe(expectedErrorMessage);
-    } finally {
-      expect(contextMock.client.v3.post).toHaveBeenCalledTimes(0);
-    }
+    await expect(
+      createWishlist(contextMock, props)
+    ).rejects.toMatchInlineSnapshot(
+      '[Error: Customer ID with value: null is not valid.]'
+    );
+
+    expect(contextMock.client.v3.post).toHaveBeenCalledTimes(0);
   });
 });
