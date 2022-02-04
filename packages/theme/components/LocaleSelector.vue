@@ -6,7 +6,8 @@
     >
       <SfImage
         :src="addBasePath(`/icons/langs/${locale}.webp`)"
-        width="20"
+        :width="20"
+        :height="20"
         alt="Flag"
       />
     </SfButton>
@@ -25,7 +26,8 @@
               <template #icon>
                 <SfImage
                   :src="addBasePath(`/icons/langs/${lang.code}.webp`)"
-                  width="20"
+                  :width="20"
+                  :height="20"
                   alt="Flag"
                   class="language__flag"
                 />
