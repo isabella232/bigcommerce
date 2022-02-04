@@ -8,27 +8,22 @@ export interface GetAddressParameters {
    * Page number
    */
   page?: number;
-
   /**
    * Items count per page. limit=50
    */
   limit?: number;
-
   /**
    * Filter items by ID.
    */
   'id:in'?: number[];
-
   /**
    * Filter items by customer ID.
    */
   'customer_id:in'?: number[];
-
   /**
    * Filter items by company.
    */
   'company:in'?: string[];
-
   /**
    * Filter items by first_name and last_name.
    */
