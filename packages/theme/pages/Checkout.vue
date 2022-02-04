@@ -8,7 +8,7 @@
         class="banner"
         :image="{
           mobile: '/thankyou/bannerM.png',
-          desktop: '/thankyou/bannerD.png'
+          desktop: '/thankyou/bannerD.png',
         }"
         @click="continueShopping"
       >
@@ -33,7 +33,9 @@
         class="thank-you__error-heading"
       />
 
-      <SfButton class="form__button" @click="tryAgain">{{ $t('Try again') }}</SfButton>
+      <SfButton class="form__button" @click="tryAgain">{{
+        $t('Try again')
+      }}</SfButton>
     </div>
 
     <div id="checkout" v-if="!isSuccess"></div>
@@ -127,15 +129,15 @@ export default defineComponent({
         onFrameError: onError,
         onSignOut: async () => {
           await logout();
-          router.replace(
-            localePath({ name: 'home' })
-          );
+          router.replace(localePath({ name: 'home' }));
         }
       });
 
       service.catch((err) => {
-        isError.value = true;
-        errorMessage.value = err.message;
+        if (err.type !== 'invalid_login') {
+          isError.value = true;
+          errorMessage.value = err.message;
+        }
       });
     });
 
