@@ -111,11 +111,44 @@ The response will contain an `id` which we will be used as the `channel_id` 
 }
 ```
 
+- Once successful, repeat the operation with a different payload:
+
+```json
+{
+  "type": "home",
+  "matching": "*",
+  "route": "/"
+}
+```
+
+- Once successful, repeat the operation with a different payload again:
+
+```json
+{
+  "type": "create_account",
+  "matching": "*",
+  "route": "/"
+}
+```
+
+- Once successful, repeat the operation with a different payload once more:
+
+```json
+{
+  "type": "forgot_password",
+  "matching": "*",
+  "route": "/"
+}
+```
+
+
 ![Create site request](./assets/setup/site_route_request.jpg)
 
 - Click on **Send**
 
-__Please note that this step is important to alter the 'Edit Cart' link on checkout otherwise it will be pointing to the Default Store front of BigCommerce.__
+__Please note that this step is important to alter those routes for ‘Edit Cart',  ‘Register’ and 'Create password’ links on checkout otherwise it will be pointing to the Default Store front of BigCommerce.__
+
+The `route` can be changed for custom page later on if those pages will be created in the integration, currently `create_account` is in a modal and `forgot_password` is non existent.
 
 _At the time of writing this guide (31/01/2021) it was not possible to create the route via admin panel, this might be fixed in the future by the BigCommerce team._
 
@@ -184,6 +217,27 @@ That’s all. Now the domain is added and BigCommerce store is available on this
 To check the status of SSL certificate navigate to **Server Settings → SSL Certificates**
 
 _Only the store owner can access the page and manage SSL certificates._
+
+## Additional changes
+- It is possible to add more address or customer fields in BigCommerce, as well as making particular fields as ‘required’
+
+- To add a new field - open the BigCommerce Admin panel
+
+  1. Go to __Advanced Settings > Account Signup Form__
+
+  2. Here you can select Account Signup Fields or Address Fields to create or amend the existing fields
+
+  3. Please note that Address Fields will be reflected on the embedded checkout automatically
+
+  4. Any new created or edited fields will need to be matched in one of the following components:
+
+    - `packages/theme/components/MyAccount/ShippingAddressForm.vue` - for address fields
+
+    - `packages/theme/components/LoginModal.vue` - for customer fields in the registration form
+
+    - `packages/theme/components/MyAccount/ProfileUpdateForm.vue` - for customer fields in the update form
+
+![Additional fields](./assets/setup/additional_fields.jpg)
 
 ## Set up VueStorefront
 
