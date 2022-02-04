@@ -1,4 +1,4 @@
-import { getDefaultVariant } from '../../helpers/product';
+import { getPurchasableDefaultVariant } from '../../helpers/product';
 import { Cart, CartItem, Product } from '@vue-storefront/bigcommerce-api';
 import { UseCartFactoryParams } from '@vue-storefront/core';
 
@@ -9,8 +9,10 @@ export const isInCart: UseCartFactoryParams<
 >['isInCart'] = (_context, { currentCart, product }) => {
   let variantId = 0;
 
+  if (!currentCart) return false;
+
   if (product.variants?.length) {
-    variantId = getDefaultVariant(product)?.id ?? 0;
+    variantId = getPurchasableDefaultVariant(product)?.id ?? 0;
   }
 
   return [

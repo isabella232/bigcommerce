@@ -44,7 +44,9 @@ describe('[bigcommerce-api-client] updateCustomer', () => {
         }
       ]
     };
-    contextMock.client.v3.put = jest.fn(() => Promise.resolve(expectedResponse));
+    contextMock.client.v3.put = jest.fn(() =>
+      Promise.resolve(expectedResponse)
+    );
 
     const response = await updateCustomer(contextMock, parameters);
 
@@ -112,7 +114,6 @@ describe('[bigcommerce-api-client] updateCustomer', () => {
   });
 
   it('throws an error if parameters are missing', async () => {
-    /* eslint-disable camelcase */
     // missing required param id
     const parameters = {
       id: 1,

@@ -2,25 +2,20 @@ import { expect } from '@jest/globals';
 import { themeConfigMock } from '../../__mocks__/themeConfig.mock';
 import { useFacetData } from '../../../composables/useFacetData';
 
-jest.mock('../../../composables/useUiHelpers', () => ({
-  _esModule: true,
-  getInstance: jest.fn(() => ({
-    context: {
-      $config: {
-        theme: themeConfigMock
-      }
-    },
-    $router: {
-      history: {
-        current: {
-          query: {
-            sort: 'id',
-            direction: 'desc'
-          }
-        }
+jest.mock('@nuxtjs/composition-api', () => ({
+  useContext: () => ({
+    $config: {
+      theme: themeConfigMock
+    }
+  }),
+  useRoute: () => ({
+    value: {
+      query: {
+        sort: 'id',
+        direction: 'desc'
       }
     }
-  }))
+  })
 }));
 
 describe('[bigcommerce-theme] useFacetData', () => {

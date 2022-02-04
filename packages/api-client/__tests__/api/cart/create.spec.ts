@@ -1,8 +1,8 @@
-import queryString from 'query-string';
 import { createCart } from '../../../src/api/cart';
 import { contextMock } from '../../../__mocks__/context.mock';
 import BigCommerceEndpoints from '../../../src/helpers/endpointPaths';
 import { CartIncludeEnum } from '../../../src';
+import * as CartResponseHelpers from '../../../src/helpers/cartResponse';
 
 describe('[bigcommerce-api-client] create cart', () => {
   const params = {
@@ -10,6 +10,13 @@ describe('[bigcommerce-api-client] create cart', () => {
       line_items: []
     }
   };
+  const prepareEmbeddedCheckoutUrlOnResponse = jest.spyOn(
+    CartResponseHelpers,
+    'prepareEmbeddedCheckoutUrlOnResponse'
+  );
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('should create a cart without items', async () => {
     const expectedResponse = {
@@ -38,31 +45,34 @@ describe('[bigcommerce-api-client] create cart', () => {
       },
       meta: {}
     };
-
-    contextMock.client.v3.post = (url: string, data: Record<string, unknown>) => {
-      expect(url).toEqual(BigCommerceEndpoints.cart());
-
-      expect(data).toEqual(params.data);
-
-      return expectedResponse;
-    };
+    contextMock.client.v3.post = jest.fn(() =>
+      Promise.resolve(expectedResponse)
+    );
 
     const response = await createCart(contextMock, params);
 
     expect(response).toBe(expectedResponse);
+    expect(contextMock.client.v3.post).toBeCalledTimes(1);
+    expect(contextMock.client.v3.post).toBeCalledWith(
+      BigCommerceEndpoints.cart(),
+      params.data
+    );
+    expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledTimes(1);
+    expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledWith(contextMock, response);
   });
 
   it('should pass include as a query parameter', async () => {
     const include = CartIncludeEnum.LineItemsPhysicalItemsOptions;
+    contextMock.client.v3.post = jest.fn();
 
-    contextMock.client.v3.post = (url: string) => {
-      const [, query] = url.split('?');
+    const response = await createCart(contextMock, { ...params, include });
 
-      const params = queryString.parse(query);
-
-      expect(params.include).toEqual(include);
-    };
-
-    await createCart(contextMock, { ...params, include });
+    expect(contextMock.client.v3.post).toBeCalledTimes(1);
+    expect(contextMock.client.v3.post).toBeCalledWith(
+      `${BigCommerceEndpoints.cart()}?include=${include}`,
+      params.data
+    );
+    expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledTimes(1);
+    expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledWith(contextMock, response);
   });
 });

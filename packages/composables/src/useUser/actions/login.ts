@@ -1,8 +1,11 @@
-import { CustomersIncludeEnum, User, STORAGE_KEY_IS_LOGGED_IN } from '@vue-storefront/bigcommerce-api';
+import { CustomersIncludeEnum, User } from '@vue-storefront/bigcommerce-api';
 import { Context, UseUserLoginParams } from '../../types';
 import { getCustomer } from './getCustomer';
 import { loadCustomerCart } from '../../helpers/customer/loadCart';
-
+import {
+  BIGCOMMERCE_COOKIE_MAXAGE,
+  BIGCOMMERCE_USER_AUTHENTICATED
+} from '../../helpers/consts';
 /**
  * `logIn` method in `useUser` composable.
  * @param {Context} context An auto-generated value prepended to the method as a first parameter.
@@ -12,6 +15,7 @@ export const logIn = async (
   context: Context,
   params: UseUserLoginParams
 ): Promise<User> => {
+  const cookies = context.$bigcommerce.config.app.$cookies;
   const { username, password } = params;
   const channelIdsConfig = context?.$bigcommerce?.config?.app?.$config?.theme?.channelIds;
   const channelId = Array.isArray(channelIdsConfig) && channelIdsConfig.length ? channelIdsConfig[0] : 1;
@@ -37,6 +41,9 @@ export const logIn = async (
     customer.form_fields = formFields;
   }
 
-  sessionStorage.setItem(STORAGE_KEY_IS_LOGGED_IN, '1');
+  cookies.set(BIGCOMMERCE_USER_AUTHENTICATED, '1', {
+    path: '/',
+    maxAge: BIGCOMMERCE_COOKIE_MAXAGE
+  });
   return customer;
 };

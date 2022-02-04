@@ -6,4 +6,3 @@ export const MESSAGE_INVALID_TOKEN_RESPONSE = 'Invalid token response';
 export const COOKIE_KEY_CART_ID = 'cart_id';
 export const COOKIE_KEY_SHOP_SESSION_TOKEN = 'SHOP_SESSION_TOKEN';
 export const COOKIE_KEY_SHOPPER_PREF = 'Shopper-Pref';
-export const STORAGE_KEY_IS_LOGGED_IN = 'is-logged-in';

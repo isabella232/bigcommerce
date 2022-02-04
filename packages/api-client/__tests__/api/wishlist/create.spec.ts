@@ -1,6 +1,17 @@
 import { CreateWishlistProps } from '../../../src/types';
 import { createWishlist } from '../../../src/api/wishlist';
 import { contextMock } from '../../../__mocks__/context.mock';
+import { COOKIE_KEY_CUSTOMER_DATA } from '../../../src/helpers/consts';
+import jwt from 'jsonwebtoken';
+
+const customerId = 1;
+const jwtVerifyMock = jest.spyOn(jwt, 'verify');
+jwtVerifyMock.mockReturnValue({ customer: { id: customerId } });
+contextMock.req = {
+  cookies: {
+    [COOKIE_KEY_CUSTOMER_DATA]: 'token'
+  }
+};
 
 describe('[BigCommerce-api-client] create wishlist', () => {
   beforeEach(() => {
@@ -11,7 +22,6 @@ describe('[BigCommerce-api-client] create wishlist', () => {
     // Given
     const props: CreateWishlistProps = {
       name: 'Test wishlist',
-      customer_id: 1,
       is_public: true,
       items: []
     };
@@ -21,13 +31,15 @@ describe('[BigCommerce-api-client] create wishlist', () => {
     await createWishlist(contextMock, props);
 
     // Then
-    expect(contextMock.client.v3.post).toHaveBeenLastCalledWith(expectedEndpoint, props);
+    expect(contextMock.client.v3.post).toHaveBeenLastCalledWith(expectedEndpoint, {
+      ...props,
+      customer_id: customerId
+    });
   });
 
   it('should throw an error when name was not provided', async () => {
     const props: CreateWishlistProps = {
       name: undefined,
-      customer_id: 1,
       is_public: true,
       items: []
     };
@@ -43,20 +55,20 @@ describe('[BigCommerce-api-client] create wishlist', () => {
   });
 
   it('should throw an error when customer id was not provided', async () => {
+    jwtVerifyMock.mockReturnValue({ customer: { id: undefined } });
+
     const props: CreateWishlistProps = {
       name: 'Test wishlist',
-      customer_id: undefined,
       is_public: true,
       items: []
     };
 
-    try {
-      await createWishlist(contextMock, props);
-    } catch (error) {
-      const expectedErrorMessage = `Customer ID with value: ${props.customer_id} is not valid. Use number value.`;
-      expect(error.message).toBe(expectedErrorMessage);
-    } finally {
-      expect(contextMock.client.v3.post).toHaveBeenCalledTimes(0);
-    }
+    await expect(
+      createWishlist(contextMock, props)
+    ).rejects.toMatchInlineSnapshot(
+      '[Error: Customer ID with value: null is not valid.]'
+    );
+
+    expect(contextMock.client.v3.post).toHaveBeenCalledTimes(0);
   });
 });

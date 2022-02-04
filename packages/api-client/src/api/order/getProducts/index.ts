@@ -1,5 +1,5 @@
 import { stringifyUrl } from 'query-string';
-import { Endpoints, GetOrderProductsParameters } from '../../../types';
+import { Endpoints } from '../../../types';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
 
 export const getOrderProducts: Endpoints['getOrderProducts'] = async (
@@ -17,7 +17,7 @@ export const getOrderProducts: Endpoints['getOrderProducts'] = async (
   return await context.client.v2.get(
     stringifyUrl({
       url: BigCommerceEndpoints.orderProducts(orderId),
-      query: queryParams as GetOrderProductsParameters
+      query: { ...queryParams }
     })
   );
 };

@@ -18,7 +18,7 @@ export const getProductReviewCollection: Endpoints['getProductReviewCollection']
   return context.client.v3.get<ProductReviewCollectionResponse>(
     stringifyUrl({
       url: BigCommerceEndpoints.reviews(productId),
-      query: query
+      query: { ...query }
     })
   );
 };

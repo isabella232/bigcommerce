@@ -159,7 +159,7 @@ export function generateSsoLoginLink(
     store_hash: storeHash,
     channel_id: process.env.BIGCOMMERCE_CHANNEL_ID || '1',
     customer_id: `${customerId}`,
-    ...(redirectUrl ? { redirectUrl } : {})
+    ...(redirectUrl ? { redirect_to: redirectUrl } : {})
   };
 
   const token = jwt.sign(payload, secret, {

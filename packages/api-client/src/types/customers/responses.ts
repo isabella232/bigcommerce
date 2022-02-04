@@ -1,83 +1,185 @@
-import { FormField } from '.';
-import { UserAddress, MetaCollection } from '..';
+import {
+  FormField,
+  UserAddress,
+  MetaCollection,
+  Authentication
+} from '..';
 
 /**
- * Format of customer data that's returned inside the response of `/customers` BigCommerce API endpoint.
- * See at {@link CreateCustomerResponse}
+ * Customer information.
  */
-export type User = {
+export interface User {
+  /**
+   * The unique numeric ID of the customer.
+   */
   id?: number;
-  authentication?: {
-    force_password_reset?: boolean;
-    new_password?: string;
-  };
+  /**
+   * Authentication information.
+   */
+  authentication?: Authentication;
+  /**
+   * The company of the customer.
+   */
   company?: string;
+  /**
+   * ID of the group which this customer belongs to.
+   */
   customer_group_id?: number;
+  /**
+   * The email of the customer. Must be unique.
+   */
   email: string;
+  /**
+   * The first name of the customer.
+   */
   first_name: string;
+  /**
+   * The last name of the customer.
+   */
   last_name: string;
+  /**
+   * The customer notes.
+   */
   notes?: string;
+  /**
+   * The phone number of the customer.
+   */
   phone?: string;
+  /**
+   * The IP address from which this customer was registered.
+   */
   registration_ip_address?: string;
+  /**
+   * The tax exempt category code for the customer.
+   */
   tax_exempt_category?: string;
+  /**
+   * The date of which the customer was created.
+   */
   date_created?: string;
+  /**
+   * The date on which the customer was modified.
+   */
   date_modified?: string;
+  /**
+   * It determines if the customer is signed up to receive product review or abandoned cart emails or recieve both emails.
+   */
   accepts_product_review_abandoned_cart_emails?: boolean;
+  /**
+   * Store credit.
+   */
   store_credit_amounts?: Array<{
+    /**
+     * Store credit amount.
+     */
     amount: number;
   }>;
+  /**
+   * Array of channel ids the Customer has access to.
+   */
   channel_ids?: number[];
+  /**
+   * Customer form fields.
+   */
   form_fields?: FormField[];
+  /**
+   * Array of customer addresses. Limited to 10.
+   */
   addresses?: UserAddress[];
+  /**
+   * Total number of customer addresses.
+   */
   address_count?: number;
+  /**
+   * Total number of customer attributes.
+   */
   attribute_count?: number;
-};
+}
 
 /**
- * Format of response returned by `/customers` BigCommerce API endpoint.
+ * Create customer response.
  */
-export type CreateCustomerResponse = {
+export interface CreateCustomerResponse {
+  /**
+   * Collection of customers.
+   */
   data: Array<User>;
+  /**
+   * Data about the response, including pagination and collection totals.
+   */
   meta: MetaCollection;
-};
+}
 
 /**
- * Format of response returned by `/customers/validate-credentials` BigCommerce API endpoint.
+ * Response of validate credentials.
  */
-export type ValidateCredentialsResponse = {
+export interface ValidateCredentialsResponse {
+  /**
+   * The unique numeric ID of the customer.
+   */
   customer_id?: number | null;
+  /**
+   * Indicates if the provided credentials are valid.
+   */
   is_valid?: boolean;
-};
+}
 
 /**
- * Format of the response returned by the `loginCustomer` endpoint in the api package.
+ * Response of login customer.
  */
-export type LoginCustomerResponse = {
+export interface LoginCustomerResponse {
+  /**
+   * The unique numeric ID of the customer.
+   */
   customer_id?: number | null;
+  /**
+   * Indicates if the provided credentials are valid.
+   */
   is_valid?: boolean;
+  /**
+   * Error message.
+   */
   errorMessage?: string;
-};
+}
 
 /**
- * Format of response for getCustomers BigCommerce API endpoint.
+ * Customer collection response.
  */
-export type GetCustomersResponse = {
+export interface GetCustomersResponse {
+  /**
+   * Collection of customers.
+   */
   data: Array<User>;
+  /**
+   * Data about the response, including pagination and collection totals.
+   */
   meta: MetaCollection;
-};
+}
 
 /**
- * Format of response for updating CustomerFields BigCommerce API endpoint.
+ * Response of update customer form fields.
  */
-export type UpdateCustomerFormFieldsResponse = {
+export interface UpdateCustomerFormFieldsResponse {
+  /**
+   * Array of customer form fields.
+   */
   data: FormField[];
+  /**
+   * Empty object.
+   */
   meta: Record<string, never>;
-};
+}
 
 /**
  * Format of parameters that can be passed to `updateCustomer` endpoint method.
  */
-export type UpdateCustomerResponse = {
+export interface UpdateCustomerResponse {
+  /**
+   * Customer information.
+   */
   data: Array<User>;
+  /**
+   * Data about the response, including pagination and collection totals.
+   */
   meta: MetaCollection;
-};
+}

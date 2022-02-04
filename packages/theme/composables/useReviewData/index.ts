@@ -9,7 +9,7 @@ const useReviewData = () => {
   };
 
   const getReviewDate = (review: ProductReview) => {
-    return formatDateString(review.date_reviewed, 'DD.MM.YYYY HH:ss');
+    return formatDateString(review.date_reviewed, 'DD.MM.YYYY HH:mm');
   };
 
   return {

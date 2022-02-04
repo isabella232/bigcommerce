@@ -1,7 +1,7 @@
 import { IntegrationContext } from '@vue-storefront/core';
 import { ContextualizedEndpoints } from '@vue-storefront/bigcommerce-api';
 import { AxiosInstance } from 'axios';
-import { NuxtCookies } from 'cookie-universal-nuxt';
+import { NuxtAppOptions } from '@nuxt/types';
 
 export * from './useWishlist';
 export * from './useGuestWishlist';
@@ -9,6 +9,7 @@ export * from './useReview';
 export * from './useUser';
 export * from './useUserOrder';
 export * from './useUserOrderProducts';
+export * from './useUserOrderByCart';
 export * from './useCategory';
 
 /**
@@ -27,17 +28,6 @@ interface AxiosClientConfig {
 }
 
 /**
- * Contains configuration for the app.
- */
-interface AppConfig {
-  /**
-   * Cookie interface.
-   */
-  $cookies: NuxtCookies;
-  $config: any;
-}
-
-/**
  * Configuration for `$vsf` context.
  */
 interface ContextConfig {
@@ -49,7 +39,7 @@ interface ContextConfig {
   /**
    * App Config.
    */
-  app: AppConfig;
+  app: NuxtAppOptions;
 }
 
 /**
@@ -65,15 +55,12 @@ export type BigcommerceIntegrationContext = IntegrationContext<
  * $vsf Context.
  */
 export interface Context {
+  /**
+   * BigCommerce integration context.
+   */
   $bigcommerce: BigcommerceIntegrationContext;
+  /**
+   * Other context properties.
+   */
   [key: string]: any;
 }
-
-// TODO types
-export type TODO = any;
-
-export type UseBillingAddParams = TODO;
-
-export type UseSearchParams = TODO;
-
-export type UseShippingAddParams = TODO;

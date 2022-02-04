@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { UseUserShippingFactoryParams } from '@vue-storefront/core';
 import type {
   UserShippingAddress as Address,

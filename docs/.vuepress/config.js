@@ -1,9 +1,12 @@
 module.exports = {
-  title: 'Vue Storefront 2 for bigcommerce',
+  title: 'Vue Storefront 2 for BigCommerce',
   base: '/',
-  description: 'Documentation for the bigcommerce connector for Vue Storefront 2',
+  description: 'Documentation for the BigCommerce connector for Vue Storefront 2',
   head: [
     ['link', { rel: 'icon', href: '/favicon.png' }]
+  ],
+  plugins:[
+    require('./plugins/additionalPages.js')
   ],
   configureWebpack: (config) => {
     config.module.rules = config.module.rules.map(rule => ({
@@ -37,12 +40,12 @@ module.exports = {
         ]
       },
       {
-        title: 'Composables',
-        path: '/composables/'
-      },
-      {
-        title: 'API Client',
-        path: '/api-client/'
+        title: 'Reference',
+        collapsable: true,
+        children: [
+          ['/reference/api/', 'API Reference'],
+          ['/reference/changelog', 'Changelog']
+        ]
       },
     ]
   }

@@ -3,6 +3,7 @@ import {
   CartIncludeEnum,
   COOKIE_KEY_CART_ID,
   FormField,
+  PhysicalCartItem,
   User
 } from '@vue-storefront/bigcommerce-api';
 import { Context } from '../../types';
@@ -20,7 +21,11 @@ const mergeCarts = async (
     data: {
       line_items: [
         ...guestCart.line_items.digital_items,
-        ...guestCart.line_items.physical_items
+        ...guestCart.line_items.physical_items.map(item => Object.fromEntries(
+          Object.entries(item).filter(([key]) =>
+            ['parent_id', 'product_id', 'variant_id', 'quantity'].includes(key)
+          )
+        ) as PhysicalCartItem)
       ]
     }
   });

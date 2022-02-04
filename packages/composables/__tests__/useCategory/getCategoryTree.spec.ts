@@ -1,11 +1,11 @@
+import { CategoryTree } from '@vue-storefront/bigcommerce-api';
 import categoryTreeMockData from '../../__mocks__/useCategory/categoryTreeMockData.json';
 import {
   buildBreadcrumbs,
   getBreadcrumbs,
   getCategoryById,
   getCategoryBySlug
-} from '../../src/helpers/category';
-import { CategoryTree } from '../../src/types/useCategory';
+} from '../../../theme/composables/useCategoryData';
 
 const contextMock = {
   $bigcommerce: {
@@ -21,9 +21,14 @@ describe('[bigcommerce-composables] getCategoryTree', () => {
   });
 
   it('it should return a category tree from api', async () => {
-
+    const i18n = {
+      t: jest.fn((str) => str)
+    };
+    const localePath = jest.fn((str) => str);
     const categories: CategoryTree[] = await contextMock.$bigcommerce.api.getCategoryTree();
-    expect(contextMock.$bigcommerce.api.getCategoryTree).toHaveBeenCalledTimes(1);
+    expect(contextMock.$bigcommerce.api.getCategoryTree).toHaveBeenCalledTimes(
+      1
+    );
 
     const categoryBath = getCategoryById(39, categories);
     expect(categoryBath).toMatchInlineSnapshot(
@@ -59,7 +64,7 @@ describe('[bigcommerce-composables] getCategoryTree', () => {
       `
     );
 
-    const breadcrumbs = getBreadcrumbs(39, categories);
+    const breadcrumbs = getBreadcrumbs(39, categories, localePath, i18n);
     expect(breadcrumbs).toMatchInlineSnapshot(`
       Array [
         Object {
@@ -77,7 +82,7 @@ describe('[bigcommerce-composables] getCategoryTree', () => {
       ]
     `);
 
-    const breadcrumbs2 = buildBreadcrumbs(39, [], categories);
+    const breadcrumbs2 = buildBreadcrumbs(39, [], categories, localePath, i18n);
     expect(breadcrumbs2).toMatchInlineSnapshot(`
       Array [
         Object {

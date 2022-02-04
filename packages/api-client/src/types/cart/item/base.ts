@@ -1,7 +1,7 @@
 import { AppliedCoupon, AppliedDiscount } from '../';
 
 /**
- * Option selected for the product
+ * Product option model.
  */
 interface ProductOption {
   /**
@@ -18,13 +18,14 @@ interface ProductOption {
   value?: string;
   /**
    * The product option value identifier.
-   * @type {number}
-   * @memberof ProductOption
    */
   valueId?: number;
 }
 
-export type CartItemBase = {
+/**
+ * Base model of cart item.
+ */
+export interface CartItemBase {
   /**
    * The line-item ID.
    */
@@ -101,4 +102,4 @@ export type CartItemBase = {
    * The list of selected options for this product.
    */
   options?: Array<ProductOption>;
-};
+}

@@ -1,19 +1,20 @@
+import { useContext, useRoute } from '@nuxtjs/composition-api';
 import { AgnosticSort } from '@vue-storefront/core';
-import { getInstance } from '../useUiHelpers';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useFacetData = () => {
-  const instance = getInstance();
+  const { $config } = useContext();
 
-  const getSortOptions = (/* params: FacetSearchResult<Facet> */): AgnosticSort => {
-    const { query } = instance.$router.history.current;
+  const getSortOptions = (): AgnosticSort => {
+    const route = useRoute();
+    const { query } = route.value;
     const sortParams = {
       sort: query.sort,
       direction: query.direction
     };
 
     const options: AgnosticSort['options'] = (
-      instance.context.$config.theme?.productsSortOptions ?? []
+      $config.theme?.productsSortOptions ?? []
     ).map((option) => ({
       type: 'sort',
       id: option.id,

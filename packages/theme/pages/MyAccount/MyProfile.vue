@@ -46,14 +46,13 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@vue/composition-api';
+import { defineComponent, ref } from '@nuxtjs/composition-api';
 import { extend } from 'vee-validate';
 import { email, required, min, confirmed } from 'vee-validate/dist/rules';
 import ProfileUpdateForm from '~/components/MyAccount/ProfileUpdateForm';
 import PasswordResetForm from '~/components/MyAccount/PasswordResetForm';
 import { SfTabs, SfInput, SfButton } from '@storefront-ui/vue';
 import { useUser } from '@vue-storefront/bigcommerce';
-import { onSSR } from '@vue-storefront/core';
 import { useUserData } from '../../composables/useUserData';
 
 extend('email', {
@@ -96,7 +95,7 @@ export default defineComponent({
     PasswordResetForm
   },
   setup() {
-    const { updateUser, changePassword, user, load } = useUser();
+    const { updateUser, changePassword, user } = useUser();
     const userData = useUserData();
     const showEditProfileForm = ref(false);
     const closeEditProfileForm = () => {
@@ -125,10 +124,6 @@ export default defineComponent({
         onComplete,
         onError
       );
-
-    onSSR(async () => {
-      await load();
-    });
 
     return {
       userData,

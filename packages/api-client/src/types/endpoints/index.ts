@@ -60,9 +60,13 @@ import {
   UpdateAddressResponse
 } from '../address';
 import {
+  GetOrderByCartParameters,
   GetOrderProductsParameters,
+  GetOrderShippingAddressesParameters,
   GetOrdersParameters,
+  OrderByCartResponse,
   OrderProductResponse,
+  OrderShippingAddressesResponse,
   OrdersResponse
 } from '../order';
 
@@ -376,4 +380,24 @@ export interface Endpoints {
     context: BigcommerceIntegrationContext,
     params?: GetOrderProductsParameters
   ): Promise<OrderProductResponse>;
+
+  /**
+   * Returns the shipping addresses of the given order. Optional filter parameters can be passed in.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {GetOrderShippingAddressesParameters} params (Optional) An object which contains optional properties for retrieving the shipping addresses of an order.
+   */
+  getOrderShippingAddresses(
+    context: BigcommerceIntegrationContext,
+    params?: GetOrderShippingAddressesParameters
+  ): Promise<OrderShippingAddressesResponse>;
+
+  /**
+   * Returns the order related to the given cart.
+   * @param {BigcommerceIntegrationContext} context An auto-generated value prepended to the method as a first parameter.
+   * @param {GetOrderByCartParameters} params (Optional) An object which contains properties for retrieving the order filtered by cartId.
+   */
+  getOrderByCart(
+    context: BigcommerceIntegrationContext,
+    params?: GetOrderByCartParameters
+  ): Promise<OrderByCartResponse>;
 }

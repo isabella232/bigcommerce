@@ -1,28 +1,31 @@
+import jwt from 'jsonwebtoken';
 import queryString from 'query-string';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
-import { getCustomerIdParameter } from '../../../helpers/auth';
+import { getCustomerIdFromCookie } from '../../../helpers/auth';
 import { COOKIE_KEY_CUSTOMER_DATA } from '../../../helpers/consts';
 import { BigcommerceIntegrationContext, Endpoints } from '../../../types';
-const jwt = require('jsonwebtoken');
 
 export const getCustomers: Endpoints['getCustomers'] = async (
   context,
   params
 ) => {
-  return await context.client.v3.get(
-    queryString.stringifyUrl(
-      {
-        url: BigCommerceEndpoints.customers,
-        query: {
-          ...params,
-          'id:in': getCustomerIdParameter(context, params)
+  const idFromCookie = getCustomerIdFromCookie(context);
+  if (idFromCookie) {
+    return await context.client.v3.get(
+      queryString.stringifyUrl(
+        {
+          url: BigCommerceEndpoints.customers,
+          query: {
+            ...params,
+            'id:in': [idFromCookie]
+          }
+        },
+        {
+          arrayFormat: 'comma'
         }
-      },
-      {
-        arrayFormat: 'comma'
-      }
-    )
-  );
+      )
+    );
+  }
 };
 
 export function getCustomerId(

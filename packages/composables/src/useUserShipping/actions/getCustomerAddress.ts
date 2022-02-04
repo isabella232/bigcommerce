@@ -3,6 +3,7 @@ import {
   UserAddress
 } from '@vue-storefront/bigcommerce-api';
 import { Context } from '../../types';
+import { logOut } from '../../useUser/actions/logout';
 
 /**
  * `getCustomerAddress` method in `useUser` composable.
@@ -13,6 +14,11 @@ export const getCustomerAddress = async (
   context: Context,
   params: GetAddressParameters
 ): Promise<UserAddress[]> => {
-  const { data } = await context.$bigcommerce.api.getCustomerAddress(params);
-  return data;
+  try {
+    const { data } = await context.$bigcommerce.api.getCustomerAddress(params);
+    return data;
+  } catch (error) {
+    await logOut(context);
+    return null;
+  }
 };

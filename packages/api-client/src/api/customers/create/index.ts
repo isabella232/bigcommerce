@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 import {
   BigcommerceIntegrationContext,
   CreateCustomerParameters,
@@ -53,13 +53,12 @@ export function setTokenCookie(
     res
   } = context;
 
-  // eslint-disable-next-line camelcase
-  const { id, email, customer_group_id: group_id } = customerData;
+  const { id, email, customer_group_id: groupId } = customerData;
   const payload = {
     customer: {
       id,
       email,
-      group_id
+      group_id: groupId
     }
   };
 

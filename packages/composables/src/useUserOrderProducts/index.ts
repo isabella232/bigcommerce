@@ -12,7 +12,7 @@ import {
 } from '..';
 
 /**
- *  Handles the product data for orders
+ * Managing product data for fulfilled and active user orders.
  */
 export const useUserOrderProducts = (
   id: string
@@ -27,7 +27,7 @@ export const useUserOrderProducts = (
   );
   const error: Ref<UseUserOrderProductsErrors> = sharedRef(
     {
-      search: null
+      load: null
     },
     `useUserOrderProducts-error-${id}`
   );

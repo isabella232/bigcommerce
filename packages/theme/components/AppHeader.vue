@@ -12,6 +12,8 @@
             src="/icons/logo.svg"
             alt="Vue Storefront Next"
             class="sf-header__logo-image"
+            :width="34"
+            :height="34"
           />
         </nuxt-link>
       </template>
@@ -28,9 +30,14 @@
             aria-label="Open account button"
             @click="handleAccountClick"
           >
-            <SfIcon :icon="accountIcon" size="1.25rem" />
+            <SfIcon
+              class="sf-header__icon"
+              :icon="accountIcon"
+              size="1.25rem"
+            />
           </SfButton>
           <SfButton
+            v-if="!isCheckoutPage"
             class="sf-button--pure sf-header__action"
             aria-label="Toggle wishlist sidebar"
             @click="toggleWishlistSidebar"
@@ -40,22 +47,19 @@
               :icon="wishlistTotalItems ? 'heart_fill' : 'heart'"
               size="1.25rem"
             />
-            <SfBadge
-              v-if="wishlistTotalItems"
-              class="sf-badge--number badge"
-            >
+            <SfBadge v-if="wishlistTotalItems" class="sf-badge--number badge">
               {{ wishlistTotalItems }}
-            </SfBadge
-            >
+            </SfBadge>
           </SfButton>
           <SfButton
+            v-if="!isCheckoutPage"
             class="sf-button--pure sf-header__action"
             aria-label="Toggle cart sidebar"
             @click="toggleCartSidebar"
           >
             <SfIcon class="sf-header__icon" icon="empty_cart" size="1.25rem" />
             <SfBadge
-              v-if="cartTotalItems"
+              :style="{ display: cartTotalItems ? 'block' : 'none' }"
               class="sf-badge--number badge"
               >{{ cartTotalItems }}</SfBadge
             >
@@ -68,6 +72,7 @@
           :placeholder="$t('Search for items')"
           aria-label="Search"
           class="sf-header__search"
+          :class="{ 'search-hidden': isCheckoutPage }"
           :value="term"
           @input="handleSearch"
           @keydown.enter="handleSearch($event)"
@@ -103,6 +108,7 @@
       </template>
     </SfHeader>
     <SearchResults
+      v-if="!isCheckoutPage"
       :visible="isSearchOpen"
       :result="result"
       @close="closeSearch"
@@ -129,8 +135,11 @@ import {
   defineComponent,
   ref,
   onBeforeUnmount,
-  watch
-} from '@vue/composition-api';
+  watch,
+  useRoute,
+  useRouter,
+  useContext
+} from '@nuxtjs/composition-api';
 import { useUiHelpers } from '~/composables';
 import LocaleSelector from './LocaleSelector';
 import SearchResults from '~/components/SearchResults';
@@ -162,17 +171,21 @@ export default defineComponent({
     HeaderNavigation
   },
   directives: { clickOutside },
-  setup(props, { root }) {
+  setup() {
+    const { localePath } = useContext();
     const { products, search } = useProduct('search-products');
+    const router = useRouter();
+    const route = useRoute();
+    const routeName = computed(() => route.value.name);
     const {
       toggleCartSidebar,
       toggleWishlistSidebar,
       toggleLoginModal,
       isMobileMenuOpen
     } = useUiState();
-    const { setTermForUrl, getFacetsFromURL } = useUiHelpers();
-    const { isAuthenticated, load: loadUser } = useUser();
-    const { cart, load: loadCart } = useCart();
+    const { getFacetsFromURL } = useUiHelpers();
+    const { isAuthenticated } = useUser();
+    const { cart } = useCart();
     const { wishlist } = useWishlist();
     const wishlistHelpers = useWishlistData();
     const { getTotalItems } = useCartData();
@@ -187,14 +200,15 @@ export default defineComponent({
     const navigation = computed(() =>
       buildCategoryNavigation(categoryResults.value)
     );
-
+    const isCheckoutPage = computed(() => {
+      return Boolean(routeName.value) && routeName.value.includes('checkout');
+    });
     const wishlistTotalItems = computed(() =>
       wishlistHelpers.getTotalItems(wishlist.value)
     );
 
     onSSR(async () => {
       await categorySearch();
-      await loadCart();
     });
 
     const cartTotalItems = computed(() => {
@@ -206,13 +220,11 @@ export default defineComponent({
       isAuthenticated.value ? 'profile_fill' : 'profile'
     );
 
-    loadUser();
-
     // TODO: https://github.com/vuestorefront/vue-storefront/issues/4927
     const handleAccountClick = async () => {
       if (isAuthenticated.value) {
-        const localeAccountPath = root.localePath({ name: 'my-account' });
-        return root.$router.push(localeAccountPath);
+        const localeAccountPath = localePath({ name: 'my-account' });
+        return router.push(localeAccountPath);
       }
 
       toggleLoginModal();
@@ -231,7 +243,10 @@ export default defineComponent({
         term.value = paramValue.target.value;
       }
 
-      await search({ 'keyword:like:': term.value });
+      await search({
+        'keyword:like:': term.value,
+        include: 'options,variants'
+      });
       const categories = buildSearchCategories(
         products.value.data,
         categoryResults.value
@@ -272,9 +287,9 @@ export default defineComponent({
       handleAccountClick,
       toggleCartSidebar,
       toggleWishlistSidebar,
-      setTermForUrl,
       term,
       isSearchOpen,
+      isCheckoutPage,
       closeSearch,
       handleSearch,
       result,
@@ -314,5 +329,9 @@ export default defineComponent({
   position: absolute;
   bottom: 40%;
   left: 40%;
+}
+
+.search-hidden {
+  display: none;
 }
 </style>

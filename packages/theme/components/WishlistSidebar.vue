@@ -48,8 +48,8 @@
                   )
                 "
                 :stock="wishlistHelpers.getItemQty(wishlist, wishlistItem)"
-                image-width="180"
-                image-height="200"
+                :image-width="180"
+                :image-height="200"
                 @click:remove="removeItem({ product: wishlistItem })"
                 class="collected-product"
               >
@@ -71,11 +71,17 @@
                 <template #actions>
                   <SfButton
                     @click="moveToCart(wishlistItem)"
-                    :disabled="cartLoading"
-                    class="sf-button--text"
+                    :disabled="
+                      cartLoading ||
+                      !wishlistHelpers.isItemPurchasable(wishlist, wishlistItem)
+                    "
+                    class="sf-button--text desktop-only"
                   >
                     {{ $t('Add to cart') }}
                   </SfButton>
+                </template>
+                <template #more-actions>
+                  <div></div>
                 </template>
               </SfCollectedProduct>
             </transition-group>
@@ -99,6 +105,8 @@
               src="/icons/empty-cart.svg"
               alt="Empty bag"
               class="empty-wishlist__icon"
+              :width="256"
+              :height="173"
             />
             <SfHeading
               title="Your bag is empty"
@@ -111,6 +119,7 @@
       </transition>
       <template #content-bottom>
         <SfLink
+          link=""
           @click.prevent="clear"
           class="my-wishlist__clear"
           v-if="totalItems"
@@ -139,7 +148,7 @@ import {
   SfImage,
   SfLink
 } from '@storefront-ui/vue';
-import { computed, defineComponent } from '@vue/composition-api';
+import { computed, defineComponent } from '@nuxtjs/composition-api';
 import { useWishlist, useCart } from '@vue-storefront/bigcommerce';
 import { useUiState } from '~/composables';
 import { useWishlistData } from '../composables/useWishlistData';

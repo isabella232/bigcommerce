@@ -1,6 +1,9 @@
 import { CartItemBase } from './base';
 
-export type DigitalCartItem = CartItemBase & {
+/**
+ * Digital cart item model.
+ */
+export interface DigitalCartItem extends CartItemBase {
   /**
    * URLs to download all product files.
    */
@@ -13,4 +16,4 @@ export type DigitalCartItem = CartItemBase & {
    * Combined download size, in human-readable style. E.g.: `30MB`.
    */
   download_size?: string;
-};
+}

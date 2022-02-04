@@ -37,14 +37,9 @@
                 <template>
                   <SfList class="list">
                     <SfListItem class="list__item">
-                      <SfMenuItem :count="cat.count || ''" :label="cat.name">
+                      <SfMenuItem :label="cat.name">
                         <template #label>
-                          <nuxt-link
-                            :to="localePath(th.getCatLink(cat))"
-                            :class="
-                              cat.isCurrent ? 'sidebar--cat-selected' : ''
-                            "
-                          >
+                          <nuxt-link :to="localePath(th.getCatLink(cat))">
                             All
                           </nuxt-link>
                         </template>
@@ -55,17 +50,9 @@
                       v-for="(subCat, j) in cat.children"
                       :key="j"
                     >
-                      <SfMenuItem
-                        :count="subCat.count || ''"
-                        :label="subCat.name"
-                      >
+                      <SfMenuItem :label="subCat.name">
                         <template #label="{ label }">
-                          <nuxt-link
-                            :to="localePath(th.getCatLink(subCat))"
-                            :class="
-                              subCat.isCurrent ? 'sidebar--cat-selected' : ''
-                            "
-                          >
+                          <nuxt-link :to="localePath(th.getCatLink(subCat))">
                             {{ label }}
                           </nuxt-link>
                         </template>
@@ -78,7 +65,10 @@
           </SfLoader>
         </LazyHydrate>
       </div>
-      <SfLoader :class="{ loading: isProductsLoading }" :loading="isProductsLoading">
+      <SfLoader
+        :class="{ loading: isProductsLoading }"
+        :loading="isProductsLoading"
+      >
         <div class="products" v-if="!isProductsLoading">
           <div
             v-if="Array.isArray(products) && !products.length"
@@ -104,23 +94,17 @@
               :image="productData.getCoverImage(product)"
               :regular-price="
                 $n(
-                  productData.getPrice(
-                    product,
-                    productData.getDefaultVariant(product)
-                  ).regular,
+                  productData.getPrice(product, getDefaultVariant(product))
+                    .regular,
                   'currency'
                 )
               "
               :special-price="
-                productData.getPrice(
-                  product,
-                  productData.getDefaultVariant(product)
-                ).special &&
+                productData.getPrice(product, getDefaultVariant(product))
+                  .special &&
                   $n(
-                    productData.getPrice(
-                      product,
-                      productData.getDefaultVariant(product)
-                    ).special,
+                    productData.getPrice(product, getDefaultVariant(product))
+                      .special,
                     'currency'
                   )
               "
@@ -130,6 +114,7 @@
               wishlistIcon="heart"
               isInWishlistIcon="heart_fill"
               :isInWishlist="isInWishlist({ product })"
+              :addToCartDisabled="!productData.canBeAddedToCart(product)"
               :isAddedToCart="isInCart({ product })"
               :link="
                 localePath(
@@ -150,6 +135,9 @@
                   : addItemToWishlist({ product })
               "
               @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
+              imageTag="img"
+              :imageWidth="isMobile ? 150 : 216"
+              :imageHeight="isMobile ? 150 : 216"
             />
           </transition-group>
           <transition-group
@@ -177,8 +165,6 @@
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
               :isInWishlist="isInWishlist({ product })"
-              :qty="1"
-              @input="productsQuantity[product.id] = $event"
               class="products__product-card-horizontal"
               @click:wishlist="
                 isInWishlist({ product })
@@ -190,14 +176,6 @@
                     })
                   : addItemToWishlist({ product })
               "
-              @click:add-to-cart="
-                addItemToCart({
-                  product,
-                  quantity: Number(
-                    productsQuantity[productData.getId(product)] || 1
-                  )
-                })
-              "
               :link="
                 localePath(
                   `/p/${productData.getId(product)}/${productData.getSlug(
@@ -205,18 +183,12 @@
                   )}`
                 )
               "
+              imageTag="img"
+              :imageWidth="isMobile ? 85 : 140"
+              :imageHeight="isMobile ? 113 : 200"
             >
               <template #description>
                 <div v-html="productData.getDescription(product)" />
-              </template>
-              <template #configuration>
-                <SfProperty
-                  class="desktop-only"
-                  name="Size"
-                  value="XS"
-                  style="margin: 0 0 1rem 0"
-                />
-                <SfProperty class="desktop-only" name="Color" value="white" />
               </template>
               <template #actions>
                 <SfButton
@@ -240,6 +212,21 @@
                   }}
                 </SfButton>
               </template>
+              <template #add-to-cart>
+                <SfAddToCart
+                  v-model="productsQuantity[product.id]"
+                  :disabled="!productData.canBeAddedToCart(product)"
+                  class="sf-product-card-horizontal__add-to-cart desktop-only"
+                  @click="
+                    addItemToCart({
+                      product,
+                      quantity: Number(
+                        productsQuantity[productData.getId(product)] || 1
+                      )
+                    })
+                  "
+                />
+              </template>
             </SfProductCardHorizontal>
           </transition-group>
 
@@ -257,9 +244,9 @@
             v-show="pagination.totalPages > 1"
             class="products__show-on-page"
           >
-            <span class="products__show-on-page__label">{{
-              $t('Show on page')
-            }}</span>
+            <span class="products__show-on-page__label">
+              {{ $t('Show on page') }}
+            </span>
             <LazyHydrate on-interaction>
               <SfSelect
                 :value="
@@ -275,9 +262,8 @@
                   :key="option"
                   :value="option"
                   class="products__items-per-page__option"
+                  >{{ option }}</SfSelectOption
                 >
-                  {{ option }}
-                </SfSelectOption>
               </SfSelect>
             </LazyHydrate>
           </div>
@@ -304,9 +290,20 @@ import {
   SfBreadcrumbs,
   SfLoader,
   SfColor,
-  SfProperty
+  SfProperty,
+  SfAddToCart
 } from '@storefront-ui/vue';
-import { computed, ref, defineComponent } from '@vue/composition-api';
+import {
+  computed,
+  defineComponent,
+  onBeforeUnmount,
+  ref,
+  useContext
+} from '@nuxtjs/composition-api';
+import {
+  mapMobileObserver,
+  unMapMobileObserver
+} from '@storefront-ui/vue/src/utilities/mobile-observer.js';
 import {
   useCart,
   useWishlist,
@@ -334,9 +331,10 @@ export default defineComponent({
     'max-age': 60,
     'stale-when-revalidate': 5
   }),
-  setup(props, context) {
+  setup() {
+    const isMobile = ref(mapMobileObserver().isMobile.get());
     const th = useUiHelpers();
-    const uiState = useUiState();
+    const { isCategoryGridView } = useUiState();
     const { addItem: addItemToCart, isInCart } = useCart();
     const {
       wishlist,
@@ -345,21 +343,24 @@ export default defineComponent({
       removeItem: removeItemFromWishlist
     } = useWishlist();
     const wishlistHelpers = useWishlistData();
-    const {
-      products: productsResult,
-      search,
-      error
-    } = useProduct('category-products');
+    const { products: productsResult, search, error } = useProduct(
+      'category-products'
+    );
     const { categories, search: categorySearch } = useCategory('category-tree');
     const productData = useProductData();
     const { categorySlug } = th.getFacetsFromURL();
-
+    const { localePath, i18n, error: nuxtError } = useContext();
     const productsQuantity = ref({});
     const products = computed(() => productsResult.value?.data);
     const categoryTree = computed(() => {
       let categoriesData = categories.value;
       const category = getCategoryBySlug(categorySlug, categories.value);
-      const breadcrumbs = getBreadcrumbs(category?.id, categories.value);
+      const breadcrumbs = getBreadcrumbs(
+        category?.id,
+        categories.value,
+        localePath,
+        i18n
+      );
       const rootSlug =
         breadcrumbs && breadcrumbs[1] ? breadcrumbs[1]?.link?.substring(2) : '';
       const rootCategory = getCategoryBySlug(rootSlug, categoriesData);
@@ -388,17 +389,20 @@ export default defineComponent({
       );
       return category?.name;
     });
-
     const breadcrumbs = computed(() => {
       if (!categories.value || !categories.value?.length) {
         return '';
       }
 
       const category = getCategoryBySlug(categorySlug, categories.value);
-      const breadcrumbs = getBreadcrumbs(category?.id, categories.value);
+      const breadcrumbs = getBreadcrumbs(
+        category?.id,
+        categories.value,
+        localePath,
+        i18n
+      );
       return breadcrumbs;
     });
-
     const isProductsLoading = ref(false);
 
     onSSR(async () => {
@@ -435,12 +439,16 @@ export default defineComponent({
       }
 
       await search(productSearchParams);
-      if (error?.value?.search) context.root.$nuxt.error({ statusCode: 404 });
+      if (error?.value?.search) nuxtError({ statusCode: 404 });
       isProductsLoading.value = false;
     });
 
+    onBeforeUnmount(() => {
+      unMapMobileObserver();
+    });
+
     return {
-      ...uiState,
+      isCategoryGridView,
       th,
       products,
       categoryTree,
@@ -457,7 +465,8 @@ export default defineComponent({
       isInCart,
       productsQuantity,
       productData,
-      getDefaultVariant
+      getDefaultVariant,
+      isMobile
     };
   },
   components: {
@@ -478,7 +487,8 @@ export default defineComponent({
     SfColor,
     SfHeading,
     SfProperty,
-    LazyHydrate
+    LazyHydrate,
+    SfAddToCart
   }
 });
 </script>

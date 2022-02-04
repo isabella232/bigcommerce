@@ -1,5 +1,6 @@
 import { GetCustomersParameters, User } from '@vue-storefront/bigcommerce-api';
 import { Context } from '../../types';
+import { logOut } from '.';
 
 /**
  * `getCustomer` method in `useUser` composable.
@@ -10,6 +11,11 @@ export const getCustomer = async (
   context: Context,
   params: GetCustomersParameters
 ): Promise<User> => {
-  const { data } = await context.$bigcommerce.api.getCustomers(params);
-  return data?.length ? data[0] : null;
+  try {
+    const { data } = await context.$bigcommerce.api.getCustomers(params);
+    return data?.length ? data[0] : null;
+  } catch (error) {
+    await logOut(context);
+    return null;
+  }
 };

@@ -3,7 +3,7 @@ import { removeWishlistItem } from '../../../src/api/wishlist';
 import { contextMock } from '../../../__mocks__/context.mock';
 import BigCommerceEndpoints from '../../../src/helpers/endpointPaths';
 
-describe('[BigCommerce-api-client] add wishlist items', () => {
+describe('[BigCommerce-api-client] remove wishlist items', () => {
   const wishlistId = 1;
   const itemId = 1;
 

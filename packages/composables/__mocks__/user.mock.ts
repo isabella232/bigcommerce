@@ -29,7 +29,8 @@ export const mockedUser: User = {
   form_fields: [
     {
       name: 'Cart ID',
-      value: '7d26b524-1db8-4919-bf2c-e74ea6c508bf'
+      value: '7d26b524-1db8-4919-bf2c-e74ea6c508bf',
+      address_id: 1
     }
   ],
   id: 11,

@@ -194,5 +194,16 @@ export default {
   'Order ID': 'Order ID',
   'Payment date': 'Payment date',
   Amount: 'Amount',
-  Status: 'Status'
+  Status: 'Status',
+  SKU: 'SKU',
+  'Item Description': 'Item Description',
+  'Thank you for your order!': 'Thank you for your order!',
+  'Continue shopping': 'Continue shopping',
+  'Thanks for adding review!': 'Thanks for adding review!',
+  'Add review': 'Add review',
+  'Review title': 'Review title',
+  'Review rating': 'Review rating',
+  'Review message': 'Review message',
+  'type review message': 'type review message',
+  Submit: 'Submit'
 };

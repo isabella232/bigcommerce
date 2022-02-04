@@ -1,3 +1,4 @@
+export * from './formFields';
 export * from './address';
 export * from './cart';
 export * from './category';
@@ -9,5 +10,4 @@ export * from './nodeBigcommerceSDK';
 export * from './order';
 export * from './product';
 export * from './review';
-export * from './shared';
 export * from './wishlist';

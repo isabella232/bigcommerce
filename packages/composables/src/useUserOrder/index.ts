@@ -5,6 +5,9 @@ import type {
 import { params } from './params';
 import { OrderResults } from '..';
 
+/**
+ * Managing past and active user orders.
+ */
 export const useUserOrder = useUserOrderFactory<
   OrderResults,
   SearchParams

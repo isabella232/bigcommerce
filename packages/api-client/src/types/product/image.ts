@@ -1,7 +1,7 @@
 /**
- * Definition of product images
+ * Product image model.
  */
-export type Image = {
+export interface Image {
   /**
    * The date on which the product image was modified.
    */
@@ -50,4 +50,4 @@ export type Image = {
    * The zoom URL for this image. By default, this is used as the zoom image on product pages when zoom images are enabled.
    */
   url_zoom?: string;
-};
+}

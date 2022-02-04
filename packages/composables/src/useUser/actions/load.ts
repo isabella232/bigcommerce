@@ -1,9 +1,12 @@
 import { Context } from '../../types';
 import {
   CustomersIncludeEnum,
-  User,
-  STORAGE_KEY_IS_LOGGED_IN
+  User
 } from '@vue-storefront/bigcommerce-api';
+import {
+  BIGCOMMERCE_COOKIE_MAXAGE,
+  BIGCOMMERCE_USER_AUTHENTICATED
+} from '../../helpers/consts';
 import { loadCustomerCart } from '../../helpers/customer/loadCart';
 import { getCustomer } from './getCustomer';
 
@@ -12,6 +15,7 @@ import { getCustomer } from './getCustomer';
  * @param {Context} context An auto-generated value prepended to the method as a first parameter.
  */
 export const load = async (context: Context): Promise<User> => {
+  const cookies = context.$bigcommerce.config.app.$cookies;
   const customer = await getCustomer(context, {
     include: CustomersIncludeEnum.Formfields
   });
@@ -23,9 +27,10 @@ export const load = async (context: Context): Promise<User> => {
       customer.form_fields = formFields;
     }
 
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem(STORAGE_KEY_IS_LOGGED_IN, '1');
-    }
+    cookies.set(BIGCOMMERCE_USER_AUTHENTICATED, '1', {
+      path: '/',
+      maxAge: BIGCOMMERCE_COOKIE_MAXAGE
+    });
 
     return customer;
   }

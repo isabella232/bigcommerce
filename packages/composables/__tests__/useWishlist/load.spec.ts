@@ -1,13 +1,9 @@
 import { WishlistResponse, WishlistCollectionResponse, Wishlist as WishlistAPI } from '@vue-storefront/bigcommerce-api';
 import { load } from '../../src/useWishlist/actions';
 import { contextMock } from '../../__mocks__/context.mock';
-import jwt from 'jsonwebtoken';
-
-const customerId = 1;
-const decode = jest.spyOn(jwt, 'decode');
-decode.mockImplementation(() => ({ customer: { id: customerId } }));
 
 describe('[BigCommerce - composables] useWishlist load', () => {
+  const customerId = 1;
   const wishlistName = 'Mocked wishlist';
   const wishlistMock: WishlistAPI = {
     id: 1,

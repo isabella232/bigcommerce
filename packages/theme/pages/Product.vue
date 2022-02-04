@@ -10,6 +10,10 @@
           :key="productGallery.length"
           :images="productGallery"
           class="product__gallery"
+          :imageWidth="422"
+          :imageHeight="644"
+          :thumbWidth="160"
+          :thumbHeight="160"
         />
       </LazyHydrate>
 
@@ -252,14 +256,13 @@ import {
   ref,
   computed,
   defineComponent,
-  onMounted
-} from '@vue/composition-api';
-import {
-  useProduct,
-  useCart,
-  productGetters,
-  useReview
-} from '@vue-storefront/bigcommerce';
+  onMounted,
+  useContext,
+  useRouter,
+  useRoute
+} from '@nuxtjs/composition-api';
+import { useProduct, useCart, useReview } from '@vue-storefront/bigcommerce';
+import { ReviewStatus } from '@vue-storefront/bigcommerce-api';
 import { onSSR } from '@vue-storefront/core';
 import LazyHydrate from 'vue-lazy-hydration';
 import { useProductData } from '../composables/useProductData';
@@ -276,16 +279,21 @@ export default defineComponent({
     'max-age': 60,
     'stale-when-revalidate': 5
   }),
-  setup(props, context) {
+  setup() {
+    const { error } = useContext();
+    const router = useRouter();
+    const route = useRoute();
     const { categories, search: categorySearch } = useCategory('category-tree');
     const qty = ref(1);
-    const { id } = context.root.$route.params;
+    const id = computed(() => route.value.params.id);
+    const { query } = route.value;
     const uiHelpers = useUiHelpers();
-    const configuration = ref(context.root.$router.query);
+    const configuration = ref(query);
     const reviewsTab = 2;
     const openTab = ref(1);
     const tabsRef = ref(null);
     const { products, search } = useProduct('products');
+    const { localePath, i18n } = useContext();
     const {
       products: relatedProducts,
       search: searchRelatedProducts,
@@ -302,7 +310,7 @@ export default defineComponent({
     const reviews = computed(
       () =>
         productReviews.value?.data?.filter(
-          (review) => review.status === 'approved'
+          (review) => review.status === ReviewStatus.approved
         ) || []
     );
     const reviewHelpers = useReviewData();
@@ -330,16 +338,19 @@ export default defineComponent({
       }
 
       const categoryId = product.value.categories[0];
-      const breadcrumbs = getBreadcrumbs(categoryId, categories.value);
+      const breadcrumbs = getBreadcrumbs(
+        categoryId,
+        categories.value,
+        localePath,
+        i18n
+      );
       breadcrumbs.push({ text: product.value.name, link: '#' });
       return breadcrumbs;
     });
     const calculateOptions = () => {
-      const queryParams = context.root.$route.query;
-
       configuration.value = product.value.options.reduce((acc, option) => {
         const newValue =
-          queryParams[option.display_name] ??
+          query[option.display_name] ??
           option.option_values.find((optionValue) => optionValue.is_default)
             ?.label ??
           option.option_values[0].label;
@@ -362,11 +373,11 @@ export default defineComponent({
     });
 
     onSSR(async () => {
-      await search({ id, include: 'options,variants' });
+      await search({ id: id.value, include: 'options,variants' });
       await categorySearch();
 
       if (!products.value?.data?.length) {
-        context.root.$nuxt.error({ statusCode: 404 });
+        error({ statusCode: 404 });
       }
 
       if (product.value) {
@@ -383,11 +394,11 @@ export default defineComponent({
       }
     });
 
-    searchReviews({ productId: Number(id) });
+    searchReviews({ productId: Number(id.value) });
 
     const updateFilter = (filter) => {
-      context.root.$router.push({
-        path: context.root.$route.path,
+      router.push({
+        path: route.path,
         query: {
           ...configuration.value,
           ...filter
@@ -422,7 +433,6 @@ export default defineComponent({
       addItem,
       loading,
       productData,
-      productGetters,
       productGallery,
       stock,
       uiHelpers,
@@ -458,7 +468,17 @@ export default defineComponent({
 });
 </script>
 
+<style lang="scss">
+.product {
+  .sf-select__label {
+    padding-left: 0;
+  }
+}
+</style>
 <style lang="scss" scoped>
+.sf-select.is-selected {
+  --select-label-font-size: var(--font-size--lg);
+}
 #product {
   box-sizing: border-box;
   @include for-desktop {

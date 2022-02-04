@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import {
   ProductReviewResponse,
   Endpoints,
-  FullCreateProductReviewProps
+  ExtendedCreateProductReviewProps
 } from '../../../types';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
 
@@ -23,7 +23,7 @@ export const createProductReview: Endpoints['createProductReview'] = async (
 
   return context.client.v3.post<
   ProductReviewResponse,
-  FullCreateProductReviewProps
+  ExtendedCreateProductReviewProps
   >(BigCommerceEndpoints.reviews(productId), {
     ...props,
     date_reviewed: dayjs().format('YYYY-MM-DDTHH:mm:ssZ')

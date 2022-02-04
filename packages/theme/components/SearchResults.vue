@@ -13,13 +13,10 @@
         >
           <SfMegaMenuColumn
             :title="$t('Categories')"
-            class="
-              sf-mega-menu-column--pined-content-on-mobile
-              search__categories
-            "
+            class="sf-mega-menu-column--pined-content-on-mobile search__categories"
           >
-            <template #title="{ title }">
-              <SfMenuItem :label="title" @click="megaMenu.changeActive(title)">
+            <template #title="{ title, changeActive }">
+              <SfMenuItem :label="title" @click="changeActive(title)">
                 <template #mobile-nav-icon> &#8203; </template>
               </SfMenuItem>
             </template>
@@ -72,22 +69,13 @@
                     )
                   "
                   :isInWishlist="isInWishlist({ product })"
+                  :addToCartDisabled="!productData.canBeAddedToCart(product)"
                   :isAddedToCart="isInCart({ product })"
-                  @click:wishlist="
-                    isInWishlist({
-                      product,
-                    })
-                      ? removeItemFromWishlist({
-                          product: wishlistHelpers.getItem(wishlist, {
-                            productId: product.id,
-                            variantId: getDefaultVariant(product).id,
-                          }),
-                        })
-                      : addItemToWishlist({
-                          product,
-                        })
-                  "
+                  @click:wishlist="handleWishlistClick(product)"
                   @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
+                  imageTag="img"
+                  :imageWidth="216"
+                  :imageHeight="216"
                 />
               </div>
             </SfScrollable>
@@ -112,22 +100,13 @@
                   )
                 "
                 :isInWishlist="isInWishlist({ product })"
+                :addToCartDisabled="!productData.canBeAddedToCart(product)"
                 :isAddedToCart="isInCart({ product })"
-                @click:wishlist="
-                  isInWishlist({
-                    product,
-                  })
-                    ? removeItemFromWishlist({
-                        product: wishlistHelpers.getItem(wishlist, {
-                          productId: product.id,
-                          variantId: getDefaultVariant(product).id,
-                        }),
-                      })
-                    : addItemToWishlist({
-                        product,
-                      })
-                "
+                @click:wishlist="handleWishlistClick(product)"
                 @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
+                imageTag="img"
+                :imageWidth="128"
+                :imageHeight="128"
               />
             </div>
           </SfMegaMenuColumn>
@@ -145,6 +124,8 @@
             class="before-results__picture"
             alt="error"
             loading="lazy"
+            :width="300"
+            :height="300"
           />
           <p class="before-results__paragraph">
             {{ $t('You haven’t searched for items yet') }}
@@ -162,7 +143,8 @@
     </SfMegaMenu>
   </div>
 </template>
-<script>
+
+<script lang="ts">
 import {
   SfMegaMenu,
   SfList,
@@ -173,18 +155,20 @@ import {
   SfButton,
   SfImage
 } from '@storefront-ui/vue';
-import { ref, watch, computed } from '@vue/composition-api';
+import { computed, defineComponent, ref, watch } from '@nuxtjs/composition-api';
 import { useProductData } from '../composables/useProductData';
 import { useWishlistData } from '../composables/useWishlistData';
+import { Product } from '@vue-storefront/bigcommerce-api';
 import {
   getDefaultVariant,
   useUser,
   useCart,
   useWishlist,
-  useGuestWishlist
+  useGuestWishlist,
+  SearchResultNavigationItem
 } from '@vue-storefront/bigcommerce';
 
-export default {
+export default defineComponent({
   name: 'SearchResults',
   components: {
     SfMegaMenu,
@@ -202,7 +186,10 @@ export default {
       default: false
     },
     result: {
-      type: Object
+      type: Object as () => {
+        categories: SearchResultNavigationItem[];
+        products: Product[];
+      }
     }
   },
   setup(props, { emit }) {
@@ -213,11 +200,27 @@ export default {
     const { isAuthenticated } = useUser();
     const { addItem: addItemToCart, isInCart } = useCart();
     const {
+      wishlist,
       addItem: addItemToWishlist,
       isInWishlist,
       removeItem: removeItemFromWishlist
     } = isAuthenticated.value ? useWishlist() : useGuestWishlist();
     const wishlistHelpers = useWishlistData();
+
+    const handleWishlistClick = (product) => {
+      isInWishlist({
+        product
+      })
+        ? removeItemFromWishlist({
+          product: wishlistHelpers.getItem(wishlist.value, {
+            productId: product.id,
+            variantId: getDefaultVariant(product)?.id
+          })
+        })
+        : addItemToWishlist({
+          product
+        });
+    };
 
     watch(
       () => props.visible,
@@ -234,20 +237,18 @@ export default {
 
     return {
       addItemToCart,
-      addItemToWishlist,
       categories,
-      getDefaultVariant,
       isInCart,
       isInWishlist,
       isSearchOpen,
       productData,
       products,
-      removeItemFromWishlist,
-      wishlistHelpers
+      handleWishlistClick
     };
   }
-};
+});
 </script>
+
 <style lang="scss" scoped>
 .search {
   position: absolute;

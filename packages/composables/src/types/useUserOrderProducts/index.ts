@@ -1,10 +1,16 @@
-import { ComputedRef } from '@nuxtjs/composition-api';
+import { ComputedRef } from '@vue/composition-api';
 import {
   GetOrderProductsParameters,
   OrderProductResponse
 } from '@vue-storefront/bigcommerce-api';
 
+/**
+ * `useUserOrderProducts` composable errors.
+ */
 export interface UseUserOrderProductsErrors {
+  /**
+   * Errors occurred during `load` action.
+   */
   load: Error;
 }
 

@@ -201,5 +201,18 @@ export default {
   'Order ID': 'Auftragsnummer',
   'Payment date': 'Zahlungsdatum',
   Amount: 'Menge',
-  Status: 'Status'
+  Status: 'Status',
+  SKU: 'SKU',
+  'Item Description': 'Produktbeschreibung',
+  'Thank you for your order!': 'Vielen Dank für Ihren Auftrag!',
+  'Continue shopping': 'Weiter einkaufen',
+  'Household Items': 'Haushaltswaren',
+  Utility: 'Dienstprogramme',
+  'Thanks for adding review!': 'Vielen Dank für das Hinzufügen Ihre Bewertung!',
+  'Add review': 'Bewertung hinzufügen',
+  'Review title': 'Bewertungstitel',
+  'Review rating': 'Bewertung',
+  'Review message': 'Bewertungsnachricht',
+  'type review message': 'Bewertungsnachricht eingeben',
+  Submit: 'Einreichen'
 };

@@ -8,7 +8,7 @@
     </LazyHydrate>
 
     <div id="layout">
-      <nuxt :key="$route.fullPath"/>
+      <nuxt :key="route.fullPath" />
 
       <LazyHydrate when-visible>
         <BottomNavigation />
@@ -25,7 +25,12 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, watch } from '@vue/composition-api';
+import {
+  defineComponent,
+  onMounted,
+  useRoute,
+  watch
+} from '@nuxtjs/composition-api';
 import AppHeader from '~/components/AppHeader.vue';
 import BottomNavigation from '~/components/BottomNavigation.vue';
 import AppFooter from '~/components/AppFooter.vue';
@@ -35,27 +40,37 @@ import WishlistSidebar from '~/components/WishlistSidebar.vue';
 import LoginModal from '~/components/LoginModal.vue';
 import LazyHydrate from 'vue-lazy-hydration';
 import Notification from '~/components/Notification';
-import { useUser, useWishlist } from '@vue-storefront/bigcommerce';
+import {
+  useUser,
+  useWishlist,
+  useCart,
+  useGuestWishlist
+} from '@vue-storefront/bigcommerce';
 
 export default defineComponent({
   name: 'DefaultLayout',
 
   setup() {
-    const { isAuthenticated } = useUser();
+    const route = useRoute();
+    const { isAuthenticated, load: loadUser } = useUser();
+    const { load: loadCart } = useCart();
+    const { load: loadWishlist, setWishlist } = useWishlist();
+    const { load: loadGuestWishlist } = useGuestWishlist();
 
-    const {
-      load: loadWishlist,
-      setWishlist
-    } = useWishlist();
-
-    onMounted(() => {
-      loadWishlist();
+    onMounted(async () => {
+      await loadUser();
+      await loadCart();
+      await loadGuestWishlist();
     });
 
     watch(isAuthenticated, () => {
       setWishlist(null);
       loadWishlist();
     });
+
+    return {
+      route
+    };
   },
 
   components: {
@@ -73,10 +88,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "~@storefront-ui/vue/styles";
+@import '~@storefront-ui/vue/styles';
 
 #layout {
   box-sizing: border-box;
+  min-height: 100vh;
   @include for-desktop {
     max-width: 1240px;
     margin: auto;

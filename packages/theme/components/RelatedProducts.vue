@@ -18,13 +18,14 @@
             "
             :special-price="
               productData.getPrice(product).special &&
-                $n(productData.getPrice(product).special, 'currency')
+              $n(productData.getPrice(product).special, 'currency')
             "
             :isInWishlist="
               isInWishlist({
                 product
               })
             "
+            :addToCartDisabled="!productData.canBeAddedToCart(product)"
             :isAddedToCart="isInCart({ product })"
             :link="
               localePath(
@@ -48,6 +49,9 @@
                   })
             "
             @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
+            imageTag="img"
+            :imageWidth="isMobile ? 154 : 216"
+            :imageHeight="isMobile ? 154 : 216"
           />
         </SfCarouselItem>
       </SfCarousel>
@@ -63,6 +67,10 @@ import {
   SfLoader
 } from '@storefront-ui/vue';
 import {
+  mapMobileObserver,
+  unMapMobileObserver
+} from '@storefront-ui/vue/src/utilities/mobile-observer.js';
+import {
   getDefaultVariant,
   useCart,
   useGuestWishlist,
@@ -70,13 +78,19 @@ import {
   useWishlist
 } from '@vue-storefront/bigcommerce';
 import { Product } from '@vue-storefront/bigcommerce-api';
-import { defineComponent, PropType } from '@vue/composition-api';
+import {
+  defineComponent,
+  onBeforeUnmount,
+  PropType,
+  ref
+} from '@nuxtjs/composition-api';
 import { useProductData } from '../composables/useProductData';
 import { useWishlistData } from '../composables/useWishlistData';
 
 export default defineComponent({
   name: 'RelatedProducts',
   setup() {
+    const isMobile = ref(mapMobileObserver().isMobile.get());
     const { isAuthenticated } = useUser();
     const productData = useProductData();
     const { addItem: addItemToCart, isInCart } = useCart();
@@ -88,6 +102,10 @@ export default defineComponent({
     } = isAuthenticated.value ? useWishlist() : useGuestWishlist();
     const wishlistHelpers = useWishlistData();
 
+    onBeforeUnmount(() => {
+      unMapMobileObserver();
+    });
+
     return {
       productData,
       wishlistHelpers,
@@ -97,7 +115,8 @@ export default defineComponent({
       removeItemFromWishlist,
       isInCart,
       addItemToCart,
-      getDefaultVariant
+      getDefaultVariant,
+      isMobile
     };
   },
   components: {

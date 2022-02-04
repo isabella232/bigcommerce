@@ -1,7 +1,7 @@
 /**
- * Definition of get orders request parameters
+ * Necessary and optional parameters to get orders.
  */
-export type GetOrdersParameters = {
+export interface GetOrdersParameters {
   /**
    * The minimum order ID.
    */
@@ -82,14 +82,14 @@ export type GetOrdersParameters = {
    * The Channel ID of the Order.
    */
   channel_id?: number;
-};
+}
 
 /**
- * Definition of get order products request parameters
+ * Necessary and optional parameters to get order products.
  */
-export type GetOrderProductsParameters = {
+export interface GetOrderProductsParameters {
   /**
-   * ID of the order
+   * ID of the order.
    */
   orderId: number;
   /**
@@ -100,4 +100,19 @@ export type GetOrderProductsParameters = {
    * Number of results to return.
    */
   limit?: number;
-};
+}
+
+/**
+ * Definition of get order shipping addresses request parameters
+ */
+export type GetOrderShippingAddressesParameters = GetOrderProductsParameters;
+
+/**
+ * Definition of get order by cart request parameters
+ */
+export interface GetOrderByCartParameters {
+  /**
+   * The cart ID of the order.
+   */
+  cartId: string;
+}

@@ -9,7 +9,7 @@
     "dev": "vuepress dev",
     "build": "yarn docs:extract && yarn docs:generate && vuepress build",
     "docs:extract": "cd ../packages/api-client && api-extractor run --local && cd ../composables && api-extractor run --local",
-    "docs:generate": "api-documenter markdown --i api-client --o api-client && api-documenter markdown --i composables --o composables"
+    "docs:generate": "api-documenter markdown --i reference/api --o reference/api"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "^7.13.58",

@@ -1,5 +1,5 @@
 import { ProductsResponse } from '@vue-storefront/bigcommerce-api';
-import { Context, Wishlist, WishlistItem, WishlistParams } from '../../types';
+import { Context, Wishlist, WishlistItem, WishlistItemParams } from '../../types';
 import { BIGCOMMERCE_GUEST_WISHLIST_KEY } from '../../helpers/consts';
 
 export const emptyProductsResponse: Wishlist['wishlist_product_data'] = {
@@ -29,11 +29,11 @@ export const refreshWishlistProducts = async (context: Context, wishlist: Wishli
   });
 };
 
-export const isInWishlist = (wishlist: Wishlist, wishlistParams: WishlistParams): boolean => {
+export const isInWishlist = (wishlist: Wishlist, wishlistItemParams: WishlistItemParams): boolean => {
   if (!wishlist) return false;
 
   return wishlist.items.some(item =>
-    item.product_id === wishlistParams.productId && item.variant_id === wishlistParams.variantId
+    item.product_id === wishlistItemParams.productId && item.variant_id === wishlistItemParams.variantId
   );
 };
 
@@ -42,6 +42,8 @@ export const mergeWishlists = async (
   guestWishlist: Wishlist,
   wishlist: Wishlist
 ): Promise<Wishlist> => {
+  if (!guestWishlist.items.length) return wishlist;
+
   const guestWishlistItems: WishlistItem[] = guestWishlist.items
     .map(item => ({
       product_id: item.product_id,

@@ -65,7 +65,7 @@ export const load: UseCartFactoryParams<
   try {
     const { data } = await context.$bigcommerce.api.getCart({
       id: cartId,
-      include: `${CartIncludeEnum.LineItemsDigitalItemsOptions},${CartIncludeEnum.LineItemsPhysicalItemsOptions},${CartIncludeEnum.RedirectUrls}`
+      include: Object.values(CartIncludeEnum).join(',')
     });
 
     return data;

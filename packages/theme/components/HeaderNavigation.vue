@@ -35,11 +35,13 @@
   </SfModal>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType, useRouter } from '@nuxtjs/composition-api';
+import { SearchResultNavigationItem } from '@vue-storefront/bigcommerce';
 import { SfMenuItem, SfModal } from '@storefront-ui/vue';
-import { useUiState } from '~/composables';
+import useUiState from '../composables/useUiState';
 
-export default {
+export default defineComponent({
   name: 'HeaderNavigation',
   components: {
     SfMenuItem,
@@ -51,24 +53,26 @@ export default {
       default: false
     },
     categories: {
-      type: Array,
+      type: Array as PropType<Array<SearchResultNavigationItem>>,
       default: false
     }
   },
   setup() {
+    const router = useRouter();
     const { isMobileMenuOpen, toggleMobileMenu } = useUiState();
+
+    const navigate = (path) => {
+      toggleMobileMenu();
+      router.push(path);
+    };
+
     return {
       isMobileMenuOpen,
-      toggleMobileMenu
+      toggleMobileMenu,
+      navigate
     };
-  },
-  methods: {
-    navigate(path) {
-      this.toggleMobileMenu();
-      this.$nuxt.$router.push(path);
-    }
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

@@ -1,40 +1,46 @@
 import { Cart } from '.';
 
 /**
- * Definition of the response to the add line items to cart request.
+ * Add line item response.
  */
-export type AddLineItemsResponse = {
+export interface AddLineItemsResponse {
+  /**
+   * Cart information.
+   */
   data: Cart;
+  /**
+   * Empty object.
+   */
   meta: Record<string, never>;
-};
+}
 
 /**
- * Definition of the response to the create cart request.
+ * Response of create cart request.
  */
 export type CreateCartResponse = AddLineItemsResponse;
 
 /**
- * Definition of the response to the get cart request.
+ * Response of get cart request.
  */
 export type GetCartResponse = AddLineItemsResponse;
 
 /**
- * Definition of the response to the update cart request.
+ * Response of update cart request.
  */
 export type UpdateCartResponse = AddLineItemsResponse;
 
 /**
- * Definition of the response to remove an item from the cart request.
+ * Response of remove an item from the cart request.
  */
 export type RemoveLineItemResponse = AddLineItemsResponse;
 
 /**
- * Definition of the response to update a cart item request.
+ * Response of update a cart item request.
  */
 export type UpdateLineItemResponse = AddLineItemsResponse;
 
 /**
- * Generic type for multiple cart related endpoints responses.
+ * Type alias for generic response of multiple cart related requests.
  */
 export type CartResponse =
   | CreateCartResponse

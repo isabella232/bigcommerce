@@ -24,8 +24,8 @@
       </form>
       <p class="notice">
         {{ $t('Read and understand') }}
-        <SfLink class="notice__link" href="#">{{ $t('Privacy') }}</SfLink> and
-        <SfLink class="notice__link" href="#">{{
+        <SfLink class="notice__link" link="#">{{ $t('Privacy') }}</SfLink> and
+        <SfLink class="notice__link" link="#">{{
           $t('Cookies Policy')
         }}</SfLink>
         {{ $t('Commercial information') }}
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from '@vue/composition-api';
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api';
 import {
   SfTabs,
   SfCheckbox,
@@ -46,7 +46,7 @@ import {
 import { useUser } from '@vue-storefront/bigcommerce';
 import { useUserData } from '../../composables/useUserData';
 
-export default {
+export default defineComponent({
   name: 'MyNewsletter',
   components: {
     SfTabs,
@@ -56,7 +56,7 @@ export default {
     SfLink
   },
   setup() {
-    const { updateUser, user, load, loading } = useUser();
+    const { updateUser, user, loading } = useUser();
     const userData = useUserData();
     const newsletter = ref(false);
 
@@ -73,7 +73,6 @@ export default {
     };
 
     onMounted(async () => {
-      await load();
       if (user.value) {
         newsletter.value =
           user.value.accepts_product_review_abandoned_cart_emails;
@@ -88,10 +87,10 @@ export default {
       submitNewsletterPreferences
     };
   }
-};
+});
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .tab-orphan {
   @include for-mobile {
     --tabs-title-display: none;

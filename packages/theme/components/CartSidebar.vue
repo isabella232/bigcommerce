@@ -28,6 +28,7 @@
                 :regular-price="
                   $n(cartData.getItemPrice(product).regular, 'currency')
                 "
+                :has-more-actions="false"
                 :special-price="
                   cartData.getItemPrice(product).special &&
                     $n(cartData.getItemPrice(product).special, 'currency')
@@ -63,6 +64,9 @@
                 <template #actions>
                   <div></div>
                 </template>
+                <template #more-actions>
+                  <div></div>
+                </template>
               </SfCollectedProduct>
             </transition-group>
           </div>
@@ -73,6 +77,8 @@
               alt="Empty bag"
               class="empty-cart__image"
               src="/icons/empty-cart.svg"
+              :width="256"
+              :height="173"
             />
             <SfHeading
               title="Your cart is empty"
@@ -89,7 +95,10 @@
           <div v-if="totalItems">
             <SfProperty
               name="Subtotal price"
-              class="sf-property--full-width sf-property--large my-cart__total-price"
+              class="
+                sf-property--full-width sf-property--large
+                my-cart__total-price
+              "
             >
               <template #value>
                 <SfPrice
@@ -102,10 +111,17 @@
                 />
               </template>
             </SfProperty>
-            <SfLink @click.prevent="clearCart" class="my-cart__clear">
+            <SfLink link="" @click.prevent="clearCart" class="my-cart__clear">
               {{ $t('Clear cart') }}
             </SfLink>
-            <nuxt-link :to="localePath({ name: 'shipping' })">
+            <nuxt-link
+              :to="
+                localePath({
+                  name: 'checkout',
+                  query: { t: new Date().getTime() }
+                })
+              "
+            >
               <SfButton
                 class="sf-button--full-width color-secondary"
                 @click="toggleCartSidebar"
@@ -139,7 +155,7 @@ import {
   SfImage,
   SfQuantitySelector
 } from '@storefront-ui/vue';
-import { computed, defineComponent } from '@vue/composition-api';
+import { computed, defineComponent } from '@nuxtjs/composition-api';
 import { useCart, useUser } from '@vue-storefront/bigcommerce';
 import { useUiState } from '~/composables';
 import { useCartData } from '../composables/useCartData';

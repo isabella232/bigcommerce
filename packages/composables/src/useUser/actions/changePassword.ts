@@ -11,10 +11,9 @@ export const changePassword = async (context: Context,
     currentPassword: string,
     newPassword: string
  }): Promise<User> => {
-
   const id = params?.currentUser?.id;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { currentPassword, newPassword } = params;
+  const { newPassword } = params;
+
   const response = await context.$bigcommerce.api.updateCustomer({
     id,
     authentication: {

@@ -1,31 +1,95 @@
 export * from './parameters';
 export * from './responses';
 export * from './item';
+export * from './shippingAddress';
 
+/**
+ * Possible values of order payment statuses.
+ */
 export enum OrderPaymentStatus {
+  /**
+   * Authorized status.
+   */
   Authorized = 'authorized',
+  /**
+   * Captured status.
+   */
   Captured = 'captured',
+  /**
+   * Capture pending status.
+   */
   CapturePending = 'capture pending',
+  /**
+   * Declined status.
+   */
   Declined = 'declined',
+  /**
+   * Held for review status.
+   */
   HeldForReview = 'held for review',
+  /**
+   * Paid status.
+   */
   Paid = 'paid',
+  /**
+   * Partially refunded status.
+   */
   PartiallyRefunded = 'partially refunded',
+  /**
+   * Pending status.
+   */
   Pending = 'pending',
+  /**
+   * Refunded status.
+   */
   Refunded = 'refunded',
+  /**
+   * Void status.
+   */
   Void = 'void',
+  /**
+   * Void pending status.
+   */
   VoidPending = 'void pending'
 }
 
+/**
+ * Possible values of order payment methods.
+ */
 export enum OrderPaymentMethod {
+  /**
+   * Credit card method.
+   */
   CreditCard = 'Credit Card',
+  /**
+   * Cash method.
+   */
   Cash = 'Cash',
+  /**
+   * Test payment gateway method.
+   */
   TestPaymentGateway = 'Test Payment Gateway',
+  /**
+   * Manual method.
+   */
   Manual = 'Manual'
 }
 
+/**
+ * Possible values of order tax provider ids.
+ */
 export enum OrderTaxProviderId {
+  /**
+   * Basic tax provider.
+   */
   BasicTaxProvider = 'BasicTaxProvider',
+  /**
+   * Ava tax provider.
+   */
   AvaTaxProvider = 'AvaTaxProvider',
+  /**
+   * Empty.
+   */
   Empty = ''
 }
 
@@ -125,16 +189,43 @@ export interface Order {
    * Orders submitted via the store's website will include a `www` value. Orders submitted via the API will be set to `external`. A read-only value. Do not pass in a POST or PUT.
    */
   order_source?: string;
+  /**
+   * Order products.
+   */
   products?: {
+    /**
+     * URL of the products for api requests
+     */
     url: string;
+    /**
+     * Resource of the products.
+     */
     resource: string;
   };
-  shippingAddresses?: {
+  /**
+   * Order shipping addresses.
+   */
+  shipping_addresses?: {
+    /**
+     * URL of the shipping address for api requests.
+     */
     url: string;
+    /**
+     * Resource of the shipping addresses.
+     */
     resource: string;
   };
+  /**
+   * Order coupons.
+   */
   coupons?: {
+    /**
+     * URL of the coupons for api requests.
+     */
     url: string;
+    /**
+     * Resource of the coupons.
+     */
     resource: string;
   };
   /**
@@ -153,11 +244,17 @@ export interface Order {
    * The value of the base wrapping cost. (Float, Float-As-String, Integer)
    */
   base_wrapping_cost?: string | number;
-  billingAddress?: Record<string, any>;
+  /**
+   * Order billing address.
+   */
+  billing_address?: Record<string, any>;
   /**
    * Shows where the order originated. The channel_id will default to 1.
    */
   channel_id?: number;
+  /**
+   * Order customer ID.
+   */
   customer_id?: number;
   /**
    * Message that the customer entered (number, optional) -o the `Order Comments` box during checkout.

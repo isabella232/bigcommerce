@@ -71,9 +71,10 @@ import UserShippingAddress from '~/components/UserShippingAddress';
 import ShippingAddressForm from '~/components/MyAccount/ShippingAddressForm';
 import { useUserShippingData } from '~/composables/useUserShippingData';
 import { useUserShipping } from '@vue-storefront/bigcommerce';
-import { ref, computed } from '@vue/composition-api';
+import { ref, defineComponent, computed } from '@nuxtjs/composition-api';
 import { onSSR } from '@vue-storefront/core';
-export default {
+
+export default defineComponent({
   name: 'ShippingDetails',
   components: {
     SfTabs,
@@ -136,7 +137,7 @@ export default {
       cancelChangeAddress
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

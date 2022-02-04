@@ -26,7 +26,9 @@ const BigCommerceEndpoints = {
   wishlists: (wishlistId?: number): string =>
     wishlistId ? `/wishlists/${wishlistId}` : '/wishlists',
   orders: '/orders',
-  orderProducts: (orderId: number): string => `/orders/${orderId}/products`
+  orderProducts: (orderId: number): string => `/orders/${orderId}/products`,
+  orderShipping: (orderId: number): string =>
+    `/orders/${orderId}/shipping_addresses`
 };
 
 export default BigCommerceEndpoints;

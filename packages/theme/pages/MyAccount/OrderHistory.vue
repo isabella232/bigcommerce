@@ -117,7 +117,9 @@
       <p class="message">
         This feature is not implemented yet! Please take a look at
         <br />
-        <SfLink class="message__link" href="#"
+        <SfLink
+          class="message__link"
+          link="https://github.com/vuestorefront/vue-storefront/issues"
           >https://github.com/vuestorefront/vue-storefront/issues</SfLink
         >
         for our Roadmap!
@@ -135,7 +137,7 @@ import {
   SfLink,
   SfLoader
 } from '@storefront-ui/vue';
-import { computed, defineComponent, ref } from '@vue/composition-api';
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api';
 import {
   useUserOrder,
   useUserOrderProducts

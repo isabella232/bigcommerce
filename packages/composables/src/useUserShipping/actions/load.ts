@@ -16,7 +16,6 @@ export const load: UseUserShippingFactoryParams<
 
   if (customerId) {
     return await getCustomerAddress(context, {
-      'customer_id:in': [customerId],
       include: CustomersIncludeEnum.Formfields
     });
   }

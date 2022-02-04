@@ -8,6 +8,6 @@ import {
 import params from './params';
 
 /**
- * `useUser` composable function.
+ * Managing user sessions, authentication, registration and user details.
  */
 export const useUser = useUserFactory<User, UpdateParams, RegisterParams>(params);

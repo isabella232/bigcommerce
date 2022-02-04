@@ -18,10 +18,13 @@ describe('[bigcommerce-composables] useUser logOut', () => {
 
   it('deletes customer data and creates a new cart', async () => {
     contextMock.cart.setCart = jest.fn();
+    contextMock.$bigcommerce.config.app.router = { push: jest.fn() };
+    contextMock.$bigcommerce.config.app.localePath = jest.fn(() => '/');
+
     const expectedNewCart = {};
     (loadCart as jest.Mock).mockReturnValue(expectedNewCart);
     contextMock.$bigcommerce.api.logoutCustomer = jest.fn();
-
+    contextMock.$bigcommerce.config.app.$cookies.remove = jest.fn();
     await logOut(contextMock);
 
     expect(contextMock.$bigcommerce.api.logoutCustomer).toBeCalledTimes(1);
@@ -30,5 +33,9 @@ describe('[bigcommerce-composables] useUser logOut', () => {
     expect(loadCart).toBeCalledWith(contextMock, {});
     expect(contextMock.cart.setCart).toBeCalledTimes(1);
     expect(contextMock.cart.setCart).toBeCalledWith(expectedNewCart);
+    expect(contextMock.$bigcommerce.config.app.localePath).toBeCalledTimes(1);
+    expect(contextMock.$bigcommerce.config.app.localePath).toBeCalledWith({ name: 'home' });
+    expect(contextMock.$bigcommerce.config.app.router.push).toBeCalledTimes(1);
+    expect(contextMock.$bigcommerce.config.app.router.push).toBeCalledWith('/');
   });
 });

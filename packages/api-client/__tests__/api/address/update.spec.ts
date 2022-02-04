@@ -2,41 +2,89 @@ import { updateCustomerAddress } from '../../../src/api/address/update';
 import { contextMock } from '../../../__mocks__/context.mock';
 import { mockedAddress } from '../../../__mocks__/address.mock';
 import BigCommerceEndpoints from '../../../src/helpers/endpointPaths';
-import { UpdateAddressParameters } from '../../../src';
+import {
+  COOKIE_KEY_CUSTOMER_DATA,
+  UpdateAddressParameters
+} from '../../../src';
+import jwt from 'jsonwebtoken';
+
+const jwtVerifyMock = jest.spyOn(jwt, 'verify');
 
 describe('[bigcommerce-api-client] update address', () => {
-  const address: UpdateAddressParameters = {
-    ...mockedAddress
+  const addressId = 123;
+  const token = 'token123';
+  const customerId = 3;
+  const decodedToken = { customer: { id: customerId } };
+  jwtVerifyMock.mockReturnValue(decodedToken);
+  contextMock.req = {
+    cookies: {
+      [COOKIE_KEY_CUSTOMER_DATA]: token
+    }
   };
 
-  const expectedResponse = [mockedAddress];
-
-  contextMock.client.v3.put = (url: string, params: UpdateAddressParameters) => {
-    expect(url).toEqual(BigCommerceEndpoints.addresses);
-
-    expect([address]).toEqual(params);
-
-    return expectedResponse;
-  };
-
-  it('should update an address', async () => {
-    const response = await updateCustomerAddress(contextMock, address);
-    expect(response).toBe(expectedResponse);
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should not update an address missing required field', async () => {
-    const addressMissingCustomerId = {
-      address1: '123 5th ave'
+  it('should update an address', async () => {
+    contextMock.client.v3.get = jest.fn(() =>
+      Promise.resolve({ data: [{ id: addressId }] })
+    );
+    const address: UpdateAddressParameters = {
+      ...mockedAddress,
+      id: addressId,
+      customer_id: customerId
     };
+    const expectedResponse = [address];
+    contextMock.client.v3.put = jest.fn(() =>
+      Promise.resolve(expectedResponse)
+    );
 
-    const expectedError = '[Error: Required parameters missing.]';
-    contextMock.client.v3.put = jest.fn(() => Promise.reject(expectedError));
+    const response = await updateCustomerAddress(contextMock, address);
+
+    expect(response).toBe(expectedResponse);
+    expect(jwtVerifyMock).toHaveBeenCalledTimes(2);
+    expect(jwtVerifyMock).toHaveBeenCalledWith(
+      token,
+      contextMock.config.sdkSettings.devtoolsAppSecret
+    );
+    expect(contextMock.client.v3.get).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
+      `${BigCommerceEndpoints.addresses}?customer_id%3Ain=${customerId}`
+    );
+    expect(contextMock.client.v3.put).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.put).toHaveBeenCalledWith(`${BigCommerceEndpoints.addresses}`, [address]);
+  });
+
+  it('should throw an error if the address is not the customer\'s own address', async () => {
+    contextMock.client.v3.get = jest.fn(() =>
+      Promise.resolve({ data: [] })
+    );
+    const address: UpdateAddressParameters = {
+      ...mockedAddress,
+      id: addressId,
+      customer_id: customerId
+    };
+    const expectedResponse = [address];
+    contextMock.client.v3.put = jest.fn(() =>
+      Promise.resolve(expectedResponse)
+    );
 
     await expect(
-      updateCustomerAddress(
-        contextMock,
-        (addressMissingCustomerId as unknown) as UpdateAddressParameters
-      )
-    ).rejects.toMatchInlineSnapshot('"[Error: Required parameters missing.]"');
+      updateCustomerAddress(contextMock, address)
+    ).rejects.toMatchInlineSnapshot(
+      '[Error: You can edit your own address only.]'
+    );
+
+    expect(jwtVerifyMock).toHaveBeenCalledTimes(1);
+    expect(jwtVerifyMock).toHaveBeenCalledWith(
+      token,
+      contextMock.config.sdkSettings.devtoolsAppSecret
+    );
+    expect(contextMock.client.v3.get).toHaveBeenCalledTimes(1);
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
+      `${BigCommerceEndpoints.addresses}?customer_id%3Ain=${customerId}`
+    );
+    expect(contextMock.client.v3.put).toHaveBeenCalledTimes(0);
   });
 });

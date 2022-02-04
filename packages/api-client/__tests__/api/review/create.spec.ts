@@ -1,4 +1,4 @@
-import { CreateProductReviewProps } from '../../../src/types';
+import { CreateProductReviewProps, ReviewStatus } from '../../../src/types';
 import { createProductReview } from '../../../src/api/review';
 import { contextMock } from '../../../__mocks__/context.mock';
 import { reviewResponseMock } from '../../../__mocks__/review/response.mock';
@@ -71,7 +71,7 @@ describe('[BigCommerce-api-client] get product reviews', () => {
       email: 'reviewer@email.com',
       name: 'Reviewer',
       rating: 5,
-      status: 'pending',
+      status: ReviewStatus.pending,
       text: 'Text of the new review'
     };
 

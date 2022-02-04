@@ -4,12 +4,13 @@ import {
   Product,
   ProductVariant
 } from '@vue-storefront/bigcommerce-api';
+import { getPurchasableDefaultVariant } from '@vue-storefront/bigcommerce';
 import { AgnosticPagination } from '@vue-storefront/core';
-import { getInstance } from '../useUiHelpers';
+import { useContext } from '@nuxtjs/composition-api';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useProductData = () => {
-  const instance = getInstance();
+  const { $config } = useContext();
 
   const getName = (product: Product): string => {
     return product?.name || '';
@@ -128,14 +129,6 @@ export const useProductData = () => {
     });
   };
 
-  const getDefaultVariant = (product: Product) => {
-    if (!product) {
-      return undefined;
-    }
-
-    return product.variants.find((variant) => !variant.purchasing_disabled);
-  };
-
   const getVariant = (product: Product, variantId: number): ProductVariant => {
     return product?.variants?.find((variant) => variant.id === variantId);
   };
@@ -146,8 +139,8 @@ export const useProductData = () => {
         currentPage: 1,
         totalPages: 1,
         totalItems: 1,
-        itemsPerPage: instance.context.$config.theme?.itemsPerPage?.[0],
-        pageOptions: instance.context.$config.theme?.itemsPerPage
+        itemsPerPage: $config.theme?.itemsPerPage?.[0],
+        pageOptions: $config.theme?.itemsPerPage
       };
     }
 
@@ -156,7 +149,7 @@ export const useProductData = () => {
       totalPages: meta?.pagination?.total_pages,
       totalItems: meta?.pagination?.total,
       itemsPerPage: meta?.pagination?.per_page,
-      pageOptions: instance.context.$config.theme?.itemsPerPage
+      pageOptions: $config.theme?.itemsPerPage
     };
   };
 
@@ -185,6 +178,25 @@ export const useProductData = () => {
     }
   };
 
+  const canBeAddedToCart = (product: Product) => {
+    if (!product) {
+      return false;
+    }
+
+    if (!product.variants?.length) {
+      switch (product.inventory_tracking) {
+        case InventoryType.none:
+          return true;
+        case InventoryType.product:
+          return product.inventory_level >= 1;
+        case InventoryType.variant:
+          return false;
+      }
+    }
+
+    return Boolean(getPurchasableDefaultVariant(product));
+  };
+
   return {
     getName,
     getSlug,
@@ -202,6 +214,6 @@ export const useProductData = () => {
     getPagination,
     getVariant,
     getInventory,
-    getDefaultVariant
+    canBeAddedToCart
   };
 };

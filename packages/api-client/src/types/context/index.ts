@@ -6,27 +6,76 @@ import { Endpoints } from '../endpoints';
  * SDK Settings provided in the `middleware.config.js` file.
  */
 export interface MiddlewareSDKSettingsConfig {
+  /**
+   * BigCommerce log level.
+   * Example: 'info'.
+   */
   logLevel: string;
+  /**
+   * BigCommerce client id.
+   */
   clientId: string;
+  /**
+   * BigCommerce secret.
+   */
   secret: string;
+  /**
+   * BigCommerce devtools app client id.
+   */
   devtoolsAppClientId: string;
+  /**
+   * BigCommerce devtools app secret.
+   */
   devtoolsAppSecret: string;
+  /**
+   * BigCommerce callback URL.
+   */
   callback: string;
+  /**
+   * BigCommerce response type.
+   */
   responseType: string;
+  /**
+   * BigCommerce store hash.
+   */
   storeHash: string;
+  /**
+   * BigCommerce store URL.
+   */
   storeUrl: string;
+  /**
+   * BigCommerce address URL.
+   */
   accessToken: string;
+  /**
+   * BigCommerce request headers.
+   */
   headers: { 'Accept-Encoding': string };
-  apiVersion: string;
+  /**
+   * BigCommerce guest token.
+   */
   guestToken?: string;
+  /**
+   * BigCommerce api version.
+   */
+  apiVersion: 'v2' | 'v3'
 }
 
 /**
  * Settings provided in the `middleware.config.js` file.
  */
 export interface MiddlewareSettingsConfig {
+  /**
+   * BigCommerce SDK settings.
+   */
   sdkSettings: MiddlewareSDKSettingsConfig;
+  /**
+   * JWT token expiration days.
+   */
   jwtTokenExpirationDays: number;
+  /**
+   * indicates usage of secure cookies.
+   */
   secureCookies: boolean;
 }
 
@@ -45,8 +94,14 @@ export type ContextualizedEndpoints = {
 /**
  * All available API clients.
  */
-export type BigCommerceClients = {
+export interface BigCommerceClients {
+  /**
+   * BigCommerce API v2 client.
+   */
   v2: NodeBigcommerceSDK,
+  /**
+   * BigCommerce API v3 client.
+   */
   v3: NodeBigcommerceSDK
 }
 
@@ -63,5 +118,8 @@ export type BigcommerceIntegrationContext = IntegrationContext<
  * Global context of the application which includes runtime integration context.
  **/
 export interface Context {
+  /**
+   * BigCommerce integration context.
+   */
   $bigcommerce: BigcommerceIntegrationContext;
 }

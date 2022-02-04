@@ -8,11 +8,7 @@
         required
         class="form__element form__element--half"
         :valid="firstNameBlur || validFirstName(firstName)"
-        :error-message="
-          $t(
-            'Please type your first name. Your name should have at least 2 characters.'
-          )
-        "
+        :error-message="$t('Please enter your first name.')"
         @blur="firstNameBlur = false"
       />
       <SfInput
@@ -22,32 +18,36 @@
         required
         class="form__element form__element--half form__element--half-even"
         :valid="lastNameBlur || validLastName(lastName)"
-        :error-message="
-          $t(
-            'Please type your last name. Your name should have at least 2 characters.'
-          )
-        "
+        :error-message="$t('Please enter your last name.')"
         @blur="lastNameBlur = false"
       />
       <SfInput
-        v-model="streetName"
-        name="streetName"
-        :label="$t('Street Name')"
+        v-model="company"
+        name="company"
+        :label="$t('Company Name')"
+        class="form__element form__element--half"
+      />
+      <SfInput
+        v-model="phoneNumber"
+        name="phone"
+        :label="$t('Phone number')"
+        class="form__element form__element--half form__element--half-even"
+      />
+      <SfInput
+        v-model="address1"
+        name="address1"
+        :label="$t('Address')"
         required
         class="form__element"
-        :valid="streetNameBlur || validStreetName(streetName)"
-        :error-message="$t('Please type your street name')"
-        @blur="streetNameBlur = false"
+        :valid="addressBlur || validAddress(address1)"
+        :error-message="$t('Please type your address')"
+        @blur="addressBlur = false"
       />
       <SfInput
         v-model="apartment"
         name="apartment"
-        :label="$t('House/Apartment number')"
-        required
+        :label="$t('Apartment/Suite/Building')"
         class="form__element"
-        :valid="apartmentBlur || validApartment(apartment)"
-        :error-message="$t('Please type your house/apartment number.')"
-        @blur="apartmentBlur = false"
       />
       <SfInput
         v-model="city"
@@ -63,31 +63,33 @@
         v-model="state"
         name="state"
         :label="$t('State/Province')"
-        required
         class="form__element form__element--half form__element--half-even"
-        :valid="stateBlur || validState(state)"
-        :error-message="$t('Please type your state/province.')"
-        @blur="stateBlur = false"
       />
       <SfInput
-        v-model="zipCode"
-        name="zipCode"
-        :label="$t('Zip-code')"
+        v-model="postCode"
+        name="postCode"
+        :label="$t('Post code')"
         required
         class="form__element form__element--half"
-        :valid="zipCodeBlur || validZipCode(zipCode)"
-        :error-message="$t('Please type your zip code.')"
-        @blur="zipCodeBlur = false"
+        :valid="postCodeBlur || validPostCode(postCode)"
+        :error-message="$t('Please type your post code.')"
+        @blur="postCodeBlur = false"
       />
       <SfComponentSelect
         v-model="country"
         name="country"
         :label="$t('Country')"
         required
-        class="sf-component-select--underlined form__select form__element form__element--half form__element--half-even"
+        class="
+          sf-component-select--underlined
+          form__select
+          form__element
+          form__element--half
+          form__element--half-even
+        "
         data-testid="country"
         :valid="countryBlur || validCountry(country)"
-        :error-message="$t('Please choose your country.')"
+        :error-message="$t('Please select your country.')"
         @blur="countryBlur = false"
       >
         <SfComponentSelectOption
@@ -98,26 +100,13 @@
           {{ countries[countryCode] }}
         </SfComponentSelectOption>
       </SfComponentSelect>
-      <SfInput
-        v-model="phoneNumber"
-        name="phone"
-        :label="$t('Phone number')"
-        required
-        class="form__element"
-        :valid="phoneNumberBlur || validPhoneNumber(phoneNumber)"
-        :error-message="$t('Please type your phone number.')"
-        @blur="phoneNumberBlur = false"
-      />
       <SfButton class="action-button" @click="saveAddress" v-if="!isNew">{{
         $t('Update address')
       }}</SfButton>
       <SfButton class="action-button" @click="saveAddress" v-else>{{
         $t('Save address')
       }}</SfButton>
-      <SfButton
-        @click="cancel()"
-        class="action-button"
-      >
+      <SfButton @click="cancel()" class="action-button">
         {{ $t('Cancel') }}
       </SfButton>
     </div>
@@ -168,25 +157,23 @@ export default {
       editingAddress: false,
       editedAddress: -1,
       name: this.address.name || '',
-      nameBlur: true,
       firstName: this.address.first_name || '',
       firstNameBlur: true,
       lastName: this.address.last_name || '',
       lastNameBlur: true,
-      streetName: this.address.address1 || '',
-      streetNameBlur: true,
+      company: this.address.company || '',
+      address1: this.address.address1 || '',
+      addressBlur: true,
       apartment: this.address.address2 || '',
-      apartmentBlur: true,
       city: this.address.city || '',
       cityBlur: true,
       state: this.address.state_or_province || '',
       stateBlur: true,
-      zipCode: this.address.postal_code || '',
-      zipCodeBlur: true,
+      postCode: this.address.postal_code || '',
+      postCodeBlur: true,
       country: this.address.country_code || '',
       countryBlur: true,
       phoneNumber: this.address.phone || '',
-      phoneNumberBlur: true,
       countries
     };
   },
@@ -198,11 +185,12 @@ export default {
           ...(this.address.id ? { id: this.address.id } : {}),
           first_name: this.firstName,
           last_name: this.lastName,
-          address1: this.streetName,
+          company: this.company,
+          address1: this.address1,
           address2: this.apartment,
           city: this.city,
           state_or_province: this.state,
-          postal_code: this.zipCode,
+          postal_code: this.postCode,
           country_code: this.country,
           phone: this.phoneNumber
         };
@@ -215,56 +203,40 @@ export default {
       }
     },
     validate() {
-      this.nameBlur = false;
       this.firstNameBlur = false;
       this.lastNameBlur = false;
-      this.streetNameBlur = false;
-      this.apartmentBlur = false;
+      this.addressBlur = false;
       this.cityBlur = false;
-      this.zipCodeBlur = false;
+      this.postCodeBlur = false;
       this.countryBlur = false;
-      this.stateBlur = false;
-      this.phoneNumberBlur = false;
       if (
-        this.validPhoneNumber(this.phoneNumber) &&
         this.validFirstName(this.firstName) &&
         this.validLastName(this.lastName) &&
-        this.validStreetName(this.streetName) &&
-        this.validApartment(this.apartment) &&
+        this.validAddress(this.address1) &&
         this.validCity(this.city) &&
-        this.validState(this.state) &&
-        this.validZipCode(this.zipCode) &&
+        this.validPostCode(this.postCode) &&
         this.validCountry(this.country)
       ) {
         this.valid = true;
       }
     },
     validFirstName(firstName) {
-      return firstName.length > 2;
+      return firstName?.length >= 1 && firstName?.length <= 255;
     },
     validLastName(lastName) {
-      return lastName.length > 2;
+      return lastName?.length >= 1 && lastName?.length <= 255;
     },
-    validStreetName(streetName) {
-      return streetName.length > 2;
-    },
-    validApartment(apartment) {
-      return Boolean(apartment);
+    validAddress(address) {
+      return address.length >= 1;
     },
     validCity(city) {
-      return Boolean(city) && city.length > 2;
+      return city?.length >= 1 && city?.length <= 100;
     },
-    validState(state) {
-      return Boolean(state) && state.length > 2;
-    },
-    validZipCode(zipCode) {
-      return Boolean(zipCode) && zipCode.length > 2;
+    validPostCode(postCode) {
+      return postCode?.length >= 1 && postCode?.length <= 30;
     },
     validCountry(country) {
       return Boolean(country);
-    },
-    validPhoneNumber(phoneNumber) {
-      return Boolean(phoneNumber);
     }
   }
 };
