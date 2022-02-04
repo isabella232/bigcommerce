@@ -102,11 +102,11 @@
               :special-price="
                 productData.getPrice(product, getDefaultVariant(product))
                   .special &&
-                $n(
-                  productData.getPrice(product, getDefaultVariant(product))
-                    .special,
-                  'currency'
-                )
+                  $n(
+                    productData.getPrice(product, getDefaultVariant(product))
+                      .special,
+                    'currency'
+                  )
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
@@ -160,13 +160,11 @@
               "
               :special-price="
                 productData.getPrice(product).special &&
-                $n(productData.getPrice(product).special, 'currency')
+                  $n(productData.getPrice(product).special, 'currency')
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
               :isInWishlist="isInWishlist({ product })"
-              :qty="1"
-              @input="productsQuantity[product.id] = $event"
               class="products__product-card-horizontal"
               @click:wishlist="
                 isInWishlist({ product })
@@ -177,14 +175,6 @@
                       })
                     })
                   : addItemToWishlist({ product })
-              "
-              @click:add-to-cart="
-                addItemToCart({
-                  product,
-                  quantity: Number(
-                    productsQuantity[productData.getId(product)] || 1
-                  )
-                })
               "
               :link="
                 localePath(
@@ -221,6 +211,21 @@
                       : $t('Remove from Wishlist')
                   }}
                 </SfButton>
+              </template>
+              <template #add-to-cart>
+                <SfAddToCart
+                  v-model="productsQuantity[product.id]"
+                  :disabled="!productData.canBeAddedToCart(product)"
+                  class="sf-product-card-horizontal__add-to-cart desktop-only"
+                  @click="
+                    addItemToCart({
+                      product,
+                      quantity: Number(
+                        productsQuantity[productData.getId(product)] || 1
+                      )
+                    })
+                  "
+                />
               </template>
             </SfProductCardHorizontal>
           </transition-group>
@@ -285,7 +290,8 @@ import {
   SfBreadcrumbs,
   SfLoader,
   SfColor,
-  SfProperty
+  SfProperty,
+  SfAddToCart
 } from '@storefront-ui/vue';
 import {
   computed,
@@ -337,11 +343,9 @@ export default defineComponent({
       removeItem: removeItemFromWishlist
     } = useWishlist();
     const wishlistHelpers = useWishlistData();
-    const {
-      products: productsResult,
-      search,
-      error
-    } = useProduct('category-products');
+    const { products: productsResult, search, error } = useProduct(
+      'category-products'
+    );
     const { categories, search: categorySearch } = useCategory('category-tree');
     const productData = useProductData();
     const { categorySlug } = th.getFacetsFromURL();
@@ -404,8 +408,13 @@ export default defineComponent({
     onSSR(async () => {
       isProductsLoading.value = true;
       await categorySearch({});
-      const { categorySlug, page, itemsPerPage, sort, direction } =
-        th.getFacetsFromURL();
+      const {
+        categorySlug,
+        page,
+        itemsPerPage,
+        sort,
+        direction
+      } = th.getFacetsFromURL();
       const category = getCategoryBySlug(categorySlug, categories.value);
       const isSortValid =
         [
@@ -478,7 +487,8 @@ export default defineComponent({
     SfColor,
     SfHeading,
     SfProperty,
-    LazyHydrate
+    LazyHydrate,
+    SfAddToCart
   }
 });
 </script>
