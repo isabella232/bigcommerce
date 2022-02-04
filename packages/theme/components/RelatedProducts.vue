@@ -18,13 +18,14 @@
             "
             :special-price="
               productData.getPrice(product).special &&
-                $n(productData.getPrice(product).special, 'currency')
+              $n(productData.getPrice(product).special, 'currency')
             "
             :isInWishlist="
               isInWishlist({
                 product
               })
             "
+            :addToCartDisabled="!productData.canBeAddedToCart(product)"
             :isAddedToCart="isInCart({ product })"
             :link="
               localePath(

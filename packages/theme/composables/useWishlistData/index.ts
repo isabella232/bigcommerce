@@ -4,7 +4,7 @@ import {
   WishlistItem,
   WishlistItemParams
 } from '@vue-storefront/bigcommerce';
-import { Product } from '@vue-storefront/bigcommerce-api';
+import { InventoryType, Product } from '@vue-storefront/bigcommerce-api';
 import { useProductData } from '../useProductData';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -78,6 +78,24 @@ export const useWishlistData = () => {
     return variant?.inventory_level || product?.inventory_level || 0;
   };
 
+  const isItemPurchasable = (
+    wishlist: Wishlist,
+    item: WishlistItem
+  ): boolean => {
+    const product = getProduct(wishlist, item);
+    const variant = getVariant(product, item.variant_id);
+
+    switch (product.inventory_tracking) {
+      case InventoryType.none:
+        return true;
+      case InventoryType.product:
+        return product.inventory_level >= 1;
+      case InventoryType.variant:
+        if (!variant) return false;
+        return variant.inventory_level >= 1;
+    }
+  };
+
   const getShippingPrice = (wishlist: Wishlist): number => {
     return (
       wishlist?.wishlist_product_data?.data.reduce((price, product) => {
@@ -117,6 +135,7 @@ export const useWishlistData = () => {
     getItemPrice,
     getItemSku,
     getItemOptions,
+    isItemPurchasable,
     getShippingPrice,
     getTotalItems,
     getItemQty,

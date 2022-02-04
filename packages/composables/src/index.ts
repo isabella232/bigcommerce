@@ -14,7 +14,8 @@ export { useGuestWishlist } from './useGuestWishlist';
 // Helpers
 export {
   BIGCOMMERCE_USER_AUTHENTICATED,
-  getDefaultVariant
+  getDefaultVariant,
+  getPurchasableDefaultVariant
 } from './helpers';
 
 // Types

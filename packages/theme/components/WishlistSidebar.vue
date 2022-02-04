@@ -41,11 +41,11 @@
                 :special-price="
                   wishlistHelpers.getItemPrice(wishlist, wishlistItem)
                     .special &&
-                    $n(
-                      wishlistHelpers.getItemPrice(wishlist, wishlistItem)
-                        .special,
-                      'currency'
-                    )
+                  $n(
+                    wishlistHelpers.getItemPrice(wishlist, wishlistItem)
+                      .special,
+                    'currency'
+                  )
                 "
                 :stock="wishlistHelpers.getItemQty(wishlist, wishlistItem)"
                 :image-width="180"
@@ -56,8 +56,7 @@
                 <template #configuration>
                   <div class="collected-product__properties">
                     <SfProperty
-                      v-for="(attribute,
-                      key) in wishlistHelpers.getItemOptions(
+                      v-for="(attribute, key) in wishlistHelpers.getItemOptions(
                         wishlist,
                         wishlistItem,
                         ['color', 'size']
@@ -72,7 +71,10 @@
                 <template #actions>
                   <SfButton
                     @click="moveToCart(wishlistItem)"
-                    :disabled="cartLoading"
+                    :disabled="
+                      cartLoading ||
+                      !wishlistHelpers.isItemPurchasable(wishlist, wishlistItem)
+                    "
                     class="sf-button--text desktop-only"
                   >
                     {{ $t('Add to cart') }}

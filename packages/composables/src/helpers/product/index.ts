@@ -1,4 +1,5 @@
 import {
+  InventoryType,
   Product,
   ProductVariant
 } from '@vue-storefront/bigcommerce-api';
@@ -8,7 +9,9 @@ import {
  * @param {Product} product Configurable product.
  * @returns {ProductVariant | undefined} Product variant or undefined.
  */
-export const getDefaultVariant = (product: Product): ProductVariant | undefined=> {
+export const getDefaultVariant = (
+  product: Product
+): ProductVariant | undefined => {
   const configuration = product.options?.reduce((acc, option) => {
     const newValue =
       option.option_values.find((optionValue) => optionValue.is_default)
@@ -27,5 +30,54 @@ export const getDefaultVariant = (product: Product): ProductVariant | undefined=
           variantOption.label === optionValue
       );
     });
+  });
+};
+
+/**
+ * Returns a purchasable variant for the product or undefined if no variant is found. The default variant has higher priority.
+ * @param {Product} product Configurable product.
+ * @returns {ProductVariant | undefined} Product variant or undefined.
+ */
+export const getPurchasableDefaultVariant = (
+  product: Product
+): ProductVariant | undefined => {
+  const defaultVariant = getDefaultVariant(product);
+
+  if (defaultVariant && !defaultVariant.purchasing_disabled) {
+    switch (product?.inventory_tracking) {
+      case InventoryType.none:
+        return defaultVariant;
+      case InventoryType.product:
+        if (product.inventory_level >= 1) {
+          return defaultVariant;
+        }
+
+        break;
+      case InventoryType.variant:
+        if (defaultVariant.inventory_level >= 1) {
+          return defaultVariant;
+        }
+
+        break;
+      default:
+        return defaultVariant;
+    }
+  }
+
+  return product.variants?.find((variant) => {
+    if (variant.purchasing_disabled) {
+      return false;
+    }
+
+    switch (product?.inventory_tracking) {
+      case InventoryType.none:
+        return true;
+      case InventoryType.product:
+        return product.inventory_level >= 1;
+      case InventoryType.variant:
+        return variant.inventory_level >= 1;
+      default:
+        return true;
+    }
   });
 };

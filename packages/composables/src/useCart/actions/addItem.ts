@@ -6,7 +6,7 @@ import {
 } from '@vue-storefront/bigcommerce-api';
 import { UseCartFactoryParams } from '@vue-storefront/core';
 import { Context } from '../../types';
-import { getDefaultVariant } from '../../helpers/product';
+import { getPurchasableDefaultVariant } from '../../helpers/product';
 
 export const addItem: UseCartFactoryParams<
   Cart,
@@ -21,7 +21,7 @@ export const addItem: UseCartFactoryParams<
     : undefined;
 
   if (product.variants?.length && !variantId) {
-    variantId = getDefaultVariant(product)?.id;
+    variantId = getPurchasableDefaultVariant(product)?.id;
   }
 
   const { data } = await context.$bigcommerce.api.addCartItems({

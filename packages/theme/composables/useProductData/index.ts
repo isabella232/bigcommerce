@@ -4,6 +4,7 @@ import {
   Product,
   ProductVariant
 } from '@vue-storefront/bigcommerce-api';
+import { getPurchasableDefaultVariant } from '@vue-storefront/bigcommerce';
 import { AgnosticPagination } from '@vue-storefront/core';
 import { useContext } from '@nuxtjs/composition-api';
 
@@ -177,6 +178,25 @@ export const useProductData = () => {
     }
   };
 
+  const canBeAddedToCart = (product: Product) => {
+    if (!product) {
+      return false;
+    }
+
+    if (!product.variants?.length) {
+      switch (product.inventory_tracking) {
+        case InventoryType.none:
+          return true;
+        case InventoryType.product:
+          return product.inventory_level >= 1;
+        case InventoryType.variant:
+          return false;
+      }
+    }
+
+    return Boolean(getPurchasableDefaultVariant(product));
+  };
+
   return {
     getName,
     getSlug,
@@ -193,6 +213,7 @@ export const useProductData = () => {
     getActiveVariant,
     getPagination,
     getVariant,
-    getInventory
+    getInventory,
+    canBeAddedToCart
   };
 };

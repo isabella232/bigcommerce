@@ -102,11 +102,11 @@
               :special-price="
                 productData.getPrice(product, getDefaultVariant(product))
                   .special &&
-                  $n(
-                    productData.getPrice(product, getDefaultVariant(product))
-                      .special,
-                    'currency'
-                  )
+                $n(
+                  productData.getPrice(product, getDefaultVariant(product))
+                    .special,
+                  'currency'
+                )
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
@@ -114,6 +114,7 @@
               wishlistIcon="heart"
               isInWishlistIcon="heart_fill"
               :isInWishlist="isInWishlist({ product })"
+              :addToCartDisabled="!productData.canBeAddedToCart(product)"
               :isAddedToCart="isInCart({ product })"
               :link="
                 localePath(
@@ -159,7 +160,7 @@
               "
               :special-price="
                 productData.getPrice(product).special &&
-                  $n(productData.getPrice(product).special, 'currency')
+                $n(productData.getPrice(product).special, 'currency')
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
@@ -336,9 +337,11 @@ export default defineComponent({
       removeItem: removeItemFromWishlist
     } = useWishlist();
     const wishlistHelpers = useWishlistData();
-    const { products: productsResult, search, error } = useProduct(
-      'category-products'
-    );
+    const {
+      products: productsResult,
+      search,
+      error
+    } = useProduct('category-products');
     const { categories, search: categorySearch } = useCategory('category-tree');
     const productData = useProductData();
     const { categorySlug } = th.getFacetsFromURL();
@@ -401,13 +404,8 @@ export default defineComponent({
     onSSR(async () => {
       isProductsLoading.value = true;
       await categorySearch({});
-      const {
-        categorySlug,
-        page,
-        itemsPerPage,
-        sort,
-        direction
-      } = th.getFacetsFromURL();
+      const { categorySlug, page, itemsPerPage, sort, direction } =
+        th.getFacetsFromURL();
       const category = getCategoryBySlug(categorySlug, categories.value);
       const isSortValid =
         [

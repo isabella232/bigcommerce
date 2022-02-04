@@ -13,10 +13,7 @@
         >
           <SfMegaMenuColumn
             :title="$t('Categories')"
-            class="
-              sf-mega-menu-column--pined-content-on-mobile
-              search__categories
-            "
+            class="sf-mega-menu-column--pined-content-on-mobile search__categories"
           >
             <template #title="{ title, changeActive }">
               <SfMenuItem :label="title" @click="changeActive(title)">
@@ -72,6 +69,7 @@
                     )
                   "
                   :isInWishlist="isInWishlist({ product })"
+                  :addToCartDisabled="!productData.canBeAddedToCart(product)"
                   :isAddedToCart="isInCart({ product })"
                   @click:wishlist="handleWishlistClick(product)"
                   @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
@@ -102,6 +100,7 @@
                   )
                 "
                 :isInWishlist="isInWishlist({ product })"
+                :addToCartDisabled="!productData.canBeAddedToCart(product)"
                 :isAddedToCart="isInCart({ product })"
                 @click:wishlist="handleWishlistClick(product)"
                 @click:add-to-cart="addItemToCart({ product, quantity: 1 })"
