@@ -117,11 +117,13 @@ export default defineComponent({
   }
   &__main {
     display: flex;
+    flex-wrap: wrap;
     flex: 1;
     align-items: center;
     padding: 0;
     justify-content: space-between;
     @include for-desktop {
+      flex-wrap: initial;
       padding: var(--spacer-xs) var(--spacer-xl);
     }
   }
@@ -155,7 +157,12 @@ export default defineComponent({
   &__sort {
     display: flex;
     align-items: center;
-    margin: 0 auto 0 0;
+    margin: var(--spacer-sm) auto 0 0;
+    order: 2;
+    @include for-desktop {
+      margin: 0 auto 0 0;
+      order: 0;
+    }
   }
   &__counter {
     font-family: var(--font-family--secondary);
