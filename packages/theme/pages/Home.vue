@@ -34,36 +34,22 @@
     <LazyHydrate when-visible>
       <div class="similar-products">
         <SfHeading title="Match with it" :level="2" />
-        <nuxt-link :to="localePath('/c/women')" class="smartphone-only"
-          >See all</nuxt-link
-        >
+        <nuxt-link :to="localePath('/c/women')" class="smartphone-only">{{ $t('See all') }}</nuxt-link>
       </div>
     </LazyHydrate>
 
     <LazyHydrate when-visible>
       <SfCarousel
         class="carousel"
-        :settings="{ gap: 16, breakpoints: { 1023: { peek: 0, perView: 2 } } }"
+        :settings="{ peek: 16, breakpoints: { 1023: { peek: 0, perView: 2 } } }"
       >
-        <template #prev="{go}">
-          <SfArrow
-            aria-label="prev"
-            class="sf-arrow--left sf-arrow--long"
-            @click="go('prev')"
-          />
+        <template #prev="{ go }">
+          <SfArrow aria-label="prev" class="sf-arrow--left sf-arrow--long" @click="go('prev')" />
         </template>
-        <template #next="{go}">
-          <SfArrow
-            aria-label="next"
-            class="sf-arrow--right sf-arrow--long"
-            @click="go('next')"
-          />
+        <template #next="{ go }">
+          <SfArrow aria-label="next" class="sf-arrow--right sf-arrow--long" @click="go('next')" />
         </template>
-        <SfCarouselItem
-          class="carousel__item"
-          v-for="(product, i) in products"
-          :key="i"
-        >
+        <SfCarouselItem class="carousel__item" v-for="(product, i) in products" :key="i">
           <SfProductCard
             :title="product.title"
             :image="product.image"
@@ -88,17 +74,15 @@
         title="Subscribe to Newsletters"
         button-text="Subscribe"
         description="Be aware of upcoming sales and events. Receive gifts and special offers!"
-        image="/homepage/newsletter.webp"
+        :image="addBasePath('/homepage/newsletter.webp')"
         class="call-to-action"
       >
         <template #button>
           <SfButton
             class="sf-call-to-action__button"
             data-testid="cta-button"
-            @click="handleNewsletterClick"
-          >
-            {{ $t('Subscribe') }}
-          </SfButton>
+            @click="toggleNewsletterModal"
+          >{{ $t('Subscribe') }}</SfButton>
         </template>
       </SfCallToAction>
     </LazyHydrate>
@@ -117,19 +101,22 @@ import {
   SfHero,
   SfBanner,
   SfCallToAction,
+  SfSection,
   SfCarousel,
   SfProductCard,
+  SfImage,
   SfBannerGrid,
   SfHeading,
   SfArrow,
   SfButton
 } from '@storefront-ui/vue';
+import { ref, useContext } from '@nuxtjs/composition-api';
 import InstagramFeed from '~/components/InstagramFeed.vue';
 import NewsletterModal from '~/components/NewsletterModal.vue';
 import LazyHydrate from 'vue-lazy-hydration';
 import { useUiState } from '../composables';
 import cacheControl from './../helpers/cacheControl';
-const { toggleNewsletterModal } = useUiState();
+import { addBasePath } from '@vue-storefront/core';
 
 export default {
   name: 'Home',
@@ -142,8 +129,10 @@ export default {
     SfHero,
     SfBanner,
     SfCallToAction,
+    SfSection,
     SfCarousel,
     SfProductCard,
+    SfImage,
     SfBannerGrid,
     SfHeading,
     SfArrow,
@@ -151,144 +140,151 @@ export default {
     NewsletterModal,
     LazyHydrate
   },
-  data() {
-    return {
-      heroes: [
-        {
-          title: 'Colorful summer dresses are already in store',
-          subtitle: 'SUMMER COLLECTION 2019',
-          background: '#eceff1',
-          image: '/homepage/bannerH.webp'
+  setup() {
+    const { $config } = useContext();
+    const { toggleNewsletterModal } = useUiState();
+    const products = ref([
+      {
+        title: 'Cream Beach Bag',
+        image: addBasePath('/homepage/productA.webp'),
+        price: { regular: '50.00 $' },
+        rating: { max: 5, score: 4 },
+        isInWishlist: true
+      },
+      {
+        title: 'Cream Beach Bag 2',
+        image: addBasePath('/homepage/productB.webp'),
+        price: { regular: '50.00 $' },
+        rating: { max: 5, score: 4 },
+        isInWishlist: false
+      },
+      {
+        title: 'Cream Beach Bag 3',
+        image: addBasePath('/homepage/productC.webp'),
+        price: { regular: '50.00 $' },
+        rating: { max: 5, score: 4 },
+        isInWishlist: false
+      },
+      {
+        title: 'Cream Beach Bag RR',
+        image: addBasePath('/homepage/productA.webp'),
+        price: { regular: '50.00 $' },
+        rating: { max: 5, score: 4 },
+        isInWishlist: false
+      },
+      {
+        title: 'Cream Beach Bag',
+        image: addBasePath('/homepage/productB.webp'),
+        price: { regular: '50.00 $' },
+        rating: { max: 5, score: 4 },
+        isInWishlist: false
+      },
+      {
+        title: 'Cream Beach Bag',
+        image: addBasePath('/homepage/productC.webp'),
+        price: { regular: '50.00 $' },
+        rating: { max: 5, score: 4 },
+        isInWishlist: false
+      },
+      {
+        title: 'Cream Beach Bag',
+        image: addBasePath('/homepage/productA.webp'),
+        price: { regular: '50.00 $' },
+        rating: { max: 5, score: 4 },
+        isInWishlist: false
+      },
+      {
+        title: 'Cream Beach Bag',
+        image: addBasePath('/homepage/productB.webp'),
+        price: { regular: '50.00 $' },
+        rating: { max: 5, score: 4 },
+        isInWishlist: false
+      }
+    ]);
+    const heroes = [
+      {
+        title: 'Colorful summer dresses are already in store',
+        subtitle: 'SUMMER COLLECTION 2019',
+        background: '#eceff1',
+        image: addBasePath('/homepage/bannerH.webp')
+      },
+      {
+        title: 'Colorful summer dresses are already in store',
+        subtitle: 'SUMMER COLLECTION 2019',
+        background: '#efebe9',
+        image: addBasePath('/homepage/bannerA.webp'),
+        className:
+          'sf-hero-item--position-bg-top-left sf-hero-item--align-right'
+      },
+      {
+        title: 'Colorful summer dresses are already in store',
+        subtitle: 'SUMMER COLLECTION 2019',
+        background: '#fce4ec',
+        image: addBasePath('/homepage/bannerB.webp')
+      }
+    ];
+    const banners = [
+      {
+        slot: 'banner-A',
+        subtitle: 'Dresses',
+        title: 'Cocktail & Party',
+        description:
+          'Find stunning women\'s cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.',
+        buttonText: 'Shop now',
+        image: {
+          mobile: addBasePath($config.theme.home.bannerA.image.mobile),
+          desktop: addBasePath($config.theme.home.bannerA.image.desktop)
         },
-        {
-          title: 'Colorful summer dresses are already in store',
-          subtitle: 'SUMMER COLLECTION 2019',
-          background: '#efebe9',
-          image: '/homepage/bannerA.webp',
-          className:
-            'sf-hero-item--position-bg-top-left sf-hero-item--align-right'
-        },
-        {
-          title: 'Colorful summer dresses are already in store',
-          subtitle: 'SUMMER COLLECTION 2019',
-          background: '#fce4ec',
-          image: '/homepage/bannerB.webp'
-        }
-      ],
-      banners: [
-        {
-          slot: 'banner-A',
-          subtitle: 'Dresses',
-          title: 'Cocktail & Party',
-          description:
-            'Find stunning women\'s cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.',
-          buttonText: 'Shop now',
-          image: {
-            mobile: this.$config.theme.home.bannerA.image.mobile,
-            desktop: this.$config.theme.home.bannerA.image.desktop
-          },
-          class: 'sf-banner--slim desktop-only',
-          link: this.$config.theme.home.bannerA.link
-        },
-        {
-          slot: 'banner-B',
-          subtitle: 'Dresses',
-          title: 'Linen Dresses',
-          description:
-            'Find stunning women\'s cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.',
-          buttonText: 'Shop now',
-          image: this.$config.theme.home.bannerB.image,
-          class: 'sf-banner--slim banner-central desktop-only',
-          link: this.$config.theme.home.bannerB.link
-        },
-        {
-          slot: 'banner-C',
-          subtitle: 'T-Shirts',
-          title: 'The Office Life',
-          image: this.$config.theme.home.bannerC.image,
-          class: 'sf-banner--slim banner__tshirt',
-          link: this.$config.theme.home.bannerC.link
-        },
-        {
-          slot: 'banner-D',
-          subtitle: 'Summer Sandals',
-          title: 'Eco Sandals',
-          image: this.$config.theme.home.bannerD.image,
-          class: 'sf-banner--slim',
-          link: this.$config.theme.home.bannerD.link
-        }
-      ],
-      products: [
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productA.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isInWishlist: true
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productB.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isInWishlist: false
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productC.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isInWishlist: false
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productA.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isInWishlist: false
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productB.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isInWishlist: false
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productC.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isInWishlist: false
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productA.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isInWishlist: false
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productB.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isInWishlist: false
-        }
-      ]
-    };
-  },
-  methods: {
-    toggleWishlist(index) {
-      this.products[index].isInWishlist = !this.products[index].isInWishlist;
-    },
-    handleNewsletterClick() {
-      toggleNewsletterModal();
-    },
-    onSubscribe(emailAddress) {
+        class: 'sf-banner--slim desktop-only',
+        link: $config.theme.home.bannerA.link
+      },
+      {
+        slot: 'banner-B',
+        subtitle: 'Dresses',
+        title: 'Linen Dresses',
+        description:
+          'Find stunning women\'s cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.',
+        buttonText: 'Shop now',
+        image: addBasePath($config.theme.home.bannerB.image),
+        class: 'sf-banner--slim banner-central desktop-only',
+        link: $config.theme.home.bannerB.link
+      },
+      {
+        slot: 'banner-C',
+        subtitle: 'T-Shirts',
+        title: 'The Office Life',
+        image: addBasePath($config.theme.home.bannerC.image),
+        class: 'sf-banner--slim banner__tshirt',
+        link: $config.theme.home.bannerC.link
+      },
+      {
+        slot: 'banner-D',
+        subtitle: 'Summer Sandals',
+        title: 'Eco Sandals',
+        image: addBasePath($config.theme.home.bannerD.image),
+        class: 'sf-banner--slim',
+        link: $config.theme.home.bannerD.link
+      }
+    ];
+
+    const onSubscribe = (emailAddress) => {
       console.log(`Email ${emailAddress} was added to newsletter.`);
       toggleNewsletterModal();
-    }
+    };
+
+    const toggleWishlist = (index) => {
+      products.value[index].isInWishlist = !products.value[index].isInWishlist;
+    };
+
+    return {
+      toggleWishlist,
+      toggleNewsletterModal,
+      onSubscribe,
+      addBasePath,
+      banners,
+      heroes,
+      products
+    };
   }
 };
 </script>
