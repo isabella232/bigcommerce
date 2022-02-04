@@ -1,25 +1,12 @@
-# Boilerplate for Vue Storefront 2 eCommerce integration
-
-This is a template, to use it you must rename the project changing the `{YOUR INTEGRATION NAME}` to the name of the integration you are developing. The name must be in lowercase and without any special characters.
-
-```sh
-grep -rl 'bigcommerce' ./ | xargs sed -i '' 's/bigcommerce/{YOUR INTEGRATION NAME}/g'
-```
-
-------
-
 <div align="center">
-<img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" height="80px"/>  
+<img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" height="80px"/>
+
+<img src="https://www-cdn.bigcommerce.com/assets/bc-photo-branding-bigcommerce-primary-gray-background.png?mtime=20211210160101" height="80px"/>
 </div>
 
-## Vue Storefront 2 integration with bigcommerce
+## Vue Storefront 2 integration with BigCommerce
 
-To learn how to build your integration, see our [Integration guide](https://docs.vuestorefront.io/v2/integrate/integration-guide.html).
-
-------
-
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+This project is a BigCommerce integration for Vue Storefront 2.
 
 ## How to start if you want to try out the integration
 
@@ -27,44 +14,66 @@ To learn how to build your integration, see our [Integration guide](https://docs
 yarn global add @vue-storefront/cli
 ```
 ```
-vsf init <project_name> && cd <project_name> && yarn && yarn dev
+vsf init bigcommerce && cd bigcommerce && yarn && yarn dev
 ```
 
 ## How to start if you want to contribute?
 
-Want to contribute? Ping us on `bigcommerce` channel on [our Discord](https://discord.vuestorefront.io)!
+Want to contribute? Ping us on `bigcommerce` channel on [our Discord](http://discord.vuestorefront.io)!
 
 ### Requirements:
-- NodeJS v14 or later
+- NodeJS v14.18 or later
+- Yarn
+- BigCommerce instance
 
 ### Steps
-1. Fork the repo
-2. Clone your fork of the repo
-    ```
-    example:
-    git clone https://github.com/vuestorefront/bigcommerce.git
-    cd bigcommerce
-    ```
-3. Run `yarn` to install dependencies
-4. Build dependencies `yarn build:api-client && yarn build:composables`
-5. Run `yarn dev:theme` to run theme. You can find other commands in `package.json`
 
-- If you need HMR on Api Client/Composables run `yarn dev:api-client` or `yarn dev:composables` on a separate terminal window.
+(<b>Note: Currently only yarn is supported because of workspaces resolving. Do not use npm to install or build the project.</b>)
+
+1. [Fork the repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
+
+2. Clone your fork of the repo
+    ```bash
+    git clone https://github.com/vuestorefront/bigcommerce.git && cd bigcommerce
+    ```
+
+3. Checkout `develop` branch
+    ```bash
+    git checkout develop
+    ```
+
+4. Run `yarn` to install dependencies
+    ```bash
+    yarn install
+    ```
+5. Follow the [configuration guide](https://docs.europe-west1.gcp.storefrontcloud.io/bigcommerce/guide/configuration.html) to prepare BigCommerce instance and VueStorefront app
+
+6. Build dependencies `yarn build`
+    ```bash
+    yarn build
+    ```
+
+7. Run `yarn dev` to run project. You can find other commands in `package.json`
+    ```bash
+    yarn dev
+    ```
 
 ## Resources
 
 - [Vue Storefront Documentation](https://docs.vuestorefront.io/v2/)
-- [bigcommerce integration Documentation](https://docs.vuestorefront.io/bigcommerce)
-- [Community Chat](https://discord.vuestorefront.io)
+- [BigCommerce integration Documentation](https://docs.europe-west1.gcp.storefrontcloud.io/bigcommerce/guide/configuration.html#set-up-vuestorefront) (Work In Progress)
+- [Community Chat](http://discord.vuestorefront.io)
 
 ## Support
 
-If you have any questions about this integration we will be happy to answer them on `bigcommerce` channel on [our Discord](discord.vuestorefront.io).
+If you have any questions about this integration we will be happy to answer them on  `bigcommerce` channel on [our Discord](http://discord.vuestorefront.io).
 
-## Contributors ✨
+## Contributors
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+### Honorable Mentions
+- [scernisevs](https://github.com/scernisevs)
+- [dhargitai](https://github.com/dhargitai)
+- [zoltantakacs-born](https://github.com/zoltantakacs-born) 
+- [darocha](https://github.com/darocha)
 
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+Thanks go to these wonderful people 🙌
