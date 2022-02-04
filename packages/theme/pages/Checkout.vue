@@ -64,6 +64,7 @@ import {
   useUserOrderByCart
 } from '@vue-storefront/bigcommerce';
 import OrderSummary from '../components/OrderSummary.vue';
+import { onSSR } from '@vue-storefront/core';
 
 export default defineComponent({
   name: 'Checkout',
@@ -89,14 +90,18 @@ export default defineComponent({
     const isError = ref(false);
     const errorMessage = ref('');
 
-    const onError = () => {
-      document.querySelector('#checkout').innerHTML = '';
-      isError.value = true;
+    const onError = (err) => {
+      if (err.payload?.message !== 'Invalid login attempt.') {
+        document.querySelector('#checkout').innerHTML = '';
+        isError.value = true;
+      }
     };
 
-    onMounted(async () => {
+    onSSR(async () => {
       await loadCart();
+    });
 
+    onMounted(async () => {
       if (!user.value) {
         await loadUser();
       }
