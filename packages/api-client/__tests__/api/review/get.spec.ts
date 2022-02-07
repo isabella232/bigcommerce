@@ -29,7 +29,9 @@ describe('[BigCommerce-api-client] get product review', () => {
       reviewId: 1
     };
 
-    expect(getProductReview(contextMock, props)).rejects.toMatch('error');
+    expect(getProductReview(contextMock, props)).rejects.toMatchInlineSnapshot(
+      '[Error: ProductId with value: undefined is not valid. Use number value.]'
+    );
   });
 
   it('should throw an error when reviewId were not provided', () => {
@@ -39,7 +41,9 @@ describe('[BigCommerce-api-client] get product review', () => {
       reviewId: undefined
     };
 
-    expect(getProductReview(contextMock, props)).rejects.toMatch('error');
+    expect(getProductReview(contextMock, props)).rejects.toMatchInlineSnapshot(
+      '[Error: ReviewId with value: undefined is not valid. Use number value.]'
+    );
   });
 
   it('should pass with valid props', async () => {
