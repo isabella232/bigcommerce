@@ -13,7 +13,10 @@
         >
           <SfMegaMenuColumn
             :title="$t('Categories')"
-            class="sf-mega-menu-column--pined-content-on-mobile search__categories"
+            class="
+              sf-mega-menu-column--pined-content-on-mobile
+              search__categories
+            "
           >
             <template #title="{ title, changeActive }">
               <SfMenuItem :label="title" @click="changeActive(title)">
@@ -160,7 +163,7 @@ import { useProductData } from '../composables/useProductData';
 import { useWishlistData } from '../composables/useWishlistData';
 import { Product } from '@vue-storefront/bigcommerce-api';
 import {
-  getDefaultVariant,
+  getPurchasableDefaultVariant,
   useUser,
   useCart,
   useWishlist,
@@ -214,7 +217,7 @@ export default defineComponent({
         ? removeItemFromWishlist({
           product: wishlistHelpers.getItem(wishlist.value, {
             productId: product.id,
-            variantId: getDefaultVariant(product)?.id
+            variantId: getPurchasableDefaultVariant(product)?.id
           })
         })
         : addItemToWishlist({

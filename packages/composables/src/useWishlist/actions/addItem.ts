@@ -5,7 +5,7 @@ import { Product } from '@vue-storefront/bigcommerce-api';
 import { Context, Wishlist, WishlistItem } from '../../types';
 import { addItem as guestAddItem } from '../../useGuestWishlist/actions';
 import {
-  getDefaultVariant,
+  getPurchasableDefaultVariant,
   emptyProductsResponse,
   getUserId,
   refreshWishlistProducts
@@ -22,7 +22,7 @@ export const addItem: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>[
   }
 
   const productId = product.id;
-  const variantId = getDefaultVariant(product)?.id;
+  const variantId = getPurchasableDefaultVariant(product)?.id;
 
   const res = await context.$bigcommerce.api.addWishlistItems({
     wishlistId: currentWishlist.id,

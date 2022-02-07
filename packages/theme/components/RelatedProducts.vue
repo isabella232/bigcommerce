@@ -41,7 +41,7 @@
                 ? removeItemFromWishlist({
                     product: wishlistHelpers.getItem(wishlist, {
                       productId: product.id,
-                      variantId: getDefaultVariant(product).id
+                      variantId: getPurchasableDefaultVariant(product).id
                     })
                   })
                 : addItemToWishlist({
@@ -71,7 +71,7 @@ import {
   unMapMobileObserver
 } from '@storefront-ui/vue/src/utilities/mobile-observer.js';
 import {
-  getDefaultVariant,
+  getPurchasableDefaultVariant,
   useCart,
   useGuestWishlist,
   useUser,
@@ -115,7 +115,7 @@ export default defineComponent({
       removeItemFromWishlist,
       isInCart,
       addItemToCart,
-      getDefaultVariant,
+      getPurchasableDefaultVariant,
       isMobile
     };
   },

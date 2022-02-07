@@ -94,19 +94,25 @@
               :image="productData.getCoverImage(product)"
               :regular-price="
                 $n(
-                  productData.getPrice(product, getDefaultVariant(product))
-                    .regular,
+                  productData.getPrice(
+                    product,
+                    getPurchasableDefaultVariant(product)
+                  ).regular,
                   'currency'
                 )
               "
               :special-price="
-                productData.getPrice(product, getDefaultVariant(product))
-                  .special &&
-                  $n(
-                    productData.getPrice(product, getDefaultVariant(product))
-                      .special,
-                    'currency'
-                  )
+                productData.getPrice(
+                  product,
+                  getPurchasableDefaultVariant(product)
+                ).special &&
+                $n(
+                  productData.getPrice(
+                    product,
+                    getPurchasableDefaultVariant(product)
+                  ).special,
+                  'currency'
+                )
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
@@ -129,7 +135,7 @@
                   ? removeItemFromWishlist({
                       product: wishlistHelpers.getItem(wishlist, {
                         productId: product.id,
-                        variantId: getDefaultVariant(product).id
+                        variantId: getPurchasableDefaultVariant(product).id
                       })
                     })
                   : addItemToWishlist({ product })
@@ -152,15 +158,30 @@
               v-for="(product, i) in products"
               :key="product.id"
               :style="{ '--index': i }"
-              :title="product.name"
+              :title="productData.getName(product)"
               :description="product.description"
               :image="productData.getCoverImage(product)"
               :regular-price="
-                $n(productData.getPrice(product).regular, 'currency')
+                $n(
+                  productData.getPrice(
+                    product,
+                    getPurchasableDefaultVariant(product)
+                  ).regular,
+                  'currency'
+                )
               "
               :special-price="
-                productData.getPrice(product).special &&
-                  $n(productData.getPrice(product).special, 'currency')
+                productData.getPrice(
+                  product,
+                  getPurchasableDefaultVariant(product)
+                ).special &&
+                $n(
+                  productData.getPrice(
+                    product,
+                    getPurchasableDefaultVariant(product)
+                  ).special,
+                  'currency'
+                )
               "
               :max-rating="5"
               :score-rating="productData.getAverageRating(product)"
@@ -171,7 +192,7 @@
                   ? removeItemFromWishlist({
                       product: wishlistHelpers.getItem(wishlist, {
                         productId: product.id,
-                        variantId: getDefaultVariant(product).id
+                        variantId: getPurchasableDefaultVariant(product).id
                       })
                     })
                   : addItemToWishlist({ product })
@@ -199,7 +220,7 @@
                       ? removeItemFromWishlist({
                           product: wishlistHelpers.getItem(wishlist, {
                             productId: product.id,
-                            variantId: getDefaultVariant(product).id
+                            variantId: getPurchasableDefaultVariant(product).id
                           })
                         })
                       : addItemToWishlist({ product })
@@ -309,7 +330,7 @@ import {
   useWishlist,
   useProduct,
   useCategory,
-  getDefaultVariant
+  getPurchasableDefaultVariant
 } from '@vue-storefront/bigcommerce';
 import { useUiHelpers, useUiState } from '~/composables';
 import {
@@ -343,9 +364,11 @@ export default defineComponent({
       removeItem: removeItemFromWishlist
     } = useWishlist();
     const wishlistHelpers = useWishlistData();
-    const { products: productsResult, search, error } = useProduct(
-      'category-products'
-    );
+    const {
+      products: productsResult,
+      search,
+      error
+    } = useProduct('category-products');
     const { categories, search: categorySearch } = useCategory('category-tree');
     const productData = useProductData();
     const { categorySlug } = th.getFacetsFromURL();
@@ -408,13 +431,8 @@ export default defineComponent({
     onSSR(async () => {
       isProductsLoading.value = true;
       await categorySearch({});
-      const {
-        categorySlug,
-        page,
-        itemsPerPage,
-        sort,
-        direction
-      } = th.getFacetsFromURL();
+      const { categorySlug, page, itemsPerPage, sort, direction } =
+        th.getFacetsFromURL();
       const category = getCategoryBySlug(categorySlug, categories.value);
       const isSortValid =
         [
@@ -465,7 +483,7 @@ export default defineComponent({
       isInCart,
       productsQuantity,
       productData,
-      getDefaultVariant,
+      getPurchasableDefaultVariant,
       isMobile
     };
   },

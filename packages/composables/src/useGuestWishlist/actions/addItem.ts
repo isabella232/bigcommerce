@@ -6,7 +6,7 @@ import { Wishlist, WishlistItemParams, Context, WishlistItem } from '../../types
 import {
   isInWishlist,
   refreshWishlistProducts,
-  getDefaultVariant,
+  getPurchasableDefaultVariant,
   BIGCOMMERCE_GUEST_WISHLIST_KEY
 } from '../../helpers';
 
@@ -14,7 +14,7 @@ export const addItem: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>[
   context: Context,
   { currentWishlist, product }
 ) => {
-  const variantId = getDefaultVariant(product)?.id;
+  const variantId = getPurchasableDefaultVariant(product)?.id;
   const params: WishlistItemParams = { productId: product.id, variantId };
 
   if (!isInWishlist(currentWishlist, params)) {

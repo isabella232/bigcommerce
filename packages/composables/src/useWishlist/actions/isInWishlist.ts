@@ -2,7 +2,7 @@ import { UseWishlistFactoryParams } from '@vue-storefront/core';
 import { Product } from '@vue-storefront/bigcommerce-api';
 import { Context, Wishlist, WishlistItem } from '../../types';
 import {
-  getDefaultVariant,
+  getPurchasableDefaultVariant,
   isInWishlist as isInWishlistHelper
 } from '../../helpers';
 
@@ -12,7 +12,7 @@ export const isInWishlist: UseWishlistFactoryParams<
   Product
 >['isInWishlist'] = (_context: Context, { currentWishlist, product }) => {
   const productId = product.id;
-  const variantId = getDefaultVariant(product)?.id;
+  const variantId = getPurchasableDefaultVariant(product)?.id;
 
   return isInWishlistHelper(currentWishlist, { productId, variantId });
 };
