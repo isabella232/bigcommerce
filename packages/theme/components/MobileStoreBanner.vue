@@ -35,14 +35,12 @@
     </template>
   </SfBanner>
 </template>
+
 <script>
-import {
-  SfBanner,
-  SfImage,
-  SfButton
-} from '@storefront-ui/vue';
+import { defineComponent } from '@nuxtjs/composition-api';
+import { SfBanner, SfImage, SfButton } from '@storefront-ui/vue';
 import { addBasePath } from '@vue-storefront/core';
-export default {
+export default defineComponent({
   name: 'AppStoreBanner',
   components: {
     SfBanner,
@@ -54,10 +52,10 @@ export default {
       addBasePath
     };
   }
-};
+});
 </script>
-<style lang="scss" scoped>
 
+<style lang="scss" scoped>
 .banner-app {
   --banner-title-margin: var(--spacer-base) 0 var(--spacer-xl) 0;
   --banner-padding: 0 0 var(--spacer-2xl);
@@ -87,5 +85,4 @@ export default {
     }
   }
 }
-
 </style>

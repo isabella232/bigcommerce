@@ -9,21 +9,24 @@
       </template>
     </SfOrderReview>
 
-    <OrderProducts
-      :order="order"
-    />
+    <OrderProducts :order="order" />
   </div>
 </template>
 
 <script lang="ts">
 import { OrderByCartResponse } from '@vue-storefront/bigcommerce-api';
 import { defineComponent } from '@nuxtjs/composition-api';
-import { SfConfirmOrder, SfOrderReview } from '@storefront-ui/vue';
+import { SfOrderReview } from '@storefront-ui/vue';
 import OrderProducts from './OrderProducts.vue';
 import { useOrderData } from '../composables/useOrderData';
 
 export default defineComponent({
   name: 'OrderSummary',
+
+  components: {
+    OrderProducts,
+    SfOrderReview
+  },
 
   props: {
     order: {
@@ -40,12 +43,6 @@ export default defineComponent({
     return {
       orderInfo: order
     };
-  },
-
-  components: {
-    OrderProducts,
-    SfConfirmOrder,
-    SfOrderReview
   }
 });
 </script>

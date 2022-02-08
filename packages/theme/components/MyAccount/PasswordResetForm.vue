@@ -53,7 +53,7 @@
         {{ error.authentication }}
       </div>
       <SfButton class="form__button">
-        {{ $t("Update password") }}
+        {{ $t('Update password') }}
       </SfButton>
     </form>
   </ValidationObserver>
@@ -74,6 +74,7 @@ export default defineComponent({
     ValidationProvider,
     ValidationObserver
   },
+  emits: ['submit'],
   setup(_, { emit }) {
     const userData = useUserData();
     const { user, login, error: userError } = useUser();
@@ -125,7 +126,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .form {
   &__element {
     display: block;

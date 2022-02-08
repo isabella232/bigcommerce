@@ -55,8 +55,7 @@
             )
           "
           @blur="messageBlur = false"
-        >
-        </SfTextarea>
+        />
         <SfButton>{{ $t('Submit') }}</SfButton>
       </form>
     </div>
@@ -76,6 +75,14 @@ import {
 
 export default defineComponent({
   name: 'AddReviewForm',
+
+  components: {
+    SfButton,
+    SfInput,
+    SfTextarea,
+    SfRating,
+    SfSelect
+  },
 
   props: {
     productId: {
@@ -139,14 +146,6 @@ export default defineComponent({
       messageBlur,
       validText
     };
-  },
-
-  components: {
-    SfButton,
-    SfInput,
-    SfTextarea,
-    SfRating,
-    SfSelect
   }
 });
 </script>

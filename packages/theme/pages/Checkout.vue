@@ -8,7 +8,7 @@
         class="banner"
         :image="{
           mobile: '/thankyou/bannerM.png',
-          desktop: '/thankyou/bannerD.png',
+          desktop: '/thankyou/bannerD.png'
         }"
         @click="continueShopping"
       >
@@ -38,7 +38,7 @@
       }}</SfButton>
     </div>
 
-    <div id="checkout" v-if="!isSuccess"></div>
+    <div id="checkout" v-if="!isSuccess" />
   </div>
 </template>
 

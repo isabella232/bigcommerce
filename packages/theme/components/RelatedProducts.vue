@@ -89,6 +89,26 @@ import { useWishlistData } from '../composables/useWishlistData';
 
 export default defineComponent({
   name: 'RelatedProducts',
+  components: {
+    SfCarousel,
+    SfProductCard,
+    SfSection,
+    SfLoader
+  },
+  props: {
+    title: {
+      type: String,
+      default: ''
+    },
+    products: {
+      type: Array as PropType<Array<Product>>,
+      default: () => []
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    }
+  },
   setup() {
     const isMobile = ref(mapMobileObserver().isMobile.get());
     const { isAuthenticated } = useUser();
@@ -118,17 +138,6 @@ export default defineComponent({
       getPurchasableDefaultVariant,
       isMobile
     };
-  },
-  components: {
-    SfCarousel,
-    SfProductCard,
-    SfSection,
-    SfLoader
-  },
-  props: {
-    title: String,
-    products: Array as PropType<Array<Product>>,
-    loading: Boolean
   }
 });
 </script>

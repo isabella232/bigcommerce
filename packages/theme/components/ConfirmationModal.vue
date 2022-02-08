@@ -26,18 +26,17 @@
 
 <script>
 import { defineComponent, reactive, ref, watch } from '@nuxtjs/composition-api';
-import {
-  SfModal,
-  SfButton,
-  SfLoader,
-  SfAlert,
-  SfBar
-} from '@storefront-ui/vue';
+import { SfModal, SfButton, SfBar } from '@storefront-ui/vue';
 import { useUser } from '@vue-storefront/bigcommerce';
 import { useUiState } from '~/composables';
 
 export default defineComponent({
   name: 'ConfirmationModal',
+  components: {
+    SfModal,
+    SfButton,
+    SfBar
+  },
   props: {
     onConfirm: {
       type: Function,
@@ -60,13 +59,7 @@ export default defineComponent({
       default: 'Cancel'
     }
   },
-  components: {
-    SfModal,
-    SfButton,
-    SfLoader,
-    SfAlert,
-    SfBar
-  },
+  emits: ['on-close'],
   setup() {
     const { isLoginModalOpen, toggleLoginModal } = useUiState();
     const form = ref({});

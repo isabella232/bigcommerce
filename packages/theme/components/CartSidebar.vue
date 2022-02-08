@@ -31,7 +31,7 @@
                 :has-more-actions="false"
                 :special-price="
                   cartData.getItemPrice(product).special &&
-                    $n(cartData.getItemPrice(product).special, 'currency')
+                  $n(cartData.getItemPrice(product).special, 'currency')
                 "
                 :stock="99999"
                 @click:remove="removeItem({ product })"
@@ -62,10 +62,10 @@
                   </div>
                 </template>
                 <template #actions>
-                  <div></div>
+                  <div />
                 </template>
                 <template #more-actions>
-                  <div></div>
+                  <div />
                 </template>
               </SfCollectedProduct>
             </transition-group>
@@ -95,10 +95,7 @@
           <div v-if="totalItems">
             <SfProperty
               name="Subtotal price"
-              class="
-                sf-property--full-width sf-property--large
-                my-cart__total-price
-              "
+              class="sf-property--full-width sf-property--large my-cart__total-price"
             >
               <template #value>
                 <SfPrice
@@ -147,7 +144,6 @@ import {
   SfSidebar,
   SfHeading,
   SfButton,
-  SfIcon,
   SfProperty,
   SfPrice,
   SfLink,
@@ -167,7 +163,6 @@ export default defineComponent({
     SfSidebar,
     SfButton,
     SfHeading,
-    SfIcon,
     SfLink,
     SfProperty,
     SfPrice,

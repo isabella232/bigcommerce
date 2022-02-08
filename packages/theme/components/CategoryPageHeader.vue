@@ -62,18 +62,18 @@
 import { defineComponent, computed } from '@nuxtjs/composition-api';
 import { useUiHelpers, useUiState } from '~/composables';
 import { useFacetData } from '../composables/useFacetData';
-import { SfButton, SfIcon, SfSelect } from '@storefront-ui/vue';
+import { SfIcon, SfSelect } from '@storefront-ui/vue';
 
 export default defineComponent({
   name: 'CategoryPageHeader',
   components: {
-    SfButton,
     SfIcon,
     SfSelect
   },
   props: {
     pagination: {
-      type: Object
+      type: Object,
+      required: true
     }
   },
   setup() {

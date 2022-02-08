@@ -41,10 +41,10 @@
             "
             :special="
               productData.getPrice(product, activeVariant).special &&
-                $n(
-                  productData.getPrice(product, activeVariant).special,
-                  'currency'
-                )
+              $n(
+                productData.getPrice(product, activeVariant).special,
+                'currency'
+              )
             "
           />
           <div>
@@ -124,8 +124,7 @@
                 class="sf-add-to-cart__button"
                 :disabled="
                   loading ||
-                    (stock.enabled &&
-                      (stock.current <= 0 || stock.current < qty))
+                  (stock.enabled && (stock.current <= 0 || stock.current < qty))
                 "
                 @click="
                   addItem({
@@ -146,7 +145,7 @@
             v-else
             :message="
               activeVariant.purchasing_disabled_message ||
-                $t('Currently unavailable')
+              $t('Currently unavailable')
             "
             type="warning"
           />
@@ -231,7 +230,6 @@
 
 <script>
 import {
-  SfProperty,
   SfHeading,
   SfPrice,
   SfRating,
@@ -240,10 +238,7 @@ import {
   SfTabs,
   SfGallery,
   SfIcon,
-  SfImage,
-  SfBanner,
   SfAlert,
-  SfSticky,
   SfReview,
   SfBreadcrumbs,
   SfButton,
@@ -274,11 +269,30 @@ import { useCategory } from '@vue-storefront/bigcommerce';
 
 export default defineComponent({
   name: 'Product',
-  transition: 'fade',
+  components: {
+    SfAlert,
+    SfColor,
+    SfHeading,
+    SfPrice,
+    SfRating,
+    SfSelect,
+    SfAddToCart,
+    SfTabs,
+    SfGallery,
+    SfIcon,
+    SfReview,
+    SfBreadcrumbs,
+    SfButton,
+    InstagramFeed,
+    RelatedProducts,
+    LazyHydrate,
+    AddReview
+  },
   middleware: cacheControl({
     'max-age': 60,
     'stale-when-revalidate': 5
   }),
+  transition: 'fade',
   setup() {
     const { error } = useContext();
     const router = useRouter();
@@ -301,9 +315,8 @@ export default defineComponent({
     } = useProduct('relatedProducts');
     const { addItem, loading } = useCart();
     const productData = useProductData();
-    const { reviews: productReviews, search: searchReviews } = useReview(
-      'productReviews'
-    );
+    const { reviews: productReviews, search: searchReviews } =
+      useReview('productReviews');
     const product = computed(() => products.value?.data?.[0]);
     const options = computed(() => productData.getOptions(product.value));
     const activeVariant = ref();
@@ -441,29 +454,6 @@ export default defineComponent({
       showReviews,
       tabsRef
     };
-  },
-  components: {
-    SfAlert,
-    SfColor,
-    SfProperty,
-    SfHeading,
-    SfPrice,
-    SfRating,
-    SfSelect,
-    SfAddToCart,
-    SfTabs,
-    SfGallery,
-    SfIcon,
-    SfImage,
-    SfBanner,
-    SfSticky,
-    SfReview,
-    SfBreadcrumbs,
-    SfButton,
-    InstagramFeed,
-    RelatedProducts,
-    LazyHydrate,
-    AddReview
   }
 });
 </script>

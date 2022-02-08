@@ -16,7 +16,7 @@
 
     <LazyHydrate when-visible>
       <SfBannerGrid :banner-grid="1" class="banner-grid">
-        <template v-for="item in banners" v-slot:[item.slot]>
+        <template v-for="item in banners" #[item.slot]>
           <SfBanner
             :key="item.slot"
             :title="item.title"
@@ -34,7 +34,9 @@
     <LazyHydrate when-visible>
       <div class="similar-products">
         <SfHeading title="Match with it" :level="2" />
-        <nuxt-link :to="localePath('/c/women')" class="smartphone-only">{{ $t('See all') }}</nuxt-link>
+        <nuxt-link :to="localePath('/c/women')" class="smartphone-only">{{
+          $t('See all')
+        }}</nuxt-link>
       </div>
     </LazyHydrate>
 
@@ -44,12 +46,24 @@
         :settings="{ peek: 16, breakpoints: { 1023: { peek: 0, perView: 2 } } }"
       >
         <template #prev="{ go }">
-          <SfArrow aria-label="prev" class="sf-arrow--left sf-arrow--long" @click="go('prev')" />
+          <SfArrow
+            aria-label="prev"
+            class="sf-arrow--left sf-arrow--long"
+            @click="go('prev')"
+          />
         </template>
         <template #next="{ go }">
-          <SfArrow aria-label="next" class="sf-arrow--right sf-arrow--long" @click="go('next')" />
+          <SfArrow
+            aria-label="next"
+            class="sf-arrow--right sf-arrow--long"
+            @click="go('next')"
+          />
         </template>
-        <SfCarouselItem class="carousel__item" v-for="(product, i) in products" :key="i">
+        <SfCarouselItem
+          class="carousel__item"
+          v-for="(product, i) in products"
+          :key="i"
+        >
           <SfProductCard
             :title="product.title"
             :image="product.image"
@@ -82,7 +96,8 @@
             class="sf-call-to-action__button"
             data-testid="cta-button"
             @click="toggleNewsletterModal"
-          >{{ $t('Subscribe') }}</SfButton>
+            >{{ $t('Subscribe') }}</SfButton
+          >
         </template>
       </SfCallToAction>
     </LazyHydrate>
@@ -96,21 +111,20 @@
     </LazyHydrate>
   </div>
 </template>
+
 <script>
 import {
   SfHero,
   SfBanner,
   SfCallToAction,
-  SfSection,
   SfCarousel,
   SfProductCard,
-  SfImage,
   SfBannerGrid,
   SfHeading,
   SfArrow,
   SfButton
 } from '@storefront-ui/vue';
-import { ref, useContext } from '@nuxtjs/composition-api';
+import { defineComponent, ref, useContext } from '@nuxtjs/composition-api';
 import InstagramFeed from '~/components/InstagramFeed.vue';
 import NewsletterModal from '~/components/NewsletterModal.vue';
 import LazyHydrate from 'vue-lazy-hydration';
@@ -118,21 +132,15 @@ import { useUiState } from '../composables';
 import cacheControl from './../helpers/cacheControl';
 import { addBasePath } from '@vue-storefront/core';
 
-export default {
+export default defineComponent({
   name: 'Home',
-  middleware: cacheControl({
-    'max-age': 60,
-    'stale-when-revalidate': 5
-  }),
   components: {
     InstagramFeed,
     SfHero,
     SfBanner,
     SfCallToAction,
-    SfSection,
     SfCarousel,
     SfProductCard,
-    SfImage,
     SfBannerGrid,
     SfHeading,
     SfArrow,
@@ -140,6 +148,10 @@ export default {
     NewsletterModal,
     LazyHydrate
   },
+  middleware: cacheControl({
+    'max-age': 60,
+    'stale-when-revalidate': 5
+  }),
   setup() {
     const { $config } = useContext();
     const { toggleNewsletterModal } = useUiState();
@@ -286,7 +298,7 @@ export default {
       products
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

@@ -50,6 +50,18 @@ import {
 export default defineComponent({
   name: 'DefaultLayout',
 
+  components: {
+    LazyHydrate,
+    TopBar,
+    AppHeader,
+    BottomNavigation,
+    AppFooter,
+    CartSidebar,
+    WishlistSidebar,
+    LoginModal,
+    Notification
+  },
+
   setup() {
     const route = useRoute();
     const { isAuthenticated, load: loadUser } = useUser();
@@ -71,18 +83,6 @@ export default defineComponent({
     return {
       route
     };
-  },
-
-  components: {
-    LazyHydrate,
-    TopBar,
-    AppHeader,
-    BottomNavigation,
-    AppFooter,
-    CartSidebar,
-    WishlistSidebar,
-    LoginModal,
-    Notification
   }
 });
 </script>
