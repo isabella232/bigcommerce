@@ -98,6 +98,11 @@ export default {
       { code: 'de', label: 'German', file: 'de.js', iso: 'de' }
     ],
     defaultLocale: 'en',
+    autoChangeCookie: {
+      currency: false,
+      locale: false,
+      country: false
+    },
     lazy: true,
     seo: true,
     langDir: 'lang/',
