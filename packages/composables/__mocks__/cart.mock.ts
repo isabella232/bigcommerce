@@ -43,8 +43,7 @@ export const mockedCart: Cart = {
         product_id: 77,
         sku: 'SLCTBS-08950B35',
         name: '[Sample] Fog Linen Chambray Towel - Beige Stripe',
-        url:
-          'https://vuestorefront.mybigcommerce.com/fog-linen-chambray-towel-beige-stripe/',
+        url: 'https://vuestorefront.mybigcommerce.com/fog-linen-chambray-towel-beige-stripe/',
         quantity: 1,
         taxable: true,
         image_url:

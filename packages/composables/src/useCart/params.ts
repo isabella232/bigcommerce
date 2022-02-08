@@ -16,9 +16,13 @@ export const params: UseCartFactoryParams<Cart, CartItem, Product> = {
   removeItem,
   updateItemQty,
   clear,
+  isInCart,
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  applyCoupon: async (context: Context, { currentCart, couponCode, customQuery }) => {
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  applyCoupon: async (
+    context: Context,
+    { currentCart, couponCode, customQuery }
+  ) => {
     console.log('Mocked: useCart.applyCoupon');
     return {
       updatedCart: {},
@@ -26,12 +30,14 @@ export const params: UseCartFactoryParams<Cart, CartItem, Product> = {
     };
   },
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  removeCoupon: async (context: Context, { currentCart, couponCode, customQuery }) => {
+  removeCoupon: async (
+    context: Context,
+    { currentCart, couponCode, customQuery }
+  ) => {
     console.log('Mocked: useCart.removeCoupon');
     return {
       updatedCart: {}
     };
-  },
-  isInCart
+  }
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 };

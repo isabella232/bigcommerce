@@ -4,13 +4,15 @@ import type { User } from '@vue-storefront/bigcommerce-api';
 /**
  * `updateCustomer` method in `useUser` composable.
  * @param {Context} context An auto-generated value prepended to the method as a first parameter.
-  */
-export const changePassword = async (context: Context,
+ */
+export const changePassword = async (
+  context: Context,
   params: {
-    currentUser: User,
-    currentPassword: string,
-    newPassword: string
- }): Promise<User> => {
+    currentUser: User;
+    currentPassword: string;
+    newPassword: string;
+  }
+): Promise<User> => {
   const id = params?.currentUser?.id;
   const { newPassword } = params;
 
@@ -22,4 +24,3 @@ export const changePassword = async (context: Context,
   });
   return response?.data?.[0];
 };
-

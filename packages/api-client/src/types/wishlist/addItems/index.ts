@@ -12,9 +12,9 @@ export interface AddWishlistItemsParams {
   /**
    * ID of the wishlist.
    */
-  wishlistId: number,
+  wishlistId: number;
   /**
    * Array of wishlist items.
    */
-  items: AddWishlistItem[]
+  items: AddWishlistItem[];
 }

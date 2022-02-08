@@ -34,22 +34,39 @@
     <LazyHydrate when-visible>
       <div class="similar-products">
         <SfHeading title="Match with it" :level="2" />
-        <nuxt-link :to="localePath('/c/women')" class="smartphone-only">{{ $t('See all') }}</nuxt-link>
+        <nuxt-link :to="localePath('/c/women')" class="smartphone-only">{{
+          $t('See all')
+        }}</nuxt-link>
       </div>
     </LazyHydrate>
 
     <LazyHydrate when-visible>
       <SfCarousel
         class="carousel"
-        :settings="{ peek: 16, breakpoints: { 1023: { peek: 0, perView: 2 } } }"
+        :settings="{
+          peek: 16,
+          breakpoints: { 1023: { peek: 0, perView: 2 } }
+        }"
       >
         <template #prev="{ go }">
-          <SfArrow aria-label="prev" class="sf-arrow--left sf-arrow--long" @click="go('prev')" />
+          <SfArrow
+            aria-label="prev"
+            class="sf-arrow--left sf-arrow--long"
+            @click="go('prev')"
+          />
         </template>
         <template #next="{ go }">
-          <SfArrow aria-label="next" class="sf-arrow--right sf-arrow--long" @click="go('next')" />
+          <SfArrow
+            aria-label="next"
+            class="sf-arrow--right sf-arrow--long"
+            @click="go('next')"
+          />
         </template>
-        <SfCarouselItem class="carousel__item" v-for="(product, i) in products" :key="i">
+        <SfCarouselItem
+          class="carousel__item"
+          v-for="(product, i) in products"
+          :key="i"
+        >
           <SfProductCard
             :title="product.title"
             :image="product.image"
@@ -82,7 +99,9 @@
             class="sf-call-to-action__button"
             data-testid="cta-button"
             @click="toggleNewsletterModal"
-          >{{ $t('Subscribe') }}</SfButton>
+          >
+            {{ $t('Subscribe') }}
+          </SfButton>
         </template>
       </SfCallToAction>
     </LazyHydrate>
@@ -96,6 +115,7 @@
     </LazyHydrate>
   </div>
 </template>
+
 <script>
 import {
   SfHero,
@@ -229,7 +249,7 @@ export default {
         subtitle: 'Dresses',
         title: 'Cocktail & Party',
         description:
-          'Find stunning women\'s cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.',
+          "Find stunning women's cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.",
         buttonText: 'Shop now',
         image: {
           mobile: addBasePath($config.theme.home.bannerA.image.mobile),
@@ -243,7 +263,7 @@ export default {
         subtitle: 'Dresses',
         title: 'Linen Dresses',
         description:
-          'Find stunning women\'s cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.',
+          "Find stunning women's cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.",
         buttonText: 'Shop now',
         image: addBasePath($config.theme.home.bannerB.image),
         class: 'sf-banner--slim banner-central desktop-only',

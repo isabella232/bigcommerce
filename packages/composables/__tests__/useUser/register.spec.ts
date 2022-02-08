@@ -27,7 +27,10 @@ describe('[bigcommerce-composables] useUser register', () => {
     const response = await module.register(contextMock, userParameters);
 
     expect(logIn).toBeCalledTimes(1);
-    expect(logIn).toBeCalledWith(contextMock, { username: userParameters.email, password: userParameters.password });
+    expect(logIn).toBeCalledWith(contextMock, {
+      username: userParameters.email,
+      password: userParameters.password
+    });
     expect(contextMock.$bigcommerce.api.createCustomer).toBeCalledTimes(1);
     expect(contextMock.$bigcommerce.api.createCustomer).toBeCalledWith({
       first_name: userParameters.firstName,

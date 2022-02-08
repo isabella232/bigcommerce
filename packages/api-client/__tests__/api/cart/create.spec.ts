@@ -58,7 +58,10 @@ describe('[bigcommerce-api-client] create cart', () => {
       params.data
     );
     expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledTimes(1);
-    expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledWith(contextMock, response);
+    expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledWith(
+      contextMock,
+      response
+    );
   });
 
   it('should pass include as a query parameter', async () => {
@@ -73,6 +76,9 @@ describe('[bigcommerce-api-client] create cart', () => {
       params.data
     );
     expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledTimes(1);
-    expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledWith(contextMock, response);
+    expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledWith(
+      contextMock,
+      response
+    );
   });
 });

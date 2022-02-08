@@ -194,9 +194,8 @@ export default defineComponent({
     const searchBarRef = ref(null);
     const result = ref({});
     const isMobile = ref(mapMobileObserver().isMobile.get());
-    const { categories: categoryResults, search: categorySearch } = useCategory(
-      'category-tree'
-    );
+    const { categories: categoryResults, search: categorySearch } =
+      useCategory('category-tree');
     const navigation = computed(() =>
       buildCategoryNavigation(categoryResults.value)
     );

@@ -48,7 +48,7 @@ describe('[bigcommerce-api-client] delete an address', () => {
     );
   });
 
-  it('should throw an error if the address is not the customer\'s own address', async () => {
+  it("should throw an error if the address is not the customer's own address", async () => {
     contextMock.client.v3.get = jest.fn(() => Promise.resolve({ data: [] }));
     contextMock.client.v3.delete = jest.fn(() => Promise.resolve(null));
 

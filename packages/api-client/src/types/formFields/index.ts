@@ -34,4 +34,3 @@ export interface AdressIdFormField extends BaseFormField {
  * Form field model.
  */
 export type FormField = CustomerIdFormField | AdressIdFormField;
-

@@ -1,12 +1,18 @@
-import {
-  UseWishlistFactoryParams
-} from '@vue-storefront/core';
+import { UseWishlistFactoryParams } from '@vue-storefront/core';
 import { Product } from '@vue-storefront/bigcommerce-api';
 import { Context, Wishlist, WishlistItem } from '../../types';
 import { removeItem as guestRemoveItem } from '../../useGuestWishlist/actions';
-import { refreshWishlistProducts, emptyProductsResponse, getUserId } from '../../helpers';
+import {
+  refreshWishlistProducts,
+  emptyProductsResponse,
+  getUserId
+} from '../../helpers';
 
-export const removeItem: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['removeItem'] = async (
+export const removeItem: UseWishlistFactoryParams<
+  Wishlist,
+  WishlistItem,
+  Product
+>['removeItem'] = async (
   context: Context,
   { currentWishlist, product: wishlistItem }
 ) => {
@@ -23,11 +29,14 @@ export const removeItem: UseWishlistFactoryParams<Wishlist, WishlistItem, Produc
 
   const wishlist = {
     ...currentWishlist,
-    items: currentWishlist.items.filter(item => item.id !== wishlistItem.id),
+    items: currentWishlist.items.filter((item) => item.id !== wishlistItem.id),
     wishlist_product_data: emptyProductsResponse
   };
 
-  wishlist.wishlist_product_data = await refreshWishlistProducts(context, wishlist);
+  wishlist.wishlist_product_data = await refreshWishlistProducts(
+    context,
+    wishlist
+  );
 
   return wishlist;
 };

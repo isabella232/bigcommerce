@@ -257,7 +257,10 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
     expect(getLoggedInCustomerToken).toBeCalledTimes(1);
     expect(getLoggedInCustomerToken).toBeCalledWith(contextMock);
     expect(jwtVerify).toBeCalledTimes(1);
-    expect(jwtVerify).toBeCalledWith(loggedInCustomerToken, contextMock.config.sdkSettings.devtoolsAppSecret);
+    expect(jwtVerify).toBeCalledWith(
+      loggedInCustomerToken,
+      contextMock.config.sdkSettings.devtoolsAppSecret
+    );
     expect(customerToken).toBe(loggedInCustomerToken);
   });
 

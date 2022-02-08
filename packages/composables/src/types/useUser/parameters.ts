@@ -1,6 +1,4 @@
-import {
-  CustomerFormField
-} from '@vue-storefront/bigcommerce-api';
+import { CustomerFormField } from '@vue-storefront/bigcommerce-api';
 
 /**
  * Base params to modify customer.
@@ -71,5 +69,5 @@ export interface UseUserUpdateParams extends Partial<BaseUserParams> {
   /**
    * The unique numeric ID of the customer.
    */
-   id: number;
+  id: number;
 }

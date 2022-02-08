@@ -8,7 +8,7 @@
         class="banner"
         :image="{
           mobile: '/thankyou/bannerM.png',
-          desktop: '/thankyou/bannerD.png',
+          desktop: '/thankyou/bannerD.png'
         }"
         @click="continueShopping"
       >

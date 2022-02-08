@@ -27,12 +27,17 @@ describe('[bigcommerce-api-client] create address', () => {
       }
     };
     const expectedResponse = [mockedAddress];
-    contextMock.client.v3.post = jest.fn(() => Promise.resolve(expectedResponse));
+    contextMock.client.v3.post = jest.fn(() =>
+      Promise.resolve(expectedResponse)
+    );
 
     const response = await createCustomerAddress(contextMock, newAddress);
     expect(response).toBe(expectedResponse);
     expect(contextMock.client.v3.post).toHaveBeenCalledTimes(1);
-    expect(contextMock.client.v3.post).toHaveBeenCalledWith(BigCommerceEndpoints.addresses, [newAddress]);
+    expect(contextMock.client.v3.post).toHaveBeenCalledWith(
+      BigCommerceEndpoints.addresses,
+      [newAddress]
+    );
     expect(jwtVerifyMock).toHaveBeenCalledTimes(1);
     expect(jwtVerifyMock).toHaveBeenCalledWith(
       token,
@@ -51,7 +56,7 @@ describe('[bigcommerce-api-client] create address', () => {
     await expect(
       createCustomerAddress(
         contextMock,
-        (newAddressMissingCustomerId as unknown) as CreateAddressParameters
+        newAddressMissingCustomerId as unknown as CreateAddressParameters
       )
     ).rejects.toMatchInlineSnapshot('"[Error: Required parameters missing.]"');
   });

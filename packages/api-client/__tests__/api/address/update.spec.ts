@@ -53,13 +53,14 @@ describe('[bigcommerce-api-client] update address', () => {
       `${BigCommerceEndpoints.addresses}?customer_id%3Ain=${customerId}`
     );
     expect(contextMock.client.v3.put).toHaveBeenCalledTimes(1);
-    expect(contextMock.client.v3.put).toHaveBeenCalledWith(`${BigCommerceEndpoints.addresses}`, [address]);
+    expect(contextMock.client.v3.put).toHaveBeenCalledWith(
+      `${BigCommerceEndpoints.addresses}`,
+      [address]
+    );
   });
 
-  it('should throw an error if the address is not the customer\'s own address', async () => {
-    contextMock.client.v3.get = jest.fn(() =>
-      Promise.resolve({ data: [] })
-    );
+  it("should throw an error if the address is not the customer's own address", async () => {
+    contextMock.client.v3.get = jest.fn(() => Promise.resolve({ data: [] }));
     const address: UpdateAddressParameters = {
       ...mockedAddress,
       id: addressId,

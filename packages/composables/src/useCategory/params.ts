@@ -1,6 +1,4 @@
-import {
-  UseCategoryFactoryParams
-} from '@vue-storefront/core';
+import { UseCategoryFactoryParams } from '@vue-storefront/core';
 import type { CategoryTree } from '@vue-storefront/bigcommerce-api';
 import { categorySearch } from './actions';
 

@@ -80,13 +80,7 @@
         name="country"
         :label="$t('Country')"
         required
-        class="
-          sf-component-select--underlined
-          form__select
-          form__element
-          form__element--half
-          form__element--half-even
-        "
+        class="sf-component-select--underlined form__select form__element form__element--half form__element--half-even"
         data-testid="country"
         :valid="countryBlur || validCountry(country)"
         :error-message="$t('Please select your country.')"
@@ -112,6 +106,7 @@
     </div>
   </transition>
 </template>
+
 <script>
 import {
   SfInput,
@@ -241,6 +236,7 @@ export default {
   }
 };
 </script>
+
 <style lang="scss" scoped>
 @import '~@storefront-ui/vue/styles';
 .shipping-list {

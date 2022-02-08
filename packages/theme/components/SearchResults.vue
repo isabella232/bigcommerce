@@ -13,10 +13,7 @@
         >
           <SfMegaMenuColumn
             :title="$t('Categories')"
-            class="
-              sf-mega-menu-column--pined-content-on-mobile
-              search__categories
-            "
+            class="sf-mega-menu-column--pined-content-on-mobile search__categories"
           >
             <template #title="{ title, changeActive }">
               <SfMenuItem :label="title" @click="changeActive(title)">
@@ -215,14 +212,14 @@ export default defineComponent({
         product
       })
         ? removeItemFromWishlist({
-          product: wishlistHelpers.getItem(wishlist.value, {
-            productId: product.id,
-            variantId: getPurchasableDefaultVariant(product)?.id
+            product: wishlistHelpers.getItem(wishlist.value, {
+              productId: product.id,
+              variantId: getPurchasableDefaultVariant(product)?.id
+            })
           })
-        })
         : addItemToWishlist({
-          product
-        });
+            product
+          });
     };
 
     watch(

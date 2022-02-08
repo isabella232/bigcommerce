@@ -43,10 +43,8 @@ export async function performLogin(
   customerCredentials: LoginCustomerParameters
 ): Promise<ValidateCredentialsResponse> {
   const { res } = context;
-  const {
-    customer_id: customerId,
-    is_valid: isValid
-  } = await validateCredentials(context, customerCredentials);
+  const { customer_id: customerId, is_valid: isValid } =
+    await validateCredentials(context, customerCredentials);
 
   if (!isValid) {
     throw new Error(MESSAGE_LOGIN_ERROR);

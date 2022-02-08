@@ -30,7 +30,8 @@ describe('[BigCommerce - composables] useCart load', () => {
     const customerId = 1;
     const updateCustomerFormFieldsMock = jest.fn(() => Promise.resolve([]));
 
-    contextMock.$bigcommerce.api.updateCustomerFormFields = updateCustomerFormFieldsMock;
+    contextMock.$bigcommerce.api.updateCustomerFormFields =
+      updateCustomerFormFieldsMock;
     contextMock.$bigcommerce.config.app.$cookies.get = jest
       .fn()
       .mockReturnValue(undefined);

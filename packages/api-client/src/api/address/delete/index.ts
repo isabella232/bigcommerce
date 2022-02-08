@@ -8,7 +8,7 @@ export const deleteCustomerAddress: Endpoints['deleteCustomerAddress'] = async (
   params
 ) => {
   const { data: ownAddresses } = await getCustomerAddress(context, {});
-  if (!ownAddresses.find(address => address.id === params['id:in'][0])) {
+  if (!ownAddresses.find((address) => address.id === params['id:in'][0])) {
     throw new Error('You can delete your own address only.');
   }
 

@@ -5,7 +5,8 @@ import { GiftCertificate } from './giftCertificate';
 /**
  * Schema of the gift certificate for adding it to the cart.
  */
-interface GiftCertificateRequest extends Omit<GiftCertificate, 'id' | 'isTaxable'> {
+interface GiftCertificateRequest
+  extends Omit<GiftCertificate, 'id' | 'isTaxable'> {
   /**
    * Gift name.
    */
@@ -185,12 +186,12 @@ type AddLineItemsParametersData = {
    * Custom items.
    */
   custom_items?: CustomItem[];
-}
+};
 
 /**
  * Base line item parameters.
  */
- interface BaseLineItemParameters {
+interface BaseLineItemParameters {
   /**
    * ID of the cart.
    */
@@ -241,7 +242,7 @@ interface ModifyLineItemParams {
      * Item last price.
      */
     list_price?: number;
-  }
+  };
 }
 
 /**
@@ -251,7 +252,7 @@ export interface UpdateLineItemParameters extends BaseLineItemParameters {
   /**
    * ID of the cart item.
    */
-   itemId: string;
+  itemId: string;
   /**
    * Describes the details of the modified cart item.
    */

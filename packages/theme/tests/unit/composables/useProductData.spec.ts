@@ -62,24 +62,21 @@ describe('[bigcommerce-theme] useProductData', () => {
   it('getGallery should sort and map product images', async () => {
     expect(productData.getGallery(mockedProduct as Product)).toEqual([
       {
-        big:
-          'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/266/foglinenbeigestripetowel1b.1633499289.386.513.jpg?c=1',
+        big: 'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/266/foglinenbeigestripetowel1b.1633499289.386.513.jpg?c=1',
         normal:
           'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/266/foglinenbeigestripetowel1b.1633499289.386.513.jpg?c=1',
         small:
           'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/266/foglinenbeigestripetowel1b.1633499289.220.290.jpg?c=1'
       },
       {
-        big:
-          'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/267/foglinenbeigestripetowel2b.1633499289.386.513.jpg?c=1',
+        big: 'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/267/foglinenbeigestripetowel2b.1633499289.386.513.jpg?c=1',
         normal:
           'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/267/foglinenbeigestripetowel2b.1633499289.386.513.jpg?c=1',
         small:
           'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/267/foglinenbeigestripetowel2b.1633499289.220.290.jpg?c=1'
       },
       {
-        big:
-          'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/265/foglinenbeigestripetowel3b.1633499289.386.513.jpg?c=1',
+        big: 'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/265/foglinenbeigestripetowel3b.1633499289.386.513.jpg?c=1',
         normal:
           'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/265/foglinenbeigestripetowel3b.1633499289.386.513.jpg?c=1',
         small:

@@ -9,7 +9,7 @@ export const updateCustomerAddress: Endpoints['updateCustomerAddress'] = async (
   params
 ) => {
   const { data: ownAddresses } = await getCustomerAddress(context, {});
-  if (!ownAddresses.find(address => address.id === params.id)) {
+  if (!ownAddresses.find((address) => address.id === params.id)) {
     throw new Error('You can edit your own address only.');
   }
 
@@ -17,10 +17,12 @@ export const updateCustomerAddress: Endpoints['updateCustomerAddress'] = async (
     queryString.stringifyUrl({
       url: BigCommerceEndpoints.addresses
     }),
-    [{
-      ...params,
-      customer_id: getCustomerIdFromCookie(context)
-    }]
+    [
+      {
+        ...params,
+        customer_id: getCustomerIdFromCookie(context)
+      }
+    ]
   );
 };
 

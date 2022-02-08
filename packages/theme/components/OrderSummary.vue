@@ -9,9 +9,7 @@
       </template>
     </SfOrderReview>
 
-    <OrderProducts
-      :order="order"
-    />
+    <OrderProducts :order="order" />
   </div>
 </template>
 

@@ -33,7 +33,8 @@ describe('[BigCommerce - composables] loadCustomerCart helper', () => {
     );
     const updateCartMock = jest.fn(() => Promise.resolve({ data: mockedCart }));
 
-    contextMock.$bigcommerce.api.updateCustomerFormFields = updateCustomerFormFieldsMock;
+    contextMock.$bigcommerce.api.updateCustomerFormFields =
+      updateCustomerFormFieldsMock;
     contextMock.$bigcommerce.api.updateCart = updateCartMock;
 
     await loadCustomerCart(contextMock, mockedUserWithoutCart);

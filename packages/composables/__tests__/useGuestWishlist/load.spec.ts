@@ -51,12 +51,17 @@ describe('[BigCommerce - composables] useGuestWishlist load', () => {
 
     expect(getProductsMock).toHaveBeenCalledTimes(0);
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
-    expect(localStorage.setItem).toHaveBeenCalledWith(BIGCOMMERCE_GUEST_WISHLIST_KEY, JSON.stringify(expectedWishlist));
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      BIGCOMMERCE_GUEST_WISHLIST_KEY,
+      JSON.stringify(expectedWishlist)
+    );
   });
 
   it('should get guest wishlist from localStorage if it exists', async () => {
     window.localStorage.__proto__.setItem = jest.fn();
-    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(guestWishlistMock));
+    window.localStorage.__proto__.getItem = jest.fn(() =>
+      JSON.stringify(guestWishlistMock)
+    );
 
     getProductsMock = jest.fn(() => guestWishlistMock.wishlist_product_data);
     contextMock.$bigcommerce.api.getProducts = getProductsMock;
@@ -69,7 +74,9 @@ describe('[BigCommerce - composables] useGuestWishlist load', () => {
 
   it('should not call api to get products if there are no items', async () => {
     window.localStorage.__proto__.setItem = jest.fn();
-    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(guestWishlistMock));
+    window.localStorage.__proto__.getItem = jest.fn(() =>
+      JSON.stringify(guestWishlistMock)
+    );
 
     await load(contextMock, {});
 
@@ -79,7 +86,9 @@ describe('[BigCommerce - composables] useGuestWishlist load', () => {
   it('should call api to get products from guest wishlists', async () => {
     window.localStorage.__proto__.setItem = jest.fn();
     guestWishlistMock.items.push({ id: '1_1', product_id: 1, variant_id: 1 });
-    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(guestWishlistMock));
+    window.localStorage.__proto__.getItem = jest.fn(() =>
+      JSON.stringify(guestWishlistMock)
+    );
 
     await load(contextMock, {});
 

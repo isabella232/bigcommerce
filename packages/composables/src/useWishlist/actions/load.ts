@@ -1,26 +1,28 @@
-import {
-  UseWishlistFactoryParams
-} from '@vue-storefront/core';
+import { UseWishlistFactoryParams } from '@vue-storefront/core';
 import { Product } from '@vue-storefront/bigcommerce-api';
 import { load as guestLoad } from '../../useGuestWishlist/actions';
 import { Context, Wishlist, WishlistItem } from '../../types';
-import { getUserId, refreshWishlistProducts, emptyProductsResponse, mergeWishlists } from '../../helpers';
 import {
-  BIGCOMMERCE_GUEST_WISHLIST_KEY
-} from '../../helpers/consts';
+  getUserId,
+  refreshWishlistProducts,
+  emptyProductsResponse,
+  mergeWishlists
+} from '../../helpers';
+import { BIGCOMMERCE_GUEST_WISHLIST_KEY } from '../../helpers/consts';
 
-export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['load'] = async (
-  context: Context
-) => {
+export const load: UseWishlistFactoryParams<
+  Wishlist,
+  WishlistItem,
+  Product
+>['load'] = async (context: Context) => {
   const customerId = getUserId(context);
 
   if (!customerId) {
     return guestLoad(context, {});
   }
 
-  const {
-    data: customerWishlists
-  } = await context.$bigcommerce.api.getAllWishlists();
+  const { data: customerWishlists } =
+    await context.$bigcommerce.api.getAllWishlists();
 
   let wishlist: Wishlist;
 
@@ -30,14 +32,14 @@ export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['lo
       wishlist_product_data: emptyProductsResponse
     };
   } else {
-    const { data: newWishlist } = await context.$bigcommerce.api
-      .createWishlist({
-        name: context.$bigcommerce.config.app
-          .$config.theme.wishlist.name,
-        is_public: context.$bigcommerce.config.app
-          .$config.theme.wishlist.isPublic,
+    const { data: newWishlist } = await context.$bigcommerce.api.createWishlist(
+      {
+        name: context.$bigcommerce.config.app.$config.theme.wishlist.name,
+        is_public:
+          context.$bigcommerce.config.app.$config.theme.wishlist.isPublic,
         items: []
-      });
+      }
+    );
 
     wishlist = {
       ...newWishlist,
@@ -45,14 +47,23 @@ export const load: UseWishlistFactoryParams<Wishlist, WishlistItem, Product>['lo
     };
   }
 
-  const localStorageItem = window.localStorage.getItem(BIGCOMMERCE_GUEST_WISHLIST_KEY);
+  const localStorageItem = window.localStorage.getItem(
+    BIGCOMMERCE_GUEST_WISHLIST_KEY
+  );
   if (localStorageItem) {
     const guestWishlist: Wishlist = JSON.parse(localStorageItem);
-    const mergedWishlist = await mergeWishlists(context, guestWishlist, wishlist);
+    const mergedWishlist = await mergeWishlists(
+      context,
+      guestWishlist,
+      wishlist
+    );
     wishlist = mergedWishlist;
   }
 
-  wishlist.wishlist_product_data = await refreshWishlistProducts(context, wishlist);
+  wishlist.wishlist_product_data = await refreshWishlistProducts(
+    context,
+    wishlist
+  );
 
   return wishlist;
 };

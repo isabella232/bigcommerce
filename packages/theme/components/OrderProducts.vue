@@ -49,10 +49,7 @@
       <SfProperty
         :name="$t(propertiesNames[0])"
         :value="$n(parseFloat(orderInfo.subtotal), 'currency')"
-        class="
-            sf-property--full-width
-            sf-confirm-order__property sf-confirm-order__property-subtotal
-          "
+        class="sf-property--full-width sf-confirm-order__property sf-confirm-order__property-subtotal"
       >
       </SfProperty>
       <SfProperty
@@ -65,10 +62,7 @@
       <SfProperty
         :name="$t(propertiesNames[2])"
         :value="$n(parseFloat(orderInfo.total), 'currency')"
-        class="
-            sf-property--full-width sf-property--large
-            sf-confirm-order__property-total
-          "
+        class="sf-property--full-width sf-property--large sf-confirm-order__property-total"
       >
       </SfProperty>
     </div>

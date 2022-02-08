@@ -1,9 +1,4 @@
-import {
-  FormField,
-  UserAddress,
-  MetaCollection,
-  Authentication
-} from '..';
+import { FormField, UserAddress, MetaCollection, Authentication } from '..';
 
 /**
  * Customer information.
