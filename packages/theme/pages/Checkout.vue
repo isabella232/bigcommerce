@@ -38,7 +38,7 @@
       }}</SfButton>
     </div>
 
-    <div id="checkout" v-if="!isSuccess"></div>
+    <div id="checkout" v-if="!isSuccess" />
   </div>
 </template>
 

@@ -43,7 +43,6 @@
 <script lang="ts">
 import {
   SfImage,
-  SfSelect,
   SfButton,
   SfList,
   SfBottomModal,
@@ -61,7 +60,6 @@ import { LocaleObject } from 'nuxt-i18n';
 export default defineComponent({
   components: {
     SfImage,
-    SfSelect,
     SfButton,
     SfList,
     SfBottomModal,

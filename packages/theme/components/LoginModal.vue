@@ -183,7 +183,6 @@ import {
   SfButton,
   SfCheckbox,
   SfLoader,
-  SfAlert,
   SfBar
 } from '@storefront-ui/vue';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
@@ -209,7 +208,6 @@ export default defineComponent({
     SfButton,
     SfCheckbox,
     SfLoader,
-    SfAlert,
     ValidationProvider,
     ValidationObserver,
     SfBar

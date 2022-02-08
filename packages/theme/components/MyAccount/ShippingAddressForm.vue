@@ -108,12 +108,7 @@
 </template>
 
 <script>
-import {
-  SfInput,
-  SfButton,
-  SfComponentSelect,
-  SfIcon
-} from '@storefront-ui/vue';
+import { SfInput, SfButton, SfComponentSelect } from '@storefront-ui/vue';
 import { countries } from '../../helpers/countries';
 
 export default {
@@ -121,8 +116,7 @@ export default {
   components: {
     SfInput,
     SfButton,
-    SfComponentSelect,
-    SfIcon
+    SfComponentSelect
   },
   props: {
     account: {

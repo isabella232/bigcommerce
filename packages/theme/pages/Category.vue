@@ -34,32 +34,30 @@
                 :key="i"
                 :header="cat.name"
               >
-                <template>
-                  <SfList class="list">
-                    <SfListItem class="list__item">
-                      <SfMenuItem :label="cat.name">
-                        <template #label>
-                          <nuxt-link :to="localePath(th.getCatLink(cat))">
-                            All
-                          </nuxt-link>
-                        </template>
-                      </SfMenuItem>
-                    </SfListItem>
-                    <SfListItem
-                      class="list__item"
-                      v-for="(subCat, j) in cat.children"
-                      :key="j"
-                    >
-                      <SfMenuItem :label="subCat.name">
-                        <template #label="{ label }">
-                          <nuxt-link :to="localePath(th.getCatLink(subCat))">
-                            {{ label }}
-                          </nuxt-link>
-                        </template>
-                      </SfMenuItem>
-                    </SfListItem>
-                  </SfList>
-                </template>
+                <SfList class="list">
+                  <SfListItem class="list__item">
+                    <SfMenuItem :label="cat.name">
+                      <template #label>
+                        <nuxt-link :to="localePath(th.getCatLink(cat))">
+                          All
+                        </nuxt-link>
+                      </template>
+                    </SfMenuItem>
+                  </SfListItem>
+                  <SfListItem
+                    class="list__item"
+                    v-for="(subCat, j) in cat.children"
+                    :key="j"
+                  >
+                    <SfMenuItem :label="subCat.name">
+                      <template #label="{ label }">
+                        <nuxt-link :to="localePath(th.getCatLink(subCat))">
+                          {{ label }}
+                        </nuxt-link>
+                      </template>
+                    </SfMenuItem>
+                  </SfListItem>
+                </SfList>
               </SfAccordionItem>
             </SfAccordion>
           </SfLoader>
@@ -296,13 +294,10 @@
 
 <script>
 import {
-  SfSidebar,
   SfButton,
   SfList,
-  SfIcon,
   SfHeading,
   SfMenuItem,
-  SfFilter,
   SfProductCard,
   SfProductCardHorizontal,
   SfPagination,
@@ -310,8 +305,6 @@ import {
   SfSelect,
   SfBreadcrumbs,
   SfLoader,
-  SfColor,
-  SfProperty,
   SfAddToCart
 } from '@storefront-ui/vue';
 import {
@@ -347,11 +340,27 @@ import { ProductsSortEnum } from '@vue-storefront/bigcommerce-api';
 
 // TODO(addToCart qty, horizontal): https://github.com/vuestorefront/storefront-ui/issues/1606
 export default defineComponent({
-  transition: 'fade',
+  components: {
+    CategoryPageHeader,
+    SfButton,
+    SfList,
+    SfProductCard,
+    SfProductCardHorizontal,
+    SfPagination,
+    SfMenuItem,
+    SfAccordion,
+    SfSelect,
+    SfBreadcrumbs,
+    SfLoader,
+    SfHeading,
+    LazyHydrate,
+    SfAddToCart
+  },
   middleware: cacheControl({
     'max-age': 60,
     'stale-when-revalidate': 5
   }),
+  transition: 'fade',
   setup() {
     const isMobile = ref(mapMobileObserver().isMobile.get());
     const th = useUiHelpers();
@@ -486,27 +495,6 @@ export default defineComponent({
       getPurchasableDefaultVariant,
       isMobile
     };
-  },
-  components: {
-    CategoryPageHeader,
-    SfButton,
-    SfSidebar,
-    SfIcon,
-    SfList,
-    SfFilter,
-    SfProductCard,
-    SfProductCardHorizontal,
-    SfPagination,
-    SfMenuItem,
-    SfAccordion,
-    SfSelect,
-    SfBreadcrumbs,
-    SfLoader,
-    SfColor,
-    SfHeading,
-    SfProperty,
-    LazyHydrate,
-    SfAddToCart
   }
 });
 </script>

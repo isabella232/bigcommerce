@@ -37,9 +37,10 @@
 </template>
 
 <script>
+import { defineComponent } from '@nuxtjs/composition-api';
 import { SfBanner, SfImage, SfButton } from '@storefront-ui/vue';
 import { addBasePath } from '@vue-storefront/core';
-export default {
+export default defineComponent({
   name: 'AppStoreBanner',
   components: {
     SfBanner,
@@ -51,7 +52,7 @@ export default {
       addBasePath
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

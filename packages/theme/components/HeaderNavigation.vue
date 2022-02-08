@@ -54,7 +54,7 @@ export default defineComponent({
     },
     categories: {
       type: Array as PropType<Array<SearchResultNavigationItem>>,
-      default: false
+      default: () => []
     }
   },
   setup() {

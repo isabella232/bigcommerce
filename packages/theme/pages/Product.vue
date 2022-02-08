@@ -230,7 +230,6 @@
 
 <script>
 import {
-  SfProperty,
   SfHeading,
   SfPrice,
   SfRating,
@@ -239,10 +238,7 @@ import {
   SfTabs,
   SfGallery,
   SfIcon,
-  SfImage,
-  SfBanner,
   SfAlert,
-  SfSticky,
   SfReview,
   SfBreadcrumbs,
   SfButton,
@@ -273,11 +269,30 @@ import { useCategory } from '@vue-storefront/bigcommerce';
 
 export default defineComponent({
   name: 'Product',
-  transition: 'fade',
+  components: {
+    SfAlert,
+    SfColor,
+    SfHeading,
+    SfPrice,
+    SfRating,
+    SfSelect,
+    SfAddToCart,
+    SfTabs,
+    SfGallery,
+    SfIcon,
+    SfReview,
+    SfBreadcrumbs,
+    SfButton,
+    InstagramFeed,
+    RelatedProducts,
+    LazyHydrate,
+    AddReview
+  },
   middleware: cacheControl({
     'max-age': 60,
     'stale-when-revalidate': 5
   }),
+  transition: 'fade',
   setup() {
     const { error } = useContext();
     const router = useRouter();
@@ -439,29 +454,6 @@ export default defineComponent({
       showReviews,
       tabsRef
     };
-  },
-  components: {
-    SfAlert,
-    SfColor,
-    SfProperty,
-    SfHeading,
-    SfPrice,
-    SfRating,
-    SfSelect,
-    SfAddToCart,
-    SfTabs,
-    SfGallery,
-    SfIcon,
-    SfImage,
-    SfBanner,
-    SfSticky,
-    SfReview,
-    SfBreadcrumbs,
-    SfButton,
-    InstagramFeed,
-    RelatedProducts,
-    LazyHydrate,
-    AddReview
   }
 });
 </script>

@@ -45,10 +45,11 @@
 </template>
 
 <script>
+import { defineComponent } from '@nuxtjs/composition-api';
 import { SfFooter, SfList, SfImage, SfMenuItem } from '@storefront-ui/vue';
 import { addBasePath } from '@vue-storefront/core';
 
-export default {
+export default defineComponent({
   components: {
     SfFooter,
     SfList,
@@ -71,7 +72,7 @@ export default {
       desktopMin: 1024
     };
   }
-};
+});
 </script>
 
 <style lang="scss">

@@ -62,10 +62,10 @@
                   </div>
                 </template>
                 <template #actions>
-                  <div></div>
+                  <div />
                 </template>
                 <template #more-actions>
-                  <div></div>
+                  <div />
                 </template>
               </SfCollectedProduct>
             </transition-group>
@@ -145,7 +145,6 @@ import {
   SfSidebar,
   SfHeading,
   SfButton,
-  SfIcon,
   SfProperty,
   SfPrice,
   SfLink,
@@ -165,7 +164,6 @@ export default defineComponent({
     SfSidebar,
     SfButton,
     SfHeading,
-    SfIcon,
     SfLink,
     SfProperty,
     SfPrice,

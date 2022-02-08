@@ -148,7 +148,6 @@
 import {
   SfMegaMenu,
   SfList,
-  SfBanner,
   SfProductCard,
   SfScrollable,
   SfMenuItem,
@@ -173,7 +172,6 @@ export default defineComponent({
   components: {
     SfMegaMenu,
     SfList,
-    SfBanner,
     SfProductCard,
     SfScrollable,
     SfMenuItem,
@@ -189,9 +187,14 @@ export default defineComponent({
       type: Object as () => {
         categories: SearchResultNavigationItem[];
         products: Product[];
-      }
+      },
+      default: () => ({
+        categories: [],
+        products: []
+      })
     }
   },
+  emits: ['close', 'removeSearchResults'],
   setup(props, { emit }) {
     const isSearchOpen = ref(props.visible);
     const products = computed(() => props.result?.products);

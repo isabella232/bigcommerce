@@ -74,6 +74,7 @@ export default defineComponent({
     ValidationProvider,
     ValidationObserver
   },
+  emits: ['submit'],
   setup(_, { emit }) {
     const userData = useUserData();
     const { user, login, error: userError } = useUser();

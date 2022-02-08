@@ -51,7 +51,7 @@ import { extend } from 'vee-validate';
 import { email, required, min, confirmed } from 'vee-validate/dist/rules';
 import ProfileUpdateForm from '~/components/MyAccount/ProfileUpdateForm';
 import PasswordResetForm from '~/components/MyAccount/PasswordResetForm';
-import { SfTabs, SfInput, SfButton } from '@storefront-ui/vue';
+import { SfTabs, SfButton } from '@storefront-ui/vue';
 import { useUser } from '@vue-storefront/bigcommerce';
 import { useUserData } from '../../composables/useUserData';
 
@@ -89,7 +89,6 @@ export default defineComponent({
 
   components: {
     SfTabs,
-    SfInput,
     SfButton,
     ProfileUpdateForm,
     PasswordResetForm

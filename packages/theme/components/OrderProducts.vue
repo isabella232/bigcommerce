@@ -50,21 +50,18 @@
         :name="$t(propertiesNames[0])"
         :value="$n(parseFloat(orderInfo.subtotal), 'currency')"
         class="sf-property--full-width sf-confirm-order__property sf-confirm-order__property-subtotal"
-      >
-      </SfProperty>
+      />
       <SfProperty
         :name="$t(propertiesNames[1])"
         :value="$n(parseFloat(orderInfo.shipping.cost), 'currency')"
         class="sf-property--full-width sf-confirm-order__property"
-      >
-      </SfProperty>
+      />
       <SfDivider class="sf-confirm-order__divider" />
       <SfProperty
         :name="$t(propertiesNames[2])"
         :value="$n(parseFloat(orderInfo.total), 'currency')"
         class="sf-property--full-width sf-property--large sf-confirm-order__property-total"
-      >
-      </SfProperty>
+      />
     </div>
   </div>
 </template>
@@ -72,19 +69,18 @@
 <script lang="ts">
 import { OrderByCartResponse } from '@vue-storefront/bigcommerce-api';
 import { defineComponent } from '@nuxtjs/composition-api';
-import {
-  SfHeading,
-  SfTable,
-  SfDivider,
-  SfImage,
-  SfPrice,
-  SfProperty,
-  SfLink
-} from '@storefront-ui/vue';
+import { SfTable, SfDivider, SfPrice, SfProperty } from '@storefront-ui/vue';
 import useOrderData from '../composables/useOrderData';
 
 export default defineComponent({
   name: 'OrderProducts',
+
+  components: {
+    SfTable,
+    SfDivider,
+    SfPrice,
+    SfProperty
+  },
 
   props: {
     order: {
@@ -104,16 +100,6 @@ export default defineComponent({
       tableHeaders: ['Item Description', 'Quantity', 'Amount'],
       propertiesNames: ['Subtotal', 'Shipping', 'Total price']
     };
-  },
-
-  components: {
-    SfHeading,
-    SfTable,
-    SfDivider,
-    SfImage,
-    SfPrice,
-    SfProperty,
-    SfLink
   }
 });
 </script>
