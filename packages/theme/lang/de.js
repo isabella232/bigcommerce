@@ -214,5 +214,7 @@ export default {
   'Review rating': 'Bewertung',
   'Review message': 'Bewertungsnachricht',
   'type review message': 'Bewertungsnachricht eingeben',
-  Submit: 'Einreichen'
+  Submit: 'Einreichen',
+  'Password must have at least 7 characters including one letter and a number':
+    'Das Passwort muss mindestens 7 Zeichen lang sein, erlaubt sind Buchstaben und Ziffern'
 };

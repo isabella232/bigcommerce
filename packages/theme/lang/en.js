@@ -205,5 +205,7 @@ export default {
   'Review rating': 'Review rating',
   'Review message': 'Review message',
   'type review message': 'type review message',
-  Submit: 'Submit'
+  Submit: 'Submit',
+  'Password must have at least 7 characters including one letter and a number':
+    'Password must have at least 7 characters including one letter and a number'
 };
