@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken';
 import { BigcommerceIntegrationContext, COOKIE_KEY_CUSTOMER_DATA } from '../..';
+import * as Login from '../../api/customers/login';
 
-export const getCustomerIdFromCookie = (
+export const getCustomerIdFromCookie = async (
   context: BigcommerceIntegrationContext
-): number => {
+): Promise<number> => {
   const {
     config: {
       sdkSettings: { devtoolsAppSecret }
@@ -11,18 +12,21 @@ export const getCustomerIdFromCookie = (
     req
   } = context;
 
-  try {
-    if (req.cookies[COOKIE_KEY_CUSTOMER_DATA]) {
-      const decodedToken = jwt.verify(
-        req.cookies[COOKIE_KEY_CUSTOMER_DATA],
-        devtoolsAppSecret
-      );
-      if (decodedToken?.customer?.id) {
+  const decodedToken = jwt.decode(req?.cookies[COOKIE_KEY_CUSTOMER_DATA]);
+  if (decodedToken?.customer?.id) {
+    try {
+      jwt.verify(req.cookies[COOKIE_KEY_CUSTOMER_DATA], devtoolsAppSecret);
+      return decodedToken.customer.id;
+    } catch (error) {
+      if (error?.name === 'TokenExpiredError') {
+        await Login.performLogin(context, decodedToken.customer.id);
+        const customerDataToken = await Login.verifyLogin(context);
+        Login.setTokenCookie(context, customerDataToken);
         return decodedToken.customer.id;
       }
+
+      throw { statusCode: 401, error };
     }
-  } catch (error) {
-    throw { statusCode: 401, error };
   }
 
   return null;

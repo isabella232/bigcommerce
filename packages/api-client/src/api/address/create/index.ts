@@ -10,6 +10,6 @@ export const createCustomerAddress: Endpoints['createCustomerAddress'] = async (
 ) => {
   return await context.client.v3.post(endpointPaths.addresses, [{
     ...params,
-    customer_id: getCustomerIdFromCookie(context)
+    customer_id: await getCustomerIdFromCookie(context)
   }]);
 };

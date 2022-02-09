@@ -10,7 +10,7 @@ export const getAllWishlists: Endpoints['getAllWishlists'] = async (
   context,
   query?
 ) => {
-  const customerId = getCustomerIdFromCookie(context);
+  const customerId = await getCustomerIdFromCookie(context);
 
   if (!customerId || typeof customerId !== 'number') {
     throw Error(`Customer ID with value: ${customerId} is not valid.`);

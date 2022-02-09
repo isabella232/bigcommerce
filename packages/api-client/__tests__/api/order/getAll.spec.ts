@@ -6,6 +6,7 @@ import { COOKIE_KEY_CUSTOMER_DATA, GetOrdersParameters } from '../../../src';
 import jwt from 'jsonwebtoken';
 
 const jwtVerifyMock = jest.spyOn(jwt, 'verify');
+const jwtDecodeMock = jest.spyOn(jwt, 'decode');
 
 describe('[BigCommerce-api-client] get orders', () => {
   const getMock = jest.fn(() => Promise.resolve([]));
@@ -13,6 +14,7 @@ describe('[BigCommerce-api-client] get orders', () => {
   const customerId = 10;
   const decodedToken = { customer: { id: customerId } };
   jwtVerifyMock.mockReturnValue(decodedToken);
+  jwtDecodeMock.mockReturnValue(decodedToken);
 
   contextMock.client.v2 = {
     get: getMock

@@ -26,10 +26,11 @@ export const loginCustomer: Endpoints['loginCustomer'] = async (
   params
 ) => {
   try {
-    const loginResponse = await Login.performLogin(context, params);
+    const validationResponse = await Login.getValidationResponse(context, params);
+    await Login.performLogin(context, validationResponse.customer_id);
     const customerDataToken = await Login.verifyLogin(context);
     Login.setTokenCookie(context, customerDataToken);
-    return loginResponse;
+    return validationResponse;
   } catch (error) {
     return {
       is_valid: false,
@@ -38,20 +39,30 @@ export const loginCustomer: Endpoints['loginCustomer'] = async (
   }
 };
 
-export async function performLogin(
+export async function getValidationResponse(
   context: BigcommerceIntegrationContext,
   customerCredentials: LoginCustomerParameters
 ): Promise<ValidateCredentialsResponse> {
-  const { res } = context;
   const {
     customer_id: customerId,
     is_valid: isValid
   } = await validateCredentials(context, customerCredentials);
 
   if (!isValid) {
-    throw new Error(MESSAGE_LOGIN_ERROR);
+    throw { statusCode: 400, error: { message: MESSAGE_LOGIN_ERROR } };
   }
 
+  return {
+    customer_id: customerId,
+    is_valid: isValid
+  };
+}
+
+export async function performLogin(
+  context: BigcommerceIntegrationContext,
+  customerId: number
+): Promise<void> {
+  const { res } = context;
   const ssoLoginLink = Login.generateSsoLoginLink(context, customerId);
   const ssoResponse = await fetch(ssoLoginLink);
 
@@ -65,11 +76,6 @@ export async function performLogin(
   cookiesToSet.forEach(({ name, value, ...options }) =>
     res.cookie(name, value, options)
   );
-
-  return {
-    customer_id: customerId,
-    is_valid: isValid
-  };
 }
 
 export async function verifyLogin(
@@ -100,13 +106,8 @@ export function setTokenCookie(
     res
   } = context;
 
-  const decodedToken = jwt.decode(token);
-  const expires = decodedToken?.exp
-    ? new Date(decodedToken.exp * 1000)
-    : getDateDaysLater(jwtTokenExpirationDays);
-
   res.cookie(COOKIE_KEY_CUSTOMER_DATA, token, {
-    expires,
+    expires: getDateDaysLater(jwtTokenExpirationDays),
     httpOnly: secureCookies,
     secure: secureCookies,
     sameSite: secureCookies ? 'Strict' : 'Lax'

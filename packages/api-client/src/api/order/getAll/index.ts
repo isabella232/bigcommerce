@@ -9,7 +9,7 @@ export const getOrders: Endpoints['getOrders'] = async (context, params) => {
       url: BigCommerceEndpoints.orders,
       query: {
         ...params,
-        customer_id: getCustomerIdFromCookie(context)
+        customer_id: await getCustomerIdFromCookie(context)
       }
     })
   );

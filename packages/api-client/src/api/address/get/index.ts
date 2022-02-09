@@ -13,7 +13,7 @@ export const getCustomerAddress: Endpoints['getCustomerAddress'] = async (
         url: BigCommerceEndpoints.addresses,
         query: {
           ...params,
-          'customer_id:in': [getCustomerIdFromCookie(context)]
+          'customer_id:in': [await getCustomerIdFromCookie(context)]
         }
       },
       {

@@ -9,7 +9,7 @@ export const getCustomers: Endpoints['getCustomers'] = async (
   context,
   params
 ) => {
-  const idFromCookie = getCustomerIdFromCookie(context);
+  const idFromCookie = await getCustomerIdFromCookie(context);
   if (idFromCookie) {
     return await context.client.v3.get(
       queryString.stringifyUrl(

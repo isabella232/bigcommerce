@@ -1,10 +1,6 @@
+import BigCommerceEndpoints from '../../../src/helpers/endpointPaths';
 import { contextMock } from '../../../__mocks__/context.mock';
 import { mockModulePartially } from '../../helpers/test';
-import {
-  MESSAGE_LOGIN_ERROR,
-  MESSAGE_LOGIN_TOKEN_ERROR,
-  MESSAGE_INVALID_TOKEN_RESPONSE
-} from '../../../src/helpers/consts';
 
 describe('[bigcommerce-api-client] loginCustomer', () => {
   beforeEach(() => {
@@ -18,10 +14,15 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
       email: 'example@email.com',
       password: 'secretpass'
     };
+    const customerId = 2;
+    const getValidationResponse = jest
+      .fn()
+      .mockResolvedValue({ customer_id: customerId });
     const performLogin = jest.fn();
     const verifyLogin = jest.fn().mockImplementation(() => expectedDataToken);
     const setTokenCookie = jest.fn();
     mockModulePartially('../../../src/api/customers/login', () => ({
+      getValidationResponse,
       performLogin,
       verifyLogin,
       setTokenCookie
@@ -30,22 +31,22 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
 
     await module.loginCustomer(contextMock, loginCredentials);
 
+    expect(getValidationResponse).toBeCalledTimes(1);
+    expect(getValidationResponse).toBeCalledWith(
+      contextMock,
+      loginCredentials
+    );
     expect(performLogin).toBeCalledTimes(1);
-    expect(performLogin).toBeCalledWith(contextMock, loginCredentials);
+    expect(performLogin).toBeCalledWith(contextMock, customerId);
     expect(verifyLogin).toBeCalledTimes(1);
     expect(verifyLogin).toBeCalledWith(contextMock);
     expect(setTokenCookie).toBeCalledTimes(1);
     expect(setTokenCookie).toBeCalledWith(contextMock, expectedDataToken);
   });
 
-  it('validates credentials and calls generated SSO login link', async () => {
+  it('calls generated SSO login link', async () => {
     const customerId = 2;
     const generatedLoginLink = 'https://login.link';
-    const loginCredentials = {
-      email: 'example@email.com',
-      password: 'secretpass',
-      channel_id: 1
-    };
     const setCookieHeaderFromLogin = 'cookie-string1, cookie-string2';
     const fetch = jest.fn().mockResolvedValue({
       status: 200,
@@ -62,24 +63,14 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
     contextMock.res = {
       cookie
     };
-
-    const validateCredentials = jest.fn().mockResolvedValue({
-      customer_id: customerId,
-      is_valid: true
-    });
-    jest.doMock('../../../src/api/customers/validateCredentials', () => ({
-      validateCredentials
-    }));
     const generateSsoLoginLink = jest.fn().mockReturnValue(generatedLoginLink);
     mockModulePartially('../../../src/api/customers/login', () => ({
       generateSsoLoginLink
     }));
     const module = await import('../../../src/api/customers/login');
 
-    await module.performLogin(contextMock, loginCredentials);
+    await module.performLogin(contextMock, customerId);
 
-    expect(validateCredentials).toBeCalledTimes(1);
-    expect(validateCredentials).toBeCalledWith(contextMock, loginCredentials);
     expect(generateSsoLoginLink).toBeCalledTimes(1);
     expect(generateSsoLoginLink).toBeCalledWith(contextMock, customerId);
     expect(fetch).toBeCalledTimes(1);
@@ -87,45 +78,74 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
   });
 
   it('throws an error if login credentials are invalid', async () => {
-    const validateCredentials = jest.fn().mockResolvedValue({
+    const validateCredentialsMock = jest.fn().mockResolvedValue({
       is_valid: false
     });
-    jest.doMock('../../../src/api/customers/validateCredentials', () => ({
-      validateCredentials
-    }));
+    contextMock.client.v3.post = validateCredentialsMock;
+    const invalidCredentials = {
+      email: 'invalid',
+      password: 'invalid'
+    };
     const module = await import('../../../src/api/customers/login');
 
     await expect(
-      module.performLogin(contextMock, {
-        email: 'invalid',
-        password: 'invalid'
-      })
-    ).rejects.toMatchInlineSnapshot(`[Error: ${MESSAGE_LOGIN_ERROR}]`);
+      module.getValidationResponse(contextMock, invalidCredentials)
+    ).rejects.toMatchInlineSnapshot(`
+            Object {
+              "error": Object {
+                "message": "Wrong email or password",
+              },
+              "statusCode": 400,
+            }
+          `);
+
+    expect(validateCredentialsMock).toHaveBeenCalledTimes(1);
+    expect(validateCredentialsMock).toHaveBeenCalledWith(
+      BigCommerceEndpoints.validateCredentials,
+      invalidCredentials
+    );
+  });
+
+  it('validates credentials', async () => {
+    const customerId = 2;
+    const validationResult = {
+      is_valid: true,
+      customer_id: customerId
+    };
+    const validateCredentialsMock = jest.fn().mockResolvedValue(validationResult);
+    contextMock.client.v3.post = validateCredentialsMock;
+    const loginCredentials = {
+      email: 'example@email.com',
+      password: 'super-secret'
+    };
+    const module = await import('../../../src/api/customers/login');
+
+    const result = await module.getValidationResponse(
+      contextMock,
+      loginCredentials
+    );
+
+    expect(result).toEqual(validationResult);
+    expect(validateCredentialsMock).toHaveBeenCalledTimes(1);
+    expect(validateCredentialsMock).toHaveBeenCalledWith(
+      BigCommerceEndpoints.validateCredentials,
+      loginCredentials
+    );
   });
 
   it('throws an error if Customer Login API response is invalid', async () => {
     const customerId = 2;
-    const loginCredentials = {
-      email: 'example@email.com',
-      password: 'secretpass'
-    };
     const fetch = jest.fn().mockResolvedValue({
       status: 503
     });
     jest.doMock('fetch-cookie/node-fetch', () => () => fetch);
-    jest.doMock('../../../src/api/customers/validateCredentials', () => ({
-      validateCredentials: jest.fn().mockResolvedValue({
-        customer_id: customerId,
-        is_valid: true
-      })
-    }));
     mockModulePartially('../../../src/api/customers/login', () => ({
       generateSsoLoginLink: jest.fn()
     }));
     const module = await import('../../../src/api/customers/login');
 
     await expect(
-      module.performLogin(contextMock, loginCredentials)
+      module.performLogin(contextMock, customerId)
     ).rejects.toMatchInlineSnapshot(
       '[Error: Something went wrong during the authentication]'
     );
@@ -133,29 +153,21 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
 
   it('throws an error if Customer Login API redirected to the login URL', async () => {
     const customerId = 2;
-    const loginCredentials = {
-      email: 'example@email.com',
-      password: 'secretpass'
-    };
     const fetch = jest.fn().mockResolvedValue({
       status: 200,
       url: '/login.php'
     });
     jest.doMock('fetch-cookie/node-fetch', () => () => fetch);
-    jest.doMock('../../../src/api/customers/validateCredentials', () => ({
-      validateCredentials: jest.fn().mockResolvedValue({
-        customer_id: customerId,
-        is_valid: true
-      })
-    }));
     mockModulePartially('../../../src/api/customers/login', () => ({
       generateSsoLoginLink: jest.fn()
     }));
     const module = await import('../../../src/api/customers/login');
 
     await expect(
-      module.performLogin(contextMock, loginCredentials)
-    ).rejects.toMatchInlineSnapshot(`[Error: ${MESSAGE_LOGIN_TOKEN_ERROR}]`);
+      module.performLogin(contextMock, customerId)
+    ).rejects.toMatchInlineSnapshot(
+      '[Error: Something went wrong during the authentication]'
+    );
   });
 
   it('generates SSO login link', async () => {
@@ -257,7 +269,10 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
     expect(getLoggedInCustomerToken).toBeCalledTimes(1);
     expect(getLoggedInCustomerToken).toBeCalledWith(contextMock);
     expect(jwtVerify).toBeCalledTimes(1);
-    expect(jwtVerify).toBeCalledWith(loggedInCustomerToken, contextMock.config.sdkSettings.devtoolsAppSecret);
+    expect(jwtVerify).toBeCalledWith(
+      loggedInCustomerToken,
+      contextMock.config.sdkSettings.devtoolsAppSecret
+    );
     expect(customerToken).toBe(loggedInCustomerToken);
   });
 
@@ -276,7 +291,7 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
     const module = await import('../../../src/api/customers/login');
 
     await expect(module.verifyLogin(contextMock)).rejects.toMatchInlineSnapshot(
-      `[Error: ${MESSAGE_INVALID_TOKEN_RESPONSE}]`
+      '[Error: Invalid token response]'
     );
   });
 
@@ -409,15 +424,16 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
     });
   });
 
-  it('sets the customer data cookie securely on the response with the same expiry date as customer JWT token', async () => {
+  it('sets the customer data cookie securely on the response', async () => {
     const tokenToSet = 'asdf123456789';
-    const now = 1641374383.081;
-    const decodedToken = { exp: now, data: 'whatever' };
-    const jwtDecode = jest.fn().mockReturnValue(decodedToken);
-    jest.doMock('jsonwebtoken', () => ({ decode: jwtDecode }));
+    const expirationDate = new Date(1644399807229);
+    const secureCookies = true;
+    const getDateDaysLater = jest.fn().mockReturnValue(expirationDate);
+    jest.doMock('../../../src/helpers/date', () => ({
+      getDateDaysLater
+    }));
     mockModulePartially('../../../src/api/customers/login', () => ({}));
     const module = await import('../../../src/api/customers/login');
-    const secureCookies = true;
     contextMock.config = {
       ...contextMock.config,
       secureCookies
@@ -429,11 +445,9 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
 
     await module.setTokenCookie(contextMock, tokenToSet);
 
-    expect(jwtDecode).toBeCalledTimes(1);
-    expect(jwtDecode).toBeCalledWith(tokenToSet);
     expect(cookie).toBeCalledTimes(1);
     expect(cookie).toBeCalledWith('customer-data', tokenToSet, {
-      expires: new Date(now * 1000),
+      expires: expirationDate,
       httpOnly: true,
       sameSite: 'Strict',
       secure: true
