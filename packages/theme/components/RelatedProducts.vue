@@ -2,7 +2,7 @@
   <SfSection :title-heading="title" class="section">
     <SfLoader :class="{ loading }" :loading="loading">
       <SfCarousel
-        :settings="{ peek: 16, breakpoints: { 1023: { peek: 0, perView: 2 } } }"
+        :settings="{ gap: 16, breakpoints: { 1023: { peek: 0, perView: 2 } } }"
         class="carousel"
       >
         <SfCarouselItem
@@ -25,6 +25,7 @@
                 product
               })
             "
+            :show-add-to-cart-button="true"
             :addToCartDisabled="!productData.canBeAddedToCart(product)"
             :isAddedToCart="isInCart({ product })"
             :link="
