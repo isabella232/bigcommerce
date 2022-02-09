@@ -11,7 +11,7 @@ export const createWishlist: Endpoints['createWishlist'] = async (
   props
 ) => {
   const { name } = props;
-  const customerId = getCustomerIdFromCookie(context);
+  const customerId = await getCustomerIdFromCookie(context);
 
   if (!name || typeof name !== 'string') {
     throw Error(`Name with value: ${name} is not valid. Use string value.`);

@@ -6,7 +6,10 @@ import jwt from 'jsonwebtoken';
 
 const customerId = 1;
 const jwtVerifyMock = jest.spyOn(jwt, 'verify');
-jwtVerifyMock.mockReturnValue({ customer: { id: customerId } });
+const jwtDecodeMock = jest.spyOn(jwt, 'decode');
+const decodedToken = { customer: { id: customerId } };
+jwtVerifyMock.mockReturnValue(decodedToken);
+jwtDecodeMock.mockReturnValue(decodedToken);
 contextMock.req = {
   cookies: {
     [COOKIE_KEY_CUSTOMER_DATA]: 'token'
@@ -58,7 +61,7 @@ describe('[BigCommerce-api-client] create wishlist', () => {
   });
 
   it('should throw an error when customer id was not provided', async () => {
-    jwtVerifyMock.mockReturnValue({ customer: { id: undefined } });
+    jwtDecodeMock.mockImplementation(() => null);
 
     const props: CreateWishlistProps = {
       name: 'Test wishlist',

@@ -6,6 +6,7 @@ import { COOKIE_KEY_CUSTOMER_DATA } from '../../../src/helpers/consts';
 import jwt from 'jsonwebtoken';
 
 const jwtVerifyMock = jest.spyOn(jwt, 'verify');
+const jwtDecodeMock = jest.spyOn(jwt, 'decode');
 
 describe('[bigcommerce-api-client] delete an address', () => {
   const addressId = 123;
@@ -16,6 +17,7 @@ describe('[bigcommerce-api-client] delete an address', () => {
   const customerId = 3;
   const decodedToken = { customer: { id: customerId } };
   jwtVerifyMock.mockReturnValue(decodedToken);
+  jwtDecodeMock.mockReturnValue(decodedToken);
   contextMock.req = {
     cookies: {
       [COOKIE_KEY_CUSTOMER_DATA]: token

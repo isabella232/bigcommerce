@@ -43,10 +43,7 @@
     <LazyHydrate when-visible>
       <SfCarousel
         class="carousel"
-        :settings="{
-          peek: 16,
-          breakpoints: { 1023: { peek: 0, perView: 2 } }
-        }"
+        :settings="{ gap: 16, breakpoints: { 1023: { peek: 0, perView: 2 } } }"
       >
         <template #prev="{ go }">
           <SfArrow

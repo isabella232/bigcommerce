@@ -102,9 +102,7 @@ export default defineComponent({
     });
 
     onMounted(async () => {
-      if (!user.value) {
-        await loadUser();
-      }
+      await loadUser();
 
       const embeddedCheckoutUrl =
         cart.value?.redirect_urls?.embedded_checkout_url;

@@ -20,7 +20,7 @@ export const updateCustomerAddress: Endpoints['updateCustomerAddress'] = async (
     [
       {
         ...params,
-        customer_id: getCustomerIdFromCookie(context)
+        customer_id: await getCustomerIdFromCookie(context)
       }
     ]
   );

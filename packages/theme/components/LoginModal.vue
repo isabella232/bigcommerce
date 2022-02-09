@@ -109,7 +109,7 @@
                 class="form__element"
               />
             </ValidationProvider>
-            <ValidationProvider rules="required" v-slot="{ errors }">
+            <ValidationProvider rules="required|password" v-slot="{ errors }">
               <SfInput
                 v-e2e="'login-modal-password'"
                 v-model="form.password"
@@ -214,10 +214,20 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const { localePath } = useContext();
+    const { i18n, localePath } = useContext();
 
     const SCREEN_LOGIN = 'login';
     const SCREEN_REGISTER = 'register';
+
+    extend('password', {
+      validate: (value) =>
+        String(value).length >= 7 &&
+        String(value).match(/[A-Za-z]/gi) !== null &&
+        String(value).match(/[0-9]/gi) !== null,
+      message: i18n.t(
+        'Password must have at least 7 characters including one letter and a number'
+      ) as string
+    });
 
     const { isLoginModalOpen, toggleLoginModal } = useUiState();
     const form = ref<{

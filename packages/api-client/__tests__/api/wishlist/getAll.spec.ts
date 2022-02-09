@@ -6,7 +6,10 @@ import jwt from 'jsonwebtoken';
 
 const customerId = 1;
 const jwtVerifyMock = jest.spyOn(jwt, 'verify');
-jwtVerifyMock.mockReturnValue({ customer: { id: customerId } });
+const jwtDecodeMock = jest.spyOn(jwt, 'decode');
+const decodedToken = { customer: { id: customerId } };
+jwtVerifyMock.mockImplementation(() => decodedToken);
+jwtDecodeMock.mockImplementation(() => decodedToken);
 contextMock.req = {
   cookies: {
     [COOKIE_KEY_CUSTOMER_DATA]: 'token'
@@ -47,7 +50,7 @@ describe('[BigCommerce-api-client] get all wishlists reviews', () => {
   it('should throw an error when customer id was not provided', async () => {
     contextMock.client.v3.get = jest.fn();
 
-    jwtVerifyMock.mockReturnValue({ customer: { id: undefined } });
+    jwtDecodeMock.mockImplementation(() => null);
 
     await expect(getAllWishlists(contextMock)).rejects.toMatchInlineSnapshot(
       '[Error: Customer ID with value: null is not valid.]'
