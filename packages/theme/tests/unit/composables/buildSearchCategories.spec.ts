@@ -6,7 +6,7 @@ import { mockedProduct } from '../../__mocks__/product.mock';
 import { buildSearchCategories } from '../../../composables/useCategoryData/buildSearchCategories';
 
 describe('[bigcommerce-theme] buildSearchResultsCategoryNavigation', () => {
-  it('buildSearchResultsCategoryNavigation should return an array of Category Navigation Items with a correct slug', async () => {
+  it('should return an array of Category Navigation Items with a correct slug', async () => {
     const expectedResult = [
       { key: '/garden/', label: 'Garden', slug: '/garden/' },
       { key: '/garden/bath/', label: 'Bath', slug: '/garden/bath/' }
@@ -29,7 +29,7 @@ describe('[bigcommerce-theme] buildSearchResultsCategoryNavigation', () => {
     );
   });
 
-  it('buildSearchResultsCategoryNavigation should return an empty array if no categories are passed', async () => {
+  it('should return an empty array if no categories are passed', async () => {
     expect(
       buildSearchCategories([] as Product[], [] as CategoryTree[])
     ).toEqual([]);

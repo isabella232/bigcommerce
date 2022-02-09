@@ -1,5 +1,5 @@
 import { expect } from '@jest/globals';
-import { Product } from '@vue-storefront/bigcommerce-api';
+import { InventoryType, Product } from '@vue-storefront/bigcommerce-api';
 import { useProductData } from '../../../composables/useProductData';
 import { mockedProduct } from '../../__mocks__/product.mock';
 import { themeConfigMock } from '../../__mocks__/themeConfig.mock';
@@ -62,24 +62,21 @@ describe('[bigcommerce-theme] useProductData', () => {
   it('getGallery should sort and map product images', async () => {
     expect(productData.getGallery(mockedProduct as Product)).toEqual([
       {
-        big:
-          'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/266/foglinenbeigestripetowel1b.1633499289.386.513.jpg?c=1',
+        big: 'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/266/foglinenbeigestripetowel1b.1633499289.386.513.jpg?c=1',
         normal:
           'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/266/foglinenbeigestripetowel1b.1633499289.386.513.jpg?c=1',
         small:
           'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/266/foglinenbeigestripetowel1b.1633499289.220.290.jpg?c=1'
       },
       {
-        big:
-          'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/267/foglinenbeigestripetowel2b.1633499289.386.513.jpg?c=1',
+        big: 'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/267/foglinenbeigestripetowel2b.1633499289.386.513.jpg?c=1',
         normal:
           'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/267/foglinenbeigestripetowel2b.1633499289.386.513.jpg?c=1',
         small:
           'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/267/foglinenbeigestripetowel2b.1633499289.220.290.jpg?c=1'
       },
       {
-        big:
-          'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/265/foglinenbeigestripetowel3b.1633499289.386.513.jpg?c=1',
+        big: 'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/265/foglinenbeigestripetowel3b.1633499289.386.513.jpg?c=1',
         normal:
           'https://cdn11.bigcommerce.com/s-moq5tdn0k6/products/77/images/265/foglinenbeigestripetowel3b.1633499289.386.513.jpg?c=1',
         small:
@@ -231,5 +228,97 @@ describe('[bigcommerce-theme] useProductData', () => {
     expect(productData.getInventory(undefined)).toEqual({
       enabled: false
     });
+  });
+
+  it('canBeAddedToCart should return true if inventory tracking is disabled', () => {
+    const canBeAddedToCart = productData.canBeAddedToCart(
+      mockedProduct as Product
+    );
+
+    expect(canBeAddedToCart).toEqual(true);
+  });
+
+  it('canBeAddedToCart should return true if inventory tracking is set to product and there is available stock', () => {
+    const product = {
+      ...mockedProduct,
+      inventory_tracking: InventoryType.product,
+      inventory_level: 10
+    } as Product;
+
+    const canBeAddedToCart = productData.canBeAddedToCart(product);
+
+    expect(canBeAddedToCart).toEqual(true);
+  });
+
+  it('canBeAddedToCart should return false if inventory tracking is set to product and stock is empty', () => {
+    const product = {
+      ...mockedProduct,
+      inventory_tracking: InventoryType.product,
+      inventory_level: 0
+    } as Product;
+
+    const canBeAddedToCart = productData.canBeAddedToCart(product);
+
+    expect(canBeAddedToCart).toEqual(false);
+  });
+
+  it('canBeAddedToCart should return true if inventory tracking is set to variant and there is available stock for the default variant', () => {
+    const product = {
+      ...mockedProduct,
+      inventory_tracking: InventoryType.variant,
+      variants: mockedProduct.variants.map((variant) => {
+        if (variant.id === 3) {
+          return { ...variant, inventory_level: 6 };
+        }
+
+        return variant;
+      })
+    } as Product;
+
+    const canBeAddedToCart = productData.canBeAddedToCart(product);
+
+    expect(canBeAddedToCart).toEqual(true);
+  });
+
+  it('canBeAddedToCart should return true if inventory tracking is set to variant and there is a (other than the default one) variant  with stock', () => {
+    const product = {
+      ...mockedProduct,
+      inventory_tracking: InventoryType.variant,
+      variants: mockedProduct.variants.map((variant) => {
+        if (variant.id === 2) {
+          return { ...variant, inventory_level: 4 };
+        }
+
+        if (variant.id === 3) {
+          return { ...variant, inventory_level: 0 };
+        }
+
+        return variant;
+      })
+    } as Product;
+
+    const canBeAddedToCart = productData.canBeAddedToCart(product);
+
+    expect(canBeAddedToCart).toEqual(true);
+  });
+
+  it('canBeAddedToCart should return false if inventory tracking is set to variant and there is no variant  with stock', () => {
+    const product = {
+      ...mockedProduct,
+      inventory_tracking: InventoryType.variant,
+      variants: mockedProduct.variants.map((variant) => {
+        return { ...variant, inventory_level: 0 };
+      })
+    } as Product;
+
+    const canBeAddedToCart = productData.canBeAddedToCart(product);
+
+    expect(canBeAddedToCart).toEqual(false);
+  });
+
+  it('canBeAddedToCart should return false if no product parameter provided', () => {
+    const canBeAddedToCart = productData.canBeAddedToCart(undefined);
+
+    expect(canBeAddedToCart).toEqual(false);
   });
 });
