@@ -49,7 +49,7 @@ export async function getValidationResponse(
   } = await validateCredentials(context, customerCredentials);
 
   if (!isValid) {
-    throw { statusCode: 400, error: { message: MESSAGE_LOGIN_ERROR } };
+    throw { statusCode: 400, message: MESSAGE_LOGIN_ERROR };
   }
 
   return {
