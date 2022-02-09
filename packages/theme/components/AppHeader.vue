@@ -78,7 +78,6 @@
           @keydown.enter="handleSearch($event)"
           @focus="isSearchOpen = true"
           @keydown.esc="closeSearch"
-          v-click-outside="closeSearch"
         >
           <template #icon>
             <SfButton
@@ -111,9 +110,11 @@
       v-if="!isCheckoutPage"
       :visible="isSearchOpen"
       :result="result"
+      :loading="loading"
+      :search-input="term"
       @close="closeSearch"
     />
-    <SfOverlay :visible="isSearchOpen" />
+    <SfOverlay :visible="isSearchOpen" @click="closeSearch" />
   </div>
 </template>
 
@@ -173,7 +174,7 @@ export default defineComponent({
   directives: { clickOutside },
   setup() {
     const { localePath } = useContext();
-    const { products, search } = useProduct('search-products');
+    const { products, search, loading } = useProduct('search-products');
     const router = useRouter();
     const route = useRoute();
     const routeName = computed(() => route.value.name);
@@ -194,9 +195,8 @@ export default defineComponent({
     const searchBarRef = ref(null);
     const result = ref({});
     const isMobile = ref(mapMobileObserver().isMobile.get());
-    const { categories: categoryResults, search: categorySearch } = useCategory(
-      'category-tree'
-    );
+    const { categories: categoryResults, search: categorySearch } =
+      useCategory('category-tree');
     const navigation = computed(() =>
       buildCategoryNavigation(categoryResults.value)
     );
@@ -292,6 +292,7 @@ export default defineComponent({
       isCheckoutPage,
       closeSearch,
       handleSearch,
+      loading,
       result,
       closeOrFocusSearchBar,
       searchBarRef,

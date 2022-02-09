@@ -215,6 +215,7 @@ export default {
   'Review message': 'Bewertungsnachricht',
   'type review message': 'Bewertungsnachricht eingeben',
   Submit: 'Einreichen',
+  'No products found matching your search criteria.': 'Es wurden keine Produkte gefunden, die Ihren Suchkriterien entsprechen.',
   'Password must have at least 7 characters including one letter and a number':
     'Das Passwort muss mindestens 7 Zeichen lang sein, erlaubt sind Buchstaben und Ziffern'
 };
