@@ -13,7 +13,11 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      {
+        hid: 'description',
+        name: 'description',
+        content: process.env.npm_package_description || ''
+      }
     ],
     link: [
       {
@@ -39,33 +43,33 @@ export default {
     '@nuxtjs/google-fonts',
     '@nuxtjs/pwa',
     '@nuxtjs/style-resources',
-    ['@vue-storefront/nuxt', {
-      // @core-development-only-start
-      coreDevelopment: true,
-      logger: {
-        verbosity: 'debug'
-      },
-      // @core-development-only-end
-      useRawSource: {
-        dev: [
-          '@vue-storefront/bigcommerce',
-          '@vue-storefront/core'
-        ],
-        prod: [
-          '@vue-storefront/bigcommerce',
-          '@vue-storefront/core'
-        ]
-      }
-    }],
-    // @core-development-only-start
-    ['@vue-storefront/nuxt-theme', {
-      generate: {
-        replace: {
-          apiClient: '@vue-storefront/bigcommerce-api',
-          composables: '@vue-storefront/bigcommerce'
+    [
+      '@vue-storefront/nuxt',
+      {
+        // @core-development-only-start
+        coreDevelopment: true,
+        logger: {
+          verbosity: 'debug'
+        },
+        // @core-development-only-end
+        useRawSource: {
+          dev: ['@vue-storefront/bigcommerce', '@vue-storefront/core'],
+          prod: ['@vue-storefront/bigcommerce', '@vue-storefront/core']
         }
       }
-    }],
+    ],
+    // @core-development-only-start
+    [
+      '@vue-storefront/nuxt-theme',
+      {
+        generate: {
+          replace: {
+            apiClient: '@vue-storefront/bigcommerce-api',
+            composables: '@vue-storefront/bigcommerce'
+          }
+        }
+      }
+    ],
     // @core-development-only-end
     /* project-only-start
     ['@vue-storefront/nuxt-theme'],
@@ -111,18 +115,24 @@ export default {
       numberFormats: {
         en: {
           currency: {
-            style: 'currency', currency: 'PLN', currencyDisplay: 'symbol'
+            style: 'currency',
+            currency: 'PLN',
+            currencyDisplay: 'symbol'
           }
         },
         de: {
           currency: {
-            style: 'currency', currency: 'PLN', currencyDisplay: 'symbol'
+            style: 'currency',
+            currency: 'PLN',
+            currencyDisplay: 'symbol'
           }
         }
+      },
+      detectBrowserLanguage: {
+        useCookie: true,
+        cookieKey: VSF_LOCALE_COOKIE,
+        onlyOnNoPrefix: false
       }
-    },
-    detectBrowserLanguage: {
-      cookieKey: VSF_LOCALE_COOKIE
     }
   },
   pwa: {
@@ -145,7 +155,11 @@ export default {
     display: 'swap'
   },
   styleResources: {
-    scss: [require.resolve('@storefront-ui/shared/styles/_helpers.scss', { paths: [process.cwd()] })]
+    scss: [
+      require.resolve('@storefront-ui/shared/styles/_helpers.scss', {
+        paths: [process.cwd()]
+      })
+    ]
   },
   publicRuntimeConfig: {
     theme
@@ -153,13 +167,9 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     babel: {
-      plugins: [
-        ['@babel/plugin-proposal-private-methods', { loose: true }]
-      ]
+      plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]]
     },
-    transpile: [
-      'vee-validate/dist/rules'
-    ],
+    transpile: ['vee-validate/dist/rules'],
     plugins: [
       new webpack.DefinePlugin({
         'process.VERSION': JSON.stringify({
