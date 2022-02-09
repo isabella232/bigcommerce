@@ -92,9 +92,7 @@ describe('[bigcommerce-api-client] loginCustomer', () => {
       module.getValidationResponse(contextMock, invalidCredentials)
     ).rejects.toMatchInlineSnapshot(`
             Object {
-              "error": Object {
-                "message": "Wrong email or password",
-              },
+              "message": "Wrong email or password",
               "statusCode": 400,
             }
           `);
