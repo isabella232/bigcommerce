@@ -257,12 +257,10 @@ import {
   useRoute
 } from '@nuxtjs/composition-api';
 import { useProduct, useCart, useReview } from '@vue-storefront/bigcommerce';
-import { ReviewStatus } from '@vue-storefront/bigcommerce-api';
 import { onSSR } from '@vue-storefront/core';
 import LazyHydrate from 'vue-lazy-hydration';
 import { useProductData } from '../composables/useProductData';
 import cacheControl from './../helpers/cacheControl';
-import useUiHelpers from '~/composables/useUiHelpers';
 import useReviewData from '~/composables/useReviewData';
 import { getBreadcrumbs } from '~/composables/useCategoryData';
 import { useCategory } from '@vue-storefront/bigcommerce';
@@ -301,7 +299,6 @@ export default defineComponent({
     const qty = ref(1);
     const id = computed(() => route.value.params.id);
     const { query } = route.value;
-    const uiHelpers = useUiHelpers();
     const configuration = ref(query);
     const reviewsTab = 2;
     const openTab = ref(1);
@@ -320,12 +317,6 @@ export default defineComponent({
     const product = computed(() => products.value?.data?.[0]);
     const options = computed(() => productData.getOptions(product.value));
     const activeVariant = ref();
-    const reviews = computed(
-      () =>
-        productReviews.value?.data?.filter(
-          (review) => review.status === ReviewStatus.approved
-        ) || []
-    );
     const reviewHelpers = useReviewData();
     const stock = computed(() =>
       productData.getInventory(product.value, activeVariant.value)
@@ -407,7 +398,7 @@ export default defineComponent({
       }
     });
 
-    searchReviews({ productId: Number(id.value) });
+    searchReviews({ productId: Number(id.value), query: { status: 1 } });
 
     const updateFilter = (filter) => {
       router.push({
@@ -434,7 +425,7 @@ export default defineComponent({
       openTab,
       product,
       breadcrumbs,
-      reviews,
+      reviews: productReviews.value?.data,
       averageRating: computed(() =>
         productData.getAverageRating(product.value)
       ),
@@ -448,8 +439,6 @@ export default defineComponent({
       productData,
       productGallery,
       stock,
-      uiHelpers,
-      useReviewData,
       reviewHelpers,
       showReviews,
       tabsRef
