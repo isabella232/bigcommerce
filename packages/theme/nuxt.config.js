@@ -131,7 +131,7 @@ export default {
       detectBrowserLanguage: {
         useCookie: true,
         cookieKey: VSF_LOCALE_COOKIE,
-        onlyOnNoPrefix: false
+        onlyOnNoPrefix: true
       }
     }
   },
