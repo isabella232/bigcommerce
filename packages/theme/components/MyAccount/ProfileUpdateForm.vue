@@ -196,7 +196,6 @@ export default defineComponent({
   }
 });
 </script>
-
 <style lang="scss" scoped>
 .form {
   &__element {

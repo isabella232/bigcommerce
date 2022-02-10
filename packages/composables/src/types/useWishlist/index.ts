@@ -19,10 +19,11 @@ export interface Wishlist extends Omit<WishlistAPI, 'items'> {
   /**
    * Response of get products api call
    */
-  wishlist_product_data: ProductsResponse;
+  wishlist_product_data: ProductsResponse,
 
   /**
    * Array of wishlist items.
    */
   items: WishlistItem[];
 }
+

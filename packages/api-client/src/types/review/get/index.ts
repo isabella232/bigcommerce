@@ -30,3 +30,4 @@ export interface ProductReviewResponse {
    */
   meta: Record<string, unknown>;
 }
+

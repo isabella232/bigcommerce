@@ -12,8 +12,6 @@ describe('[bigcommerce-api-client] delete cart', () => {
 
     expect(response).toBeFalsy();
     expect(contextMock.client.v3.delete).toHaveBeenCalledTimes(1);
-    expect(contextMock.client.v3.delete).toHaveBeenCalledWith(
-      BigCommerceEndpoints.cart(cartId)
-    );
+    expect(contextMock.client.v3.delete).toHaveBeenCalledWith(BigCommerceEndpoints.cart(cartId));
   });
 });

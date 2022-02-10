@@ -1,7 +1,9 @@
 {
   "useWorkspaces": true,
   "npmClient": "yarn",
-  "packages": ["packages/**/*"],
+  "packages": [
+    "packages/**/*"
+  ],
   "command": {
     "publish": {
       "message": "chore(release): %s",

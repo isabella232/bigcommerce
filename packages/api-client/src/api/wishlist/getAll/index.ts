@@ -1,6 +1,9 @@
 import { stringifyUrl } from 'query-string';
 import { getCustomerIdFromCookie } from '../../../helpers/auth';
-import { WishlistCollectionResponse, Endpoints } from '../../../types';
+import {
+  WishlistCollectionResponse,
+  Endpoints
+} from '../../../types';
 import BigCommerceEndpoints from '../../../helpers/endpointPaths';
 
 export const getAllWishlists: Endpoints['getAllWishlists'] = async (

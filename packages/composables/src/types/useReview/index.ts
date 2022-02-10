@@ -13,25 +13,25 @@ export interface UseReviewResponse {
   /**
    * Collection of product reviews.
    */
-  reviews: ComputedRef<ProductReviewCollectionResponse>;
+  reviews: ComputedRef<ProductReviewCollectionResponse>,
 
   /**
    * Flag is set to true, if the adding or searching is in progress.
    */
-  loading: ComputedRef<boolean>;
+  loading: ComputedRef<boolean>
 
   /**
    * Contains searching or adding error if occures.
    */
-  error: ComputedRef<UseReviewErrors>;
+  error: ComputedRef<UseReviewErrors>,
 
   /**
    * Function for searching for product reviews. Result is stored in reviews property.
    */
-  search: (searchParams: UseReviewSearchParams) => Promise<void>;
+  search: (searchParams: UseReviewSearchParams) => Promise<void>
 
   /**
    * Function for searching for product reviews. Result is stored in reviews property.
    */
-  add: (params: UseReviewAddParams) => Promise<void>;
+  add: (params: UseReviewAddParams) => Promise<void>
 }

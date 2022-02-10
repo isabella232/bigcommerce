@@ -8,9 +8,7 @@ export const searchReviews = async (
   const { productId } = searchParams;
 
   if (!productId || typeof productId !== 'number') {
-    throw new Error(
-      `ProductId with value: ${productId} is not valid. Use number value.`
-    );
+    throw new Error(`ProductId with value: ${productId} is not valid. Use number value.`);
   }
 
   const props = { productId };

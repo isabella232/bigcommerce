@@ -159,7 +159,7 @@ export type ValidateCredentialsParameter = AuthCustomerParams;
  * Parameters to login customer.
  * Type alias for `AuthCustomerParams`.
  */
-export type LoginCustomerParameters = AuthCustomerParams;
+export type LoginCustomerParameters = AuthCustomerParams
 
 /**
  * Parameters to update customer form fields.
@@ -179,7 +179,7 @@ type StoreCreditAmounts = Array<{
    * Store credit amount.
    */
   amount: number;
-}>;
+}>
 
 /**
  * Parameters to update customer.

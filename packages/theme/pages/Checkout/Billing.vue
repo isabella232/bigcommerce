@@ -8,4 +8,3 @@
 export default {
   name: 'Billing'
 };
-</script>

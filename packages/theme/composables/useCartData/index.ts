@@ -49,10 +49,8 @@ export const useCartData = () => {
   ): Record<string, AgnosticAttribute | string> => {
     return (
       item?.options?.reduce((acc, attribute) => {
-        if (
-          !filterByAttributeName ||
-          filterByAttributeName.includes(attribute.name)
-        ) {
+        if (!filterByAttributeName ||
+        filterByAttributeName.includes(attribute.name)) {
           acc[attribute.name] = attribute.value;
         }
 
@@ -75,14 +73,8 @@ export const useCartData = () => {
 
   const getTotalItems = (cart: Cart): number => {
     return cart
-      ? cart.line_items.physical_items.reduce(
-          (sum, item) => sum + item.quantity,
-          0
-        ) +
-          cart.line_items.digital_items.reduce(
-            (sum, item) => sum + item.quantity,
-            0
-          )
+      ? cart.line_items.physical_items.reduce((sum, item) => sum + item.quantity, 0) +
+          cart.line_items.digital_items.reduce((sum, item) => sum + item.quantity, 0)
       : 0;
   };
 

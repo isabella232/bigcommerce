@@ -15,7 +15,7 @@ export function getBreadcrumbs(
   categories: Readonly<CategoryTree[]> = [],
   localePath: (fn: string) => string,
   i18n: {
-    t: (fn: string) => string;
+    t: (fn: string) => string
   }
 ): Crumb[] {
   const flattenedCategories = flattenCategoryTree(categories);
@@ -26,8 +26,5 @@ export function getBreadcrumbs(
     localePath,
     i18n
   );
-  return [
-    { text: i18n.t('Home'), link: localePath('/') },
-    ...breadcrumbs.reverse()
-  ];
+  return [{ text: i18n.t('Home'), link: localePath('/') }, ...breadcrumbs.reverse()];
 }

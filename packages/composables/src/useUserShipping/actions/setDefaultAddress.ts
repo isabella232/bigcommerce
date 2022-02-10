@@ -5,10 +5,12 @@ import type {
 } from '@vue-storefront/bigcommerce-api';
 import { Context } from '../..';
 
-export const setDefaultAddress: UseUserShippingFactoryParams<
-  Address,
-  AddressItem
->['setDefaultAddress'] = async (_context: Context, params) => {
+export const setDefaultAddress: UseUserShippingFactoryParams<Address, AddressItem>['setDefaultAddress'] = async (
+  _context: Context,
+  params
+) => {
   // BigCommerce API currently not supporting to mark an address as default.
   return params.shipping as Address;
+
 };
+

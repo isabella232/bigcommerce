@@ -43,9 +43,9 @@
                 <nuxt-link
                   :to="
                     '/p/' +
-                    orderHelpers.getItemSku(item) +
-                    '/' +
-                    orderHelpers.getItemSku(item)
+                      orderHelpers.getItemSku(item) +
+                      '/' +
+                      orderHelpers.getItemSku(item)
                   "
                 >
                   {{ orderHelpers.getItemName(item) }}

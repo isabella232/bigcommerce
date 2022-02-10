@@ -11,9 +11,7 @@ const decode = jest.spyOn(jwt, 'decode');
 decode.mockImplementation(() => ({ customer: { id: customerId } }));
 
 describe('[BigCommerce - composables] useWishlist addItem', () => {
-  contextMock.$bigcommerce.config.app.$cookies.get = jest.fn(
-    () => 'mocked_token'
-  );
+  contextMock.$bigcommerce.config.app.$cookies.get = jest.fn(() => 'mocked_token');
 
   beforeEach(() => {
     contextMock.$bigcommerce.api.addWishlistItems = jest.fn(() => ({
@@ -27,12 +25,10 @@ describe('[BigCommerce - composables] useWishlist addItem', () => {
   it('should call api with wishlist id and array of items', async () => {
     const expectedParams = {
       wishlistId: wishlistMock.id,
-      items: [
-        {
-          product_id: mockedProduct.id,
-          variant_id: undefined
-        }
-      ]
+      items: [{
+        product_id: mockedProduct.id,
+        variant_id: undefined
+      }]
     };
 
     await addItem(contextMock, {
@@ -40,9 +36,8 @@ describe('[BigCommerce - composables] useWishlist addItem', () => {
       product: mockedProduct as Product
     });
 
-    expect(contextMock.$bigcommerce.api.addWishlistItems).toHaveBeenCalledWith(
-      expectedParams
-    );
+    expect(contextMock.$bigcommerce.api.addWishlistItems)
+      .toHaveBeenCalledWith(expectedParams);
   });
 
   it('should refresh product list', async () => {

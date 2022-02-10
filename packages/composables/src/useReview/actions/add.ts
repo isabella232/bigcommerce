@@ -8,9 +8,7 @@ export const addReview = async (
   const { title, productId } = params;
 
   if (!productId || typeof productId !== 'number')
-    throw Error(
-      `ProductId with value: ${productId} is not valid. Use number value.`
-    );
+    throw Error(`ProductId with value: ${productId} is not valid. Use number value.`);
 
   if (!title || typeof title !== 'string')
     throw Error(`Title with value: ${title} is not valid. Use string value.`);

@@ -81,7 +81,7 @@ extend('password', {
 
 extend('confirmed', {
   ...confirmed,
-  message: "Passwords don't match"
+  message: 'Passwords don\'t match'
 });
 
 export default defineComponent({

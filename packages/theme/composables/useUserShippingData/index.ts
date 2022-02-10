@@ -6,19 +6,14 @@ import type {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useUserShippingData = () => {
-  const getAddresses = (
-    addresses: Address,
-    criteria?: UserShippingAddressSearchCriteria
-  ): Address => {
+  const getAddresses = (addresses: Address, criteria?: UserShippingAddressSearchCriteria): Address => {
     if (!criteria || !Object.keys(criteria).length) {
       return addresses;
     }
 
     const entries = Object.entries(criteria);
 
-    return addresses.filter((address) =>
-      entries.every(([key, value]) => address[key] === value)
-    );
+    return addresses.filter(address => entries.every(([key, value]) => address[key] === value));
   };
 
   const getDefault = (shipping: Address): AddressItem => {

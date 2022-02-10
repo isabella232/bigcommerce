@@ -25,8 +25,7 @@ describe('[bigcommerce-composables] getCategoryTree', () => {
       t: jest.fn((str) => str)
     };
     const localePath = jest.fn((str) => str);
-    const categories: CategoryTree[] =
-      await contextMock.$bigcommerce.api.getCategoryTree();
+    const categories: CategoryTree[] = await contextMock.$bigcommerce.api.getCategoryTree();
     expect(contextMock.$bigcommerce.api.getCategoryTree).toHaveBeenCalledTimes(
       1
     );

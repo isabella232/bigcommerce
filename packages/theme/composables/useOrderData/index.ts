@@ -1,8 +1,4 @@
-import type {
-  Order,
-  OrderByCartResponse,
-  OrderItem
-} from '@vue-storefront/bigcommerce-api';
+import type { Order, OrderByCartResponse, OrderItem } from '@vue-storefront/bigcommerce-api';
 import { OrderResults } from '@vue-storefront/bigcommerce';
 import useUiHelpers from '../useUiHelpers';
 
@@ -11,9 +7,7 @@ export const useOrderData = () => {
   const { formatDateString } = useUiHelpers();
 
   function getDate(order: Order): string {
-    return order?.date_created
-      ? formatDateString(order.date_created, 'DD.MM.YYYY HH:mm')
-      : '';
+    return order?.date_created ? formatDateString(order.date_created, 'DD.MM.YYYY HH:mm') : '';
   }
 
   function getId(order: Order): string {
@@ -59,9 +53,7 @@ export const useOrderData = () => {
   }
 
   function mapOrderSummary(order: OrderByCartResponse) {
-    const shippingAddress = order.shipping_addresses?.length
-      ? order.shipping_addresses[0]
-      : undefined;
+    const shippingAddress = order.shipping_addresses?.length ? order.shipping_addresses[0] : undefined;
 
     return {
       firstName: order.billing_address?.first_name,
@@ -79,6 +71,7 @@ export const useOrderData = () => {
           value: shippingAddress?.shipping_method
         },
         cost: order.shipping_cost_inc_tax
+
       },
       payment: {
         streetName: order.billing_address?.street_1,
