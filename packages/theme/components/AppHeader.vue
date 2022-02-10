@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-click-outside="closeSearch">
     <SfHeader
       class="sf-header--has-mobile-search"
       :class="{ 'header-on-top': isSearchOpen }"
@@ -14,17 +14,22 @@
             class="sf-header__logo-image"
             :width="34"
             :height="34"
+            @click="closeSearch"
           />
         </nuxt-link>
       </template>
       <template #navigation>
-        <HeaderNavigation :categories="navigation" :isMobile="isMobile" />
+        <div @click="closeSearch">
+          <HeaderNavigation :categories="navigation" :isMobile="isMobile" />
+        </div>
       </template>
       <template #aside>
-        <LocaleSelector class="smartphone-only" />
+        <div @click="closeSearch">
+          <LocaleSelector class="smartphone-only" />
+        </div>
       </template>
       <template #header-icons>
-        <div v-e2e="'header-icons'" class="sf-header__icons">
+        <div v-e2e="'header-icons'" class="sf-header__icons" @click="closeSearch">
           <SfButton
             class="sf-button--pure sf-header__action"
             aria-label="Open account button"
