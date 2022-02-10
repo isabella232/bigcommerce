@@ -22,9 +22,7 @@ describe('[bigcommerce-api-client] updateCustomerFormFields', () => {
       meta: {}
     };
 
-    contextMock.client.v3.put = jest.fn(() =>
-      Promise.resolve(expectedResponse)
-    );
+    contextMock.client.v3.put = jest.fn(() => Promise.resolve(expectedResponse));
 
     const response = await updateCustomerFormFields(contextMock, params);
 

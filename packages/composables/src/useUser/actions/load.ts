@@ -1,5 +1,8 @@
 import { Context } from '../../types';
-import { CustomersIncludeEnum, User } from '@vue-storefront/bigcommerce-api';
+import {
+  CustomersIncludeEnum,
+  User
+} from '@vue-storefront/bigcommerce-api';
 import {
   BIGCOMMERCE_COOKIE_MAXAGE,
   BIGCOMMERCE_USER_AUTHENTICATED

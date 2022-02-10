@@ -35,6 +35,7 @@ describe('[bigcommerce-api-client] getCategoryTree', () => {
           "url": "/garden/",
         },
       ]
-    `);
+    `
+    );
   });
 });

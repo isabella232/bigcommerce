@@ -17,17 +17,13 @@ describe('[bigcommerce-api-client] getProducts', () => {
         }
       ]
     };
-    contextMock.client.v3.get = jest.fn(() =>
-      Promise.resolve(expectedResponse)
-    );
+    contextMock.client.v3.get = jest.fn(() => Promise.resolve(expectedResponse));
 
     const response = await getProducts(contextMock, params);
 
     expect(response).toBe(expectedResponse);
     expect(contextMock.client.v3.get).toBeCalledTimes(1);
-    expect(contextMock.client.v3.get).toBeCalledWith(
-      `${BigCommerceEndpoints.products}?${queryString.stringify(params)}`
-    );
+    expect(contextMock.client.v3.get).toBeCalledWith(`${BigCommerceEndpoints.products}?${queryString.stringify(params)}`);
   });
 
   it('images should always be requested', async () => {
@@ -36,9 +32,7 @@ describe('[bigcommerce-api-client] getProducts', () => {
     await getProducts(contextMock, {});
 
     expect(contextMock.client.v3.get).toBeCalledTimes(1);
-    expect(contextMock.client.v3.get).toBeCalledWith(
-      `${BigCommerceEndpoints.products}?include=images&is_visible=true`
-    );
+    expect(contextMock.client.v3.get).toBeCalledWith(`${BigCommerceEndpoints.products}?include=images&is_visible=true`);
   });
 
   it('should apply additional include params', async () => {
@@ -47,9 +41,7 @@ describe('[bigcommerce-api-client] getProducts', () => {
     await getProducts(contextMock, { include: 'videos' });
 
     expect(contextMock.client.v3.get).toBeCalledTimes(1);
-    expect(contextMock.client.v3.get).toBeCalledWith(
-      `${BigCommerceEndpoints.products}?include=videos%2Cimages&is_visible=true`
-    );
+    expect(contextMock.client.v3.get).toBeCalledWith(`${BigCommerceEndpoints.products}?include=videos%2Cimages&is_visible=true`);
   });
 
   it('images should not be duplicated in the include param', async () => {
@@ -59,8 +51,6 @@ describe('[bigcommerce-api-client] getProducts', () => {
     await getProducts(contextMock, { include: expectedParam });
 
     expect(contextMock.client.v3.get).toBeCalledTimes(1);
-    expect(contextMock.client.v3.get).toBeCalledWith(
-      `${BigCommerceEndpoints.products}?include=images%2Cvideos&is_visible=true`
-    );
+    expect(contextMock.client.v3.get).toBeCalledWith(`${BigCommerceEndpoints.products}?include=images%2Cvideos&is_visible=true`);
   });
 });

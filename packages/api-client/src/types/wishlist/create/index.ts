@@ -32,3 +32,4 @@ export interface CreateWishlistParams extends CreateWishlistProps {
    */
   customer_id: number;
 }
+

@@ -1,5 +1,9 @@
 import dayjs from 'dayjs';
-import { useContext, useRoute, useRouter } from '@nuxtjs/composition-api';
+import {
+  useContext,
+  useRoute,
+  useRouter
+} from '@nuxtjs/composition-api';
 
 const nonFilters = ['page', 'sort', 'direction', 'term', 'itemsPerPage'];
 
@@ -30,9 +34,7 @@ const useUiHelpers = () => {
 
   const getFacetsFromURL = () => {
     const { query, path } = route.value;
-    const categorySlug = `/${path.split('/c/').pop()}${
-      /\/$/.test(path) ? '' : '/'
-    }`;
+    const categorySlug = `/${path.split('/c/').pop()}${/\/$/.test(path) ? '' : '/'}`;
     return {
       categorySlug,
       page: parseInt(query.page as string, 10) || 1,
@@ -49,7 +51,8 @@ const useUiHelpers = () => {
   };
 
   const changeSorting = (sort: string) => {
-    const sortOptions = $config.theme?.productsSortOptions ?? [];
+    const sortOptions =
+      $config.theme?.productsSortOptions ?? [];
     const selectedOption = sortOptions.find(
       (option) => option.id === Number.parseInt(sort)
     );

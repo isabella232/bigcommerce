@@ -1,6 +1,8 @@
 import { Context } from '../../types';
 import { load as loadCart } from '../../useCart/actions';
-import { BIGCOMMERCE_USER_AUTHENTICATED } from '../../helpers/consts';
+import {
+  BIGCOMMERCE_USER_AUTHENTICATED
+} from '../../helpers/consts';
 /**
  * `logOut` method in `useUser` composable.
  * @param {Context} context An auto-generated value prepended to the method as a first parameter.

@@ -17,12 +17,8 @@ export const logIn = async (
 ): Promise<User> => {
   const cookies = context.$bigcommerce.config.app.$cookies;
   const { username, password } = params;
-  const channelIdsConfig =
-    context?.$bigcommerce?.config?.app?.$config?.theme?.channelIds;
-  const channelId =
-    Array.isArray(channelIdsConfig) && channelIdsConfig.length
-      ? channelIdsConfig[0]
-      : 1;
+  const channelIdsConfig = context?.$bigcommerce?.config?.app?.$config?.theme?.channelIds;
+  const channelId = Array.isArray(channelIdsConfig) && channelIdsConfig.length ? channelIdsConfig[0] : 1;
   const loginResponse = await context.$bigcommerce.api.loginCustomer({
     email: username,
     password,

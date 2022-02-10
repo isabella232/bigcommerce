@@ -1,11 +1,11 @@
 <template>
-  <span>
-    <b>
-      {{ address.apartment }} {{ address.streetName }}, {{ address.city }}
+  <span
+    ><b
+      >{{ address.apartment }} {{ address.streetName }}, {{ address.city }}
       {{ address.zipCode }}, {{ address.country }}
     </b>
-    ({{ address.name }})
-  </span>
+    ({{ address.name }})</span
+  >
 </template>
 
 <script>

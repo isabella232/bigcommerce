@@ -55,9 +55,7 @@ describe('[bigcommerce-api-client] createCustomer', () => {
         }
       ]
     };
-    contextMock.client.v3.post = jest.fn(() =>
-      Promise.resolve(expectedResponse)
-    );
+    contextMock.client.v3.post = jest.fn(() => Promise.resolve(expectedResponse));
     const jwtTokenExpirationDays = 4;
     const secureCookies = false;
     contextMock.config = {
@@ -165,7 +163,7 @@ describe('[bigcommerce-api-client] createCustomer', () => {
     await expect(
       createCustomer(
         contextMock,
-        parameters as unknown as CreateCustomerParameters
+        (parameters as unknown) as CreateCustomerParameters
       )
     ).rejects.toMatchInlineSnapshot('[Error: Required parameters missing.]');
     expect(contextMock.client.v3.post).not.toHaveBeenCalled();

@@ -16,9 +16,7 @@ describe('[bigcommerce-api-client] validateCredentials', () => {
     const expectedResponse = {
       is_valid: true
     };
-    contextMock.client.v3.post = jest.fn(() =>
-      Promise.resolve(expectedResponse)
-    );
+    contextMock.client.v3.post = jest.fn(() => Promise.resolve(expectedResponse));
 
     const response = await validateCredentials(contextMock, parameters);
 
@@ -59,7 +57,7 @@ describe('[bigcommerce-api-client] validateCredentials', () => {
     await expect(
       validateCredentials(
         contextMock,
-        parameters as unknown as ValidateCredentialsParameter
+        (parameters as unknown) as ValidateCredentialsParameter
       )
     ).rejects.toMatchInlineSnapshot('[Error: Required parameters missing.]');
     expect(contextMock.client.v3.post).not.toHaveBeenCalled();

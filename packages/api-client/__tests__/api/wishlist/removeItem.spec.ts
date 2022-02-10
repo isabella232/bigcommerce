@@ -19,9 +19,8 @@ describe('[BigCommerce-api-client] remove wishlist items', () => {
     await removeWishlistItem(contextMock, params);
 
     // Then
-    expect(contextMock.client.v3.delete).toHaveBeenLastCalledWith(
-      BigCommerceEndpoints.wishlistItems(wishlistId, itemId)
-    );
+    expect(contextMock.client.v3.delete)
+      .toHaveBeenLastCalledWith(BigCommerceEndpoints.wishlistItems(wishlistId, itemId));
   });
 
   it('should throw an error when wishlist id was not provided', async () => {

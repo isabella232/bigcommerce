@@ -22,22 +22,15 @@ describe('[bigcommerce-api-client] getCart', () => {
       data: mockedCart,
       meta: {}
     };
-    contextMock.client.v3.get = jest.fn(() =>
-      Promise.resolve(expectedResponse)
-    );
+    contextMock.client.v3.get = jest.fn(() => Promise.resolve(expectedResponse));
 
     const response = await getCart(contextMock, params);
 
     expect(response).toBe(expectedResponse);
     expect(contextMock.client.v3.get).toBeCalledTimes(1);
-    expect(contextMock.client.v3.get).toBeCalledWith(
-      BigCommerceEndpoints.cart(params.id)
-    );
+    expect(contextMock.client.v3.get).toBeCalledWith(BigCommerceEndpoints.cart(params.id));
     expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledTimes(1);
-    expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledWith(
-      contextMock,
-      response
-    );
+    expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledWith(contextMock, response);
   });
 
   it('should pass include as a query parameter', async () => {
@@ -47,13 +40,8 @@ describe('[bigcommerce-api-client] getCart', () => {
     const response = await getCart(contextMock, { ...params, include });
 
     expect(contextMock.client.v3.get).toBeCalledTimes(1);
-    expect(contextMock.client.v3.get).toBeCalledWith(
-      `${BigCommerceEndpoints.cart(params.id)}?include=${include}`
-    );
+    expect(contextMock.client.v3.get).toBeCalledWith(`${BigCommerceEndpoints.cart(params.id)}?include=${include}`);
     expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledTimes(1);
-    expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledWith(
-      contextMock,
-      response
-    );
+    expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledWith(contextMock, response);
   });
 });

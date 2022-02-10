@@ -34,9 +34,7 @@ describe('[bigcommerce-composables] useUser logOut', () => {
     expect(contextMock.cart.setCart).toBeCalledTimes(1);
     expect(contextMock.cart.setCart).toBeCalledWith(expectedNewCart);
     expect(contextMock.$bigcommerce.config.app.localePath).toBeCalledTimes(1);
-    expect(contextMock.$bigcommerce.config.app.localePath).toBeCalledWith({
-      name: 'home'
-    });
+    expect(contextMock.$bigcommerce.config.app.localePath).toBeCalledWith({ name: 'home' });
     expect(contextMock.$bigcommerce.config.app.router.push).toBeCalledTimes(1);
     expect(contextMock.$bigcommerce.config.app.router.push).toBeCalledWith('/');
   });

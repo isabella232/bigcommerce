@@ -10,6 +10,4 @@ import params from './params';
 /**
  * Managing user sessions, authentication, registration and user details.
  */
-export const useUser = useUserFactory<User, UpdateParams, RegisterParams>(
-  params
-);
+export const useUser = useUserFactory<User, UpdateParams, RegisterParams>(params);

@@ -65,7 +65,6 @@
     </SfTabs>
   </transition>
 </template>
-
 <script>
 import { SfTabs, SfButton, SfIcon } from '@storefront-ui/vue';
 import UserShippingAddress from '~/components/UserShippingAddress';

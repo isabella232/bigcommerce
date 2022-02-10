@@ -8,13 +8,13 @@ export interface WishlistResponse {
    * Wishlist model.
    * @memberof WishlistResponse
    */
-  data: Wishlist;
+  data: Wishlist,
 
   /**
    * Empty meta object; may be used later.
    * @memberof WishlistResponse
    */
-  meta: Record<string, unknown>;
+  meta: Record<string, unknown>
 }
 
 /**
@@ -24,10 +24,10 @@ export interface WishlistCollectionResponse {
   /**
    * Collection of the wishlists
    */
-  data: Wishlist[];
+  data: Wishlist[],
 
   /**
    * Data about the response, including pagination and collection totals.
    */
-  meta: MetaCollection;
+  meta: MetaCollection
 }

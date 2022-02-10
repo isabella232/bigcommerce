@@ -1,8 +1,4 @@
-import {
-  WishlistResponse,
-  WishlistCollectionResponse,
-  Wishlist as WishlistAPI
-} from '@vue-storefront/bigcommerce-api';
+import { WishlistResponse, WishlistCollectionResponse, Wishlist as WishlistAPI } from '@vue-storefront/bigcommerce-api';
 import { load } from '../../src/useWishlist/actions';
 import { contextMock } from '../../__mocks__/context.mock';
 
@@ -25,9 +21,7 @@ describe('[BigCommerce - composables] useWishlist load', () => {
       }
     }
   };
-  contextMock.$bigcommerce.config.app.$cookies.get = jest.fn(
-    () => 'mocked_token'
-  );
+  contextMock.$bigcommerce.config.app.$cookies.get = jest.fn(() => 'mocked_token');
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -44,15 +38,11 @@ describe('[BigCommerce - composables] useWishlist load', () => {
       data: [wishlistMock],
       meta: {}
     };
-    contextMock.$bigcommerce.api.getAllWishlists = jest.fn(
-      () => getAllWishlistResponseMock
-    );
+    contextMock.$bigcommerce.api.getAllWishlists = jest.fn(() => getAllWishlistResponseMock);
 
     await load(contextMock, {});
 
-    expect(contextMock.$bigcommerce.api.getAllWishlists).toHaveBeenCalledTimes(
-      1
-    );
+    expect(contextMock.$bigcommerce.api.getAllWishlists).toHaveBeenCalledTimes(1);
   });
 
   it('should not create new wishlist if there is created one', async () => {
@@ -60,15 +50,11 @@ describe('[BigCommerce - composables] useWishlist load', () => {
       data: [wishlistMock],
       meta: {}
     };
-    contextMock.$bigcommerce.api.getAllWishlists = jest.fn(
-      () => getAllWishlistResponseMock
-    );
+    contextMock.$bigcommerce.api.getAllWishlists = jest.fn(() => getAllWishlistResponseMock);
 
     await load(contextMock, {});
 
-    expect(contextMock.$bigcommerce.api.createWishlist).toHaveBeenCalledTimes(
-      0
-    );
+    expect(contextMock.$bigcommerce.api.createWishlist).toHaveBeenCalledTimes(0);
   });
 
   it('should create new wishlist if it was not created before', async () => {
@@ -80,18 +66,12 @@ describe('[BigCommerce - composables] useWishlist load', () => {
       data: wishlistMock,
       meta: {}
     };
-    contextMock.$bigcommerce.api.getAllWishlists = jest.fn(
-      () => getAllWishlistResponseMock
-    );
-    contextMock.$bigcommerce.api.createWishlist = jest.fn(
-      () => createWishlistResponseMock
-    );
+    contextMock.$bigcommerce.api.getAllWishlists = jest.fn(() => getAllWishlistResponseMock);
+    contextMock.$bigcommerce.api.createWishlist = jest.fn(() => createWishlistResponseMock);
 
     await load(contextMock, {});
 
-    expect(contextMock.$bigcommerce.api.createWishlist).toHaveBeenCalledTimes(
-      1
-    );
+    expect(contextMock.$bigcommerce.api.createWishlist).toHaveBeenCalledTimes(1);
   });
 
   it('should call getProducts to refresh product list', async () => {
@@ -99,9 +79,7 @@ describe('[BigCommerce - composables] useWishlist load', () => {
       data: [wishlistMock],
       meta: {}
     };
-    contextMock.$bigcommerce.api.getAllWishlists = jest.fn(
-      () => getAllWishlistResponseMock
-    );
+    contextMock.$bigcommerce.api.getAllWishlists = jest.fn(() => getAllWishlistResponseMock);
 
     await load(contextMock, {});
 
@@ -109,9 +87,7 @@ describe('[BigCommerce - composables] useWishlist load', () => {
   });
 
   it('should merge wishlists if there is guest wishlist', async () => {
-    window.localStorage.__proto__.getItem = jest.fn(() =>
-      JSON.stringify(wishlistMock)
-    );
+    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
     window.localStorage.__proto__.removeItem = jest.fn();
 
     const getAllWishlistResponseMock: WishlistCollectionResponse = {
@@ -122,19 +98,13 @@ describe('[BigCommerce - composables] useWishlist load', () => {
       data: wishlistMock,
       meta: {}
     };
-    contextMock.$bigcommerce.api.addWishlistItems = jest.fn(
-      () => addItemsResponseMock
-    );
-    contextMock.$bigcommerce.api.getAllWishlists = jest.fn(
-      () => getAllWishlistResponseMock
-    );
+    contextMock.$bigcommerce.api.addWishlistItems = jest.fn(() => addItemsResponseMock);
+    contextMock.$bigcommerce.api.getAllWishlists = jest.fn(() => getAllWishlistResponseMock);
 
     await load(contextMock, {});
 
     expect(window.localStorage.getItem).toHaveBeenCalledTimes(1);
-    expect(contextMock.$bigcommerce.api.addWishlistItems).toHaveBeenCalledTimes(
-      1
-    );
+    expect(contextMock.$bigcommerce.api.addWishlistItems).toHaveBeenCalledTimes(1);
     expect(window.localStorage.removeItem).toHaveBeenCalledTimes(1);
   });
 
@@ -147,16 +117,12 @@ describe('[BigCommerce - composables] useWishlist load', () => {
       meta: {}
     };
     contextMock.$bigcommerce.api.addWishlistItems = jest.fn();
-    contextMock.$bigcommerce.api.getAllWishlists = jest.fn(
-      () => getAllWishlistResponseMock
-    );
+    contextMock.$bigcommerce.api.getAllWishlists = jest.fn(() => getAllWishlistResponseMock);
 
     await load(contextMock, {});
 
     expect(window.localStorage.getItem).toHaveBeenCalledTimes(1);
-    expect(contextMock.$bigcommerce.api.addWishlistItems).toHaveBeenCalledTimes(
-      0
-    );
+    expect(contextMock.$bigcommerce.api.addWishlistItems).toHaveBeenCalledTimes(0);
     expect(window.localStorage.removeItem).toHaveBeenCalledTimes(0);
   });
 });

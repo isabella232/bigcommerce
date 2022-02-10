@@ -3,7 +3,7 @@ export const mockedOrder = {
   base_shipping_cost: '0.0000',
   base_wrapping_cost: '0.0000',
   billing_address: {
-    city: "O'Keefeborough",
+    city: 'O\'Keefeborough',
     company: 'Prohaska Inc',
     country: 'Poland',
     country_iso2: 'PL',
@@ -74,7 +74,8 @@ export const mockedOrder = {
   shipping_address_count: 1,
   shipping_addresses: {
     resource: '/orders/127/shipping_addresses',
-    url: 'https://api.bigcommerce.com/stores/moq5tdn0k6/v2/orders/127/shipping_addresses'
+    url:
+      'https://api.bigcommerce.com/stores/moq5tdn0k6/v2/orders/127/shipping_addresses'
   },
   shipping_cost_ex_tax: '0.0000',
   shipping_cost_inc_tax: '0.0000',

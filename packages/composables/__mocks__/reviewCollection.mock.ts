@@ -1,7 +1,4 @@
-import {
-  ProductReviewCollectionResponse,
-  ReviewStatus
-} from '@vue-storefront/bigcommerce-api';
+import { ProductReviewCollectionResponse, ReviewStatus } from '@vue-storefront/bigcommerce-api';
 
 export const reviewCollectionMock: ProductReviewCollectionResponse = {
   data: [

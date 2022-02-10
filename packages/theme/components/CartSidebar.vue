@@ -139,7 +139,6 @@
     </SfSidebar>
   </div>
 </template>
-
 <script>
 import {
   SfSidebar,

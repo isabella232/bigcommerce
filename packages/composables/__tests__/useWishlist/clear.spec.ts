@@ -1,7 +1,4 @@
-import {
-  WishlistResponse,
-  Wishlist as WishlistAPI
-} from '@vue-storefront/bigcommerce-api';
+import { WishlistResponse, Wishlist as WishlistAPI } from '@vue-storefront/bigcommerce-api';
 import { Wishlist } from '../../src/types';
 import { clear } from '../../src/useWishlist/actions';
 import { wishlistMock } from '../../__mocks__/wishlist.mock';
@@ -17,9 +14,7 @@ describe('[BigCommerce - composables] useWishlist clear', () => {
       isPublic
     }
   };
-  contextMock.$bigcommerce.config.app.$cookies.get = jest.fn(
-    () => 'mocked_token'
-  );
+  contextMock.$bigcommerce.config.app.$cookies.get = jest.fn(() => 'mocked_token');
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -35,11 +30,10 @@ describe('[BigCommerce - composables] useWishlist clear', () => {
 
     contextMock.$bigcommerce.api.deleteWishlist = jest.fn();
     contextMock.$bigcommerce.api.createWishlist = jest.fn(
-      (): Promise<WishlistResponse> =>
-        Promise.resolve({
-          data: newWishlist,
-          meta: {}
-        })
+      (): Promise<WishlistResponse> => Promise.resolve({
+        data: newWishlist,
+        meta: {}
+      })
     );
     contextMock.user = { user: { value: { id: customerId } } };
   });
@@ -49,9 +43,7 @@ describe('[BigCommerce - composables] useWishlist clear', () => {
 
     await clear(contextMock, { currentWishlist: wishlistMock as Wishlist });
 
-    expect(contextMock.$bigcommerce.api.deleteWishlist).toHaveBeenCalledWith(
-      expectedWishlistId
-    );
+    expect(contextMock.$bigcommerce.api.deleteWishlist).toHaveBeenCalledWith(expectedWishlistId);
   });
 
   it('should create new wishlist after deleting old one', async () => {
@@ -63,11 +55,7 @@ describe('[BigCommerce - composables] useWishlist clear', () => {
 
     await clear(contextMock, { currentWishlist: wishlistMock as Wishlist });
 
-    expect(contextMock.$bigcommerce.api.deleteWishlist).toHaveBeenCalledTimes(
-      1
-    );
-    expect(contextMock.$bigcommerce.api.createWishlist).toHaveBeenCalledWith(
-      expectedParams
-    );
+    expect(contextMock.$bigcommerce.api.deleteWishlist).toHaveBeenCalledTimes(1);
+    expect(contextMock.$bigcommerce.api.createWishlist).toHaveBeenCalledWith(expectedParams);
   });
 });
