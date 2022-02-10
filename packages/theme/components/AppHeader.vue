@@ -29,7 +29,11 @@
         </div>
       </template>
       <template #header-icons>
-        <div v-e2e="'header-icons'" class="sf-header__icons" @click="closeSearch">
+        <div
+          v-e2e="'header-icons'"
+          class="sf-header__icons"
+          @click="closeSearch"
+        >
           <SfButton
             class="sf-button--pure sf-header__action"
             aria-label="Open account button"
@@ -83,32 +87,9 @@
           @keydown.enter="handleSearch($event)"
           @focus="isSearchOpen = true"
           @keydown.esc="closeSearch"
-        >
-          <template #icon>
-            <SfButton
-              v-if="!!term"
-              aria-label="Close search"
-              class="sf-search-bar__button sf-button--pure"
-              @click="closeOrFocusSearchBar"
-            >
-              <span class="sf-search-bar__icon">
-                <SfIcon color="var(--c-text)" size="18px" icon="cross" />
-              </span>
-            </SfButton>
-            <SfButton
-              v-else
-              aria-label="Open search"
-              class="sf-search-bar__button sf-button--pure"
-              @click="
-                isSearchOpen ? (isSearchOpen = false) : (isSearchOpen = true)
-              "
-            >
-              <span class="sf-search-bar__icon">
-                <SfIcon color="var(--c-text)" size="20px" icon="search" />
-              </span>
-            </SfButton>
-          </template>
-        </SfSearchBar>
+          :icon="searchBarIcon"
+          @click:icon="onSearchBarIconClick"
+        />
       </template>
     </SfHeader>
     <SearchResults
@@ -268,6 +249,22 @@ export default defineComponent({
       }
     };
 
+    const searchBarIcon = computed(() =>
+      term.value
+        ? { icon: 'cross', color: 'var(--c-text)', size: '18px' }
+        : { icon: 'search', color: 'var(--c-text)', size: '20px' }
+    );
+
+    const onSearchBarIconClick = computed(() =>
+      term.value
+        ? closeOrFocusSearchBar
+        : () => {
+          isSearchOpen.value
+            ? (isSearchOpen.value = false)
+            : (isSearchOpen.value = true);
+        }
+    );
+
     watch(
       () => term.value,
       (newVal, oldVal) => {
@@ -305,7 +302,9 @@ export default defineComponent({
       isMobileMenuOpen,
       products,
       navigation,
-      wishlistTotalItems
+      wishlistTotalItems,
+      searchBarIcon,
+      onSearchBarIconClick
     };
   }
 });
@@ -339,5 +338,9 @@ export default defineComponent({
 
 .search-hidden {
   display: none;
+}
+
+.sf-search-bar {
+  flex-grow: 0;
 }
 </style>
