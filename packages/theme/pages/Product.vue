@@ -425,7 +425,7 @@ export default defineComponent({
       openTab,
       product,
       breadcrumbs,
-      reviews: productReviews.value?.data,
+      reviews: computed(() => productReviews.value?.data),
       averageRating: computed(() =>
         productData.getAverageRating(product.value)
       ),
