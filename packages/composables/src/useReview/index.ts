@@ -1,8 +1,18 @@
 import { Ref, computed } from '@vue/composition-api';
-import { sharedRef, UseReviewErrors, Logger, generateContext } from '@vue-storefront/core';
+import {
+  sharedRef,
+  UseReviewErrors,
+  Logger,
+  generateContext
+} from '@vue-storefront/core';
 import { ProductReviewCollectionResponse } from '@vue-storefront/bigcommerce-api';
 import { params } from './params';
-import { UseReviewSearchParams, UseReviewAddParams, Context, UseReviewResponse } from '../index';
+import {
+  UseReviewSearchParams,
+  UseReviewAddParams,
+  Context,
+  UseReviewResponse
+} from '../index';
 
 /**
  *  Returns product reviews data and actions.
@@ -15,12 +25,18 @@ import { UseReviewSearchParams, UseReviewAddParams, Context, UseReviewResponse }
  *  - `{ add }` - Function for adding review. Review is being created with `pending` status.
  */
 export const useReview = (id: string): UseReviewResponse => {
-  const reviews: Ref<ProductReviewCollectionResponse> = sharedRef(null, `useReviews-reviews-${id}`);
+  const reviews: Ref<ProductReviewCollectionResponse> = sharedRef(
+    null,
+    `useReviews-reviews-${id}`
+  );
   const loading: Ref<boolean> = sharedRef(false, `useReviews-loading-${id}`);
-  const error: Ref<UseReviewErrors> = sharedRef({
-    search: null,
-    addReview: null
-  }, `useReviews-error-${id}`);
+  const error: Ref<UseReviewErrors> = sharedRef(
+    {
+      search: null,
+      addReview: null
+    },
+    `useReviews-error-${id}`
+  );
   const context = generateContext(params) as Context;
 
   const search = async (searchParams: UseReviewSearchParams): Promise<void> => {
@@ -44,8 +60,7 @@ export const useReview = (id: string): UseReviewResponse => {
 
     try {
       loading.value = true;
-      const response = await params.addReview(context, addParams);
-      reviews.value.data.push(response.data);
+      await params.addReview(context, addParams);
       error.value.addReview = null;
     } catch (err) {
       error.value.addReview = err;
