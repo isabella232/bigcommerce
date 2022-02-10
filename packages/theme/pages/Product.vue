@@ -9,6 +9,7 @@
         <LazyHydrate when-idle>
           <SfGallery
             :key="productGallery.length"
+            v-if="productGallery.length"
             :images="productGallery"
             class="product__gallery"
             :imageWidth="422"
@@ -255,6 +256,7 @@ import RelatedProducts from '~/components/RelatedProducts.vue';
 import AddReview from '~/components/AddReview.vue';
 import {
   ref,
+  ssrRef,
   computed,
   defineComponent,
   useContext,
@@ -305,7 +307,7 @@ export default defineComponent({
     const qty = ref(1);
     const id = computed(() => route.value.params.id);
     const { query } = route.value;
-    const configuration = ref(query);
+    const configuration = ssrRef(query);
     const reviewsTab = 2;
     const openTab = ref(1);
     const tabsRef = ref(null);
@@ -378,29 +380,32 @@ export default defineComponent({
     };
 
     onSSR(async () => {
+      if (product.value) {
+        calculateOptions();
+      }
+
       await search({ id: id.value, include: 'options,variants' });
-      await searchReviews({
-        productId: Number(id.value),
-        query: { status: 1 }
-      });
       await categorySearch();
 
       if (!products.value?.data?.length) {
-        error({ statusCode: 404 });
+        return error({ statusCode: 404 });
       }
 
-      if (product.value) {
-        calculateOptions();
+      calculateOptions();
 
-        const relatedProductIds = productData.getRelatedProducts(product.value);
-        if (relatedProductIds.length) {
-          await searchRelatedProducts({
-            'id:in': relatedProductIds,
-            include: 'options,variants',
-            limit: 8
-          });
-        }
+      const relatedProductIds = productData.getRelatedProducts(product.value);
+      if (relatedProductIds.length) {
+        await searchRelatedProducts({
+          'id:in': relatedProductIds,
+          include: 'options,variants',
+          limit: 8
+        });
       }
+    });
+
+    searchReviews({
+      productId: Number(id.value),
+      query: { status: 1 }
     });
 
     const updateFilter = (filter) => {
