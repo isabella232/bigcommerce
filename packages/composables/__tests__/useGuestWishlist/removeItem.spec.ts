@@ -15,14 +15,20 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
     getProductsMock = jest.fn();
     contextMock.$bigcommerce.api.getProducts = getProductsMock;
 
-    const { guestWishlistMock }: { guestWishlistMock: Wishlist } = require(
-      '../../__mocks__/useGuestWishlist/guestWishlist.mock'
-    );
+    const {
+      guestWishlistMock
+    }: {
+      guestWishlistMock: Wishlist;
+    } = require('../../__mocks__/useGuestWishlist/guestWishlist.mock');
     wishlistMock = guestWishlistMock;
   });
 
   it('should remove item from the items array', async () => {
-    const wishlistItem: WishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
+    const wishlistItem: WishlistItem = {
+      id: '1_1',
+      product_id: 1,
+      variant_id: 1
+    };
     wishlistMock.items.push(wishlistItem);
 
     const expectedLength = 0;
@@ -54,7 +60,11 @@ describe('[BigCommerce - composables] useGuestWishlist removeItem', () => {
   });
 
   it('should set new guest wishlist in the localstorage', async () => {
-    const wishlistItem: WishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
+    const wishlistItem: WishlistItem = {
+      id: '1_1',
+      product_id: 1,
+      variant_id: 1
+    };
     wishlistMock.items.push(wishlistItem);
 
     await removeItem(contextMock, {

@@ -106,6 +106,7 @@
     </div>
   </transition>
 </template>
+
 <script>
 import { SfInput, SfButton, SfComponentSelect } from '@storefront-ui/vue';
 import { countries } from '../../helpers/countries';
@@ -229,6 +230,7 @@ export default {
   }
 };
 </script>
+
 <style lang="scss" scoped>
 @import '~@storefront-ui/vue/styles';
 .shipping-list {

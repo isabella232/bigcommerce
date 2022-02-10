@@ -22,8 +22,9 @@ export async function prepareEmbeddedCheckoutUrlOnResponse(
       }
     });
 
-    response.data.redirect_urls.embedded_checkout_url = await getEmbeddedCheckoutUrl(context, {
-      defaultEmbeddedCheckoutUrl: embeddedCheckoutUrl
-    });
+    response.data.redirect_urls.embedded_checkout_url =
+      await getEmbeddedCheckoutUrl(context, {
+        defaultEmbeddedCheckoutUrl: embeddedCheckoutUrl
+      });
   }
 }

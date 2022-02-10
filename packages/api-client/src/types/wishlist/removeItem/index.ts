@@ -5,9 +5,9 @@ export interface RemoveWishlistItemParams {
   /**
    * ID of the wishlist.
    */
-  wishlistId: number
+  wishlistId: number;
   /**
    * ID of the wishlist item.
    */
-  itemId: number
+  itemId: number;
 }

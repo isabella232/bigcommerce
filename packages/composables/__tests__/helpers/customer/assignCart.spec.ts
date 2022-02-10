@@ -18,7 +18,8 @@ describe('[BigCommerce - composables] assignCart helper', () => {
       setCart: setCartMock
     };
 
-    contextMock.$bigcommerce.api.updateCustomerFormFields = updateCustomerFormFieldsMock;
+    contextMock.$bigcommerce.api.updateCustomerFormFields =
+      updateCustomerFormFieldsMock;
     contextMock.$bigcommerce.api.updateCart = updateCartMock;
 
     const formFields = await assignCart(contextMock, {

@@ -13,7 +13,10 @@ export const getCart: Endpoints['getCart'] = async (context, params) => {
     })
   );
 
-  await prepareEmbeddedCheckoutUrlOnResponse(context, response as GetCartResponse);
+  await prepareEmbeddedCheckoutUrlOnResponse(
+    context,
+    response as GetCartResponse
+  );
 
   return response as Promise<GetCartResponse>;
 };

@@ -5,8 +5,11 @@ import { UseReviewSearchParams } from '../../../src/types';
 
 describe('[BigCommerce - composables] useReview searchReviews', () => {
   it('should to return review collection', async () => {
-    const getReviewCollectionMock = jest.fn(() => Promise.resolve(reviewCollectionMock));
-    contextMock.$bigcommerce.api.getProductReviewCollection = getReviewCollectionMock;
+    const getReviewCollectionMock = jest.fn(() =>
+      Promise.resolve(reviewCollectionMock)
+    );
+    contextMock.$bigcommerce.api.getProductReviewCollection =
+      getReviewCollectionMock;
     const expectedResponse = reviewCollectionMock;
 
     const res = await searchReviews(contextMock, { productId: 1 });
@@ -15,8 +18,11 @@ describe('[BigCommerce - composables] useReview searchReviews', () => {
   });
 
   it('should call api with required params', async () => {
-    const getReviewCollectionMock = jest.fn(() => Promise.resolve(reviewCollectionMock));
-    contextMock.$bigcommerce.api.getProductReviewCollection = getReviewCollectionMock;
+    const getReviewCollectionMock = jest.fn(() =>
+      Promise.resolve(reviewCollectionMock)
+    );
+    contextMock.$bigcommerce.api.getProductReviewCollection =
+      getReviewCollectionMock;
     const searchParams: UseReviewSearchParams = {
       productId: 1,
       query: undefined
@@ -25,12 +31,18 @@ describe('[BigCommerce - composables] useReview searchReviews', () => {
 
     await searchReviews(contextMock, searchParams);
 
-    expect(getReviewCollectionMock).toHaveBeenCalledWith(expectedProps, undefined);
+    expect(getReviewCollectionMock).toHaveBeenCalledWith(
+      expectedProps,
+      undefined
+    );
   });
 
   it('should call api with all params', async () => {
-    const getReviewCollectionMock = jest.fn(() => Promise.resolve(reviewCollectionMock));
-    contextMock.$bigcommerce.api.getProductReviewCollection = getReviewCollectionMock;
+    const getReviewCollectionMock = jest.fn(() =>
+      Promise.resolve(reviewCollectionMock)
+    );
+    contextMock.$bigcommerce.api.getProductReviewCollection =
+      getReviewCollectionMock;
     const searchParams: UseReviewSearchParams = {
       productId: 1,
       query: {
@@ -42,12 +54,16 @@ describe('[BigCommerce - composables] useReview searchReviews', () => {
 
     await searchReviews(contextMock, searchParams);
 
-    expect(getReviewCollectionMock).toHaveBeenCalledWith(expectedProps, expectedQuery);
+    expect(getReviewCollectionMock).toHaveBeenCalledWith(
+      expectedProps,
+      expectedQuery
+    );
   });
 
   it('should throw an error when product id is invalid', async () => {
     const getReviewCollectionMock = jest.fn();
-    contextMock.$bigcommerce.api.getProductReviewCollection = getReviewCollectionMock;
+    contextMock.$bigcommerce.api.getProductReviewCollection =
+      getReviewCollectionMock;
     const searchParams: UseReviewSearchParams = {
       productId: undefined
     };
@@ -55,7 +71,9 @@ describe('[BigCommerce - composables] useReview searchReviews', () => {
     try {
       await searchReviews(contextMock, searchParams);
     } catch (error) {
-      expect(error.message).toBe(`ProductId with value: ${searchParams.productId} is not valid. Use number value.`);
+      expect(error.message).toBe(
+        `ProductId with value: ${searchParams.productId} is not valid. Use number value.`
+      );
     } finally {
       expect(getReviewCollectionMock).toHaveBeenCalledTimes(0);
     }

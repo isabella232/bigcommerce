@@ -36,9 +36,14 @@ describe('[bigcommerce-api-client] get an address', () => {
 
     const response = await getCustomerAddress(contextMock, params);
     expect(contextMock.client.v3.get).toHaveBeenCalledTimes(1);
-    expect(contextMock.client.v3.get).toHaveBeenCalledWith(`${BigCommerceEndpoints.addresses}?customer_id%3Ain=3&id%3Ain=1`);
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
+      `${BigCommerceEndpoints.addresses}?customer_id%3Ain=3&id%3Ain=1`
+    );
     expect(jwtVerifyMock).toHaveBeenCalledTimes(1);
-    expect(jwtVerifyMock).toHaveBeenCalledWith(token, contextMock.config.sdkSettings.devtoolsAppSecret);
+    expect(jwtVerifyMock).toHaveBeenCalledWith(
+      token,
+      contextMock.config.sdkSettings.devtoolsAppSecret
+    );
     expect(response).toBe(expectedResponse);
   });
 });

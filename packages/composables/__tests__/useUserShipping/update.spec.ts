@@ -17,7 +17,8 @@ describe('[BigCommerce - composables] useUserShipping update', () => {
         address1: mockedAddressFormData.address1
       })
     );
-    contextMock.$bigcommerce.api.updateCustomerAddress = updateCustomerAddressMock;
+    contextMock.$bigcommerce.api.updateCustomerAddress =
+      updateCustomerAddressMock;
 
     const response = await updateAddress(contextMock, {
       address: mockedAddress,
@@ -36,7 +37,8 @@ describe('[BigCommerce - composables] useUserShipping update', () => {
         address1: []
       })
     );
-    contextMock.$bigcommerce.api.updateCustomerAddress = updateCustomerAddressMock;
+    contextMock.$bigcommerce.api.updateCustomerAddress =
+      updateCustomerAddressMock;
 
     const response = await updateAddress(contextMock, {
       address: mockedAddress,

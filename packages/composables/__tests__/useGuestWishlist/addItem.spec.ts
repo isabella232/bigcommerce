@@ -23,9 +23,11 @@ describe('[BigCommerce - composables] useGuestWishlist addItem', () => {
   });
 
   it('should add item to the items array', async () => {
-    const { guestWishlistMock: wishlistMock }: { guestWishlistMock: Wishlist } = require(
-      '../../__mocks__/useGuestWishlist/guestWishlist.mock'
-    );
+    const {
+      guestWishlistMock: wishlistMock
+    }: {
+      guestWishlistMock: Wishlist;
+    } = require('../../__mocks__/useGuestWishlist/guestWishlist.mock');
 
     const wishlistItem: WishlistItem = {
       id: `${wishlistItemParams.productId}_${wishlistItemParams.variantId}`,
@@ -43,9 +45,11 @@ describe('[BigCommerce - composables] useGuestWishlist addItem', () => {
   });
 
   it('should call api to get products from guest wishlists', async () => {
-    const { guestWishlistMock: wishlistMock }: { guestWishlistMock: Wishlist } = require(
-      '../../__mocks__/useGuestWishlist/guestWishlist.mock'
-    );
+    const {
+      guestWishlistMock: wishlistMock
+    }: {
+      guestWishlistMock: Wishlist;
+    } = require('../../__mocks__/useGuestWishlist/guestWishlist.mock');
     const expectedParams = { 'id:in': [mockedProduct.id], include: 'variants' };
 
     await addItem(contextMock, {
@@ -58,9 +62,11 @@ describe('[BigCommerce - composables] useGuestWishlist addItem', () => {
   });
 
   it('should not add item to items array if it is there', async () => {
-    const { guestWishlistMock: wishlistMock }: { guestWishlistMock: Wishlist } = require(
-      '../../__mocks__/useGuestWishlist/guestWishlist.mock'
-    );
+    const {
+      guestWishlistMock: wishlistMock
+    }: {
+      guestWishlistMock: Wishlist;
+    } = require('../../__mocks__/useGuestWishlist/guestWishlist.mock');
     const wishlistItem: WishlistItem = {
       id: `${wishlistItemParams.productId}_${wishlistItemParams.variantId}`,
       product_id: wishlistItemParams.productId,

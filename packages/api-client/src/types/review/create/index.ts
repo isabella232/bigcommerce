@@ -37,10 +37,10 @@ export interface CreateProductReviewProps {
  * Properties for creating a product review.
  * Extended with date_reviewed param.
  */
-export interface ExtendedCreateProductReviewProps extends CreateProductReviewProps {
+export interface ExtendedCreateProductReviewProps
+  extends CreateProductReviewProps {
   /**
    * Date the product was reviewed. Must be in date-time format.
    */
-  'date_reviewed': string;
+  date_reviewed: string;
 }
-

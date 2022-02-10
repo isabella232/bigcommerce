@@ -42,8 +42,9 @@ describe('[BigCommerce-api-client] get all wishlists reviews', () => {
     await getAllWishlists(contextMock, query);
 
     // Then
-    expect(contextMock.client.v3.get)
-      .toHaveBeenCalledWith(`/wishlists?customer_id=${customerId}&limit=${query.limit}&page=${query.page}`);
+    expect(contextMock.client.v3.get).toHaveBeenCalledWith(
+      `/wishlists?customer_id=${customerId}&limit=${query.limit}&page=${query.page}`
+    );
   });
 
   it('should throw an error when customer id was not provided', async () => {
@@ -51,8 +52,7 @@ describe('[BigCommerce-api-client] get all wishlists reviews', () => {
 
     jwtDecodeMock.mockImplementation(() => null);
 
-    await expect(getAllWishlists(contextMock)
-    ).rejects.toMatchInlineSnapshot(
+    await expect(getAllWishlists(contextMock)).rejects.toMatchInlineSnapshot(
       '[Error: Customer ID with value: null is not valid.]'
     );
 

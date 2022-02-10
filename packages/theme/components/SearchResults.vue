@@ -99,8 +99,8 @@
                             product: wishlistHelpers.getItem(wishlist, {
                               productId: product.id,
                               variantId:
-                                getPurchasableDefaultVariant(product).id,
-                            }),
+                                getPurchasableDefaultVariant(product).id
+                            })
                           })
                         : addItemToWishlist({ product })
                     "
@@ -160,8 +160,8 @@
                       ? removeItemFromWishlist({
                           product: wishlistHelpers.getItem(wishlist, {
                             productId: product.id,
-                            variantId: getPurchasableDefaultVariant(product).id,
-                          }),
+                            variantId: getPurchasableDefaultVariant(product).id
+                          })
                         })
                       : addItemToWishlist({ product })
                   "
@@ -295,14 +295,14 @@ export default defineComponent({
         product
       })
         ? removeItemFromWishlist({
-          product: wishlistHelpers.getItem(wishlist.value, {
-            productId: product.id,
-            variantId: getPurchasableDefaultVariant(product)?.id
+            product: wishlistHelpers.getItem(wishlist.value, {
+              productId: product.id,
+              variantId: getPurchasableDefaultVariant(product)?.id
+            })
           })
-        })
         : addItemToWishlist({
-          product
-        });
+            product
+          });
     };
 
     watch(

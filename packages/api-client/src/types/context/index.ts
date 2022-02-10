@@ -58,7 +58,7 @@ export interface MiddlewareSDKSettingsConfig {
   /**
    * BigCommerce api version.
    */
-  apiVersion: 'v2' | 'v3'
+  apiVersion: 'v2' | 'v3';
 }
 
 /**
@@ -98,11 +98,11 @@ export interface BigCommerceClients {
   /**
    * BigCommerce API v2 client.
    */
-  v2: NodeBigcommerceSDK,
+  v2: NodeBigcommerceSDK;
   /**
    * BigCommerce API v3 client.
    */
-  v3: NodeBigcommerceSDK
+  v3: NodeBigcommerceSDK;
 }
 
 /**

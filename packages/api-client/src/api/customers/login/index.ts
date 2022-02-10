@@ -26,7 +26,10 @@ export const loginCustomer: Endpoints['loginCustomer'] = async (
   params
 ) => {
   try {
-    const validationResponse = await Login.getValidationResponse(context, params);
+    const validationResponse = await Login.getValidationResponse(
+      context,
+      params
+    );
     await Login.performLogin(context, validationResponse.customer_id);
     const customerDataToken = await Login.verifyLogin(context);
     Login.setTokenCookie(context, customerDataToken);
@@ -43,10 +46,8 @@ export async function getValidationResponse(
   context: BigcommerceIntegrationContext,
   customerCredentials: LoginCustomerParameters
 ): Promise<ValidateCredentialsResponse> {
-  const {
-    customer_id: customerId,
-    is_valid: isValid
-  } = await validateCredentials(context, customerCredentials);
+  const { customer_id: customerId, is_valid: isValid } =
+    await validateCredentials(context, customerCredentials);
 
   if (!isValid) {
     throw { statusCode: 400, message: MESSAGE_LOGIN_ERROR };

@@ -19,9 +19,11 @@ describe('[BigCommerce - composables] useGuestWishlist clear', () => {
     getProductsMock = jest.fn();
     contextMock.$bigcommerce.api.getProducts = getProductsMock;
 
-    const { guestWishlistMock }: { guestWishlistMock: Wishlist } = require(
-      '../../__mocks__/useGuestWishlist/guestWishlist.mock'
-    );
+    const {
+      guestWishlistMock
+    }: {
+      guestWishlistMock: Wishlist;
+    } = require('../../__mocks__/useGuestWishlist/guestWishlist.mock');
 
     wishlistMock = guestWishlistMock;
   });
@@ -46,7 +48,9 @@ describe('[BigCommerce - composables] useGuestWishlist clear', () => {
       { id: '2_2', product_id: 2, variant_id: 2 }
     ];
     wishlistMock.items.push(...wishlistItems);
-    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
+    window.localStorage.__proto__.getItem = jest.fn(() =>
+      JSON.stringify(wishlistMock)
+    );
 
     await clear(contextMock, { currentWishlist: wishlistMock });
 
@@ -54,10 +58,16 @@ describe('[BigCommerce - composables] useGuestWishlist clear', () => {
   });
 
   it('should set cleared guest wishlist in the localstorage', async () => {
-    const wishlistItem: WishlistItem = { id: '1_1', product_id: 1, variant_id: 1 };
+    const wishlistItem: WishlistItem = {
+      id: '1_1',
+      product_id: 1,
+      variant_id: 1
+    };
     wishlistMock.items.push(wishlistItem);
 
-    window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify(wishlistMock));
+    window.localStorage.__proto__.getItem = jest.fn(() =>
+      JSON.stringify(wishlistMock)
+    );
 
     await clear(contextMock, { currentWishlist: wishlistMock });
 

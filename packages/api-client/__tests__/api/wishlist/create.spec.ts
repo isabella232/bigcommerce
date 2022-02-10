@@ -34,10 +34,13 @@ describe('[BigCommerce-api-client] create wishlist', () => {
     await createWishlist(contextMock, props);
 
     // Then
-    expect(contextMock.client.v3.post).toHaveBeenLastCalledWith(expectedEndpoint, {
-      ...props,
-      customer_id: customerId
-    });
+    expect(contextMock.client.v3.post).toHaveBeenLastCalledWith(
+      expectedEndpoint,
+      {
+        ...props,
+        customer_id: customerId
+      }
+    );
   });
 
   it('should throw an error when name was not provided', async () => {

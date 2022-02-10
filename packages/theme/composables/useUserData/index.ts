@@ -2,7 +2,6 @@ import type { User } from '@vue-storefront/bigcommerce-api';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useUserData = () => {
-
   const getFirstName = (user: User): string => {
     return user?.first_name;
   };
@@ -12,7 +11,9 @@ export const useUserData = () => {
   };
 
   const getFullName = (user: User): string => {
-    return user?.first_name && user?.last_name ? `${user.first_name} ${user.last_name}` : '';
+    return user?.first_name && user?.last_name
+      ? `${user.first_name} ${user.last_name}`
+      : '';
   };
 
   const getEmailAddress = (user: User): string => {

@@ -1,4 +1,7 @@
-import { ReviewStatus, CreateProductReviewProps } from '@vue-storefront/bigcommerce-api';
+import {
+  ReviewStatus,
+  CreateProductReviewProps
+} from '@vue-storefront/bigcommerce-api';
 
 export const reviewParamsMock: CreateProductReviewProps = {
   productId: 22609026,

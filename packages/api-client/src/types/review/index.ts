@@ -56,7 +56,7 @@ export interface ProductReview {
   /**
    * Date the product was reviewed.
    */
-  'date_reviewed': string;
+  date_reviewed: string;
   /**
    * The unique numeric ID of the product review; increments sequentially.
    */
@@ -64,13 +64,13 @@ export interface ProductReview {
   /**
    * The unique numeric identifier for the product with which the review is associated.
    */
-  'product_id': number;
+  product_id: number;
   /**
    * Date the product review was created.
    */
-  'date_created': string;
+  date_created: string;
   /**
    * Date the product review was modified.
    */
-  'date_modified': string;
+  date_modified: string;
 }

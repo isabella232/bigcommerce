@@ -96,8 +96,9 @@
             class="sf-call-to-action__button"
             data-testid="cta-button"
             @click="toggleNewsletterModal"
-            >{{ $t('Subscribe') }}</SfButton
           >
+            {{ $t('Subscribe') }}
+          </SfButton>
         </template>
       </SfCallToAction>
     </LazyHydrate>
@@ -241,7 +242,7 @@ export default defineComponent({
         subtitle: 'Dresses',
         title: 'Cocktail & Party',
         description:
-          'Find stunning women\'s cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.',
+          "Find stunning women's cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.",
         buttonText: 'Shop now',
         image: {
           mobile: addBasePath($config.theme.home.bannerA.image.mobile),
@@ -255,7 +256,7 @@ export default defineComponent({
         subtitle: 'Dresses',
         title: 'Linen Dresses',
         description:
-          'Find stunning women\'s cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.',
+          "Find stunning women's cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.",
         buttonText: 'Shop now',
         image: addBasePath($config.theme.home.bannerB.image),
         class: 'sf-banner--slim banner-central desktop-only',

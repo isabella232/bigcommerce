@@ -103,7 +103,8 @@ export interface CreateAddressParameters {
 /**
  * Necessary parameters to update a customer address.
  */
-export interface UpdateAddressParameters extends Partial<CreateAddressParameters> {
+export interface UpdateAddressParameters
+  extends Partial<CreateAddressParameters> {
   /**
    * The unique numeric ID of the address.
    */

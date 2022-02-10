@@ -14,10 +14,12 @@ describe('[BigCommerce-api-client] add wishlist items', () => {
     // Given
     const props: AddWishlistItemsParams = {
       wishlistId,
-      items: [{
-        product_id: 1,
-        variant_id: 1
-      }]
+      items: [
+        {
+          product_id: 1,
+          variant_id: 1
+        }
+      ]
     };
     const expectedParams = { items: props.items };
 
@@ -25,17 +27,21 @@ describe('[BigCommerce-api-client] add wishlist items', () => {
     await addWishlistItems(contextMock, props);
 
     // Then
-    expect(contextMock.client.v3.post)
-      .toHaveBeenLastCalledWith(BigCommerceEndpoints.wishlistItems(wishlistId), expectedParams);
+    expect(contextMock.client.v3.post).toHaveBeenLastCalledWith(
+      BigCommerceEndpoints.wishlistItems(wishlistId),
+      expectedParams
+    );
   });
 
   it('should throw an error when wishlist id was not provided', async () => {
     const props: AddWishlistItemsParams = {
       wishlistId: undefined,
-      items: [{
-        product_id: 1,
-        variant_id: 1
-      }]
+      items: [
+        {
+          product_id: 1,
+          variant_id: 1
+        }
+      ]
     };
 
     try {

@@ -35,7 +35,6 @@ const params: UseUserFactoryParams<User, UpdateParams, RegisterParams> = {
   logIn,
 
   changePassword
-
 };
 
 export default params;

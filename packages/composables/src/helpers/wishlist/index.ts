@@ -1,5 +1,10 @@
 import { ProductsResponse } from '@vue-storefront/bigcommerce-api';
-import { Context, Wishlist, WishlistItem, WishlistItemParams } from '../../types';
+import {
+  Context,
+  Wishlist,
+  WishlistItem,
+  WishlistItemParams
+} from '../../types';
 import { BIGCOMMERCE_GUEST_WISHLIST_KEY } from '../../helpers/consts';
 
 export const emptyProductsResponse: Wishlist['wishlist_product_data'] = {
@@ -12,28 +17,37 @@ export const emptyProductsResponse: Wishlist['wishlist_product_data'] = {
       current_page: 1,
       total_pages: 0,
       links: {
-        current: '?id%3Ain=&include=variants%2Cimages&is_visible=true&page=1&limit=50'
+        current:
+          '?id%3Ain=&include=variants%2Cimages&is_visible=true&page=1&limit=50'
       }
     }
   }
 };
 
-export const refreshWishlistProducts = async (context: Context, wishlist: Wishlist): Promise<ProductsResponse> => {
+export const refreshWishlistProducts = async (
+  context: Context,
+  wishlist: Wishlist
+): Promise<ProductsResponse> => {
   if (!wishlist.items?.length) {
     return emptyProductsResponse;
   }
 
   return await context.$bigcommerce.api.getProducts({
-    'id:in': wishlist.items.map(item => item.product_id),
+    'id:in': wishlist.items.map((item) => item.product_id),
     include: 'variants'
   });
 };
 
-export const isInWishlist = (wishlist: Wishlist, wishlistItemParams: WishlistItemParams): boolean => {
+export const isInWishlist = (
+  wishlist: Wishlist,
+  wishlistItemParams: WishlistItemParams
+): boolean => {
   if (!wishlist) return false;
 
-  return wishlist.items.some(item =>
-    item.product_id === wishlistItemParams.productId && item.variant_id === wishlistItemParams.variantId
+  return wishlist.items.some(
+    (item) =>
+      item.product_id === wishlistItemParams.productId &&
+      item.variant_id === wishlistItemParams.variantId
   );
 };
 
@@ -44,17 +58,17 @@ export const mergeWishlists = async (
 ): Promise<Wishlist> => {
   if (!guestWishlist.items.length) return wishlist;
 
-  const guestWishlistItems: WishlistItem[] = guestWishlist.items
-    .map(item => ({
+  const guestWishlistItems: WishlistItem[] = guestWishlist.items.map(
+    (item) => ({
       product_id: item.product_id,
       variant_id: item.variant_id
-    }));
+    })
+  );
 
-  const mergedWishlistRes = await context.$bigcommerce.api
-    .addWishlistItems({
-      wishlistId: wishlist.id,
-      items: guestWishlistItems
-    });
+  const mergedWishlistRes = await context.$bigcommerce.api.addWishlistItems({
+    wishlistId: wishlist.id,
+    items: guestWishlistItems
+  });
 
   window.localStorage.removeItem(BIGCOMMERCE_GUEST_WISHLIST_KEY);
 
