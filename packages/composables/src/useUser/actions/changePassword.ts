@@ -7,15 +7,12 @@ import type { User } from '@vue-storefront/bigcommerce-api';
   */
 export const changePassword = async (context: Context,
   params: {
-    currentUser: User,
     currentPassword: string,
     newPassword: string
  }): Promise<User> => {
-  const id = params?.currentUser?.id;
   const { newPassword } = params;
 
   const response = await context.$bigcommerce.api.updateCustomer({
-    id,
     authentication: {
       new_password: newPassword
     }

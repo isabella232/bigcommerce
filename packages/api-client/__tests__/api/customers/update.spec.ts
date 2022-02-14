@@ -1,14 +1,35 @@
 import { updateCustomer } from '../../../src/api/customers/update';
-import { UpdateCustomerParameters } from '../../../src/types';
 import { contextMock } from '../../../__mocks__/context.mock';
+import {
+  COOKIE_KEY_CUSTOMER_DATA
+} from '../../../src';
+import jwt from 'jsonwebtoken';
+
+const jwtVerifyMock = jest.spyOn(jwt, 'verify');
+const jwtDecodeMock = jest.spyOn(jwt, 'decode');
 
 describe('[bigcommerce-api-client] updateCustomer', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+  const token = 'token123';
+  const customerId = 1;
+  const decodedToken = { customer: { id: customerId } };
+  jwtVerifyMock.mockReturnValue(decodedToken);
+  jwtDecodeMock.mockReturnValue(decodedToken);
+  contextMock.req = {
+    cookies: {
+      [COOKIE_KEY_CUSTOMER_DATA]: token
+    }
+  };
+  contextMock.req = {
+    cookies: {
+      [COOKIE_KEY_CUSTOMER_DATA]: 'token123'
+    }
+  };
+
   it('update a customer', async () => {
     const parameters = {
-      id: 1,
       email: 'janedoe@example.com',
       first_name: 'Jane',
       last_name: 'Doe',
@@ -44,6 +65,7 @@ describe('[bigcommerce-api-client] updateCustomer', () => {
         }
       ]
     };
+
     contextMock.client.v3.put = jest.fn(() =>
       Promise.resolve(expectedResponse)
     );
@@ -52,7 +74,10 @@ describe('[bigcommerce-api-client] updateCustomer', () => {
 
     expect(contextMock.client.v3.put).toHaveBeenCalledTimes(1);
     expect(contextMock.client.v3.put).toHaveBeenCalledWith('/customers', [
-      parameters
+      {
+        ...parameters,
+        id: customerId
+      }
     ]);
 
     expect(response.data[0]).toMatchInlineSnapshot(`
@@ -87,7 +112,6 @@ describe('[bigcommerce-api-client] updateCustomer', () => {
 
   it('throws an error if there is a error response from the API', async () => {
     const parameters = {
-      id: 1,
       accepts_product_review_abandoned_cart_emails: true,
       custom_fields: [
         {
@@ -109,23 +133,10 @@ describe('[bigcommerce-api-client] updateCustomer', () => {
     ).rejects.toMatchInlineSnapshot('"API error"');
     expect(contextMock.client.v3.put).toHaveBeenCalledTimes(1);
     expect(contextMock.client.v3.put).toHaveBeenCalledWith('/customers', [
-      parameters
+      {
+        ...parameters,
+        id: customerId
+      }
     ]);
-  });
-
-  it('throws an error if parameters are missing', async () => {
-    // missing required param id
-    const parameters = {
-      id: 1,
-      email: 'janedoe@example.com',
-      first_name: 'Jane',
-      last_name: 'Doe',
-      password: 'string',
-      channel_ids: [1]
-    };
-    await expect(
-      updateCustomer(contextMock, parameters as UpdateCustomerParameters)
-    ).rejects.toMatchInlineSnapshot('"API error"');
-    expect(contextMock.client.v3.put).toHaveBeenCalledTimes(1);
   });
 });

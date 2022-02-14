@@ -186,10 +186,6 @@ type StoreCreditAmounts = Array<{
  */
 export interface UpdateCustomerParameters {
   /**
-   * The unique numeric ID of the customer.
-   */
-  id: number;
-  /**
    * The first name of the customer.
    */
   first_name?: string;

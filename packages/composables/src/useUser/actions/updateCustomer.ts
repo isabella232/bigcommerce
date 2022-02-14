@@ -9,15 +9,12 @@ import type { User } from '@vue-storefront/bigcommerce-api';
 export const updateCustomer = async (
   context: Context,
   params: {
-    currentUser: User,
     updatedUserData: UseUserUpdateParams
   }
 ): Promise<User> => {
 
   const { firstName = undefined, lastName = undefined, email = undefined, acceptsMarketingEmails = undefined } = params.updatedUserData;
-  const id = params?.currentUser?.id;
   const updatedCustomerData = await context.$bigcommerce.api.updateCustomer({
-    ...(id && {id}),
     ...(firstName && {first_name: firstName}),
     ...(lastName && {last_name: lastName}),
     ...(email && {email}),

@@ -8,10 +8,10 @@ import {
 } from '../../../src';
 import jwt from 'jsonwebtoken';
 
-const jwtVerifyMock = jest.spyOn(jwt, 'verify');
-const jwtDecodeMock = jest.spyOn(jwt, 'decode');
-
 describe('[bigcommerce-api-client] update address', () => {
+  const jwtVerifyMock = jest.spyOn(jwt, 'verify');
+  const jwtDecodeMock = jest.spyOn(jwt, 'decode');
+
   const addressId = 123;
   const token = 'token123';
   const customerId = 3;
