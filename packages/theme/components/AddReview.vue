@@ -29,7 +29,8 @@
           class="form__element"
           :label="$t('Review rating')"
           :required="true"
-          v-model="rating"
+          :value="rating.toString()"
+          @input="(newRating) => rating = Number(newRating)"
         >
           <SfSelectOption
             v-for="star in Array.from(Array(6).keys())"
@@ -56,7 +57,7 @@
           "
           @blur="messageBlur = false"
         />
-        <SfButton>{{ $t('Submit') }}</SfButton>
+        <SfButton type="submit">{{ $t('Submit') }}</SfButton>
       </form>
     </div>
   </div>
