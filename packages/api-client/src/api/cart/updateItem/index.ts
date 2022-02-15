@@ -8,6 +8,12 @@ export const updateCartItem: Endpoints['updateCartItem'] = async (
   params
 ) => {
   const { cartId, itemId, include, data } = params;
+
+  // The list price needs to be removed on the API level, to cater for modified requests
+  if (data.line_item?.list_price) {
+    delete data.line_item.list_price;
+  }
+
   const response: UpdateLineItemResponse = await context.client.v3.put(
     queryString.stringifyUrl({
       url: BigCommerceEndpoints.cartItems(cartId, itemId),

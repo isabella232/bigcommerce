@@ -51,4 +51,23 @@ describe('[bigcommerce-api-client] add items to cart', () => {
     expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledTimes(1);
     expect(prepareEmbeddedCheckoutUrlOnResponse).toHaveBeenCalledWith(contextMock, response);
   });
+  it('should not pass a list_price property to the request payload', async () => {
+    const paramsWithListPrice = {
+      cartId,
+      data: {
+        line_items: [
+          {
+            quantity: 2,
+            product_id: 80,
+            list_price: 49.99
+          }
+        ]
+      }
+    };
+
+    contextMock.client.v3.post = jest.fn();
+    await addCartItems(contextMock, paramsWithListPrice);
+    expect(contextMock.client.v3.post).toBeCalledTimes(1);
+    expect(contextMock.client.v3.post).toBeCalledWith(BigCommerceEndpoints.cartItems(cartId), params.data);
+  });
 });

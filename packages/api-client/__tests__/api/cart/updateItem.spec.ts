@@ -69,4 +69,22 @@ describe('[bigcommerce-api-client] update a cart item', () => {
       response
     );
   });
+  it('should not pass list_price property to the the request payload', async () => {
+    const paramsWithListPrice = {
+      cartId: mockedCart.id,
+      itemId: product.id,
+      data: {
+        line_item: {
+          product_id: product.product_id,
+          quantity: 2,
+          list_price: 49.99
+        }
+      }
+    };
+
+    contextMock.client.v3.put = jest.fn();
+    await updateCartItem(contextMock, paramsWithListPrice);
+    expect(contextMock.client.v3.put).toBeCalledTimes(1);
+    expect(contextMock.client.v3.put).toBeCalledWith(BigCommerceEndpoints.cartItems(mockedCart.id, product.id), params.data);
+  });
 });
