@@ -20,7 +20,7 @@ export interface CustomerIdFormField extends BaseFormField {
   /**
    * Form field customer id.
    */
-  customer_id: number;
+  customer_id?: number;
 }
 
 /**
@@ -29,9 +29,3 @@ export interface CustomerIdFormField extends BaseFormField {
 export interface AdressIdFormField extends BaseFormField {
   address_id: number;
 }
-
-/**
- * Form field model.
- */
-export type FormField = CustomerIdFormField | AdressIdFormField;
-

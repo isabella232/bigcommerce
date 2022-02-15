@@ -1,4 +1,4 @@
-import { FormField } from '..';
+import { AdressIdFormField } from '..';
 
 export * from './parameters';
 export * from './responses';
@@ -80,7 +80,7 @@ export interface UserAddress {
   /**
    * Array of form fields.
    */
-  form_fields?: Array<FormField>;
+  form_fields?: Array<AdressIdFormField>;
 }
 
 /**

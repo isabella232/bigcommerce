@@ -1,5 +1,5 @@
 import {
-  FormField,
+  CustomerIdFormField,
   UserAddress,
   MetaCollection,
   Authentication
@@ -81,7 +81,7 @@ export interface User {
   /**
    * Customer form fields.
    */
-  form_fields?: FormField[];
+  form_fields?: CustomerIdFormField[];
   /**
    * Array of customer addresses. Limited to 10.
    */
@@ -163,7 +163,7 @@ export interface UpdateCustomerFormFieldsResponse {
   /**
    * Array of customer form fields.
    */
-  data: FormField[];
+  data: CustomerIdFormField[];
   /**
    * Empty object.
    */

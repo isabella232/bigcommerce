@@ -2,7 +2,7 @@ import {
   Cart,
   CartIncludeEnum,
   COOKIE_KEY_CART_ID,
-  FormField,
+  CustomerIdFormField,
   PhysicalCartItem,
   User
 } from '@vue-storefront/bigcommerce-api';
@@ -35,7 +35,7 @@ const mergeCarts = async (
 export const loadCustomerCart = async (
   context: Context,
   customer: User
-): Promise<FormField[] | void> => {
+): Promise<CustomerIdFormField[] | void> => {
   const userCartKey =
     context.$bigcommerce.config.app.$config.theme?.userCartKey ||
     BIGCOMMERCE_USER_CART_KEY;
@@ -67,9 +67,9 @@ export const loadCustomerCart = async (
         await mergeCarts(context, guestCart, userCart);
       }
     } catch (error) {
-      return await assignCart(context, { currentUser: customer });
+      return await assignCart(context);
     }
   } else {
-    return await assignCart(context, { currentUser: customer });
+    return await assignCart(context);
   }
 };

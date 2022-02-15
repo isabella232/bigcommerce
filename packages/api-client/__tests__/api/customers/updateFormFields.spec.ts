@@ -4,8 +4,26 @@ import {
   UpdateCustomerFormFieldsParameters,
   UpdateCustomerFormFieldsResponse
 } from '../../../src';
+import {
+  COOKIE_KEY_CUSTOMER_DATA
+} from '../../../src';
+import jwt from 'jsonwebtoken';
 
 describe('[bigcommerce-api-client] updateCustomerFormFields', () => {
+
+  const jwtVerifyMock = jest.spyOn(jwt, 'verify');
+  const jwtDecodeMock = jest.spyOn(jwt, 'decode');
+
+  const token = 'token123';
+  const customerId = 1;
+  const decodedToken = { customer: { id: customerId } };
+  jwtVerifyMock.mockReturnValue(decodedToken);
+  jwtDecodeMock.mockReturnValue(decodedToken);
+  contextMock.req = {
+    cookies: {
+      [COOKIE_KEY_CUSTOMER_DATA]: token
+    }
+  };
   it('should update the value of a form field on the customer', async () => {
     const params: UpdateCustomerFormFieldsParameters = {
       data: [

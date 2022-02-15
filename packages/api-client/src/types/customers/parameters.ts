@@ -1,7 +1,7 @@
 import {
   CustomersIncludeEnum,
   CustomersSortEnum,
-  FormField,
+  CustomerIdFormField,
   Authentication
 } from '..';
 
@@ -166,9 +166,9 @@ export type LoginCustomerParameters = AuthCustomerParams
  */
 export interface UpdateCustomerFormFieldsParameters {
   /**
-   * Form fields.
+   * Form field with customer ID.
    */
-  data: FormField[];
+  data: CustomerIdFormField[];
 }
 
 /**

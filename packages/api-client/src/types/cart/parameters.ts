@@ -161,7 +161,7 @@ export interface UpdateCartParameters {
   /**
    * The updated value for customer_id.
    */
-  data: {
+  data?: {
     /**
      * Customer ID.
      */

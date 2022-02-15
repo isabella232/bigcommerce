@@ -5,13 +5,9 @@ import {
 } from '../../../src';
 import jwt from 'jsonwebtoken';
 
-const jwtVerifyMock = jest.spyOn(jwt, 'verify');
-const jwtDecodeMock = jest.spyOn(jwt, 'decode');
-
 describe('[bigcommerce-api-client] updateCustomer', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  const jwtVerifyMock = jest.spyOn(jwt, 'verify');
+  const jwtDecodeMock = jest.spyOn(jwt, 'decode');
   const token = 'token123';
   const customerId = 1;
   const decodedToken = { customer: { id: customerId } };
@@ -22,11 +18,10 @@ describe('[bigcommerce-api-client] updateCustomer', () => {
       [COOKIE_KEY_CUSTOMER_DATA]: token
     }
   };
-  contextMock.req = {
-    cookies: {
-      [COOKIE_KEY_CUSTOMER_DATA]: 'token123'
-    }
-  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('update a customer', async () => {
     const parameters = {
