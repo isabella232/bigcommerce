@@ -256,7 +256,8 @@ import {
   defineComponent,
   useContext,
   useRouter,
-  useRoute
+  useRoute,
+  useMeta
 } from '@nuxtjs/composition-api';
 import { useProduct, useCart, useReview } from '@vue-storefront/bigcommerce';
 import { onSSR } from '@vue-storefront/core';
@@ -420,6 +421,45 @@ export default defineComponent({
       }
     };
 
+    const metaTags = computed(() => ({
+      title: product.value?.page_title,
+      meta: [
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: product.value?.open_graph_use_product_name
+            ? product.value?.name
+            : product.value?.open_graph_title
+        },
+        {
+          hid: 'description',
+          name: 'description',
+          content: product.value?.meta_description
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: product.value?.open_graph_use_meta_description
+            ? product.value?.meta_description
+            : product.value?.open_graph_description
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: product.value?.open_graph_use_image
+            ? productData.getCoverImage(product.value)
+            : ''
+        },
+        {
+          hid: 'og:type',
+          property: 'og:type',
+          content: product.value?.open_graph_type
+        }
+      ]
+    }));
+
+    useMeta(() => metaTags.value);
+
     return {
       activeVariant,
       updateFilter,
@@ -446,7 +486,8 @@ export default defineComponent({
       showReviews,
       tabsRef
     };
-  }
+  },
+  head: {}
 });
 </script>
 
