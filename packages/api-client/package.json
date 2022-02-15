@@ -23,7 +23,6 @@
     "node-bigcommerce": "^4.1.0",
     "node-fetch": "2.6.7",
     "query-string": "^7.1.0",
-    "set-cookie-parser": "^2.4.8",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

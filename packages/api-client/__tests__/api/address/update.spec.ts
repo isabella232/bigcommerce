@@ -89,4 +89,22 @@ describe('[bigcommerce-api-client] update address', () => {
     );
     expect(contextMock.client.v3.put).toHaveBeenCalledTimes(0);
   });
+
+  it('should throw an error if address lines are above 255 characters', async () => {
+    contextMock.client.v3.get = jest.fn(() =>
+      Promise.resolve({ data: [{ id: addressId }] })
+    );
+    mockedAddress.address2 = 'a'.repeat(256);
+    const address: UpdateAddressParameters = {
+      ...mockedAddress,
+      id: addressId,
+      customer_id: customerId
+    };
+
+    await expect(
+      updateCustomerAddress(
+        contextMock,
+        address)
+    ).rejects.toMatchInlineSnapshot('[Error: Address line 1 and line 2 must be 255 characters or less.]');
+  });
 });

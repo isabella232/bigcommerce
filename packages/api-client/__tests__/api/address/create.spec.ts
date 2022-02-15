@@ -57,4 +57,13 @@ describe('[bigcommerce-api-client] create address', () => {
       )
     ).rejects.toMatchInlineSnapshot('"[Error: Required parameters missing.]"');
   });
+
+  it('should throw an error if address lines are above 255 characters', async () => {
+    mockedAddress.address1 = 'a'.repeat(256);
+    await expect(
+      createCustomerAddress(
+        contextMock,
+        mockedAddress)
+    ).rejects.toMatchInlineSnapshot('[Error: Address line 1 and line 2 must be 255 characters or less.]');
+  });
 });

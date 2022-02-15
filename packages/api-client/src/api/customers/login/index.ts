@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 const nodeFetch = require('node-fetch');
 const fetch = require('fetch-cookie/node-fetch')(nodeFetch);
-const setCookieParser = require('set-cookie-parser');
 import queryString from 'query-string';
 import {
   BigcommerceIntegrationContext,
@@ -62,20 +61,12 @@ export async function performLogin(
   context: BigcommerceIntegrationContext,
   customerId: number
 ): Promise<void> {
-  const { res } = context;
   const ssoLoginLink = Login.generateSsoLoginLink(context, customerId);
   const ssoResponse = await fetch(ssoLoginLink);
 
   if (ssoResponse?.status !== 200 || ssoResponse?.url?.includes('/login.php')) {
     throw new Error(MESSAGE_LOGIN_TOKEN_ERROR);
   }
-
-  const cookiesToSet = setCookieParser.parse(
-    setCookieParser.splitCookiesString(ssoResponse.headers.get('set-cookie'))
-  );
-  cookiesToSet.forEach(({ name, value, ...options }) =>
-    res.cookie(name, value, options)
-  );
 }
 
 export async function verifyLogin(

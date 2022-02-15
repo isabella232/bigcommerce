@@ -32,6 +32,11 @@
         name="phone"
         :label="$t('Phone number')"
         class="form__element form__element--half form__element--half-even"
+        :valid="phoneNumberBlur || validPhoneNumber(phoneNumber)"
+        :error-message="
+          $t('The phone number should not be longer than 50 characters.')
+        "
+        @blur="phoneNumberBlur = false"
       />
       <SfInput
         v-model="address1"
@@ -40,14 +45,19 @@
         required
         class="form__element"
         :valid="addressBlur || validAddress(address1)"
-        :error-message="$t('Please type your address')"
+        :error-message="$t('Please enter your valid address.')"
         @blur="addressBlur = false"
       />
       <SfInput
-        v-model="apartment"
-        name="apartment"
+        v-model="address2"
+        name="address2"
         :label="$t('Apartment/Suite/Building')"
         class="form__element"
+        :valid="address2Blur || validAddress2(address2)"
+        :error-message="
+          $t('The apartment value should be under 255 characters.')
+        "
+        @blur="address2Blur = false"
       />
       <SfInput
         v-model="city"
@@ -60,10 +70,15 @@
         @blur="cityBlur = false"
       />
       <SfInput
-        v-model="state"
-        name="state"
+        v-model="stateOrProvince"
+        name="stateOrProvince"
         :label="$t('State/Province')"
         class="form__element form__element--half form__element--half-even"
+        :valid="stateBlur || validState(stateOrProvince)"
+        :error-message="
+          $t('The apartment value should be under 100 characters.')
+        "
+        @blur="stateBlur = false"
       />
       <SfInput
         v-model="postCode"
@@ -80,7 +95,13 @@
         name="country"
         :label="$t('Country')"
         required
-        class="sf-component-select--underlined form__select form__element form__element--half form__element--half-even"
+        class="
+          sf-component-select--underlined
+          form__select
+          form__element
+          form__element--half
+          form__element--half-even
+        "
         data-testid="country"
         :valid="countryBlur || validCountry(country)"
         :error-message="$t('Please select your country.')"
@@ -152,16 +173,18 @@ export default {
       company: this.address.company || '',
       address1: this.address.address1 || '',
       addressBlur: true,
-      apartment: this.address.address2 || '',
+      address2: this.address.address2 || '',
+      address2Blur: true,
       city: this.address.city || '',
       cityBlur: true,
-      state: this.address.state_or_province || '',
+      stateOrProvince: this.address.state_or_province || '',
       stateBlur: true,
       postCode: this.address.postal_code || '',
       postCodeBlur: true,
       country: this.address.country_code || '',
       countryBlur: true,
       phoneNumber: this.address.phone || '',
+      phoneNumberBlur: true,
       countries
     };
   },
@@ -175,9 +198,9 @@ export default {
           last_name: this.lastName,
           company: this.company,
           address1: this.address1,
-          address2: this.apartment,
+          address2: this.address2,
           city: this.city,
-          state_or_province: this.state,
+          state_or_province: this.stateOrProvince,
           postal_code: this.postCode,
           country_code: this.country,
           phone: this.phoneNumber
@@ -194,16 +217,22 @@ export default {
       this.firstNameBlur = false;
       this.lastNameBlur = false;
       this.addressBlur = false;
+      this.address2Blur = false;
+      this.phoneNumberBlur = false;
       this.cityBlur = false;
+      this.stateBlur = false;
       this.postCodeBlur = false;
       this.countryBlur = false;
       if (
         this.validFirstName(this.firstName) &&
         this.validLastName(this.lastName) &&
         this.validAddress(this.address1) &&
+        this.validAddress2(this.address2) &&
         this.validCity(this.city) &&
+        this.validState(this.stateOrProvince) &&
         this.validPostCode(this.postCode) &&
-        this.validCountry(this.country)
+        this.validCountry(this.country) &&
+        this.validPhoneNumber(this.phoneNumber)
       ) {
         this.valid = true;
       }
@@ -215,16 +244,25 @@ export default {
       return lastName?.length >= 1 && lastName?.length <= 255;
     },
     validAddress(address) {
-      return address.length >= 1;
+      return address.length >= 1 && address.length <= 255;
+    },
+    validAddress2(address2) {
+      return address2?.length <= 255;
     },
     validCity(city) {
       return city?.length >= 1 && city?.length <= 100;
     },
+    validState(stateOrProvince) {
+      return stateOrProvince?.length <= 100;
+    },
     validPostCode(postCode) {
       return postCode?.length >= 1 && postCode?.length <= 30;
     },
+    validPhoneNumber(phoneNumber) {
+      return phoneNumber.length <= 50;
+    },
     validCountry(country) {
-      return Boolean(country);
+      return Boolean(country && country.length === 2);
     }
   }
 };
