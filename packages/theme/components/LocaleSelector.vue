@@ -89,13 +89,6 @@ export default defineComponent({
   flex-wrap: nowrap;
   align-items: center;
   position: relative;
-  &__lang,
-  .language {
-    ::v-deep .sf-image {
-      --image-width: 1.25rem;
-      --image-height: 1.25rem;
-    }
-  }
   .sf-bottom-modal {
     z-index: 2;
     left: 0;
