@@ -223,12 +223,8 @@
           v-if="relatedProducts.length"
           :products="relatedProducts"
           :loading="relatedLoading"
-          title="Match it with"
+          :title="$t('Recommended products')"
         />
-      </LazyHydrate>
-
-      <LazyHydrate when-visible>
-        <InstagramFeed />
       </LazyHydrate>
     </div>
   </SfLoader>
@@ -251,7 +247,6 @@ import {
   SfColor,
   SfLoader
 } from '@storefront-ui/vue';
-import InstagramFeed from '~/components/InstagramFeed.vue';
 import RelatedProducts from '~/components/RelatedProducts.vue';
 import AddReview from '~/components/AddReview.vue';
 import {
@@ -289,7 +284,6 @@ export default defineComponent({
     SfBreadcrumbs,
     SfButton,
     SfLoader,
-    InstagramFeed,
     RelatedProducts,
     LazyHydrate,
     AddReview

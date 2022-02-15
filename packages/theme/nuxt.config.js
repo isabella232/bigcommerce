@@ -34,7 +34,7 @@ export default {
   },
   loading: { color: '#fff' },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['~/plugins/cms'],
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // to core
@@ -53,8 +53,8 @@ export default {
         },
         // @core-development-only-end
         useRawSource: {
-          dev: ['@vue-storefront/bigcommerce', '@vue-storefront/core'],
-          prod: ['@vue-storefront/bigcommerce', '@vue-storefront/core']
+          dev: ['@vue-storefront/bigcommerce', '@vue-storefront/core', '@vue-storefront/storyblok'],
+          prod: ['@vue-storefront/bigcommerce', '@vue-storefront/core', '@vue-storefront/storyblok']
         }
       }
     ],
@@ -78,11 +78,16 @@ export default {
   ],
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@vue-storefront/storyblok/nuxt',
+    '@vue-storefront/middleware/nuxt',
+    '@nuxtjs/markdownit',
     'nuxt-i18n',
     'cookie-universal-nuxt',
-    'vue-scrollto/nuxt',
-    '@vue-storefront/middleware/nuxt'
+    'vue-scrollto/nuxt'
   ],
+  markdownit: {
+    runtime: true
+  },
   i18n: {
     currency: 'USD',
     country: 'US',

@@ -20,6 +20,13 @@ module.exports = {
         jwtTokenExpirationDays: 2,
         secureCookies: process.env.NODE_ENV === 'production'
       }
+    },
+    sb: {
+      location: '@vue-storefront/storyblok/server',
+      configuration: {
+        token: process.env.STORYBLOK_BIGCOMMERCE_DEMO_TOKEN,
+        cacheProvider: 'memory'
+      }
     }
   }
 };

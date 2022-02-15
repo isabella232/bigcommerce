@@ -207,6 +207,7 @@ export default {
   'Thank you for your order!': 'Vielen Dank für Ihren Auftrag!',
   'Continue shopping': 'Weiter einkaufen',
   'Household Items': 'Haushaltswaren',
+  'Household items': 'Haushaltswaren',
   Utility: 'Dienstprogramme',
   'Thanks for adding review!': 'Vielen Dank für das Hinzufügen Ihre Bewertung!',
   'Add review': 'Bewertung hinzufügen',
@@ -217,5 +218,26 @@ export default {
   Submit: 'Einreichen',
   'No products found matching your search criteria.': 'Es wurden keine Produkte gefunden, die Ihren Suchkriterien entsprechen.',
   'Password must have at least 7 characters including one letter and a number':
-    'Das Passwort muss mindestens 7 Zeichen lang sein, erlaubt sind Buchstaben und Ziffern'
-};
+    'Das Passwort muss mindestens 7 Zeichen lang sein, erlaubt sind Buchstaben und Ziffern',
+  'Subscribe to Newsletters': 'Newsletters abonnieren',
+  'Subscribe': 'Abonnieren',
+  'Be aware of upcoming sales and events. Receive gifts and special offers!': 'Informieren Sie sich über anstehende Verkäufe und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!',
+  'Decorate your home with carefully crafted accessories': 'Dekorieren Sie Ihr Zuhause mit sorgfältig gefertigten Accessoires',
+  'As spring arrives, choose beautiful ornaments made of more sustainable materials that reduce our environmental impact.': 'Wählen Sie zum Frühlingsanfang schöne Dekorationen aus nachhaltigeren Materialien, die die Umwelt weniger belasten.',
+  'Invite joyful design into your home': 'Holen Sie sich fröhliches Design in Ihr Zuhause',
+  'The arrival of spring is the perfect opportunity to refresh your home decor with beautiful accessories and interesting designs.': 'Die Ankunft des Frühlings ist die perfekte Gelegenheit, Ihr Heim mit schönen Accessoires und interessanten Designs aufzufrischen.',
+  'Simple changes for more sustainable living': 'Einfache Veränderungen für ein nachhaltigeres Leben',
+  'Outstanding simplicity': 'Herausragende Einfachheit',
+  'A good vibe starts at home.': 'Eine gute Stimmung beginnt zu Hause',
+  'Inspire yourself.': 'Inspirieren Sie sich selbst.',
+  'Modern design in your home.': 'Modernes Design in Ihrem Zuhause',
+  'Discover our new products': 'Entdecken Sie unsere neuen Produkte',
+  'Recommended products': 'Empfohlene Produkte',
+  'Shop now': 'Jetzt einkaufen',
+  'Page not found': 'Seite nicht gefunden',
+  'An error occured': 'Es ist ein Fehler aufgetreten',
+  'We are sorry that we can’t find the page, please go back or try again': 'Es tut uns leid, dass wir die Seite nicht finden können, bitte gehen Sie zurück oder versuchen Sie es erneut',
+  'Please go back or try again': 'Bitte gehen Sie zurück oder versuchen Sie es erneut',
+  'Return home': 'Nach Hause zurückkehren',
+  'Back': 'Zurück'
+  };

@@ -7,7 +7,7 @@
         v-e2e="'thank-you-banner'"
         class="banner"
         :image="{
-          mobile: '/thankyou/bannerM.png',
+          mobile: '/thankyou/bannerD.png',
           desktop: '/thankyou/bannerD.png'
         }"
         @click="continueShopping"

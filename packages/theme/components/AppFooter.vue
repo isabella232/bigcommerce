@@ -64,8 +64,8 @@ export default defineComponent({
   data() {
     return {
       aboutUs: ['Who we are', 'Quality in the details', 'Customer Reviews'],
-      departments: ['Women fashion', 'Men fashion', 'Kidswear', 'Home'],
-      help: ['Customer service', 'Size guide', 'Contact us'],
+      departments: ['Household items', 'Utility'],
+      help: ['Customer service', 'Contact us'],
       paymentsDelivery: ['Purchase terms', 'Guarantee'],
       social: ['facebook', 'pinterest', 'google', 'twitter', 'youtube'],
       isMobile: false,

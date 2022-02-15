@@ -2,27 +2,6 @@ export default {
   itemsPerPage: [10],
   userCartKey: 'Cart ID',
   channelIds: [921432],
-  home: {
-    bannerA: {
-      link: '/',
-      image: {
-        mobile: '/homepage/bannerB.webp',
-        desktop: '/homepage/bannerF.webp'
-      }
-    },
-    bannerB: {
-      link: '/',
-      image: '/homepage/bannerE.webp'
-    },
-    bannerC: {
-      link: '/',
-      image: '/homepage/bannerC.webp'
-    },
-    bannerD: {
-      link: '/',
-      image: '/homepage/bannerG.webp'
-    }
-  },
   productsSortOptions: [
     { label: 'Latest', id: 1, value: { sort: 'id', direction: 'desc' } },
     { label: 'Oldest', id: 2, value: { sort: 'id' } },
