@@ -32,11 +32,11 @@
           v-model="rating"
         >
           <SfSelectOption
-            v-for="star in Array.from(Array(5).keys())"
+            v-for="star in Array.from(Array(6).keys())"
             :key="star"
             class="form__element"
-            :value="star + 1"
-            >{{ star + 1 }}</SfSelectOption
+            :value="star"
+            >{{ star }}</SfSelectOption
           >
         </SfSelect>
         <SfTextarea
