@@ -49,7 +49,7 @@
             'Be aware of upcoming sales and events. Receive gifts and special offers!'
           )
         "
-        :image="addBasePath('/homepage/newsletter.png')"
+        :image="addBasePath('/homepage/newsletter.jpg')"
         class="call-to-action"
       >
         <template #button>
